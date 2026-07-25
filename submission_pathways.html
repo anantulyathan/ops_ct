@@ -11,16 +11,12 @@
     --navy:#0B1F3A;
     --navy2:#12294D;
     --steel:#3D6E96;
-    --teal:#0E8A83;
-    --teal-dim:#0E8A8322;
-    --amber:#C97A2B;
-    --amber-dim:#C97A2B22;
-    --v-fast:#0E8A83;
-    --v-fast-dim:#0E8A8318;
-    --v-delay:#8654A1;
-    --v-delay-dim:#8654A118;
-    --v-silent:#5B6472;
-    --v-silent-dim:#5B647218;
+    --lane-operator:#0B1220;
+    --lane-caat:#1E3A8A;
+    --cr-blue:#1D4ED8;
+    --cr-blue-dim:#1D4ED822;
+    --cn-green:#15803D;
+    --cn-green-dim:#15803D22;
     --slate:#6B7686;
     --paper:#F5F6F8;
     --card:#FFFFFF;
@@ -38,7 +34,7 @@
     -webkit-font-smoothing:antialiased;
   }
 
-  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px;}
+  .wrap{max-width:1220px;margin:0 auto;padding:28px 20px 60px;}
 
   header{margin-bottom:22px;}
   .eyebrow{
@@ -46,7 +42,7 @@
     font-size:11px;
     letter-spacing:.14em;
     text-transform:uppercase;
-    color:var(--teal);
+    color:var(--cn-green);
     font-weight:600;
     margin-bottom:6px;
   }
@@ -60,48 +56,74 @@
   }
   .sub{color:var(--slate);font-size:14.5px;max-width:640px;line-height:1.5;}
 
-  /* Scenario selector */
-  .scenarios{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
+  .cat-tabs{
+    display:flex;
     gap:8px;
-    margin:24px 0 6px;
+    margin:22px 0 8px;
   }
-  @media(max-width:900px){.scenarios{grid-template-columns:repeat(2,1fr);}}
-
-  .scen-btn{
-    background:var(--card);
+  @media(max-width:700px){.cat-tabs{flex-direction:column;}}
+  .cat-tab{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:10px 14px;
+    border-radius:11px;
     border:1.5px solid var(--line);
-    border-radius:var(--radius);
-    padding:12px 12px;
-    text-align:left;
+    background:var(--card);
     cursor:pointer;
+    text-align:left;
     transition:.15s ease;
     font-family:'Inter',sans-serif;
   }
-  .scen-btn:hover{border-color:var(--steel);}
-  .scen-btn.active{
-    border-color:var(--teal);
-    background:linear-gradient(180deg,#fff,#f2fbfa);
-    box-shadow:0 1px 0 var(--teal);
+  .cat-tab:hover{border-color:var(--steel);}
+  .cat-tab .cat-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+  .cat-tab .cat-text{display:flex;flex-direction:column;gap:1px;}
+  .cat-tab .cat-name{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    color:var(--ink);
   }
-  .scen-tag{
+  .cat-tab .cat-full{
     font-family:'IBM Plex Mono',monospace;
-    font-size:10px;
-    font-weight:600;
-    letter-spacing:.06em;
+    font-size:9px;
+    letter-spacing:.02em;
     color:var(--slate);
   }
-  .scen-name{
-    font-size:13.5px;
-    font-weight:600;
-    color:var(--navy);
-    margin-top:3px;
-    line-height:1.3;
+  .cat-tab.active{
+    border-color:var(--cat-color, var(--cn-green));
+    background:linear-gradient(180deg,#fff,#f7f8fb);
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
   }
-  .scen-btn.active .scen-tag{color:var(--teal);}
+  .cat-tab.active .cat-name{color:var(--cat-color, var(--cn-green));}
 
-  /* Variant selector (CN sub-scenarios) */
+  .path-chips{
+    display:none;
+    gap:8px;
+    margin:0 0 8px;
+    flex-wrap:wrap;
+  }
+  .path-chips.show{display:flex;}
+  .path-chip{
+    padding:7px 15px;
+    border-radius:20px;
+    border:1.5px solid var(--line);
+    background:var(--card);
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--slate);
+    cursor:pointer;
+    transition:.15s;
+  }
+  .path-chip:hover{border-color:var(--steel);}
+  .path-chip.active{
+    color:var(--ink);
+    border-color:currentColor;
+    background:var(--chip-dim, transparent);
+  }
+
   .variants{
     display:none;
     gap:8px;
@@ -134,7 +156,6 @@
   }
   .variant-btn:hover{border-color:var(--steel);}
 
-  /* Controls */
   .controls{
     display:flex;
     align-items:center;
@@ -156,14 +177,14 @@
     gap:6px;
     transition:.15s;
   }
-  .ctrl-btn:hover{background:var(--navy2);}
+  .ctrl-btn:hover{background:var(--navy2); transform:translateY(-1px);}
   .ctrl-btn.ghost{
     background:transparent;
     color:var(--navy);
     border:1.5px solid var(--line);
   }
   .ctrl-btn.ghost:hover{border-color:var(--steel);}
-  .ctrl-btn:disabled{opacity:.35;cursor:not-allowed;}
+  .ctrl-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;}
 
   .step-counter{
     font-family:'IBM Plex Mono',monospace;
@@ -171,34 +192,44 @@
     color:var(--slate);
     margin-left:auto;
   }
+  .kbd-hint{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    color:var(--slate);
+    opacity:.7;
+  }
 
-  /* Runway progress */
   .runway{
     position:relative;
-    height:34px;
+    height:36px;
     margin:4px 0 26px;
   }
   .runway-line{
     position:absolute;
-    top:16px;left:0;right:0;height:2px;
+    top:15px;left:0;right:0;height:6px;border-radius:3px;
     background:repeating-linear-gradient(90deg,var(--line) 0 10px, transparent 10px 20px);
   }
   .runway-fill{
     position:absolute;
-    top:16px;left:0;height:2px;
-    background:var(--teal);
-    transition:width .4s ease;
+    top:15px;left:0;height:6px;border-radius:3px;
+    background-color:var(--cn-green);
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.4) 0 6px, transparent 6px 12px);
+    background-size:24px 24px;
+    transition:width .4s ease, background-color .3s ease;
+    animation: shimmerMove 0.9s linear infinite;
   }
+  @keyframes shimmerMove{ from{background-position:0 0;} to{background-position:24px 0;} }
   .plane-marker{
     position:absolute;
-    top:2px;
+    top:-2px;
     transform:translateX(-50%);
     transition:left .4s ease;
-    font-size:18px;
-    filter: drop-shadow(0 1px 1px rgba(0,0,0,.15));
+    font-size:19px;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.2));
+    animation: bob 1.2s ease-in-out infinite;
   }
+  @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-5px);}}
 
-  /* Swimlanes */
   .lanes{
     background:var(--card);
     border:1.5px solid var(--line);
@@ -208,13 +239,13 @@
   .lane{
     display:flex;
     border-bottom:1.5px solid var(--line);
-    min-height:118px;
+    min-height:150px;
   }
   .lane:last-child{border-bottom:none;}
   .lane-label{
     width:126px;
     flex-shrink:0;
-    background:var(--navy);
+    background:var(--lane-operator);
     color:#fff;
     display:flex;
     flex-direction:column;
@@ -224,14 +255,14 @@
     font-weight:600;
     font-size:14px;
   }
-  .lane-label.caat{background:var(--steel);}
+  .lane-label.caat{background:var(--lane-caat);}
   .lane-label small{
     display:block;
     font-family:'IBM Plex Mono',monospace;
     font-weight:500;
     font-size:10px;
     letter-spacing:.06em;
-    opacity:.75;
+    opacity:.8;
     margin-top:3px;
     text-transform:uppercase;
   }
@@ -246,50 +277,32 @@
     overflow-x:auto;
   }
 
-  .step-card{
-    width:190px;
-    background:var(--paper);
-    border:1.5px solid var(--line);
-    border-radius:9px;
-    padding:11px 13px;
-    opacity:.28;
-    transform:translateY(6px);
-    transition:all .35s cubic-bezier(.2,.7,.3,1);
+  .caat-sublanes{
+    flex:1;
+    display:flex;
+    flex-direction:column;
   }
-  .step-card.seen{
-    opacity:1;
-    transform:translateY(0);
-    background:#fff;
-    border-color:var(--line);
+  .sub-lane{
+    display:flex;
+    flex-direction:column;
+    padding:8px 0;
+    border-bottom:1px dashed var(--line);
   }
-  .step-card.current{
-    border-color:var(--teal);
-    box-shadow:0 3px 12px rgba(14,138,131,.18);
-  }
-  .step-card .badge{
-    display:inline-block;
+  .sub-lane:last-child{border-bottom:none;}
+  .sub-tag{
     font-family:'IBM Plex Mono',monospace;
     font-size:9.5px;
-    font-weight:600;
-    letter-spacing:.05em;
-    padding:2px 7px;
-    border-radius:20px;
-    margin-bottom:6px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:0 18px 4px;
   }
-  .badge.cr{background:var(--amber-dim);color:#95601F;}
-  .badge.cn{background:var(--teal-dim);color:#0A6560;}
-  .badge.instrument{background:var(--navy);color:#fff;}
-  .step-card .title{
-    font-size:12.5px;
-    font-weight:600;
-    color:var(--ink);
-    line-height:1.3;
-    margin-bottom:3px;
-  }
-  .step-card .desc{
-    font-size:11px;
-    color:var(--slate);
-    line-height:1.4;
+  .sub-tag.cr{color:var(--cr-blue);}
+  .sub-tag.cn{color:var(--cn-green);}
+  .sub-lane .lane-track{padding-top:0;}
+  .step-card.bridge{
+    background:linear-gradient(90deg, var(--cr-blue-dim), var(--cn-green-dim));
+    border-style:solid;
   }
 
   .order-row{
@@ -321,17 +334,107 @@
     color:var(--line);
     font-size:14px;
     padding-right:2px;
+    transition:color .3s ease;
   }
 
-  /* Detail panel */
+  .step-cell{
+    width:190px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    justify-content:center;
+  }
+  .step-cell.stacked{
+    border:1.5px dashed var(--fam-color, var(--slate));
+    border-radius:11px;
+    padding:8px;
+    background:#FBFBFD;
+  }
+  .linked-tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:8.5px;
+    font-weight:700;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    padding:2px 7px;
+    border:1px solid currentColor;
+    border-radius:20px;
+    align-self:flex-start;
+  }
+
+  .step-card{
+    width:100%;
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:9px;
+    padding:11px 13px;
+    opacity:.3;
+    transform:translateY(6px) scale(.98);
+    cursor:pointer;
+    transition:opacity .35s cubic-bezier(.2,.7,.3,1), transform .35s cubic-bezier(.2,.7,.3,1), border-color .25s ease, box-shadow .25s ease;
+  }
+  .step-card:hover{
+    opacity:.6;
+    transform:translateY(4px) scale(.99);
+  }
+  .step-card.seen:hover{
+    transform:translateY(-1px) scale(1.01);
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+  }
+  .step-card.seen{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    background:#fff;
+  }
+  .step-card.current{
+    animation: pulseGlow 1.6s ease-out infinite;
+  }
+  @keyframes pulseGlow{
+    0%{ box-shadow: 0 0 0 0 var(--glow-color, rgba(21,128,61,.4)); }
+    70%{ box-shadow: 0 0 0 11px rgba(0,0,0,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+  }
+  .step-card .badge{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9.5px;
+    font-weight:600;
+    letter-spacing:.05em;
+    padding:2px 7px;
+    border-radius:20px;
+    margin-bottom:6px;
+  }
+  .badge.cr{background:var(--cr-blue-dim);color:#1E3A8A;}
+  .badge.cn{background:var(--cn-green-dim);color:#14532D;}
+  .badge.instrument{background:var(--navy);color:#fff;}
+  .step-card .title{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--ink);
+    line-height:1.3;
+    margin-bottom:3px;
+  }
+  .step-card .desc{
+    font-size:11px;
+    color:var(--slate);
+    line-height:1.4;
+  }
+
   .detail{
     margin-top:18px;
     background:var(--card);
     border:1.5px solid var(--line);
-    border-left:4px solid var(--teal);
+    border-left:4px solid var(--cn-green);
     border-radius:10px;
     padding:16px 20px;
     min-height:64px;
+    transition:border-color .3s ease;
+  }
+  .detail.complete{ animation: flashComplete .9s ease; }
+  @keyframes flashComplete{
+    0%{ box-shadow:0 0 0 0 rgba(0,0,0,0); }
+    45%{ box-shadow:0 0 0 7px var(--flash-color, rgba(21,128,61,.35)); }
+    100%{ box-shadow:0 0 0 0 rgba(0,0,0,0); }
   }
   .detail .who{
     font-family:'IBM Plex Mono',monospace;
@@ -339,7 +442,7 @@
     font-weight:600;
     letter-spacing:.08em;
     text-transform:uppercase;
-    color:var(--teal);
+    color:var(--fam-color, var(--cn-green));
     margin-bottom:5px;
   }
   .detail .body{
@@ -371,7 +474,8 @@
     <div class="sub">A visual walkthrough of five submission pathways under Chapter 3, showing what the Operator and CAAT each do, and when.</div>
   </header>
 
-  <div class="scenarios" id="scenarios"></div>
+  <div class="cat-tabs" id="catTabs"></div>
+  <div class="path-chips" id="pathChips"></div>
   <div class="variants" id="variants"></div>
 
   <div class="controls">
@@ -380,6 +484,7 @@
     <button class="ctrl-btn ghost" id="nextBtn">Next →</button>
     <button class="ctrl-btn ghost" id="resetBtn">Reset</button>
     <div class="step-counter" id="stepCounter"></div>
+    <div class="kbd-hint">Use ← → to navigate</div>
   </div>
 
   <div class="runway">
@@ -399,7 +504,16 @@
     </div>
     <div class="lane">
       <div class="lane-label caat">CAAT<small>Assesses &amp; certifies</small></div>
-      <div class="lane-track" id="caatTrack"></div>
+      <div class="caat-sublanes">
+        <div class="sub-lane">
+          <div class="sub-tag cr">CR Actions</div>
+          <div class="lane-track" id="caatCRTrack"></div>
+        </div>
+        <div class="sub-lane">
+          <div class="sub-tag cn">CN Actions</div>
+          <div class="lane-track" id="caatCNTrack"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -409,8 +523,9 @@
   </div>
 
   <div class="legend">
-    <div class="legend-item"><span class="dot" style="background:var(--amber-dim);border:1px solid #C97A2B55;"></span> CR content</div>
-    <div class="legend-item"><span class="dot" style="background:var(--teal-dim);border:1px solid #0E8A8355;"></span> CN content</div>
+    <div class="legend-item"><span class="dot" style="background:var(--cr-blue);"></span> CR content — and CR-only pathways</div>
+    <div class="legend-item"><span class="dot" style="background:var(--cn-green);"></span> CN content — and CN-only pathways</div>
+    <div class="legend-item"><span class="dot" style="background:#6D28D9;"></span> Combined CR + CN pathways</div>
     <div class="legend-item"><span class="dot" style="background:var(--navy);"></span> Instrument issued (LoA / RoD / Verification Email)</div>
   </div>
 
@@ -421,36 +536,38 @@ const PATHWAYS = [
   {
     tag: "PATH 1",
     name: "CN Only — Manual Only",
+    category: "cn",
+    short: "Manual Only",
     isGrouped: true,
     variants: [
       {
-        key: "fast", label: "RoD + Verification within 10 Days", color: "var(--v-fast)", colorDim: "var(--v-fast-dim)",
+        key: "fast", label: "RoD + Verification within 10 Days", color: "#15803D",
         steps: [
-          {who:"operator", badge:"cn", title:"Submit CN — Day 0", desc:"PCA Form submitted via EMPIC.", detail:"The operator submits a routine manual change classified as CN — no item on it appears in Appendix B."},
-          {who:"caat", badge:"cn", title:"Cursory Review", desc:"CAAT checks the submission for completeness.", detail:"CAAT conducts a cursory review of the CN package for completeness only."},
-          {who:"caat", badge:"instrument", title:"RoD Issued — within window", desc:"Acknowledgement of receipt.", detail:"The inspector's verification is complete early. The RoD is issued within the 10-day window."},
-          {who:"caat", badge:"instrument", title:"Verification Email — same time", desc:"Issued together with the RoD, within the window.", detail:"Because verification is complete, the verification email is issued together with the RoD, both within the 10-day window."},
-          {who:"operator", badge:"cn", title:"Implement — Immediately", desc:"On receipt, before Day 11.", detail:"The operator is authorised to implement immediately upon receipt of the verification email, without waiting for Day 11."}
+          {who:"operator", badge:"cn", title:"Submit CN — Day 0", desc:"PCA Form submitted via EMPIC.", detail:"The operator submits a routine manual change classified as CN — no item on it appears in Appendix B.", col:1},
+          {who:"caat", badge:"cn", title:"Cursory Review", desc:"CAAT checks the submission for completeness.", detail:"CAAT conducts a cursory review of the CN package for completeness only.", sub:"cn", col:2},
+          {who:"caat", badge:"instrument", title:"RoD Issued — within window", desc:"Acknowledgement of receipt.", detail:"The inspector's verification is complete early. The RoD is issued within the 10-day window.", sub:"cn", col:3},
+          {who:"caat", badge:"instrument", title:"Verification Email — same time", desc:"Issued together with the RoD, within the window.", detail:"Because verification is complete, the verification email is issued together with the RoD, both within the 10-day window.", sub:"cn", col:3},
+          {who:"operator", badge:"cn", title:"Implement — Immediately", desc:"On receipt, before Day 11.", detail:"The operator is authorised to implement immediately upon receipt of the verification email, without waiting for Day 11.", col:4}
         ]
       },
       {
-        key: "delay", label: "RoD within 10 Days, Verification Later", color: "var(--v-delay)", colorDim: "var(--v-delay-dim)",
+        key: "delay", label: "RoD within 10 Days, Verification Later", color: "#059669",
         steps: [
           {who:"operator", badge:"cn", title:"Submit CN — Day 0", desc:"PCA Form submitted via EMPIC.", detail:"The operator submits a routine manual change classified as CN — no item on it appears in Appendix B."},
-          {who:"caat", badge:"cn", title:"Cursory Review", desc:"CAAT checks the submission for completeness.", detail:"CAAT conducts a cursory review of the CN package for completeness only."},
-          {who:"caat", badge:"instrument", title:"RoD Issued — within window", desc:"Acknowledgement of receipt only.", detail:"The RoD is issued within the 10-day window, but verification of the documentation itself is not yet complete."},
+          {who:"caat", badge:"cn", title:"Cursory Review", desc:"CAAT checks the submission for completeness.", detail:"CAAT conducts a cursory review of the CN package for completeness only.", sub:"cn"},
+          {who:"caat", badge:"instrument", title:"RoD Issued — within window", desc:"Acknowledgement of receipt only.", detail:"The RoD is issued within the 10-day window, but verification of the documentation itself is not yet complete.", sub:"cn"},
           {who:"operator", badge:"cn", title:"Implement — Day 11", desc:"10 days passed, no objection raised.", detail:"With the RoD in hand and no objection raised within 10 days, the operator is authorised to implement from Day 11 onwards."},
-          {who:"caat", badge:"instrument", title:"Verification Email — after Day 10", desc:"Issued later, after implementation.", detail:"CAAT completes its compliance verification after the 10-day window has closed and issues the verification email afterward — reflecting CAAT's risk-based approach, where CN content may be verified subsequent to implementation."}
+          {who:"caat", badge:"instrument", title:"Verification Email — after Day 10", desc:"Issued later, after implementation.", detail:"CAAT completes its compliance verification after the 10-day window has closed and issues the verification email afterward.", sub:"cn"}
         ]
       },
       {
-        key: "silent", label: "No RoD, No Verification — Day 11 Default", color: "var(--v-silent)", colorDim: "var(--v-silent-dim)",
+        key: "silent", label: "No RoD, No Verification — Day 11 Default", color: "#4D7C0F",
         steps: [
           {who:"operator", badge:"cn", title:"Submit CN — Day 0", desc:"PCA Form submitted via EMPIC.", detail:"The operator submits a routine manual change classified as CN — no item on it appears in Appendix B."},
-          {who:"caat", badge:"cn", title:"Cursory Review", desc:"CAAT checks the submission for completeness.", detail:"CAAT conducts a cursory review of the CN package for completeness only."},
-          {who:"caat", badge:"cn", title:"10-Day Window Elapses", desc:"No RoD and no verification email issued.", detail:"The window closes with neither instrument issued. No objection has been raised by CAAT."},
-          {who:"operator", badge:"cn", title:"Implement — Day 11", desc:"Authorised regardless; follow up to obtain RoD.", detail:"The operator is authorised to implement, as the 10 days have passed with no objection. The operator should follow up with the assigned inspector to obtain the RoD, as it may be needed to facilitate ramp inspections."},
-          {who:"caat", badge:"instrument", title:"RoD Issued — later, on follow-up", desc:"Issued after implementation, upon request.", detail:"CAAT issues the RoD after the fact, following the operator's follow-up. It remains an acknowledgement of receipt only, not a finding of compliance."}
+          {who:"caat", badge:"cn", title:"Cursory Review", desc:"CAAT checks the submission for completeness.", detail:"CAAT conducts a cursory review of the CN package for completeness only.", sub:"cn"},
+          {who:"caat", badge:"cn", title:"10-Day Window Elapses", desc:"No RoD and no verification email issued.", detail:"The window closes with neither instrument issued. No objection has been raised by CAAT.", sub:"cn"},
+          {who:"operator", badge:"cn", title:"Implement — Day 11", desc:"Authorised regardless; follow up to obtain RoD.", detail:"The operator is authorised to implement, as the 10 days have passed with no objection. The operator should follow up with the assigned inspector to obtain the RoD."},
+          {who:"caat", badge:"instrument", title:"RoD Issued — later, on follow-up", desc:"Issued after implementation, upon request.", detail:"CAAT issues the RoD after the fact, following the operator's follow-up. It remains an acknowledgement of receipt only.", sub:"cn"}
         ]
       }
     ]
@@ -458,82 +575,187 @@ const PATHWAYS = [
   {
     tag: "PATH 2",
     name: "CR Only — Full Phase",
+    category: "cr",
+    short: "Full Phase",
+    color: "#1D4ED8",
     steps: [
       {who:"operator", badge:"cr", title:"Submit CR", desc:"PCA Form + documentation, ≥30 days before change.", detail:"The operator applies for a change appearing in Appendix B — e.g. a new Specific Approval requiring demonstration."},
-      {who:"caat", badge:"cr", title:"Phase 1 — Application", desc:"Formal application accepted into the CR process.", detail:"CAAT opens the CR case and confirms the application is complete for assessment to begin."},
-      {who:"caat", badge:"cr", title:"Phase 2 — Document Assessment", desc:"Manuals and procedures reviewed for compliance.", detail:"The assigned inspector assesses submitted documentation against the applicable TCAR-OPS requirements."},
-      {who:"caat", badge:"cr", title:"Phase 3 — Demonstration / Inspection", desc:"On-site inspection, flight demonstration, or audit.", detail:"Where the nature of the change requires it, CAAT verifies compliance through inspection or demonstration before certification."},
-      {who:"caat", badge:"instrument", title:"Phase 4 — Certification (LoA)", desc:"List of Approvals signed by the DGCA.", detail:"Approval is only granted once all items have been thoroughly assessed and proven compliant — evidenced by the LoA."},
+      {who:"caat", badge:"cr", title:"Phase 1 — Application", desc:"Formal application accepted into the CR process.", detail:"CAAT opens the CR case and confirms the application is complete for assessment to begin.", sub:"cr"},
+      {who:"caat", badge:"cr", title:"Phase 2 — Document Assessment", desc:"Manuals and procedures reviewed for compliance.", detail:"The assigned inspector assesses submitted documentation against the applicable TCAR-OPS requirements.", sub:"cr"},
+      {who:"caat", badge:"cr", title:"Phase 3 — Demonstration / Inspection", desc:"On-site inspection, flight demonstration, or audit.", detail:"Where the nature of the change requires it, CAAT verifies compliance through inspection or demonstration before certification.", sub:"cr"},
+      {who:"caat", badge:"instrument", title:"Phase 4 — Certification (LoA + RoD)", desc:"List of Approvals and Release of Documentation issued together.", detail:"The LoA certifies the change is compliant; the RoD is issued alongside it as CAAT's release of the amended manual document itself.", sub:"cr"},
       {who:"operator", badge:"cr", title:"Implement", desc:"Upon receipt of the LoA, per proposed effective date.", detail:"The change may only be implemented upon receipt of formal approval — not before."}
     ]
   },
   {
     tag: "PATH 3",
     name: "CR Only — Manual Only",
+    category: "cr",
+    short: "Manual Only",
+    color: "#3B82F6",
     steps: [
       {who:"operator", badge:"cr", title:"Submit CR", desc:"PCA Form + documentation, ≥30 days before change.", detail:"The operator applies for a CR change that is document-based only — no demonstration or on-site inspection required."},
-      {who:"caat", badge:"cr", title:"Phase 1 — Application", desc:"Formal application accepted into the CR process.", detail:"CAAT opens the CR case and confirms the application is complete for assessment to begin."},
-      {who:"caat", badge:"cr", title:"Phase 2 — Document Assessment", desc:"Manuals and procedures reviewed for compliance.", detail:"The assigned inspector assesses submitted documentation against applicable requirements. No demonstration phase applies."},
-      {who:"caat", badge:"instrument", title:"Phase 4 — Certification (LoA)", desc:"List of Approvals signed by the DGCA.", detail:"Phase 3 is skipped where the change is purely document-based. Approval proceeds directly to certification once assessment is satisfactory."},
+      {who:"caat", badge:"cr", title:"Phase 1 — Application", desc:"Formal application accepted into the CR process.", detail:"CAAT opens the CR case and confirms the application is complete for assessment to begin.", sub:"cr"},
+      {who:"caat", badge:"cr", title:"Phase 2 — Document Assessment", desc:"Manuals and procedures reviewed for compliance.", detail:"The assigned inspector assesses submitted documentation against applicable requirements. No demonstration phase applies.", sub:"cr"},
+      {who:"caat", badge:"instrument", title:"Phase 4 — Certification (LoA + RoD)", desc:"List of Approvals and Release of Documentation issued together.", detail:"Phase 3 is skipped where the change is document-based. The LoA certifies the change; the RoD is issued alongside it as the release of the amended manual document.", sub:"cr"},
       {who:"operator", badge:"cr", title:"Implement", desc:"Upon receipt of the LoA, per proposed effective date.", detail:"The change may only be implemented upon receipt of formal approval — not before."}
     ]
   },
   {
     tag: "PATH 4",
     name: "CR Full Phase + Linked CN",
-    steps: [
-      {who:"operator", badge:"cr", title:"Submit CR", desc:"Full-phase CR content of a single manual revision.", detail:"The operator applies for the CR portion of a revision that requires demonstration or inspection."},
-      {who:"operator", badge:"cn", title:"Submit Linked CN", desc:"Declares effective date = LoA date, cites CR case ref.", detail:"The CN portion of the same revision is submitted separately, declaring the effective date aligned to LoA issuance and citing the CR EMPIC case."},
-      {who:"caat", badge:"cr", title:"CR Phases 1–3", desc:"Application, document assessment, demonstration.", detail:"CAAT processes the CR through its full four-phase assessment, including inspection or demonstration."},
-      {who:"caat", badge:"cn", title:"CN Held Open", desc:"Cursory review done; worksheet item stays open.", detail:"The CN case is reviewed for completeness and held — no RoD is issued on the 10-day target, which is disapplied for a declared later effective date."},
-      {who:"caat", badge:"instrument", title:"LoA + RoD Issued Together", desc:"On completion of the CR process.", detail:"Both instruments are issued together once the CR is certified — the RoD naming the amendment as it is to be issued."},
-      {who:"operator", badge:"cr", title:"Implement Full Revision", desc:"Single amendment, single effective date.", detail:"The whole manual revision — CR and CN content together — goes live on the declared date, distributed as one coherent document."},
-      {who:"caat", badge:"instrument", title:"Verification Email — Later", desc:"At LoA issuance, or subsequently during surveillance.", detail:"CN documentation is verified either at LoA issuance or later as part of scheduled surveillance — after implementation. This reflects CAAT's risk-based approach: verification may follow implementation, it does not gate it."}
+    category: "combined",
+    short: "Full Phase + CN",
+    isGrouped: true,
+    variants: [
+      {
+        key: "surveillance", label: "Verification during Surveillance", color: "#6D28D9",
+        steps: [
+          {who:"operator", badge:"cr", title:"Submit CR", desc:"Full-phase CR content of a single manual revision.", detail:"The operator applies for the CR portion of a revision that requires demonstration or inspection.", col:1},
+          {who:"operator", badge:"cn", title:"Submit Linked CN", desc:"Proposes/declares effective date of CN contents as the same effective date for CR contents.", detail:"The CN portion of the same revision is submitted in parallel, cross-referencing the CR EMPIC case, and declaring that its effective date will match the CR's LoA issuance date.", col:1},
+          {who:"caat", badge:"cr", title:"CR Phases 1–3", desc:"Application, document assessment, demonstration.", detail:"CAAT processes the CR through its full four-phase assessment, including inspection or demonstration.", col:2, sub:"cr"},
+          {who:"caat", badge:"cn", title:"CN Held Open", desc:"Cursory review done; worksheet item stays open.", detail:"The CN case is reviewed for completeness and held — no RoD is issued on the 10-day target, which is disapplied for a declared later effective date.", col:2, sub:"cn"},
+          {who:"caat", badge:"instrument", title:"LoA + RoD Issued Together", desc:"On completion of the CR process.", detail:"Both instruments are issued together once the CR is certified — the RoD naming the amendment as it is to be issued.", col:3, sub:"cr"},
+          {who:"operator", badge:"cr", title:"Implement Full Revision", desc:"Single amendment, single effective date.", detail:"The whole manual revision — CR and CN content together — goes live on the declared date, distributed as one coherent document.", col:4},
+          {who:"caat", badge:"instrument", title:"Verification Email — Later", desc:"At LoA issuance, or subsequently during surveillance.", detail:"CN documentation is verified either at LoA issuance or later as part of scheduled surveillance — after implementation.", col:5, sub:"cn"}
+        ]
+      },
+      {
+        key: "atloa", label: "Verification at LoA Issuance", color: "#9333EA",
+        steps: [
+          {who:"operator", badge:"cr", title:"Submit CR", desc:"Full-phase CR content of a single manual revision.", detail:"The operator applies for the CR portion of a revision that requires demonstration or inspection.", col:1},
+          {who:"operator", badge:"cn", title:"Submit Linked CN", desc:"Proposes/declares effective date of CN contents as the same effective date for CR contents.", detail:"The CN portion of the same revision is submitted in parallel, cross-referencing the CR EMPIC case, and declaring that its effective date will match the CR's LoA issuance date.", col:1},
+          {who:"caat", badge:"cr", title:"CR Phases 1–3", desc:"Application, document assessment, demonstration.", detail:"CAAT processes the CR through its full four-phase assessment, including inspection or demonstration.", col:2, sub:"cr"},
+          {who:"caat", badge:"cn", title:"CN Held Open", desc:"Cursory review done; worksheet item stays open.", detail:"The CN case is reviewed for completeness and held — no RoD is issued on the 10-day target, which is disapplied for a declared later effective date.", col:2, sub:"cn"},
+          {who:"caat", badge:"instrument", title:"LoA + RoD + Verification — All Together", desc:"Verification completed and issued at the same time as the CR.", detail:"CAAT completes CN document verification in step with the CR assessment, so the LoA, RoD, and verification email are all issued together on completion of the CR process.", col:3, sub:"cr", bridge:true},
+          {who:"operator", badge:"cr", title:"Implement Full Revision", desc:"Single amendment, single effective date — final stage.", detail:"With all three instruments already in hand, the whole manual revision — CR and CN content together — goes live on the declared date as the final step of the pathway.", col:4}
+        ]
+      }
     ]
   },
   {
     tag: "PATH 5",
     name: "CR Manual Only + Linked CN",
-    steps: [
-      {who:"operator", badge:"cr", title:"Submit CR", desc:"Document-based CR content of a single manual revision.", detail:"The operator applies for the CR portion of a revision that is document-based only, with no demonstration required."},
-      {who:"operator", badge:"cn", title:"Submit Linked CN", desc:"Declares effective date = LoA date, cites CR case ref.", detail:"The CN portion of the same revision is submitted separately, declaring the effective date aligned to LoA issuance and citing the CR EMPIC case."},
-      {who:"caat", badge:"cr", title:"CR Phases 1–2", desc:"Application and document assessment only.", detail:"CAAT assesses the CR documentation for compliance. Phase 3 demonstration is skipped, as the change is document-based."},
-      {who:"caat", badge:"cn", title:"CN Held Open", desc:"Cursory review done; worksheet item stays open.", detail:"The CN case is reviewed for completeness and held — no RoD is issued on the 10-day target, which is disapplied for a declared later effective date."},
-      {who:"caat", badge:"instrument", title:"LoA + RoD Issued Together", desc:"On completion of the CR process.", detail:"Both instruments are issued together once the CR is certified — the RoD naming the amendment as it is to be issued."},
-      {who:"operator", badge:"cr", title:"Implement Full Revision", desc:"Single amendment, single effective date.", detail:"The whole manual revision — CR and CN content together — goes live on the declared date, distributed as one coherent document."},
-      {who:"caat", badge:"instrument", title:"Verification Email — Later", desc:"At LoA issuance, or subsequently during surveillance.", detail:"CN documentation is verified either at LoA issuance or later as part of scheduled surveillance — after implementation. This reflects CAAT's risk-based approach: verification may follow implementation, it does not gate it."}
+    category: "combined",
+    short: "Manual Only + CN",
+    isGrouped: true,
+    variants: [
+      {
+        key: "surveillance", label: "Verification during Surveillance", color: "#8B5CF6",
+        steps: [
+          {who:"operator", badge:"cr", title:"Submit CR", desc:"Document-based CR content of a single manual revision.", detail:"The operator applies for the CR portion of a revision that is document-based only, with no demonstration required.", col:1},
+          {who:"operator", badge:"cn", title:"Submit Linked CN", desc:"Proposes/declares effective date of CN contents as the same effective date for CR contents.", detail:"The CN portion of the same revision is submitted in parallel, cross-referencing the CR EMPIC case, and declaring that its effective date will match the CR's LoA issuance date.", col:1},
+          {who:"caat", badge:"cr", title:"CR Phases 1–2", desc:"Application and document assessment only.", detail:"CAAT assesses the CR documentation for compliance. Phase 3 demonstration is skipped, as the change is document-based.", col:2, sub:"cr"},
+          {who:"caat", badge:"cn", title:"CN Held Open", desc:"Cursory review done; worksheet item stays open.", detail:"The CN case is reviewed for completeness and held — no RoD is issued on the 10-day target, which is disapplied for a declared later effective date.", col:2, sub:"cn"},
+          {who:"caat", badge:"instrument", title:"LoA + RoD Issued Together", desc:"On completion of the CR process.", detail:"Both instruments are issued together once the CR is certified — the RoD naming the amendment as it is to be issued.", col:3, sub:"cr"},
+          {who:"operator", badge:"cr", title:"Implement Full Revision", desc:"Single amendment, single effective date.", detail:"The whole manual revision — CR and CN content together — goes live on the declared date, distributed as one coherent document.", col:4},
+          {who:"caat", badge:"instrument", title:"Verification Email — Later", desc:"At LoA issuance, or subsequently during surveillance.", detail:"CN documentation is verified either at LoA issuance or later as part of scheduled surveillance — after implementation.", col:5, sub:"cn"}
+        ]
+      },
+      {
+        key: "atloa", label: "Verification at LoA Issuance", color: "#A855F7",
+        steps: [
+          {who:"operator", badge:"cr", title:"Submit CR", desc:"Document-based CR content of a single manual revision.", detail:"The operator applies for the CR portion of a revision that is document-based only, with no demonstration required.", col:1},
+          {who:"operator", badge:"cn", title:"Submit Linked CN", desc:"Proposes/declares effective date of CN contents as the same effective date for CR contents.", detail:"The CN portion of the same revision is submitted in parallel, cross-referencing the CR EMPIC case, and declaring that its effective date will match the CR's LoA issuance date.", col:1},
+          {who:"caat", badge:"cr", title:"CR Phases 1–2", desc:"Application and document assessment only.", detail:"CAAT assesses the CR documentation for compliance. Phase 3 demonstration is skipped, as the change is document-based.", col:2, sub:"cr"},
+          {who:"caat", badge:"cn", title:"CN Held Open", desc:"Cursory review done; worksheet item stays open.", detail:"The CN case is reviewed for completeness and held — no RoD is issued on the 10-day target, which is disapplied for a declared later effective date.", col:2, sub:"cn"},
+          {who:"caat", badge:"instrument", title:"LoA + RoD + Verification — All Together", desc:"Verification completed and issued at the same time as the CR.", detail:"CAAT completes CN document verification in step with the CR assessment, so the LoA, RoD, and verification email are all issued together on completion of the CR process.", col:3, sub:"cr", bridge:true},
+          {who:"operator", badge:"cr", title:"Implement Full Revision", desc:"Single amendment, single effective date — final stage.", detail:"With all three instruments already in hand, the whole manual revision — CR and CN content together — goes live on the declared date as the final step of the pathway.", col:4}
+        ]
+      }
     ]
   }
 ];
 
+const CATEGORIES = [
+  { key: "cr", name: "CR", full: "Changes Requiring Prior Approval", color: "var(--cr-blue)" },
+  { key: "cn", name: "CN", full: "Changes Not Requiring Prior Approval", color: "var(--cn-green)" },
+  { key: "combined", name: "CR + CN", full: "Combined — CR with Linked CN", color: "#6D28D9" }
+];
+
+let currentCategory = "cn";
 let currentPathway = 0;
 let currentVariant = 0;
-let currentStep = -1; // -1 = nothing shown yet
+let currentStep = -1;
 let playing = false;
 let playTimer = null;
 
-const scenariosEl = document.getElementById('scenarios');
+const catTabsEl = document.getElementById('catTabs');
+const pathChipsEl = document.getElementById('pathChips');
 const variantsEl = document.getElementById('variants');
 const operatorTrack = document.getElementById('operatorTrack');
-const caatTrack = document.getElementById('caatTrack');
+const caatCRTrack = document.getElementById('caatCRTrack');
+const caatCNTrack = document.getElementById('caatCNTrack');
 const detailEl = document.getElementById('detail');
 const stepCounterEl = document.getElementById('stepCounter');
 const runwayFill = document.getElementById('runwayFill');
 const planeMarker = document.getElementById('planeMarker');
 
+function pathwaysInCategory(catKey){
+  return PATHWAYS.map((p, i) => ({p, i})).filter(x => x.p.category === catKey);
+}
+function pathwayColor(p){
+  return p.isGrouped ? p.variants[0].color : p.color;
+}
+function currentColor(){
+  const p = PATHWAYS[currentPathway];
+  return p.isGrouped ? p.variants[currentVariant].color : p.color;
+}
 function currentSteps(){
   const p = PATHWAYS[currentPathway];
   return p.isGrouped ? p.variants[currentVariant].steps : p.steps;
 }
+function stepCol(s, idx){ return s.col || (idx+1); }
+function maxColOf(steps){ return Math.max(...steps.map((s,idx)=>stepCol(s,idx))); }
+function subOfStep(s){
+  if(s.who !== 'caat') return 'op';
+  return s.sub || (s.badge === 'cn' ? 'cn' : 'cr');
+}
+function groupKey(s, idx){
+  return s.who + '-' + subOfStep(s) + '-' + stepCol(s, idx);
+}
+function computeMoments(steps){
+  const map = {};
+  const order = [];
+  steps.forEach((s, idx) => {
+    const key = groupKey(s, idx);
+    if(!map[key]){ map[key] = []; order.push(key); }
+    map[key].push(idx);
+  });
+  return order.map(k => map[k]);
+}
 
-function buildScenarioButtons(){
-  scenariosEl.innerHTML = '';
-  PATHWAYS.forEach((p, i) => {
+function buildCatTabs(){
+  catTabsEl.innerHTML = '';
+  CATEGORIES.forEach(cat => {
     const btn = document.createElement('button');
-    btn.className = 'scen-btn' + (i === currentPathway ? ' active' : '');
-    btn.innerHTML = `<div class="scen-tag">${p.tag}</div><div class="scen-name">${p.name}</div>`;
+    btn.className = 'cat-tab' + (cat.key === currentCategory ? ' active' : '');
+    btn.style.setProperty('--cat-color', cat.color);
+    btn.innerHTML = `<span class="cat-dot" style="background:${cat.color}"></span>
+      <span class="cat-text"><span class="cat-name">${cat.name}</span><span class="cat-full">${cat.full}</span></span>`;
+    btn.onclick = () => selectCategory(cat.key);
+    catTabsEl.appendChild(btn);
+  });
+}
+
+function buildPathChips(){
+  const items = pathwaysInCategory(currentCategory);
+  if(items.length <= 1){
+    pathChipsEl.classList.remove('show');
+    pathChipsEl.innerHTML = '';
+    return;
+  }
+  pathChipsEl.classList.add('show');
+  pathChipsEl.innerHTML = '';
+  items.forEach(({p, i}) => {
+    const c = pathwayColor(p);
+    const btn = document.createElement('button');
+    btn.className = 'path-chip' + (i === currentPathway ? ' active' : '');
+    btn.style.color = i === currentPathway ? c : '';
+    btn.style.setProperty('--chip-dim', c + '14');
+    btn.textContent = p.short || p.name;
     btn.onclick = () => selectPathway(i);
-    scenariosEl.appendChild(btn);
+    pathChipsEl.appendChild(btn);
   });
 }
 
@@ -556,6 +778,20 @@ function buildVariantButtons(){
   });
 }
 
+function selectCategory(catKey){
+  currentCategory = catKey;
+  const items = pathwaysInCategory(catKey);
+  currentPathway = items[0].i;
+  currentVariant = 0;
+  currentStep = -1;
+  stopPlaying();
+  buildCatTabs();
+  buildPathChips();
+  buildVariantButtons();
+  buildTracks();
+  updateView();
+}
+
 function selectVariant(i){
   currentVariant = i;
   currentStep = -1;
@@ -570,7 +806,7 @@ function selectPathway(i){
   currentVariant = 0;
   currentStep = -1;
   stopPlaying();
-  buildScenarioButtons();
+  buildPathChips();
   buildVariantButtons();
   buildTracks();
   updateView();
@@ -578,38 +814,65 @@ function selectPathway(i){
 
 function buildTracks(){
   operatorTrack.innerHTML = '';
-  caatTrack.innerHTML = '';
+  caatCRTrack.innerHTML = '';
+  caatCNTrack.innerHTML = '';
   const steps = currentSteps();
-  const p = PATHWAYS[currentPathway];
-  const variantColor = p.isGrouped ? p.variants[currentVariant].color : null;
-  const cols = 'repeat(' + steps.length + ', 190px)';
-  operatorTrack.style.gridTemplateColumns = cols;
-  caatTrack.style.gridTemplateColumns = cols;
+  const variantColor = currentColor();
+  const totalCols = maxColOf(steps);
+  const colsTemplate = 'repeat(' + totalCols + ', 190px)';
+  operatorTrack.style.gridTemplateColumns = colsTemplate;
+  caatCRTrack.style.gridTemplateColumns = colsTemplate;
+  caatCNTrack.style.gridTemplateColumns = colsTemplate;
 
+  function trackFor(s){
+    if(s.who === 'operator') return operatorTrack;
+    return subOfStep(s) === 'cn' ? caatCNTrack : caatCRTrack;
+  }
+
+  const cellMap = {};
   steps.forEach((s, idx) => {
-    const card = document.createElement('div');
-    card.className = 'step-card';
-    card.id = 'card-' + idx;
-    card.style.gridColumn = (idx + 1);
-    if(variantColor){
-      card.style.borderLeft = '4px solid ' + variantColor;
-    }
-    card.innerHTML = `<span class="badge ${s.badge}">${s.badge === 'instrument' ? 'INSTRUMENT' : s.badge.toUpperCase()}</span>
-      <div class="title">${s.title}</div>
-      <div class="desc">${s.desc}</div>`;
-    (s.who === 'operator' ? operatorTrack : caatTrack).appendChild(card);
+    const col = stepCol(s, idx);
+    const key = groupKey(s, idx);
+    if(!cellMap[key]) cellMap[key] = [];
+    cellMap[key].push({s, idx, col});
   });
 
-  // timeline connector arrows between consecutive steps regardless of lane
+  Object.values(cellMap).forEach(group => {
+    const track = trackFor(group[0].s);
+    const wrapper = document.createElement('div');
+    wrapper.className = 'step-cell' + (group.length > 1 ? ' stacked' : '');
+    wrapper.style.gridColumn = group[0].col;
+    wrapper.style.setProperty('--fam-color', variantColor);
+    if(group.length > 1){
+      const tag = document.createElement('div');
+      tag.className = 'linked-tag';
+      tag.style.color = variantColor;
+      tag.textContent = group[0].s.who === 'operator' ? '⇄ Submitted in Parallel' : '⇄ Issued Together';
+      wrapper.appendChild(tag);
+    }
+    group.forEach(({s, idx}) => {
+      const card = document.createElement('div');
+      card.className = 'step-card' + (s.bridge ? ' bridge' : '');
+      card.id = 'card-' + idx;
+      card.style.borderLeft = '4px solid ' + variantColor;
+      card.innerHTML = `<span class="badge ${s.badge}">${s.badge === 'instrument' ? 'INSTRUMENT' : s.badge.toUpperCase()}</span>
+        <div class="title">${s.title}</div>
+        <div class="desc">${s.desc}</div>`;
+      card.onclick = () => jumpToStep(idx);
+      wrapper.appendChild(card);
+    });
+    track.appendChild(wrapper);
+  });
+
   const arrowRow = document.getElementById('arrowRow');
   if(arrowRow){
     arrowRow.innerHTML = '';
-    arrowRow.style.gridTemplateColumns = cols;
-    for(let i=0;i<steps.length;i++){
+    arrowRow.style.gridTemplateColumns = colsTemplate;
+    for(let c = 1; c <= totalCols; c++){
       const cell = document.createElement('div');
       cell.className = 'arrow-cell';
-      cell.style.gridColumn = (i+1);
-      cell.textContent = i < steps.length - 1 ? '→' : '';
+      cell.style.gridColumn = c;
+      cell.textContent = c < totalCols ? '→' : '';
       arrowRow.appendChild(cell);
     }
   }
@@ -617,69 +880,98 @@ function buildTracks(){
 
 function updateView(){
   const steps = currentSteps();
+  const moments = computeMoments(steps);
   const p = PATHWAYS[currentPathway];
-  const variantColor = p.isGrouped ? p.variants[currentVariant].color : 'var(--teal)';
+  const variantColor = currentColor();
+
+  const activeIdxs = currentStep >= 0 ? moments[currentStep] : [];
+  const seenIdxs = currentStep >= 0 ? moments.slice(0, currentStep + 1).flat() : [];
 
   steps.forEach((s, idx) => {
     const card = document.getElementById('card-' + idx);
+    if(!card) return;
     card.classList.remove('seen','current');
-    if(idx <= currentStep) card.classList.add('seen');
-    if(idx === currentStep){
+    if(seenIdxs.includes(idx)) card.classList.add('seen');
+    if(activeIdxs.includes(idx)){
       card.classList.add('current');
-      card.style.boxShadow = '0 3px 12px ' + variantColor + '30';
       card.style.borderColor = variantColor;
-    } else if(p.isGrouped){
+      card.style.setProperty('--glow-color', variantColor + '66');
+    } else {
       card.style.borderColor = 'var(--line)';
+      card.style.removeProperty('--glow-color');
     }
   });
 
+  const totalCols = maxColOf(steps);
+  const currentCol = activeIdxs.length ? stepCol(steps[activeIdxs[0]], activeIdxs[0]) : 0;
+
   const arrowRow = document.getElementById('arrowRow');
   if(arrowRow){
-    Array.from(arrowRow.children).forEach((cell, idx) => {
-      cell.style.color = idx < currentStep ? variantColor : 'var(--line)';
+    Array.from(arrowRow.children).forEach((cell, i) => {
+      const c = i + 1;
+      cell.style.color = c < currentCol ? variantColor : 'var(--line)';
     });
   }
 
-  runwayFill.style.background = variantColor;
-
-  // runway
-  const pct = currentStep < 0 ? 0 : ((currentStep + 1) / steps.length) * 100;
+  runwayFill.style.backgroundColor = variantColor;
+  const pct = currentCol <= 0 ? 0 : (currentCol / totalCols) * 100;
   runwayFill.style.width = pct + '%';
   planeMarker.style.left = pct + '%';
 
-  // detail
+  const isLast = currentStep === moments.length - 1;
+  planeMarker.textContent = isLast ? '🏁' : '✈️';
+
   const label = p.isGrouped ? `${p.name} — ${p.variants[currentVariant].label}` : p.name;
   detailEl.style.borderLeftColor = variantColor;
+  detailEl.style.setProperty('--flash-color', variantColor + '55');
   if(currentStep < 0){
     detailEl.querySelector('.who').textContent = label;
     detailEl.querySelector('.body').textContent = 'Press Play or Next to begin the walkthrough.';
   } else {
-    const s = steps[currentStep];
-    detailEl.querySelector('.who').textContent = (s.who === 'operator' ? 'Operator' : 'CAAT') + ' — Step ' + (currentStep+1) + ' of ' + steps.length;
-    detailEl.querySelector('.body').textContent = s.detail;
+    const whoLabel = steps[activeIdxs[0]].who === 'operator' ? 'Operator' : 'CAAT';
+    const suffix = activeIdxs.length > 1 ? ` · ${activeIdxs.length} actions together` : '';
+    detailEl.querySelector('.who').textContent = whoLabel + ' — Step ' + (currentStep+1) + ' of ' + moments.length + suffix;
+    if(activeIdxs.length === 1){
+      detailEl.querySelector('.body').textContent = steps[activeIdxs[0]].detail;
+    } else {
+      detailEl.querySelector('.body').innerHTML = activeIdxs.map(i => `<strong>${steps[i].title}:</strong> ${steps[i].detail}`).join('<br><br>');
+    }
+  }
+  if(isLast){
+    detailEl.classList.remove('complete');
+    void detailEl.offsetWidth;
+    detailEl.classList.add('complete');
   }
 
   stepCounterEl.textContent = currentStep < 0
-    ? `0 / ${steps.length}`
-    : `${currentStep+1} / ${steps.length}`;
+    ? `0 / ${moments.length}`
+    : `${currentStep+1} / ${moments.length}`;
 
   document.getElementById('prevBtn').disabled = currentStep <= -1;
-  document.getElementById('nextBtn').disabled = currentStep >= steps.length - 1;
+  document.getElementById('nextBtn').disabled = currentStep >= moments.length - 1;
 
-  // scroll current card into view
-  if(currentStep >= 0){
-    const card = document.getElementById('card-' + currentStep);
+  if(activeIdxs.length){
+    const card = document.getElementById('card-' + activeIdxs[0]);
     if(card) card.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
   }
 }
 
 function next(){
-  const steps = currentSteps();
-  if(currentStep < steps.length - 1){
+  const moments = computeMoments(currentSteps());
+  if(currentStep < moments.length - 1){
     currentStep++;
     updateView();
   } else {
     stopPlaying();
+  }
+}
+function jumpToStep(idx){
+  stopPlaying();
+  const moments = computeMoments(currentSteps());
+  const momentIdx = moments.findIndex(group => group.includes(idx));
+  if(momentIdx > -1){
+    currentStep = momentIdx;
+    updateView();
   }
 }
 function prev(){
@@ -701,8 +993,8 @@ function togglePlay(){
     playing = true;
     document.getElementById('playBtn').textContent = '⏸ Pause';
     playTimer = setInterval(() => {
-      const steps = currentSteps();
-      if(currentStep >= steps.length - 1){
+      const moments = computeMoments(currentSteps());
+      if(currentStep >= moments.length - 1){
         stopPlaying();
         return;
       }
@@ -721,7 +1013,20 @@ document.getElementById('nextBtn').onclick = () => { stopPlaying(); next(); };
 document.getElementById('prevBtn').onclick = () => { stopPlaying(); prev(); };
 document.getElementById('resetBtn').onclick = reset;
 
-buildScenarioButtons();
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'ArrowRight'){
+    e.preventDefault();
+    stopPlaying();
+    next();
+  } else if(e.key === 'ArrowLeft'){
+    e.preventDefault();
+    stopPlaying();
+    prev();
+  }
+});
+
+buildCatTabs();
+buildPathChips();
 buildVariantButtons();
 buildTracks();
 updateView();
