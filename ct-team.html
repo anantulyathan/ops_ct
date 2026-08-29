@@ -549,14 +549,14 @@ function saveRem(){
 function textTable(){
   const rows=sortedByNext().map(m=>{
     const c=calc(m);
-    return [ m.full_name, ddmmyyyy(c.birth), String(c.age), String(c.turning),
+    return [ m.full_name, ddmmyyyy(c.birth), String(c.age),
              c.gm+'m '+c.gd+'d', ddmmyyyy(c.start), c.svY+'y '+c.svM+'m',
              String(m.staff_id||'—') ];
   });
-  const head=['NAME','BIRTHDAY','AGE','TURNS','IN','CAAT SINCE','SERVICE','ID'];
+  const head=['NAME','BIRTHDAY','AGE','NEXT BIRTHDAY IN','CAAT SINCE','SERVICE','ID'];
   const w=head.map((h,i)=>Math.max(h.length,...rows.map(r=>r[i].length)));
   const line=(cells)=>cells.map((v,i)=>
-    (i===2||i===3) ? String(v).padStart(w[i]) : String(v).padEnd(w[i])).join('  ').trimEnd();
+    (i===2) ? String(v).padStart(w[i]) : String(v).padEnd(w[i])).join('  ').trimEnd();
   const rule=w.map(n=>'─'.repeat(n)).join('──');
   return [line(head), rule, ...rows.map(line)].join('\n');
 }
@@ -572,7 +572,6 @@ function htmlTable(){
       +'<td style="'+td+'font-weight:bold;color:#1a2e4a">'+esc(m.full_name)+'</td>'
       +'<td style="'+td+'">'+ddmmyyyy(c.birth)+'</td>'
       +'<td style="'+td+'text-align:center">'+c.age+'</td>'
-      +'<td style="'+td+'text-align:center">'+c.turning+'</td>'
       +'<td style="'+td+'color:'+hot+';font-weight:bold">'+c.gm+'m '+c.gd+'d</td>'
       +'<td style="'+td+'">'+ddmmyyyy(c.start)+'</td>'
       +'<td style="'+td+'">'+c.svY+'y '+c.svM+'m</td>'
@@ -585,8 +584,7 @@ function htmlTable(){
     +'<tr style="background:#1a2e4a">'
     +'<th style="'+th+'">Name</th><th style="'+th+'">Birthday</th>'
     +'<th style="'+th+'text-align:center">Age</th>'
-    +'<th style="'+th+'text-align:center">Turns</th>'
-    +'<th style="'+th+'">In</th><th style="'+th+'">CAAT since</th>'
+    +'<th style="'+th+'">Next birthday in</th><th style="'+th+'">CAAT since</th>'
     +'<th style="'+th+'">Service</th><th style="'+th+'">ID</th></tr>'
     +body+'</table>';
 }
@@ -627,7 +625,7 @@ function buildEmail(focus,d){
            body:intro+'\n\n'
              +'CT TEAM — BIRTHDAYS AND SERVICE (as at '+ddmmyyyy(today0())+')\n\n'
              +textTable()
-             +'\n\nAGE = age today. TURNS = age at next birthday. IN = time until it.\n'
+             +'\n\nAGE = age today. NEXT BIRTHDAY IN = months and days until it.\n'
              +'Sent from the CT Team Tracker.' };
 }
 
