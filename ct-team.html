@@ -258,8 +258,14 @@ pre.list{background:var(--navy);color:#dbeafe;padding:14px;border-radius:12px;
     <label>Reminder interval</label>
     <select id="testDays" onchange="renderTest()"></select>
     <label>To</label>
-    <div class="mono" id="testTo" style="padding:10px 12px;background:var(--grey-pale);
-      border-radius:8px;font-size:12px;line-height:1.7"></div>
+    <textarea id="testTo" style="font-family:'JetBrains Mono',monospace;font-size:12.5px;
+      min-height:56px" placeholder="anan.t@caat.or.th"></textarea>
+    <div class="hint">Separate addresses with a comma, semicolon or new line. This applies to
+      the test only — it does not change your saved recipients.</div>
+    <div class="btn-row">
+      <button class="btn b-grey b-sm" onclick="resetTestTo()">↺ Use saved recipients</button>
+      <button class="btn b-grey b-sm" onclick="saveTestTo()">💾 Save as default</button>
+    </div>
     <label>Subject</label>
     <div id="testSubj" style="padding:10px 12px;background:var(--grey-pale);
       border-radius:8px;font-size:13px;font-weight:600;color:var(--navy)"></div>
@@ -471,7 +477,8 @@ function renderTeam(){
       +'<div class="m-top" onclick="toggleDet(\''+m.id+'\')">'+avatarHtml(m)
       +'<div style="flex:1">'
       +'<div class="m-name">'+esc(m.full_name)+'</div>'
-      +'<div class="m-sub">'+ddmmyyyy(c.birth)+' · <b>Age '+c.age+'</b> · in '+c.gm+' m '+c.gd+' d</div>'
+      +'<div class="m-sub">'+ddmmyyyy(c.birth)+' · <b>Age '+c.age+'</b> · Turning '
+      +c.turning+' in '+c.gm+' m '+c.gd+' d</div>'
       +'<div class="m-sub">CAAT since '+ddmmyyyy(c.start)+' · <b>'+c.svY+' y '+c.svM+' m</b></div>'
       +'</div>'+pillOf(c)+'</div>'
       +'<div class="m-det" id="det-'+m.id+'">'
@@ -597,8 +604,9 @@ function openMailto(){
   const e = due.length ? buildEmail(due[0],calc(due[0]).days) : buildEmail(null,null);
   mailtoOpen(e);
 }
-function mailtoOpen(e){
-  window.location.href='mailto:'+encodeURIComponent(rem.recipients.join(','))
+function mailtoOpen(e,to){
+  const rc=(to&&to.length)?to:rem.recipients;
+  window.location.href='mailto:'+encodeURIComponent(rc.join(','))
     +'?subject='+encodeURIComponent(e.subject)
     +'&body='+encodeURIComponent(e.body);
 }
@@ -613,6 +621,7 @@ function openTest(){
   if(sorted.length) who.value=sorted[0].id;
   const dsel=document.getElementById('testDays');
   dsel.innerHTML=rem.days.map(d=>'<option value="'+d+'">'+d+' days before</option>').join('');
+  document.getElementById('testTo').value=rem.recipients.join(', ');
   renderTest();
   document.getElementById('tOv').classList.add('open');
 }
@@ -624,10 +633,23 @@ function currentTest(){
   const d=m?parseInt(document.getElementById('testDays').value,10):null;
   return { m:m, d:isNaN(d)?null:d, email:buildEmail(m,m?d:null) };
 }
+function testRecipients(){
+  return document.getElementById('testTo').value
+    .split(/[\n,;]+/).map(s=>s.trim()).filter(Boolean);
+}
+function resetTestTo(){
+  document.getElementById('testTo').value=rem.recipients.join(', ');
+  toast('Reset to saved recipients','ok');
+}
+function saveTestTo(){
+  const rc=testRecipients();
+  if(!rc.length){ toast('Enter at least one address','err'); return; }
+  rem.recipients=rc; persist(); renderRem();
+  toast('Saved as default recipients ✓','ok');
+}
 function renderTest(){
   const t=currentTest();
   document.getElementById('testDays').disabled = !t.m;
-  document.getElementById('testTo').textContent=rem.recipients.join(', ');
   document.getElementById('testSubj').textContent=t.email.subject;
 
   const head = t.m
@@ -670,9 +692,11 @@ function renderTest(){
     +'<th style="padding:7px 8px">ID</th></tr>'+rows+'</table></div>';
 }
 function sendTest(){
+  const rc=testRecipients();
+  if(!rc.length){ toast('Enter at least one recipient','err'); return; }
   const t=currentTest();
-  mailtoOpen({ subject:'[TEST] '+t.email.subject, body:t.email.body });
-  toast('Draft opened in your mail app','ok');
+  mailtoOpen({ subject:'[TEST] '+t.email.subject, body:t.email.body }, rc);
+  toast('Draft opened for '+rc.length+' recipient'+(rc.length>1?'s':''),'ok');
 }
 function copyTest(){
   const t=currentTest();
