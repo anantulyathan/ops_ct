@@ -206,15 +206,12 @@ pre.list{background:var(--navy);color:#dbeafe;padding:14px;border-radius:12px;
     <div class="card" id="schedBox"></div>
     <div class="sec-h">Send the email</div>
     <div class="card">
-      <div class="hint">This app runs entirely in the browser, so it cannot send mail by itself.
-        Use the button to open a pre-filled draft in your mail client, or copy the plain list
-        and paste it into Outlook.</div>
+      <div class="hint">Opens a pre-filled draft in Outlook addressed to your recipients.
+        For a fully formatted table, use Copy formatted table and paste it into the draft —
+        Outlook keeps the colours, borders and column alignment.</div>
       <div class="btn-row">
-        <button class="btn b-teal" onclick="openTest()">🧪 Test Send Email</button>
         <button class="btn b-navy" onclick="openMailto()">✉︎ Open email draft</button>
-      </div>
-      <div class="btn-row">
-        <button class="btn b-grey b-sm" onclick="copyList()">📋 Copy list only</button>
+        <button class="btn b-teal" onclick="copyRichTable()">📋 Copy formatted table</button>
       </div>
     </div>
   </div>
@@ -244,40 +241,6 @@ pre.list{background:var(--navy);color:#dbeafe;padding:14px;border-radius:12px;
     </div>
     <div class="btn-row" id="delRow" style="display:none">
       <button class="btn b-red" onclick="deleteMember()">Delete member</button>
-    </div>
-  </div>
-</div>
-
-<div class="ov" id="tOv" onclick="if(event.target===this)closeTest()">
-  <div class="modal">
-    <h3>🧪 Test Send Email</h3>
-    <div class="hint">Preview the exact reminder that will go out, then send it now to check
-      formatting and delivery.</div>
-    <label>Simulate the reminder for</label>
-    <select id="testWho" onchange="renderTest()"></select>
-    <label>Reminder interval</label>
-    <select id="testDays" onchange="renderTest()"></select>
-    <label>To</label>
-    <textarea id="testTo" style="font-family:'JetBrains Mono',monospace;font-size:12.5px;
-      min-height:56px" placeholder="anan.t@caat.or.th"></textarea>
-    <div class="hint">Separate addresses with a comma, semicolon or new line. This applies to
-      the test only — it does not change your saved recipients.</div>
-    <div class="btn-row">
-      <button class="btn b-grey b-sm" onclick="resetTestTo()">↺ Use saved recipients</button>
-      <button class="btn b-grey b-sm" onclick="saveTestTo()">💾 Save as default</button>
-    </div>
-    <label>Subject</label>
-    <div id="testSubj" style="padding:10px 12px;background:var(--grey-pale);
-      border-radius:8px;font-size:13px;font-weight:600;color:var(--navy)"></div>
-    <label>Message preview</label>
-    <div id="testPrev" style="border:1px solid var(--grey-light);border-radius:12px;
-      overflow:hidden"></div>
-    <div class="btn-row">
-      <button class="btn b-teal" onclick="sendTest()">✉︎ Send test now</button>
-      <button class="btn b-grey" onclick="copyTest()">📋 Copy</button>
-    </div>
-    <div class="btn-row">
-      <button class="btn b-grey b-sm" onclick="closeTest()">Close</button>
     </div>
   </div>
 </div>
@@ -582,6 +545,72 @@ function saveRem(){
   rem={recipients:rc,days:dy.sort((a,b)=>b-a)};
   persist(); renderRem(); toast('Saved ✓','ok');
 }
+/* aligned plain-text table for the mail draft */
+function textTable(){
+  const rows=sortedByNext().map(m=>{
+    const c=calc(m);
+    return [ m.full_name, ddmmyyyy(c.birth), String(c.age), String(c.turning),
+             c.gm+'m '+c.gd+'d', ddmmyyyy(c.start), c.svY+'y '+c.svM+'m',
+             String(m.staff_id||'—') ];
+  });
+  const head=['NAME','BIRTHDAY','AGE','TURNS','IN','CAAT SINCE','SERVICE','ID'];
+  const w=head.map((h,i)=>Math.max(h.length,...rows.map(r=>r[i].length)));
+  const line=(cells)=>cells.map((v,i)=>
+    (i===2||i===3) ? String(v).padStart(w[i]) : String(v).padEnd(w[i])).join('  ').trimEnd();
+  const rule=w.map(n=>'─'.repeat(n)).join('──');
+  return [line(head), rule, ...rows.map(line)].join('\n');
+}
+
+/* HTML table for pasting into Outlook */
+function htmlTable(){
+  const body=sortedByNext().map((m,i)=>{
+    const c=calc(m);
+    const hot=c.days<=10?'#c0392b':(c.days<=30?'#d97706':'#2a9d8f');
+    const bg=i%2?'background:#f7fafc;':'';
+    const td='padding:8px 10px;border-bottom:1px solid #e2e8f0;font-size:13px;';
+    return '<tr style="'+bg+'">'
+      +'<td style="'+td+'font-weight:bold;color:#1a2e4a">'+esc(m.full_name)+'</td>'
+      +'<td style="'+td+'">'+ddmmyyyy(c.birth)+'</td>'
+      +'<td style="'+td+'text-align:center">'+c.age+'</td>'
+      +'<td style="'+td+'text-align:center">'+c.turning+'</td>'
+      +'<td style="'+td+'color:'+hot+';font-weight:bold">'+c.gm+'m '+c.gd+'d</td>'
+      +'<td style="'+td+'">'+ddmmyyyy(c.start)+'</td>'
+      +'<td style="'+td+'">'+c.svY+'y '+c.svM+'m</td>'
+      +'<td style="'+td+'color:#4a5568">'+esc(m.staff_id||'—')+'</td></tr>';
+  }).join('');
+  const th='padding:9px 10px;font-size:11px;text-transform:uppercase;'
+    +'letter-spacing:.5px;text-align:left;color:#ffffff;';
+  return '<table cellspacing="0" cellpadding="0" style="border-collapse:collapse;'
+    +'font-family:Segoe UI,Arial,sans-serif;border:1px solid #e2e8f0">'
+    +'<tr style="background:#1a2e4a">'
+    +'<th style="'+th+'">Name</th><th style="'+th+'">Birthday</th>'
+    +'<th style="'+th+'text-align:center">Age</th>'
+    +'<th style="'+th+'text-align:center">Turns</th>'
+    +'<th style="'+th+'">In</th><th style="'+th+'">CAAT since</th>'
+    +'<th style="'+th+'">Service</th><th style="'+th+'">ID</th></tr>'
+    +body+'</table>';
+}
+
+function copyRichTable(){
+  const html='<div style="font-family:Segoe UI,Arial,sans-serif">'
+    +'<p style="font-size:13px;color:#1a2e4a"><b>CT Team — birthdays and service</b><br>'
+    +'<span style="font-size:12px;color:#4a5568">As at '+ddmmyyyy(today0())+'</span></p>'
+    +htmlTable()+'</div>';
+  const plain='CT Team — birthdays and service (as at '+ddmmyyyy(today0())+')\n\n'+textTable();
+  try{
+    navigator.clipboard.write([ new ClipboardItem({
+      'text/html' : new Blob([html], {type:'text/html'}),
+      'text/plain': new Blob([plain],{type:'text/plain'})
+    })]).then(()=>toast('Formatted table copied — paste into Outlook ✓','ok'))
+       .catch(()=>fallbackCopy(plain));
+  }catch(e){ fallbackCopy(plain); }
+}
+function fallbackCopy(txt){
+  navigator.clipboard.writeText(txt)
+    .then(()=>toast('Copied as plain text ✓','ok'))
+    .catch(()=>toast('Copy failed — select the text manually','err'));
+}
+
 /* Build the reminder email. focus = member object or null, d = interval or null */
 function buildEmail(focus,d){
   let subj, intro;
@@ -589,14 +618,17 @@ function buildEmail(focus,d){
     const c=calc(focus);
     subj=(d!==null?d+' days: ':'')+focus.full_name+"'s birthday on "+ddmmyyyy(c.next);
     intro=focus.full_name+"'s birthday is on "+ddmmyyyy(c.next)+', turning '+c.turning+'.'
-      +(d!==null?' That is '+d+' days from the day this reminder goes out.':'')
-      +'\n\nFull CT team list below.';
+      +(d!==null?' That is '+d+' days from today.':'');
   }else{
-    subj='CT Team — birthday overview ('+ddmmyyyy(today0())+')';
-    intro='Current CT team birthday and service overview.';
+    subj='CT Team — birthdays and service ('+ddmmyyyy(today0())+')';
+    intro='CT team birthday and service overview.';
   }
   return { subject:subj,
-           body:intro+'\n\n'+plainList()+'\n\nSent from the CT Team Tracker.' };
+           body:intro+'\n\n'
+             +'CT TEAM — BIRTHDAYS AND SERVICE (as at '+ddmmyyyy(today0())+')\n\n'
+             +textTable()
+             +'\n\nAGE = age today. TURNS = age at next birthday. IN = time until it.\n'
+             +'Sent from the CT Team Tracker.' };
 }
 
 function openMailto(){
@@ -609,100 +641,6 @@ function mailtoOpen(e,to){
   window.location.href='mailto:'+encodeURIComponent(rc.join(','))
     +'?subject='+encodeURIComponent(e.subject)
     +'&body='+encodeURIComponent(e.body);
-}
-
-/* ── test send ───────────────────────────────────────────── */
-function openTest(){
-  const who=document.getElementById('testWho');
-  const sorted=sortedByNext();
-  who.innerHTML='<option value="">Overview — no single person</option>'
-    +sorted.map(m=>'<option value="'+m.id+'">'+esc(m.full_name)+' — '
-      +ddmmyyyy(calc(m).next)+'</option>').join('');
-  if(sorted.length) who.value=sorted[0].id;
-  const dsel=document.getElementById('testDays');
-  dsel.innerHTML=rem.days.map(d=>'<option value="'+d+'">'+d+' days before</option>').join('');
-  document.getElementById('testTo').value=rem.recipients.join(', ');
-  renderTest();
-  document.getElementById('tOv').classList.add('open');
-}
-function closeTest(){ document.getElementById('tOv').classList.remove('open'); }
-
-function currentTest(){
-  const id=document.getElementById('testWho').value;
-  const m=id?members.find(x=>x.id===id):null;
-  const d=m?parseInt(document.getElementById('testDays').value,10):null;
-  return { m:m, d:isNaN(d)?null:d, email:buildEmail(m,m?d:null) };
-}
-function testRecipients(){
-  return document.getElementById('testTo').value
-    .split(/[\n,;]+/).map(s=>s.trim()).filter(Boolean);
-}
-function resetTestTo(){
-  document.getElementById('testTo').value=rem.recipients.join(', ');
-  toast('Reset to saved recipients','ok');
-}
-function saveTestTo(){
-  const rc=testRecipients();
-  if(!rc.length){ toast('Enter at least one address','err'); return; }
-  rem.recipients=rc; persist(); renderRem();
-  toast('Saved as default recipients ✓','ok');
-}
-function renderTest(){
-  const t=currentTest();
-  document.getElementById('testDays').disabled = !t.m;
-  document.getElementById('testSubj').textContent=t.email.subject;
-
-  const head = t.m
-    ? '<div style="background:#2a9d8f;color:#fff;padding:14px 16px">'
-      +'<div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;opacity:.85">'
-      +t.d+' day reminder</div><div style="font-size:16px;font-weight:600;margin-top:5px">🎂 '
-      +esc(t.m.full_name)+' — '+ddmmyyyy(calc(t.m).next)+'</div>'
-      +'<div style="font-size:12px;margin-top:4px;opacity:.92">Turning '+calc(t.m).turning
-      +'</div></div>'
-    : '<div style="background:#1e4d8c;color:#fff;padding:14px 16px;font-size:15px;'
-      +'font-weight:600">CT Team — birthday overview</div>';
-
-  const rows=sortedByNext().map(m=>{
-    const c=calc(m);
-    const hot=c.days<=10?'#c0392b':(c.days<=30?'#d97706':'#2a9d8f');
-    const hl=(t.m&&t.m.id===m.id)?'background:#f0fdfa;':'';
-    return '<tr style="'+hl+'">'
-      +'<td style="padding:7px 8px;border-bottom:1px solid #e2e8f0;font-weight:600;'
-      +'color:#1a2e4a">'+esc(m.full_name)+'</td>'
-      +'<td style="padding:7px 8px;border-bottom:1px solid #e2e8f0;font-family:monospace;'
-      +'font-size:11px">'+ddmmyyyy(c.birth)+'</td>'
-      +'<td style="padding:7px 8px;border-bottom:1px solid #e2e8f0;text-align:center">'
-      +c.age+'</td>'
-      +'<td style="padding:7px 8px;border-bottom:1px solid #e2e8f0;font-size:11px;'
-      +'font-weight:600;color:'+hot+'">'+c.gm+'m '+c.gd+'d</td>'
-      +'<td style="padding:7px 8px;border-bottom:1px solid #e2e8f0;font-size:11px">'
-      +c.svY+'y '+c.svM+'m</td>'
-      +'<td style="padding:7px 8px;border-bottom:1px solid #e2e8f0;font-family:monospace;'
-      +'font-size:11px;color:#4a5568">'+esc(m.staff_id||'—')+'</td></tr>';
-  }).join('');
-
-  document.getElementById('testPrev').innerHTML = head
-    +'<div style="padding:14px;background:#fff">'
-    +'<table style="width:100%;border-collapse:collapse;font-size:12px">'
-    +'<tr style="background:#1a2e4a;color:#fff;text-align:left;font-size:10px;'
-    +'text-transform:uppercase;letter-spacing:.5px">'
-    +'<th style="padding:7px 8px">Name</th><th style="padding:7px 8px">DOB</th>'
-    +'<th style="padding:7px 8px;text-align:center">Age</th>'
-    +'<th style="padding:7px 8px">In</th><th style="padding:7px 8px">Service</th>'
-    +'<th style="padding:7px 8px">ID</th></tr>'+rows+'</table></div>';
-}
-function sendTest(){
-  const rc=testRecipients();
-  if(!rc.length){ toast('Enter at least one recipient','err'); return; }
-  const t=currentTest();
-  mailtoOpen({ subject:'[TEST] '+t.email.subject, body:t.email.body }, rc);
-  toast('Draft opened for '+rc.length+' recipient'+(rc.length>1?'s':''),'ok');
-}
-function copyTest(){
-  const t=currentTest();
-  navigator.clipboard.writeText(t.email.subject+'\n\n'+t.email.body)
-    .then(()=>toast('Email copied ✓','ok'))
-    .catch(()=>toast('Copy failed','err'));
 }
 
 /* ── member modal ────────────────────────────────────────── */
