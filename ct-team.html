@@ -138,7 +138,6 @@ pre.list{background:var(--navy);color:#dbeafe;padding:14px;border-radius:12px;
   <div class="tab active" onclick="switchTab('dash')">Dashboard</div>
   <div class="tab" onclick="switchTab('team')">Team</div>
   <div class="tab" onclick="switchTab('list')">Text List</div>
-  <div class="tab" onclick="switchTab('rem')">Reminders</div>
 </div></div>
 
 <div class="wrap">
@@ -184,35 +183,13 @@ pre.list{background:var(--navy);color:#dbeafe;padding:14px;border-radius:12px;
       <pre class="list" id="textList">Loading…</pre>
       <div class="btn-row">
         <button class="btn b-navy" onclick="copyList()">📋 Copy list</button>
-        <button class="btn b-grey" onclick="downloadCsv()">⬇︎ Download CSV</button>
+        <button class="btn b-teal" onclick="copyRichTable()">📊 Copy as table</button>
       </div>
-      <div class="hint">All values recalculate automatically against today's date.</div>
-    </div>
-  </div>
-
-  <div class="page" id="page-rem">
-    <div class="card">
-      <div style="font-size:13px;font-weight:600;color:var(--navy)">Reminder recipients</div>
-      <textarea id="setRecipients"></textarea>
-      <label>Remind this many days before</label>
-      <input id="setDays" placeholder="30, 10">
       <div class="btn-row">
-        <button class="btn b-teal" onclick="saveRem()">Save</button>
+        <button class="btn b-grey b-sm" onclick="downloadCsv()">⬇︎ Download CSV</button>
       </div>
-    </div>
-    <div class="sec-h">Due today</div>
-    <div id="dueBox"></div>
-    <div class="sec-h">Reminder schedule — next 12 months</div>
-    <div class="card" id="schedBox"></div>
-    <div class="sec-h">Send the email</div>
-    <div class="card">
-      <div class="hint">Opens a pre-filled draft in Outlook addressed to your recipients.
-        For a fully formatted table, use Copy formatted table and paste it into the draft —
-        Outlook keeps the colours, borders and column alignment.</div>
-      <div class="btn-row">
-        <button class="btn b-navy" onclick="openMailto()">✉︎ Open email draft</button>
-        <button class="btn b-teal" onclick="copyRichTable()">📋 Copy formatted table</button>
-      </div>
+      <div class="hint">All values recalculate automatically against today's date.
+        Copy as table pastes a formatted table into Word, Outlook or Teams.</div>
     </div>
   </div>
 
@@ -266,14 +243,10 @@ const SEED = [
   { id:'m6', full_name:'Anan',       thai_name:'', position:'', email:'anan.t@caat.or.th',
     birth_date:'1984-06-10', start_date:'2024-08-01', staff_id:'2024059' }
 ];
-const SEED_REM = {
-  recipients:['anan.t@caat.or.th','pavinee.t@caat.or.th'],
-  days:[30,10]
-};
+
 /* ═══════════════════════════════════════════════════════ */
 
 let members = [];
-let rem = { recipients:SEED_REM.recipients.slice(), days:SEED_REM.days.slice() };
 let editId = null;
 let currentTab = 'dash';
 
@@ -293,14 +266,11 @@ function loadLocal(){
   try{
     const raw = localStorage.getItem('ctTeamMembers');
     if(raw){ const p=JSON.parse(raw); if(Array.isArray(p)&&p.length) members=p; }
-    const r = localStorage.getItem('ctTeamRem');
-    if(r){ const p=JSON.parse(r); if(p&&p.recipients) rem=p; }
   }catch(e){}
 }
 function persist(){
   try{
     localStorage.setItem('ctTeamMembers',JSON.stringify(members));
-    localStorage.setItem('ctTeamRem',JSON.stringify(rem));
   }catch(e){ toast('Browser storage unavailable — changes are session only','err'); }
 }
 
@@ -361,7 +331,7 @@ function toast(msg,type){
 /* ── tabs ────────────────────────────────────────────────── */
 function switchTab(tab){
   currentTab=tab;
-  const order=['dash','team','list','rem'];
+  const order=['dash','team','list'];
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',order[i]===tab));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+tab).classList.add('active');
@@ -370,13 +340,20 @@ function switchTab(tab){
 }
 
 /* ── render ──────────────────────────────────────────────── */
-function renderAll(){ renderDash(); renderTeam(); renderText(); renderRem(); }
+function renderAll(){ renderDash(); renderTeam(); renderText(); }
 
 function avatarHtml(m){
   const idx=members.findIndex(x=>x.id===m.id);
   const col=AVCOL[(idx<0?0:idx)%AVCOL.length];
   const ini=(m.full_name||'?').trim().charAt(0).toUpperCase();
   return '<div class="avatar" style="background:'+col[0]+';color:'+col[1]+'">'+esc(ini)+'</div>';
+}
+
+function bdEmoji(c){
+  if(c.days===0) return '🎉';
+  if(c.days<=10) return '🎂';
+  if(c.days<=30) return '🎈';
+  return '🎁';
 }
 
 function renderDash(){
@@ -400,7 +377,8 @@ function renderDash(){
     const c=calc(m);
     return '<div class="card" style="display:flex;align-items:center;gap:12px">'
       +avatarHtml(m)+'<div style="flex:1">'
-      +'<div class="m-name">'+esc(m.full_name)+'</div>'
+      +'<div class="m-name"><span style="font-size:18px;margin-right:5px">'+bdEmoji(c)
+      +'</span>'+esc(m.full_name)+'</div>'
       +'<div class="m-sub">'+ddmmyyyy(c.next)+' · turning '+c.turning
       +' · in '+c.gm+' months '+c.gd+' days</div></div>'+pillOf(c)+'</div>';
   }).join('');
@@ -500,51 +478,9 @@ function dl(blob,name){
 function resetData(){
   if(!confirm('Discard local edits and restore the original six members?')) return;
   members=SEED.map(m=>Object.assign({},m));
-  rem={recipients:SEED_REM.recipients.slice(),days:SEED_REM.days.slice()};
   persist(); renderAll(); toast('Restored ✓','ok');
 }
 
-/* ── reminders ───────────────────────────────────────────── */
-function renderRem(){
-  const r=document.getElementById('setRecipients'); if(!r) return;
-  if(document.activeElement!==r) r.value=rem.recipients.join('\n');
-  const d=document.getElementById('setDays');
-  if(document.activeElement!==d) d.value=rem.days.join(', ');
-
-  const due=members.filter(m=>rem.days.includes(calc(m).days));
-  document.getElementById('dueBox').innerHTML = due.length
-    ? due.map(m=>{ const c=calc(m);
-        return '<div class="due'+(c.days<=10?'':' amber')+'">'
-          +'<div style="font-weight:600;color:var(--navy)">'+esc(m.full_name)
-          +' — '+c.days+' day reminder</div>'
-          +'<div class="hint" style="margin-top:4px">Birthday '+ddmmyyyy(c.next)
-          +' · turning '+c.turning+'</div></div>'; }).join('')
-    : '<div class="card"><div class="empty">Nothing due today.</div></div>';
-
-  const t=today0(); const sched=[];
-  members.forEach(m=>{ const c=calc(m);
-    rem.days.forEach(d=>{
-      const fire=new Date(c.next.getTime()-d*86400000);
-      if(fire>=t) sched.push({fire:fire,name:m.full_name,d:d,bd:c.next});
-    }); });
-  sched.sort((a,b)=>a.fire-b.fire);
-  document.getElementById('schedBox').innerHTML = sched.length
-    ? sched.map(s=>'<div class="bd-line"><div class="bd-d">'+pad(s.fire.getDate())+' '
-        +MON[s.fire.getMonth()]+'</div><div style="flex:1;font-size:13.5px">'
-        +esc(s.name)+' <span style="color:var(--grey-mid)">— '+s.d
-        +' days before '+ddmmyyyy(s.bd)+'</span></div></div>').join('')
-    : '<div class="empty">—</div>';
-}
-function saveRem(){
-  const rc=document.getElementById('setRecipients').value
-    .split(/[\n,;]+/).map(s=>s.trim()).filter(Boolean);
-  const dy=document.getElementById('setDays').value
-    .split(/[\s,;]+/).map(s=>parseInt(s,10)).filter(n=>!isNaN(n)&&n>=0&&n<=365);
-  if(!rc.length){ toast('At least one recipient required','err'); return; }
-  if(!dy.length){ toast('At least one reminder day required','err'); return; }
-  rem={recipients:rc,days:dy.sort((a,b)=>b-a)};
-  persist(); renderRem(); toast('Saved ✓','ok');
-}
 /* aligned plain-text table for the mail draft */
 function textTable(){
   const rows=sortedByNext().map(m=>{
@@ -607,38 +543,6 @@ function fallbackCopy(txt){
   navigator.clipboard.writeText(txt)
     .then(()=>toast('Copied as plain text ✓','ok'))
     .catch(()=>toast('Copy failed — select the text manually','err'));
-}
-
-/* Build the reminder email. focus = member object or null, d = interval or null */
-function buildEmail(focus,d){
-  let subj, intro;
-  if(focus){
-    const c=calc(focus);
-    subj=(d!==null?d+' days: ':'')+focus.full_name+"'s birthday on "+ddmmyyyy(c.next);
-    intro=focus.full_name+"'s birthday is on "+ddmmyyyy(c.next)+', turning '+c.turning+'.'
-      +(d!==null?' That is '+d+' days from today.':'');
-  }else{
-    subj='CT Team — birthdays and service ('+ddmmyyyy(today0())+')';
-    intro='CT team birthday and service overview.';
-  }
-  return { subject:subj,
-           body:intro+'\n\n'
-             +'CT TEAM — BIRTHDAYS AND SERVICE (as at '+ddmmyyyy(today0())+')\n\n'
-             +textTable()
-             +'\n\nAGE = age today. NEXT BIRTHDAY IN = months and days until it.\n'
-             +'Sent from the CT Team Tracker.' };
-}
-
-function openMailto(){
-  const due=members.filter(m=>rem.days.includes(calc(m).days));
-  const e = due.length ? buildEmail(due[0],calc(due[0]).days) : buildEmail(null,null);
-  mailtoOpen(e);
-}
-function mailtoOpen(e,to){
-  const rc=(to&&to.length)?to:rem.recipients;
-  window.location.href='mailto:'+encodeURIComponent(rc.join(','))
-    +'?subject='+encodeURIComponent(e.subject)
-    +'&body='+encodeURIComponent(e.body);
 }
 
 /* ── member modal ────────────────────────────────────────── */
