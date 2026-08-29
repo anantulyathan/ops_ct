@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a2e4a">
+<title>CT Team Tracker — CAAT OPS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a2e4a; --blue:#1e4d8c; --blue-mid:#2563a8;
+  --teal:#2a9d8f; --teal-lt:#3bbfb0;
+  --grey-dark:#2d3748; --grey-mid:#4a5568; --grey-light:#e2e8f0;
+  --grey-pale:#f0f4f8; --white:#ffffff; --error:#c0392b;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--grey-pale);font-family:'Inter',system-ui,sans-serif;
+  color:var(--grey-dark);padding-bottom:env(safe-area-inset-bottom)}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 70px}
+
+header{background:var(--navy);color:#fff;padding:22px 16px 18px}
+.hd{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.hd-ic{width:42px;height:42px;border-radius:12px;background:var(--teal);
+  display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+.hd-t{font-size:17px;font-weight:600;line-height:1.25}
+.hd-s{font-size:12px;color:#94a3b8;margin-top:2px}
+.badge{margin-left:auto;font-size:11px;padding:5px 10px;border-radius:20px;
+  background:var(--teal);color:#fff;white-space:nowrap;font-weight:500}
+.accent{height:3px;background:linear-gradient(90deg,var(--teal),var(--teal-lt))}
+
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;background:#fff;
+  border-bottom:1px solid var(--grey-light);padding:0 16px;position:sticky;top:0;z-index:40}
+.tabs::-webkit-scrollbar{display:none}
+.tabs-in{display:flex;gap:6px;max-width:720px;margin:0 auto;width:100%}
+.tab{padding:13px 14px;font-size:13.5px;font-weight:500;color:var(--grey-mid);
+  cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent}
+.tab.active{color:var(--blue);border-bottom-color:var(--teal);font-weight:600}
+
+.page{display:none;padding-top:18px} .page.active{display:block}
+
+.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:12px;
+  box-shadow:0 2px 12px rgba(26,46,74,.08)}
+.sec-h{font-size:11px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;
+  color:var(--grey-mid);margin:22px 0 10px}
+.sec-h:first-child{margin-top:4px}
+
+.m-card{background:#fff;border-radius:16px;margin-bottom:12px;overflow:hidden;
+  box-shadow:0 2px 12px rgba(26,46,74,.08);border-left:5px solid var(--grey-light)}
+.m-top{padding:14px 16px;display:flex;align-items:flex-start;gap:12px;cursor:pointer}
+.avatar{width:44px;height:44px;border-radius:50%;flex:none;display:flex;
+  align-items:center;justify-content:center;font-weight:600;font-size:16px}
+.m-name{font-size:16px;font-weight:600;color:var(--navy)}
+.m-sub{font-size:12px;color:var(--grey-mid);margin-top:3px}
+.m-sub b{font-weight:500;color:var(--grey-dark)}
+.pill{font-size:11px;font-weight:600;padding:4px 9px;border-radius:20px;
+  white-space:nowrap;border:1px solid transparent}
+.p-red{background:#fee2e2;color:#991b1b;border-color:#fecaca}
+.p-amber{background:#fef3c7;color:#92400e;border-color:#fde68a}
+.p-teal{background:#d1fae5;color:#065f46;border-color:#a7f3d0}
+.p-grey{background:#eef2f7;color:#475569;border-color:#e2e8f0}
+.m-det{display:none;padding:12px 16px 14px;border-top:1px solid var(--grey-light)}
+.m-det.open{display:block}
+.row{display:flex;justify-content:space-between;gap:10px;padding:6px 0;font-size:13px}
+.row span:first-child{color:var(--grey-mid)}
+.row span:last-child{font-weight:500;text-align:right}
+.mono{font-family:'JetBrains Mono',monospace;font-size:12.5px}
+
+.btn{border:none;border-radius:8px;padding:11px 16px;font-size:13.5px;font-weight:600;
+  cursor:pointer;font-family:inherit}
+.b-teal{background:var(--teal);color:#fff} .b-teal:hover{background:var(--teal-lt)}
+.b-navy{background:var(--blue);color:#fff} .b-navy:hover{background:var(--blue-mid)}
+.b-grey{background:var(--grey-pale);color:var(--grey-mid);border:1px solid var(--grey-light)}
+.b-red{background:#fff;color:var(--error);border:1px solid #f0c0ba}
+.b-sm{padding:8px 12px;font-size:12.5px}
+.btn-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn-row .btn{flex:1;min-width:110px}
+
+label{display:block;font-size:11.5px;font-weight:600;color:var(--grey-mid);
+  text-transform:uppercase;letter-spacing:.6px;margin:14px 0 6px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--grey-light);
+  border-radius:8px;font-size:14.5px;font-family:inherit;background:#fff;color:var(--grey-dark)}
+input:focus,textarea:focus{outline:none;border-color:var(--teal)}
+textarea{resize:vertical;min-height:70px}
+
+pre.list{background:var(--navy);color:#dbeafe;padding:14px;border-radius:12px;
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.85;
+  overflow-x:auto;white-space:pre;margin:0}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stat{background:#fff;border-radius:14px;padding:13px 10px;text-align:center;
+  box-shadow:0 2px 12px rgba(26,46,74,.08)}
+.stat .v{font-size:21px;font-weight:600;color:var(--navy)}
+.stat .l{font-size:10.5px;color:var(--grey-mid);margin-top:3px;
+  text-transform:uppercase;letter-spacing:.5px}
+
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;
+  align-items:flex-end;justify-content:center}
+.ov.open{display:flex}
+.modal{background:#fff;width:100%;max-width:600px;border-radius:20px 20px 0 0;
+  max-height:92vh;overflow-y:auto;padding:20px 20px calc(24px + env(safe-area-inset-bottom))}
+.modal h3{margin:0 0 4px;font-size:17px;color:var(--navy)}
+@media(min-width:640px){.ov{align-items:center}.modal{border-radius:18px;max-height:88vh}}
+
+#toast{position:fixed;bottom:24px;right:16px;left:16px;z-index:200;display:flex;
+  flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.tst{background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px;
+  font-size:13.5px;box-shadow:0 6px 20px rgba(0,0,0,.25);max-width:420px}
+.tst.err{background:var(--error)} .tst.ok{background:var(--teal)}
+
+.empty{text-align:center;padding:40px 20px;color:var(--grey-mid);font-size:14px}
+.hint{font-size:12px;color:var(--grey-mid);line-height:1.6;margin-top:8px}
+.bd-line{display:flex;align-items:center;gap:10px;padding:10px 0;
+  border-bottom:1px solid var(--grey-light)}
+.bd-line:last-child{border-bottom:none}
+.bd-d{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--grey-mid);
+  width:62px;flex:none}
+.due{border-left:4px solid var(--error);padding:12px 14px;background:#fff5f5;
+  border-radius:0 10px 10px 0;margin-bottom:10px}
+.due.amber{border-left-color:#d97706;background:#fffbeb}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <div class="hd-ic">🎂</div>
+    <div>
+      <div class="hd-t">CT Team Tracker</div>
+      <div class="hd-s">กองรับรองผู้ดำเนินการเดินอากาศ · CAAT OPS</div>
+    </div>
+    <div class="badge" id="badge">6 members</div>
+  </div>
+</header>
+<div class="accent"></div>
+
+<div class="tabs"><div class="tabs-in">
+  <div class="tab active" onclick="switchTab('dash')">Dashboard</div>
+  <div class="tab" onclick="switchTab('team')">Team</div>
+  <div class="tab" onclick="switchTab('list')">Text List</div>
+  <div class="tab" onclick="switchTab('rem')">Reminders</div>
+</div></div>
+
+<div class="wrap">
+
+  <div class="page active" id="page-dash">
+    <div class="stats">
+      <div class="stat"><div class="v" id="stMembers">–</div><div class="l">Members</div></div>
+      <div class="stat"><div class="v" id="stNext">–</div><div class="l">Days to next</div></div>
+      <div class="stat"><div class="v" id="stAvg">–</div><div class="l">Avg service (yr)</div></div>
+    </div>
+    <div class="sec-h">Next up</div>
+    <div id="dashNext"></div>
+    <div class="sec-h">Birthday calendar — full year</div>
+    <div class="card" id="dashYear"></div>
+  </div>
+
+  <div class="page" id="page-team">
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <select id="sortSel" onchange="renderTeam()" style="flex:1">
+        <option value="next">🎂 Next birthday</option>
+        <option value="name">🔤 Name</option>
+        <option value="age">📅 Age (oldest first)</option>
+        <option value="service">🏛️ Service (longest first)</option>
+        <option value="id">🆔 Staff ID</option>
+      </select>
+      <button class="btn b-teal" style="flex:none" onclick="openMember(null)">＋ Add</button>
+    </div>
+    <div id="teamList"></div>
+    <div class="card">
+      <div class="hint">Edits are saved in this browser only. Use Export to keep a copy,
+        or paste the data back into the file to make it permanent for everyone.</div>
+      <div class="btn-row">
+        <button class="btn b-grey b-sm" onclick="exportJson()">⬇︎ Export data</button>
+        <button class="btn b-grey b-sm" onclick="resetData()">↺ Reset to original</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-list">
+    <div class="card">
+      <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:10px">
+        Standard format output</div>
+      <pre class="list" id="textList">Loading…</pre>
+      <div class="btn-row">
+        <button class="btn b-navy" onclick="copyList()">📋 Copy list</button>
+        <button class="btn b-grey" onclick="downloadCsv()">⬇︎ Download CSV</button>
+      </div>
+      <div class="hint">All values recalculate automatically against today's date.</div>
+    </div>
+  </div>
+
+  <div class="page" id="page-rem">
+    <div class="card">
+      <div style="font-size:13px;font-weight:600;color:var(--navy)">Reminder recipients</div>
+      <textarea id="setRecipients"></textarea>
+      <label>Remind this many days before</label>
+      <input id="setDays" placeholder="30, 10">
+      <div class="btn-row">
+        <button class="btn b-teal" onclick="saveRem()">Save</button>
+      </div>
+    </div>
+    <div class="sec-h">Due today</div>
+    <div id="dueBox"></div>
+    <div class="sec-h">Reminder schedule — next 12 months</div>
+    <div class="card" id="schedBox"></div>
+    <div class="sec-h">Send the email</div>
+    <div class="card">
+      <div class="hint">This app runs entirely in the browser, so it cannot send mail by itself.
+        Use the button to open a pre-filled draft in your mail client, or copy the plain list
+        and paste it into Outlook.</div>
+      <div class="btn-row">
+        <button class="btn b-navy" onclick="openMailto()">✉︎ Open email draft</button>
+        <button class="btn b-grey" onclick="copyList()">📋 Copy list</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="ov" id="mOv" onclick="if(event.target===this)closeMember()">
+  <div class="modal">
+    <h3 id="mTitle">Add member</h3>
+    <label>Name (as shown in list)</label>
+    <input id="fName" placeholder="Chayapha">
+    <label>Thai name / ชื่อ-สกุล</label>
+    <input id="fThai" placeholder="optional">
+    <label>Position / ตำแหน่ง</label>
+    <input id="fPos" placeholder="optional">
+    <label>Email</label>
+    <input id="fEmail" type="email" placeholder="optional">
+    <label>Date of birth</label>
+    <input id="fBirth" type="date">
+    <label>Start working at CAAT</label>
+    <input id="fStart" type="date">
+    <label>Staff ID</label>
+    <input id="fId" placeholder="2016231">
+    <div class="btn-row">
+      <button class="btn b-teal" onclick="saveMember()">Save</button>
+      <button class="btn b-grey" onclick="closeMember()">Cancel</button>
+    </div>
+    <div class="btn-row" id="delRow" style="display:none">
+      <button class="btn b-red" onclick="deleteMember()">Delete member</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ══ CT TEAM DATA ══════════════════════════════════════════
+   Edit this block directly in the file to change the master data.
+   Dates are YYYY-MM-DD.
+   ═══════════════════════════════════════════════════════ */
+const SEED = [
+  { id:'m1', full_name:'Chayapha',   thai_name:'', position:'', email:'',
+    birth_date:'1976-04-30', start_date:'2016-09-19', staff_id:'2016231' },
+  { id:'m2', full_name:'Thunchanok', thai_name:'', position:'', email:'',
+    birth_date:'1999-08-16', start_date:'2023-05-02', staff_id:'2023070' },
+  { id:'m3', full_name:'Kanjana',    thai_name:'', position:'', email:'',
+    birth_date:'1993-11-07', start_date:'2023-05-02', staff_id:'2023071' },
+  { id:'m4', full_name:'Pavinee',    thai_name:'', position:'', email:'pavinee.t@caat.or.th',
+    birth_date:'1992-09-17', start_date:'2025-09-01', staff_id:'2025028' },
+  { id:'m5', full_name:'Papatsupa',  thai_name:'', position:'', email:'',
+    birth_date:'1996-09-12', start_date:'2025-08-01', staff_id:'2025027' },
+  { id:'m6', full_name:'Anan',       thai_name:'', position:'', email:'anan.t@caat.or.th',
+    birth_date:'1984-06-10', start_date:'2024-08-01', staff_id:'2024059' }
+];
+const SEED_REM = {
+  recipients:['anan.t@caat.or.th','pavinee.t@caat.or.th'],
+  days:[30,10]
+};
+/* ═══════════════════════════════════════════════════════ */
+
+let members = [];
+let rem = { recipients:SEED_REM.recipients.slice(), days:SEED_REM.days.slice() };
+let editId = null;
+let currentTab = 'dash';
+
+const AVCOL = [
+  ['#dbeafe','#1d4ed8'],['#fce7f3','#be185d'],['#d1fae5','#065f46'],
+  ['#ede9fe','#5b21b6'],['#ffedd5','#c2410c'],['#fef9c3','#854d0e']
+];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/* ── storage (browser only; degrades safely) ─────────────── */
+function store(key,val){
+  try{ if(val===undefined) return localStorage.getItem(key);
+       localStorage.setItem(key,val); }catch(e){ return null; }
+}
+function loadLocal(){
+  members = SEED.map(m=>Object.assign({},m));
+  try{
+    const raw = localStorage.getItem('ctTeamMembers');
+    if(raw){ const p=JSON.parse(raw); if(Array.isArray(p)&&p.length) members=p; }
+    const r = localStorage.getItem('ctTeamRem');
+    if(r){ const p=JSON.parse(r); if(p&&p.recipients) rem=p; }
+  }catch(e){}
+}
+function persist(){
+  try{
+    localStorage.setItem('ctTeamMembers',JSON.stringify(members));
+    localStorage.setItem('ctTeamRem',JSON.stringify(rem));
+  }catch(e){ toast('Browser storage unavailable — changes are session only','err'); }
+}
+
+/* ── helpers ─────────────────────────────────────────────── */
+function esc(s){ if(s===null||s===undefined) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function today0(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
+function toDate(iso){ if(!iso) return null;
+  const p=String(iso).slice(0,10).split('-'); return new Date(+p[0],+p[1]-1,+p[2]); }
+function pad(n){ return String(n).padStart(2,'0'); }
+function ddmmyyyy(d){ return d ? pad(d.getDate())+'-'+pad(d.getMonth()+1)+'-'+d.getFullYear() : '—'; }
+function isoOf(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+
+function addMonths(d,n){
+  const r=new Date(d.getFullYear(),d.getMonth()+n,d.getDate());
+  if(r.getDate()!==d.getDate()) r.setDate(0);
+  return r;
+}
+function gap(from,to){
+  if(!from||!to||to<from) return {m:0,d:0};
+  let m=0; while(addMonths(from,m+1)<=to) m++;
+  return { m:m, d:Math.round((to-addMonths(from,m))/86400000) };
+}
+function yearsMonths(from,to){ const g=gap(from,to); return {y:Math.floor(g.m/12), m:g.m%12}; }
+function daysBetween(a,b){ return Math.round((b-a)/86400000); }
+function nextBirthday(b,ref){
+  if(!b) return null;
+  let n=new Date(ref.getFullYear(),b.getMonth(),b.getDate());
+  if(n.getMonth()!==b.getMonth()) n.setDate(0);
+  if(n<ref){ n=new Date(ref.getFullYear()+1,b.getMonth(),b.getDate());
+             if(n.getMonth()!==b.getMonth()) n.setDate(0); }
+  return n;
+}
+function calc(mem){
+  const t=today0(), b=toDate(mem.birth_date), s=toDate(mem.start_date);
+  const nb=nextBirthday(b,t), g=nb?gap(t,nb):{m:0,d:0};
+  const age=b?yearsMonths(b,t).y:0, sv=s?yearsMonths(s,t):{y:0,m:0};
+  return { birth:b, start:s, next:nb, gm:g.m, gd:g.d,
+           days:nb?daysBetween(t,nb):999, age:age, turning:age+1,
+           svY:sv.y, svM:sv.m };
+}
+function pillOf(c){
+  if(c.days===0) return '<span class="pill p-red">🎉 TODAY</span>';
+  if(c.days<=10) return '<span class="pill p-red">'+c.days+' days</span>';
+  if(c.days<=30) return '<span class="pill p-amber">'+c.days+' days</span>';
+  if(c.days<=60) return '<span class="pill p-teal">'+c.days+' days</span>';
+  return '<span class="pill p-grey">'+c.days+' days</span>';
+}
+function sortedByNext(){ return members.slice().sort((a,b)=>calc(a).days-calc(b).days); }
+function toast(msg,type){
+  const el=document.createElement('div');
+  el.className='tst'+(type?(' '+type):''); el.textContent=msg;
+  document.getElementById('toast').appendChild(el);
+  setTimeout(()=>el.remove(),3200);
+}
+
+/* ── tabs ────────────────────────────────────────────────── */
+function switchTab(tab){
+  currentTab=tab;
+  const order=['dash','team','list','rem'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',order[i]===tab));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+tab).classList.add('active');
+  window.scrollTo(0,0);
+  renderAll();
+}
+
+/* ── render ──────────────────────────────────────────────── */
+function renderAll(){ renderDash(); renderTeam(); renderText(); renderRem(); }
+
+function avatarHtml(m){
+  const idx=members.findIndex(x=>x.id===m.id);
+  const col=AVCOL[(idx<0?0:idx)%AVCOL.length];
+  const ini=(m.full_name||'?').trim().charAt(0).toUpperCase();
+  return '<div class="avatar" style="background:'+col[0]+';color:'+col[1]+'">'+esc(ini)+'</div>';
+}
+
+function renderDash(){
+  document.getElementById('badge').textContent = members.length+' members';
+  const box=document.getElementById('dashNext'), yr=document.getElementById('dashYear');
+  if(!members.length){
+    box.innerHTML='<div class="card"><div class="empty">No members.</div></div>';
+    yr.innerHTML='<div class="empty">—</div>';
+    document.getElementById('stMembers').textContent='0';
+    document.getElementById('stNext').textContent='–';
+    document.getElementById('stAvg').textContent='–';
+    return;
+  }
+  const sorted=sortedByNext(), c0=calc(sorted[0]);
+  document.getElementById('stMembers').textContent=members.length;
+  document.getElementById('stNext').textContent=c0.days;
+  document.getElementById('stAvg').textContent=
+    (members.reduce((s,m)=>s+calc(m).svY,0)/members.length).toFixed(1);
+
+  box.innerHTML=sorted.slice(0,3).map(m=>{
+    const c=calc(m);
+    return '<div class="card" style="display:flex;align-items:center;gap:12px">'
+      +avatarHtml(m)+'<div style="flex:1">'
+      +'<div class="m-name">'+esc(m.full_name)+'</div>'
+      +'<div class="m-sub">'+ddmmyyyy(c.next)+' · turning '+c.turning
+      +' · in '+c.gm+' months '+c.gd+' days</div></div>'+pillOf(c)+'</div>';
+  }).join('');
+
+  const byMonth={};
+  members.forEach(m=>{ const b=toDate(m.birth_date); if(!b) return;
+    (byMonth[b.getMonth()]=byMonth[b.getMonth()]||[]).push({m:m,b:b}); });
+  let h='';
+  for(let i=0;i<12;i++){
+    if(!byMonth[i]) continue;
+    byMonth[i].sort((x,y)=>x.b.getDate()-y.b.getDate());
+    h+=byMonth[i].map(o=>{
+      const c=calc(o.m);
+      return '<div class="bd-line"><div class="bd-d">'+pad(o.b.getDate())+' '+MON[i]
+        +'</div><div style="flex:1;font-size:13.5px;font-weight:500">'+esc(o.m.full_name)
+        +'</div>'+pillOf(c)+'</div>';
+    }).join('');
+  }
+  yr.innerHTML=h||'<div class="empty">—</div>';
+}
+
+function renderTeam(){
+  const box=document.getElementById('teamList'); if(!box) return;
+  if(!members.length){ box.innerHTML='<div class="card"><div class="empty">No members. Use the Add button.</div></div>'; return; }
+  const mode=(document.getElementById('sortSel')||{}).value||'next';
+  let list=members.slice();
+  if(mode==='next') list.sort((a,b)=>calc(a).days-calc(b).days);
+  else if(mode==='name') list.sort((a,b)=>(a.full_name||'').localeCompare(b.full_name||''));
+  else if(mode==='age') list.sort((a,b)=>calc(b).age-calc(a).age);
+  else if(mode==='service') list.sort((a,b)=>(toDate(a.start_date)||0)-(toDate(b.start_date)||0));
+  else if(mode==='id') list.sort((a,b)=>String(a.staff_id||'').localeCompare(String(b.staff_id||'')));
+
+  box.innerHTML=list.map(m=>{
+    const c=calc(m);
+    const bar=c.days<=10?'#c0392b':(c.days<=30?'#d97706':'#2a9d8f');
+    return '<div class="m-card" style="border-left-color:'+bar+'">'
+      +'<div class="m-top" onclick="toggleDet(\''+m.id+'\')">'+avatarHtml(m)
+      +'<div style="flex:1">'
+      +'<div class="m-name">'+esc(m.full_name)+'</div>'
+      +'<div class="m-sub">'+ddmmyyyy(c.birth)+' · <b>Age '+c.age+'</b> · in '+c.gm+' m '+c.gd+' d</div>'
+      +'<div class="m-sub">CAAT since '+ddmmyyyy(c.start)+' · <b>'+c.svY+' y '+c.svM+' m</b></div>'
+      +'</div>'+pillOf(c)+'</div>'
+      +'<div class="m-det" id="det-'+m.id+'">'
+      +(m.thai_name?row('ชื่อ-สกุล',esc(m.thai_name)):'')
+      +(m.position?row('Position',esc(m.position)):'')
+      +(m.email?row('Email','<span class="mono">'+esc(m.email)+'</span>'):'')
+      +row('Staff ID','<span class="mono">'+esc(m.staff_id||'—')+'</span>')
+      +row('Date of birth','<span class="mono">'+ddmmyyyy(c.birth)+'</span>')
+      +row('Next birthday','<span class="mono">'+ddmmyyyy(c.next)+'</span> (turning '+c.turning+')')
+      +row('Countdown',c.gm+' months '+c.gd+' days · '+c.days+' days')
+      +row('Start at CAAT','<span class="mono">'+ddmmyyyy(c.start)+'</span>')
+      +row('Service','<b>'+c.svY+'</b> years <b>'+c.svM+'</b> months')
+      +'<div class="btn-row"><button class="btn b-navy b-sm" onclick="openMember(\''+m.id+'\')">Edit</button></div>'
+      +'</div></div>';
+  }).join('');
+}
+function row(a,b){ return '<div class="row"><span>'+a+'</span><span>'+b+'</span></div>'; }
+function toggleDet(id){ const e=document.getElementById('det-'+id); if(e) e.classList.toggle('open'); }
+
+function lineFor(m){
+  const c=calc(m);
+  return m.full_name+': '+ddmmyyyy(c.birth)
+    +' | Age: '+c.age
+    +' | In '+c.gm+' Months '+c.gd+' Days'
+    +' | Start Working at CAAT: '+ddmmyyyy(c.start)
+    +' | Working Years at CAAT: '+c.svY+' Years '+c.svM+' Months'
+    +' | ID: '+(m.staff_id||'—');
+}
+function plainList(){ return sortedByNext().map(lineFor).join('\n'); }
+function renderText(){
+  const el=document.getElementById('textList'); if(!el) return;
+  el.textContent = members.length ? plainList() : 'No members.';
+}
+function copyList(){
+  navigator.clipboard.writeText(plainList())
+    .then(()=>toast('List copied ✓','ok'))
+    .catch(()=>toast('Copy failed — select the text manually','err'));
+}
+function downloadCsv(){
+  const head='Name,Date of Birth,Age,Months to Birthday,Days to Birthday,Start at CAAT,Service Years,Service Months,Staff ID';
+  const rows=sortedByNext().map(m=>{ const c=calc(m);
+    return [m.full_name,ddmmyyyy(c.birth),c.age,c.gm,c.gd,
+            ddmmyyyy(c.start),c.svY,c.svM,m.staff_id||''].join(','); });
+  dl(new Blob(['\ufeff'+head+'\n'+rows.join('\n')],{type:'text/csv;charset=utf-8'}),
+     'ct-team-'+isoOf(today0())+'.csv');
+}
+function exportJson(){
+  dl(new Blob([JSON.stringify(members,null,2)],{type:'application/json'}),
+     'ct-team-data.json');
+  toast('Exported ✓','ok');
+}
+function dl(blob,name){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=name; a.click();
+}
+function resetData(){
+  if(!confirm('Discard local edits and restore the original six members?')) return;
+  members=SEED.map(m=>Object.assign({},m));
+  rem={recipients:SEED_REM.recipients.slice(),days:SEED_REM.days.slice()};
+  persist(); renderAll(); toast('Restored ✓','ok');
+}
+
+/* ── reminders ───────────────────────────────────────────── */
+function renderRem(){
+  const r=document.getElementById('setRecipients'); if(!r) return;
+  if(document.activeElement!==r) r.value=rem.recipients.join('\n');
+  const d=document.getElementById('setDays');
+  if(document.activeElement!==d) d.value=rem.days.join(', ');
+
+  const due=members.filter(m=>rem.days.includes(calc(m).days));
+  document.getElementById('dueBox').innerHTML = due.length
+    ? due.map(m=>{ const c=calc(m);
+        return '<div class="due'+(c.days<=10?'':' amber')+'">'
+          +'<div style="font-weight:600;color:var(--navy)">'+esc(m.full_name)
+          +' — '+c.days+' day reminder</div>'
+          +'<div class="hint" style="margin-top:4px">Birthday '+ddmmyyyy(c.next)
+          +' · turning '+c.turning+'</div></div>'; }).join('')
+    : '<div class="card"><div class="empty">Nothing due today.</div></div>';
+
+  const t=today0(); const sched=[];
+  members.forEach(m=>{ const c=calc(m);
+    rem.days.forEach(d=>{
+      const fire=new Date(c.next.getTime()-d*86400000);
+      if(fire>=t) sched.push({fire:fire,name:m.full_name,d:d,bd:c.next});
+    }); });
+  sched.sort((a,b)=>a.fire-b.fire);
+  document.getElementById('schedBox').innerHTML = sched.length
+    ? sched.map(s=>'<div class="bd-line"><div class="bd-d">'+pad(s.fire.getDate())+' '
+        +MON[s.fire.getMonth()]+'</div><div style="flex:1;font-size:13.5px">'
+        +esc(s.name)+' <span style="color:var(--grey-mid)">— '+s.d
+        +' days before '+ddmmyyyy(s.bd)+'</span></div></div>').join('')
+    : '<div class="empty">—</div>';
+}
+function saveRem(){
+  const rc=document.getElementById('setRecipients').value
+    .split(/[\n,;]+/).map(s=>s.trim()).filter(Boolean);
+  const dy=document.getElementById('setDays').value
+    .split(/[\s,;]+/).map(s=>parseInt(s,10)).filter(n=>!isNaN(n)&&n>=0&&n<=365);
+  if(!rc.length){ toast('At least one recipient required','err'); return; }
+  if(!dy.length){ toast('At least one reminder day required','err'); return; }
+  rem={recipients:rc,days:dy.sort((a,b)=>b-a)};
+  persist(); renderRem(); toast('Saved ✓','ok');
+}
+function openMailto(){
+  const due=members.filter(m=>rem.days.includes(calc(m).days));
+  let subj, intro;
+  if(due.length){
+    const c=calc(due[0]);
+    subj='CT Team — '+c.days+' days to '+due[0].full_name+"'s birthday ("+ddmmyyyy(c.next)+')';
+    intro=due.map(m=>{ const k=calc(m);
+      return k.days+' days to '+m.full_name+"'s birthday on "+ddmmyyyy(k.next)
+        +' (turning '+k.turning+').'; }).join('\n');
+  }else{
+    subj='CT Team — birthday overview ('+ddmmyyyy(today0())+')';
+    intro='Current CT team birthday and service overview.';
+  }
+  const body=intro+'\n\n'+plainList()+'\n\nSent from the CT Team Tracker.';
+  window.location.href='mailto:'+encodeURIComponent(rem.recipients.join(','))
+    +'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+}
+
+/* ── member modal ────────────────────────────────────────── */
+function openMember(id){
+  editId=id;
+  const m=id?members.find(x=>x.id===id):null;
+  document.getElementById('mTitle').textContent=m?'Edit member':'Add member';
+  document.getElementById('fName').value=m?(m.full_name||''):'';
+  document.getElementById('fThai').value=m?(m.thai_name||''):'';
+  document.getElementById('fPos').value=m?(m.position||''):'';
+  document.getElementById('fEmail').value=m?(m.email||''):'';
+  document.getElementById('fBirth').value=m?(m.birth_date||''):'';
+  document.getElementById('fStart').value=m?(m.start_date||''):'';
+  document.getElementById('fId').value=m?(m.staff_id||''):'';
+  document.getElementById('delRow').style.display=m?'flex':'none';
+  document.getElementById('mOv').classList.add('open');
+}
+function closeMember(){ document.getElementById('mOv').classList.remove('open'); editId=null; }
+function saveMember(){
+  const p={
+    full_name:document.getElementById('fName').value.trim(),
+    thai_name:document.getElementById('fThai').value.trim(),
+    position:document.getElementById('fPos').value.trim(),
+    email:document.getElementById('fEmail').value.trim(),
+    birth_date:document.getElementById('fBirth').value,
+    start_date:document.getElementById('fStart').value,
+    staff_id:document.getElementById('fId').value.trim()
+  };
+  if(!p.full_name){ toast('Name is required','err'); return; }
+  if(!p.birth_date){ toast('Date of birth is required','err'); return; }
+  if(editId){
+    const i=members.findIndex(x=>x.id===editId);
+    if(i>=0) members[i]=Object.assign({},members[i],p);
+  }else{
+    p.id='m'+Date.now();
+    members.push(p);
+  }
+  persist(); closeMember(); renderAll(); toast('Saved ✓','ok');
+}
+function deleteMember(){
+  if(!editId) return;
+  if(!confirm('Delete this member?')) return;
+  members=members.filter(x=>x.id!==editId);
+  persist(); closeMember(); renderAll(); toast('Deleted','ok');
+}
+
+/* ── init ────────────────────────────────────────────────── */
+loadLocal();
+renderAll();
+</script>
+</body>
+</html>
