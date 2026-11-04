@@ -106,8 +106,14 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:360/540;touch-action:ma
 .ecard small{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--lbl);padding:1px 7px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ecard small.gc{color:#8a6a1f;font-weight:600;padding-bottom:6px}
 .ecard:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 16px rgba(26,46,74,.2),0 2px 4px rgba(26,46,74,.12)}
+.ecard.cbh{box-shadow:0 0 0 2px rgba(42,157,143,.9),0 0 16px 3px rgba(59,191,176,.5),0 3px 8px rgba(26,46,74,.16);animation:cbpulse 1.8s ease-in-out infinite}
+.ecard.cbh.tri{box-shadow:0 0 0 2px rgba(30,77,140,.95),0 0 18px 4px rgba(59,191,176,.6),0 3px 8px rgba(26,46,74,.16)}
+.ecard.cbh img{filter:brightness(1.06) saturate(1.1)}
+.ecard.cbh::after{content:attr(data-hint);position:absolute;top:5px;right:5px;background:linear-gradient(135deg,#1d776d,#2a9d8f);color:#fff;font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.05em;padding:2px 7px;border-radius:999px;box-shadow:0 1px 3px rgba(26,46,74,.35)}
+.ecard.cbh.tri::after{background:linear-gradient(135deg,#1a2e4a,#1e4d8c)}
+@keyframes cbpulse{0%,100%{filter:none}50%{filter:brightness(1.07)}}
 .ecard:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.5)}
-@media (prefers-reduced-motion:reduce){.ecard{transition:none}.ecard:hover:not(:disabled){transform:none}}
+@media (prefers-reduced-motion:reduce){.ecard.cbh{animation:none}.ecard{transition:none}.ecard:hover:not(:disabled){transform:none}}
 .bsk{min-height:46px;border-radius:10px;border:1px solid var(--bd);background:linear-gradient(180deg,#fff,#f4f7fb);cursor:pointer;display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:2px;padding:4px;color:var(--navy);font-weight:600;font-size:12px;box-shadow:0 1px 3px rgba(26,46,74,.1)}
 .bsk small{font-weight:500;color:var(--lbl);font-family:'JetBrains Mono',monospace;font-size:11px}
@@ -235,6 +241,13 @@ body.fit .ctl .lf{display:none}body.fit .ctl .ls{display:inline-flex;align-items
 body.fit .cwrap{grid-column:1/3;grid-row:2;width:var(--mw,100%);justify-self:center;box-shadow:none}
 body.fit .gr{display:flex;flex-direction:column;grid-column:1/3;grid-row:3;min-height:0;overflow-y:auto;padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:8px}
 body.fit .gr #jstrip{margin:0!important}
+body.fit .gr>*{flex:none}
+body.fit #jstrip{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+body.fit #jstrip::-webkit-scrollbar{display:none}
+body.fit #jstrip .jc,body.fit #jstrip .hint{flex:none}
+body.fit #jstrip .hint{color:#c9d6e6}
+body.fit #panel.idle .hint,body.fit #panel.idle .jchips{display:none}
+body.fit #panel.idle{min-height:0;padding-top:8px;padding-bottom:8px}
 body.fit.tight .gr #panel:not(.sh){display:none}
 body.fit #panel{margin:0;border-radius:16px;min-height:0}
 body.fit #panel.sh{position:fixed;left:0;right:0;z-index:40;margin:0;border-radius:16px;max-height:var(--shh,55vh);overflow-y:auto;
@@ -265,7 +278,7 @@ body.fit #panel.sh .ecard small{font-size:10px;padding-left:5px;padding-right:5p
     <div class="card hero">
       <canvas id="titleArt" class="tart" role="img" aria-label="Airport Defense title: elemental towers guarding a runway at dusk while an airliner climbs away"></canvas>
       <h2>Defend the airport</h2>
-      <p>Build towers that stay for the whole run and upgrade them to level 5 heroes with super skills. Gravity at level 4, then one random new element every 4 levels. 40 levels, each with three packs of 68 threats. A random airport map every run. One run, one score.</p>
+      <p>Build towers that stay for the whole run and upgrade them to level 5 heroes with super skills. Gravity at level 4, then one random new element every 4 levels. 50 levels, each with three packs of 68 threats. A random airport map every run. One run, one score.</p>
       <div class="stat"><span class="chip" id="stLv">Level 1</span><span class="chip" id="stSc">Score 0</span><span class="chip" id="stJw">Orbs 0</span></div>
       <div class="row" id="runBtns" style="margin-top:12px;position:relative"></div>
     </div>
@@ -283,7 +296,7 @@ body.fit #panel.sh .ecard small{font-size:10px;padding-left:5px;padding-right:5p
       <div class="card" style="margin:0;padding:8px 12px;display:flex;align-items:center;justify-content:center"><b id="loadCnt">Orbs 0</b></div>
     </div>
     <div class="card"><h2>Elements and mastery</h2>
-      <div class="hint" style="margin-bottom:6px">In a run you start with Fire, Water, Earth, Lightning and two beacons, and receive one random new element every 4 levels (Gravity always at level 4). Element orbs dropped by threats are kept here to raise mastery (max 5, +15% damage per level).</div>
+      <div class="hint" style="margin-bottom:6px">In a run you start with Fire, Water, Earth, Lightning and two random elements, and receive one random new element or beacon every 4 levels (Gravity always at level 4). Element orbs dropped by threats are kept here to raise mastery (max 5, +15% damage per level).</div>
       <div id="skList"></div>
     </div>
   </section>
@@ -370,17 +383,17 @@ const SK=[
 {id:'spore',n:'Spore Cloud',c:'#a6a85a',k:'pool',dps:7,rad:46,dur:5,cd:2.5,rng:120,cost:100,fx:{slow:[.7,1]},s:['n',500,250,.3,.12],d:'Lingering cloud that damages and slows.'},
 {id:'crystal',n:'Crystal',c:'#b57fc4',k:'single',dmg:78,cd:1.1,rng:140,cost:100,fx:{},s:['triangle',1800,1100,.16,.1],d:'Crystal spear. High damage to one target.'},
 {id:'warp',n:'Time Warp',c:'#d99a52',k:'aura',rad:80,boost:.25,slow:.8,cost:130,rng:80,s:['sine',400,200,.2,.08],d:'Speeds up nearby towers and slows enemies.'},
-{id:'mirror',n:'Mirror',c:'#c8cdd6',k:'mirror',cd:1.2,rng:120,cost:140,s:['triangle',1000,1000,.1,.1],d:'Copies the last skill cast at half strength.'},
-{id:'power',n:'Power Beacon',c:'#c98a3a',k:'aura',rad:165,boost:0,dmgB:.05,slow:1,cost:120,rng:165,util:1,s:['sawtooth',220,440,.14,.08],d:'Support tower. Adjacent towers deal 5% more damage per beacon level (25% at level 5).'},
+{id:'mirror',n:'Mirror',c:'#c8cdd6',k:'mirror',cd:1.2,rng:120,cost:140,s:['triangle',1000,1000,.1,.1],d:'Copies the last skill cast by another tower at 90% strength.'},
+{id:'power',n:'Power Beacon',c:'#c98a3a',k:'aura',rad:165,boost:0,dmgB:.05,slow:1,cost:120,rng:165,util:1,s:['sawtooth',220,440,.14,.08],d:'Support tower. Nearby towers deal 5% more damage per beacon level (25% at level 5).'},
 {id:'speed',n:'Speed Beacon',c:'#3bbfb0',k:'aura',rad:165,boost:.05,slow:1,cost:110,rng:165,util:1,s:['triangle',700,1400,.12,.08],d:'Support tower. Adjacent towers attack 5% faster per beacon level (25% at level 5).'}
 ];
-const AT={fire:1,water:1,earth:1,lightning:1,speed:1,power:1,wind:2,ice:2,poison:3,nature:3,light:4,spore:4,magnet:5,shadow:5,crystal:6,lava:6,jet:7,thunder:7,stars:8,nova:8,warp:9,meteor:9,gravity:10,mirror:10};
+const AT={fire:1,water:1,earth:1,lightning:1,speed:2,power:2,wind:2,ice:2,poison:3,nature:3,light:4,spore:4,magnet:5,shadow:5,crystal:6,lava:6,jet:7,thunder:7,stars:8,nova:8,warp:9,meteor:9,gravity:10,mirror:10};
 SK.forEach(s=>s.at=AT[s.id]||1);SK.sort((a,b)=>a.at-b.at);
 const SKM={};SK.forEach(s=>SKM[s.id]=s);
-const STARTERS=SK.filter(s=>s.at===1).map(s=>s.id);
-const MAXLV=5,MAXL=40,MAXT=5,RUNKEY='ad_run_v5';
+const STARTERS=['fire','water','earth','lightning'];
+const MAXLV=5,MAXL=50,MAXT=5,RUNKEY='ad_run_v6';
 /* upgrading is the better use of gold: level 5 gives 18x damage for 18.5x the build price, plus wider splash and super skills */
-const LVM=[0,1,2.6,5.4,10,18],LVB=[0,1,1.5,2,2.5,3],UPC=[0,1.5,3,5,8];
+const LVM=[0,1,2.6,5.4,10,18],LVB=[0,1,1.5,2,2.5,3],UPC=[0,1.5,3,5,9.6];
 
 /* ============ ENEMIES / ZONES ============ */
 const ET={
@@ -404,7 +417,9 @@ perfect:{n:'Perfect Storm',hp:1700,sp:34,rew:140,r:22,c:'#34455f',sh:'swirl',bos
 tempest:{n:'Tempest Core',hp:2300,sp:34,rew:180,r:22,c:'#2f3b52',sh:'cloud',boss:1},
 carrier:{n:'Drone Carrier',hp:3600,sp:33,rew:280,r:23,c:'#26303f',sh:'drone',boss:1},
 maelstrom:{n:'Maelstrom',hp:4600,sp:32,rew:330,r:25,c:'#2f3f5a',sh:'swirl',boss:1},
-apex:{n:'Apex Storm',hp:6000,sp:32,rew:420,r:27,c:'#3a2f4f',sh:'swirl',boss:1}
+vortex:{n:'Vortex Titan',hp:6000,sp:32,rew:380,r:26,c:'#2b3a55',sh:'swirl',boss:1},
+armada:{n:'Drone Armada',hp:7500,sp:32,rew:400,r:26,c:'#222c3b',sh:'drone',boss:1},
+apex:{n:'CAAT Van',hp:9000,sp:32,rew:500,r:27,c:'#ffffff',sh:'van',boss:1}
 };
 const ZONES=[
  {n:'Ground',types:['bird','debris','wild'],boss:'flock'},
@@ -414,15 +429,20 @@ const ZONES=[
  {n:'Tempest',types:['super','ashs','glare','hail','ash'],boss:'tempest'},
  {n:'Jetstream',types:['drone','glare','gust','hail','ash'],boss:'carrier'},
  {n:'Stratosphere',types:['super','ashs','drone','glare','storm'],boss:'maelstrom'},
- {n:'Apex',types:['super','ashs','drone','glare','ash','gust'],boss:'apex'}
+ {n:'Apex',types:['super','ashs','drone','glare','ash','gust'],boss:'vortex'},
+ {n:'Skyline',types:['super','ashs','drone','glare','ash','storm'],boss:'armada'},
+ {n:'Zenith',types:['super','ashs','drone','glare','ash','gust'],boss:'apex'}
 ];
-const zoneOf=L=>Math.min(7,Math.floor((L-1)/5));
-const TUNE={cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:2,capTri:5,winB:100000,lifeB:50000,pairP:.05,triP:.04,bossK:21.6,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:204,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.7,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
+const zoneOf=L=>Math.min(9,Math.floor((L-1)/5));
+const TUNE={goldPts:10,moveCost:500,beaconR:1.2,sdN:8,vanK:1.3,vanLeak:7,vanLap:.75,vanSp2:.7,spEvery:6,spK:.4,pureM:1.08,spM:{"lightning":2.4,"gravity":3.5,"poison":1.8,"light":2.1,"shadow":1.4,"lava":2.0,"nova":4,"meteor":2.7,"magnet":4,"spore":2.1,"crystal":1.7,"nature":1.1,"earth":0.74,"stars":0.74,"wind":0.74,"jet":0.74,"thunder":0.74,"fire":0.9,"ice":1.2,"water":1.0},spB:{"lightning":4,"gravity":12,"poison":3.5,"light":5,"shadow":2.8,"lava":4,"nova":10,"meteor":6.5,"magnet":10,"spore":5,"crystal":3,"nature":1.2,"earth":0.05,"stars":0.05,"wind":0.05,"jet":0.05,"thunder":0.05,"fire":0.7,"ice":1.3,"water":1},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:2,capTri:5,winB:100000,lifeB:50000,pairP:.05,triP:.04,bossK:21.6,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:204,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:1,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
 const dens=L=>(12+3.4*L)/TUNE.perL;
 const eF=L=>1+(Math.max(TUNE.eB,TUNE.eA-(TUNE.eA-TUNE.eB)*(L-1)/(TUNE.eL-1))-1);
 const hpMul=L=>1+TUNE.a*(L-1)+TUNE.b*Math.pow(L-1,2)+TUNE.c*Math.pow(L-1,3);
-const SHIELD=Array(30).fill(1).concat([.6,.5,.42,.37,.33,.31,.29,.28,.27,.27]);
-const shieldK=L=>SHIELD[Math.min(MAXL,L)-1]||1;
+const SHIELD=Array(30).fill(1).concat([.6,.5,.42,.37,.33,.31,.29,.28,.27,.27],[.26,.25,.24,.23,.22,.21,.2,.2,.19,.19]);
+/* difficulty index: levels 1 to 28 follow their own number; later levels follow a tuned curve so the run is hardest to survive through the last stretch */
+const LDA=[[1,1],[28,28],[34,38.4],[44,38.8],[49,41.3],[50,42]];
+function Ld(L){const A=TUNE.ld||LDA;if(L<=A[0][0])return A[0][1];for(let i=1;i<A.length;i++){if(L<=A[i][0]){const a=A[i-1],b=A[i];return a[1]+(b[1]-a[1])*(L-a[0])/(b[0]-a[0]);}}return A[A.length-1][1];}
+const shieldK=L=>SHIELD[Math.min(MAXL,Math.round(Ld(L)))-1]||1;
 
 /* ============ MAP ============ */
 /* every run gets its own random taxiway; landscape (14 x 9 cells) on wide screens, portrait (8 x 12) on phones */
@@ -542,15 +562,16 @@ function buildMap(seed,ori){
   if(typeof cv!=='undefined'&&cv){cv.style.aspectRatio=CW+' / '+CH;cv.width=Math.round(CW*DPR);cv.height=Math.round(CH*DPR);}
   document.body.classList.toggle('wide',ORI==='wide');
 }
-/* four airports, one every 10 levels; muted palettes only */
+/* five airports, one every 10 levels; muted palettes only */
 const THEMES=[
  {n:'Meadow Field',g0:'#cfe4d3',g1:'#b8d2bf',tr:['#5f9374','#6aa07b','#548a69'],tuft:'rgba(60,110,80,.28)',sh:'rgba(26,46,74,.2)',light:'rgba(255,248,225,.10)',shade:'rgba(26,46,74,.16)',pond:['#a9d2e2','#5a95b5'],bank:'#dbe8cc'},
  {n:'Harvest Plains',g0:'#e2e1c4',g1:'#cdcca6',tr:['#8a9a5b','#a39a5c','#7d8f55'],tuft:'rgba(120,110,60,.28)',sh:'rgba(60,50,30,.2)',light:'rgba(255,236,200,.12)',shade:'rgba(60,50,30,.14)',pond:['#b5d6dc','#6a9cae'],bank:'#e6e2c6'},
  {n:'Coastal Strip',g0:'#d5e8e2',g1:'#bcd8d0',tr:['#4f8f84','#5f9d8a','#447d75'],tuft:'rgba(50,110,100,.26)',sh:'rgba(26,46,74,.2)',light:'rgba(240,250,255,.10)',shade:'rgba(26,60,74,.16)',pond:['#b3dde6','#4f93ad'],bank:'#e9e3cf'},
- {n:'Dusk Approach',g0:'#a7bcc0',g1:'#8ea6ad',tr:['#4d7480','#567d84','#456a74'],tuft:'rgba(30,60,80,.3)',sh:'rgba(20,30,50,.28)',light:'rgba(255,214,170,.10)',shade:'rgba(20,30,60,.26)',pond:['#9fbfd0','#4d7a96'],bank:'#b9c8c4',dusk:1}
+ {n:'Dusk Approach',g0:'#a7bcc0',g1:'#8ea6ad',tr:['#4d7480','#567d84','#456a74'],tuft:'rgba(30,60,80,.3)',sh:'rgba(20,30,50,.28)',light:'rgba(255,214,170,.10)',shade:'rgba(20,30,60,.26)',pond:['#9fbfd0','#4d7a96'],bank:'#b9c8c4',dusk:1},
+ {n:'Midnight Apron',g0:'#8296a8',g1:'#6f8499',tr:['#3f6070','#476a78','#385868'],tuft:'rgba(20,44,70,.32)',sh:'rgba(14,24,44,.32)',light:'rgba(190,215,255,.10)',shade:'rgba(14,24,50,.3)',pond:['#8aa9c4','#41678a'],bank:'#9fb0b8',dusk:1}
 ];
 let THEME=THEMES[0];
-const mapNo=L=>Math.min(3,Math.floor((L-1)/10));
+const mapNo=L=>Math.min(4,Math.floor((L-1)/10));
 const pickOri=()=>(window.innerWidth>=700&&window.innerHeight>=480)?'wide':'tall';
 
 /* ============ SAVE ============ */
@@ -733,8 +754,8 @@ function buildSchedule(L,lead){
   for(let w=0;w<W;w++){
     const cnt=per+(w<rem?1:0),mix=[pool[(Math.random()*pool.length)|0],pool[(Math.random()*pool.length)|0],pool[(Math.random()*pool.length)|0]];
     for(let k=0;k<cnt;k++)sched.push({t:t0+w*TUNE.packGap,ty:mix[k%3],w:w,d0:-Math.random()*TUNE.spread});
-    /* levels 36 to 40: fast Jet Wake runners slip through weaker defences, so the best defences keep more terminal health */
-    if(L>=TUNE.wakeFrom)for(let k=0;k<Math.round(TUNE.wakeN+TUNE.wakeG*(L-TUNE.wakeFrom));k++)sched.push({t:t0+w*TUNE.packGap+k*.35,ty:'wake',w:w,d0:-rnd(0,60)});
+    /* levels 36 to 50: fast Jet Wake runners slip through weaker defences, so the best defences keep more terminal health */
+    if(L>=TUNE.wakeFrom)for(let k=0;k<Math.round(TUNE.wakeN+TUNE.wakeG*Math.max(0,Ld(L)-TUNE.wakeFrom));k++)sched.push({t:t0+w*TUNE.packGap+k*.35,ty:'wake',w:w,d0:-rnd(0,60)});
     if(L%5===0&&w===W-1)sched.push({t:t0+w*TUNE.packGap,ty:ZONES[z].boss,w:w,d0:-TUNE.spread*.5});
   }
   sched.sort((a,b)=>a.t-b.t);
@@ -760,7 +781,7 @@ function startLevel(L,snap){
   S={level:L,runStart:L,running:false,paused:false,speed:1,over:false,t:0,lives:TUNE.lives,maxLives:TUNE.lives,credits:Math.round(TUNE.startB+TUNE.startM*(L-1)),score:0,kills:0,leaks:0,
      towers:[],enemies:[],fx:[],pools:[],pend:[],jw:{},jwRun:{},sched:buildSchedule(L,TUNE.leadFirst),si:0,sel:null,last:null,tuneIdx:tuneIdx,hudT:0,shake:0,kb:0,started:false,shieldK:shieldK(L),links:[],seen:{},
      avail:STARTERS.slice()};
-  if(!snap)for(let n=4;n<=L;n+=TUNE.newEvery)S.avail.push(pickNew(n));
+  if(!snap){for(let k=0;k<2;k++)S.avail.push(pickStart());for(let n=4;n<=L;n+=TUNE.newEvery)S.avail.push(pickNew(n));}
   if(snap){
     S.runStart=snap.runStart||1;S.lives=snap.lives;S.credits=snap.gold;S.score=snap.score;S.kills=snap.kills||0;S.jwRun=snap.jwRun||{};
     S.avail=(snap.avail||STARTERS).filter(id=>SKM[id]);STARTERS.forEach(id=>{if(S.avail.indexOf(id)<0)S.avail.push(id);});
@@ -784,8 +805,10 @@ function startLevel(L,snap){
   };
   setTimeout(()=>{try{$('bStart').focus();}catch(e){}},50);
 }
+/* the two random starting elements: attacking elements only, never Gravity (it always arrives at level 4) */
+function pickStart(){const c=SK.filter(s=>!s.util&&s.id!=='gravity'&&S.avail.indexOf(s.id)<0);return c[(Math.random()*c.length)|0].id;}
 function pickNew(N){
-  const c=SK.filter(s=>!s.util&&S.avail.indexOf(s.id)<0);if(!c.length)return null;
+  const c=SK.filter(s=>S.avail.indexOf(s.id)<0);if(!c.length)return null;
   if(N>=TUNE.gravBy&&S.avail.indexOf('gravity')<0)return 'gravity';
   return c[(Math.random()*c.length)|0].id;
 }
@@ -837,7 +860,7 @@ function newAirport(N){
   }
   S.cbSig=null;S.seen={};S.quiet=true;updCombos();S.quiet=false;S.sel=null;
   if(S.started&&!S.botRun){S.running=false;
-    $('ovl').innerHTML='<div class="box"><h3>New airport · '+esc(THEME.n)+'</h3><p>Level '+N+'. Your towers have been moved to the new pads with the same element and level. Tap a tower, then <b>Move</b>, to place it on any free pad at no cost.</p><button class="btn p" id="bGo" style="width:100%">Continue</button></div>';
+    $('ovl').innerHTML='<div class="box"><h3>New airport · '+esc(THEME.n)+'</h3><p>Level '+N+'. Your towers have been moved to the new pads with the same element and level. Tap a tower, then <b>Move</b>, to place it on any free pad for '+fmt(TUNE.moveCost)+' gold.</p><button class="btn p" id="bGo" style="width:100%">Continue</button></div>';
     $('ovl').classList.add('on');$('bGo').onclick=()=>{$('ovl').classList.remove('on');S.running=true;};}
   banner('New airport · '+THEME.n,'Level '+N);
 }
@@ -988,7 +1011,7 @@ function comboHit(t,tg){
   const near=(r,n,ex)=>{const L=[];for(const e of S.enemies){if(e.dead||e.d<0||e===ex)continue;const dd=Math.hypot(e.x-x,e.y-y);if(dd<=r+e.r){e._dd=dd;L.push(e);}}L.sort((p,q)=>p._dd-q._dd);if(L.length>n)L.length=n;return L;};
   t.ch=(t.ch||0)+1;SRC_GL=!!d.gl;SRC_WI=!!d.wi;SRC_TRI=!!d.tri;SRC_PAIR=!d.tri&&!d.gl;
   switch(d.k){
-    case 'surge':near(120,4,tg).forEach(e=>dmgE(e,.5*b));break;
+    case 'surge':near(130,6,tg).forEach(e=>dmgE(e,.7*b));break;
     case 'steam':hitList(near(55,cap),.25*b,{burn:[5,2.5],slow:[.6,1.5]},dm);break;
     case 'overgrow':hitList(near(65,cap),.25*b,{stun:.35,slow:[.6,1.5]},dm);break;
     case 'inferno':hitList(near(70,cap),.3*b,{burn:[10,3]},dm);break;
@@ -1060,7 +1083,7 @@ const COMBO_M=1.15,COMBO_GL=1.3,TRI_M=1.35,TRI_GL=1.5;
 const COMBOS=[
 {k:'inferno',a:'meteor',b:'fire',n:'Inferno Strike',m:COMBO_M,c:'#e0743f',d:'Meteor and Fire turn each impact into a firestorm that sets nearby threats burning.'},
 {k:'overgrow',a:'earth',b:'nature',n:'Overgrowth',m:COMBO_M,c:'#5c9a58',d:'Earth and Nature tear up the ground with vines that root and slow nearby threats.'},
-{k:'surge',a:'gravity',b:'lightning',n:'Storm Surge',m:1.6,gl:1,hops:5,c:'#8a6fc4',d:'+60% damage, +5 chain jumps at full strength, sky strikes on nearby threats, and its hits ignore the splash cap. Cuts through the Storm Shield of levels 31 to 40.'},
+{k:'surge',a:'gravity',b:'lightning',n:'Storm Surge',m:1.9,gl:1,hops:5,c:'#8a6fc4',d:'+90% damage, +5 chain jumps at full strength, sky strikes on nearby threats, and its hits ignore the splash cap. Cuts through the Storm Shield of levels 31 to 40.'},
 {k:'steam',a:'fire',b:'water',n:'Steam Burst',m:COMBO_M,c:'#cdd9e3',d:'Scalding steam: hits also burn and slow the threats around the target.'},
 {k:'tstorm',a:'water',b:'lightning',n:'Thunder Rain',m:COMBO_M,hops:3,c:'#3d7fc4',d:'Charged rain: +3 chain jumps at full strength, and each hit arcs to 6 nearby threats and slows them.'},
 {k:'wildfire',a:'fire',b:'wind',n:'Wildfire',m:COMBO_M,c:'#d9a03a',d:'The wind spreads the flames: burning spreads to 4 nearby threats.'},
@@ -1092,9 +1115,15 @@ const pct=m=>'+'+Math.round((m-1)*100)+'%';
 function comboFor(x,y){for(const c of COMBOS){if((c.a===x&&c.b===y)||(c.a===y&&c.b===x))return c;}return null;}
 const near2=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y)<=LINK;
 function setCb(t,d,others){if(!t.cb||d.m>t.cb.def.m)t.cb={def:d,others:others,other:others[0]};}
+/* two towers of the same element side by side, both at level 5 */
+const PURE={};
+function pureDef(id){return PURE[id]||(PURE[id]={k:'pure',n:'Pure Connection',m:TUNE.pureM,pure:1,c:SKM[id].c,d:'Two '+SKM[id].n+' towers side by side at level 5: +8% damage and wider splash.'});}
+/* every pad on the map holds a tower of the same element, all at level 5 */
+const SUPERP={};
+function superDef(id){return SUPERP[id]||(SUPERP[id]={k:'superpure',n:'Super Duper Pure Connection',m:TRI_M*(TUNE.spM[id]||1),tri:1,sp:1,c:SKM[id].c,d:'Every pad holds a '+SKM[id].n+' tower: bonus damage tuned to the element, wider splash, and a blast hits every threat on the map every '+TUNE.spEvery+' seconds.'});}
 function updCombos(){
   if(!S.seen)S.seen={};
-  const sig=S.towers.map(t=>t.pad+':'+t.id+(t.lvl>=TUNE.cbLvl?'+':'')).join(',');
+  const sig=S.towers.map(t=>t.pad+':'+t.id+':'+t.lvl).join(',');
   if(sig===S.cbSig&&S.links)return;S.cbSig=sig;
   S.links=[];
   for(const t of S.towers)t.cb=null;
@@ -1118,7 +1147,35 @@ function updCombos(){
       if(!S.seen[key]){S.seen[key]=1;if(!S.quiet)comboForm([a,b,c],d);}
     }
   }
+  /* pure connections */
+  const P5=T.filter(t=>t.lvl>=MAXT);
+  for(let i=0;i<P5.length;i++)for(let j=i+1;j<P5.length;j++){
+    const a=P5[i],b=P5[j];if(a.id!==b.id||!near2(a,b))continue;const d=pureDef(a.id);
+    addLink(a,b,d);setCb(a,d,[b]);setCb(b,d,[a]);
+    const key=Math.min(a.pad,b.pad)+'-'+Math.max(a.pad,b.pad)+'pure';
+    if(!S.seen[key]){S.seen[key]=1;if(!S.quiet)comboForm([a,b],d);}
+  }
+  /* super duper pure connection */
+  const A=S.towers,id0=A.length?A[0].id:null;
+  S.superPure=null;
+  if(A.length>=PADS.length&&SKM[id0].k!=='aura'&&SKM[id0].k!=='mirror'&&A.every(t=>t.id===id0&&t.lvl>=MAXT)){
+    const d=superDef(id0);S.superPure=d;A.forEach(t=>{t.cb={def:d,others:[],other:null};});
+    if(!S.seen.superpure){S.seen.superpure=1;if(!S.quiet){comboForm(A,d);banner('Super Duper Pure Connection',SKM[id0].n+' everywhere · map-wide blast every '+TUNE.spEvery+' s');}}
+  }
   S.links=Object.keys(lm).map(k=>lm[k]);
+}
+/* super duper pure connection: one blast across the whole map */
+function superBlast(){
+  const t=S.towers[0];if(!t)return;const sk=SKM[t.id],d=S.superPure;
+  const dm=dmgM(t)*d.m*(1+(t.pw||0))*(S.bc>0?2:1),amt=(sk.dmg||(sk.dps?sk.dps*2:30))*dm*TUNE.spK*(TUNE.spB[t.id]||1);
+  SRC_TRI=true;SRC_GL=false;SRC_PAIR=false;
+  for(const e of S.enemies){if(!e.dead&&e.d>=0)dmgE(e,amt);}
+  SRC_TRI=false;
+  if(S.botRun)return;
+  const n0=S.fx.length;fxRing(CW/2,CH/2,Math.hypot(CW,CH)*.55,d.c,.8,6);fxRing(CW/2,CH/2,Math.hypot(CW,CH)*.35,'#ffffff',.6,3);
+  for(let i=n0;i<S.fx.length;i++)S.fx[i].dl=(i-n0)*.08;
+  S.towers.forEach(u=>fxGlow(u.x,u.y-8,26,d.c,.5,.7));
+  S.flashT=.25;S.flashC=d.c;S.shake=RM?0:.12;sfx(SFX.up);
 }
 /* best combo a new tower would join on this pad, for the build buttons */
 function comboPreview(pp,id){
@@ -1235,7 +1292,7 @@ nova:{n:'Absolute Zero',f(t,sk,b,dm){const L=alive();hitList(L,b*2,{slow:[.6,5]}
 warp:{n:'Time Stop',f(t,sk,b,dm){const L=alive();L.forEach(e=>{e.stun=Math.max(e.stun,(e.boss?.6:2)*ccK());});fxRing(t.x,t.y,260,'#d99a52',.9,5);fxGlow(t.x,t.y,200,'#f7e1b8',.6,.35);}},
 meteor:{n:'Meteor Shower',f(t,sk,b,dm){alive().filter(e=>e.d>=0).slice(0,6).forEach((e,i)=>pendAt(e.x,e.y,sk,b*10,80,dm,.6+i*.2,SRC_GL));}},
 gravity:{n:'Black Hole',f(t,sk,b,dm){const L=inR(t,200);pullTo(L,1);hitList(L,b*6,{stun:.8},dm);fxGlow(t.x,t.y,150,'#3b2f56',.9,.6);impactFx(sk,t.x,t.y,200,0);S.shake=RM?0:.3;}},
-mirror:{n:'Reflection',f(t,sk,b,dm){const id=S.lastSuper&&S.lastSuper!=='mirror'?S.lastSuper:'lightning';const s2=SKM[id];SUP[id].f(t,s2,(s2.dmg||40)*dm*.7,dm);}},
+mirror:{n:'Reflection',f(t,sk,b,dm){const id=S.lastSuper&&S.lastSuper!=='mirror'?S.lastSuper:'lightning';const s2=SKM[id];SUP[id].f(t,s2,(s2.dmg||40)*dm*.9,dm);}},
 power:{n:'Battle Cry',f(t,sk,b,dm){S.bc=6;S.towers.forEach(u=>fxRing(u.x,u.y,24,'#c98a3a',.6,2));fxRing(t.x,t.y,220,'#c98a3a',.8,4);}},
 speed:{n:'Overdrive',f(t,sk,b,dm){S.od=6;S.towers.forEach(u=>fxRing(u.x,u.y,24,'#3bbfb0',.6,2));fxRing(t.x,t.y,200,'#3bbfb0',.8,4);}}
 };
@@ -1258,11 +1315,12 @@ function pickTarget(t,range){
 }
 function updTowers(dt){
   updCombos();
+  if(S.superPure){S.spT=(S.spT||0)+dt;if(S.spT>=TUNE.spEvery){S.spT=0;superBlast();}}else S.spT=0;
   for(const t of S.towers){t.boost=0;t.pw=0;}
   if(S.bc>0)S.bc-=dt;
   if(S.od>0)S.od-=dt;if(S.flashT>0)S.flashT-=dt;if(S.armT>0)S.armT-=dt;
   for(const a of S.towers){const sk=SKM[a.id];if(sk.k!=='aura')continue;
-    const r=sk.util?LINK:sk.rad*radM(a),b=sk.util?sk.boost*a.lvl:sk.boost*(1+.15*(slv(a.id)-1))*LVB[a.lvl],pw=sk.util?(sk.dmgB||0)*a.lvl:0;
+    const r=sk.util?LINK*TUNE.beaconR:sk.rad*radM(a),b=sk.util?sk.boost*a.lvl:sk.boost*(1+.15*(slv(a.id)-1))*LVB[a.lvl],pw=sk.util?(sk.dmgB||0)*a.lvl:0;
     for(const t of S.towers){if(t!==a&&dist(a,t)<=r){t.boost=Math.max(t.boost,b);t.pw=Math.max(t.pw,pw);}}}
   for(const t of S.towers){
     const sk=SKM[t.id];if(t.flash>0)t.flash-=dt;
@@ -1272,17 +1330,17 @@ function updTowers(dt){
       if(t.hc>=every){t.hc=0;if(S.lives<S.maxLives){S.lives=Math.min(S.maxLives,S.lives+2);fxText(t.x,t.y-18,"+2 terminal",'#3f7d5c');fxRing(t.x,t.y,26,sk.c,.5);sfx(sk.s,'heal');}}continue;}
     t.cd-=dt*(1+t.boost+(S.od>0?1:0));if(t.cd>0)continue;
     const tg=(sk.k==='single'?pickStrong:pickTarget)(t,sk.rng*rngM(t));if(!tg)continue;
-    if(sk.k==='mirror'){if(!S.last)continue;cast(t,SKM[S.last],tg,.5);t.cd=sk.cd;continue;}
+    if(sk.k==='mirror'){if(!S.last)continue;cast(t,SKM[S.last],tg,.9);t.cd=sk.cd;continue;}
     cast(t,sk,tg,1);t.cd=sk.cd;S.last=sk.id;
   }
 }
-/* levels 36 to 40 climb harder, so the best defences are separated by the terminal health they keep */
-function baseHp(L,ty){return ET[ty].hp*hpMul(L)*dens(L)*TUNE.hpK*eF(L)*(L>35?1+TUNE.late*(L-35):1);}
+/* levels 36 to 50 climb harder, so the best defences are separated by the terminal health they keep */
+function baseHp(L,ty){const D=Ld(L);return ET[ty].hp*hpMul(D)*dens(D)*TUNE.hpK*eF(D)*(D>35?1+TUNE.late*(D-35):1);}
 /* a boss has about 18 times the health of an average threat of its level */
-function bossHp(L){const z=ZONES[zoneOf(L)];return z.types.reduce((a,t)=>a+baseHp(L,t),0)/z.types.length*TUNE.bossK;}
+function bossHp(L){const z=ZONES[zoneOf(L)];return z.types.reduce((a,t)=>a+baseHp(L,t),0)/z.types.length*TUNE.bossK*(z.boss==='apex'?TUNE.vanK:1);}
 function spawn(s){
-  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(L);const hp=T.boss?bossHp(L):baseHp(L,s.ty);
-  const e={ty:s.ty,n:T.n,hp:hp,max:hp,sp:(T.boss||T.fast?T.sp:(T.sp*.45+TUNE.packSp*.55)*(1+rnd(-TUNE.spV,TUNE.spV)))*(1+.012*(L-1)),lo:T.boss?0:rnd(-14,14),r:T.r,c:T.c,sh:T.sh,boss:!!T.boss,d:s.d0||0,x:PP[0].x+(s.d0||0),y:PP[0].y,
+  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=T.boss?bossHp(L):baseHp(L,s.ty);
+  const e={ty:s.ty,n:T.n,hp:hp,max:hp,sp:(T.boss||T.fast?T.sp:(T.sp*.45+TUNE.packSp*.55)*(1+rnd(-TUNE.spV,TUNE.spV)))*(1+.012*(Ld(L)-1)),lo:T.boss?0:rnd(-14,14),r:T.r,c:T.c,sh:T.sh,boss:!!T.boss,d:s.d0||0,x:PP[0].x+(s.d0||0),y:PP[0].y,
     slowF:1,slowT:0,stun:0,burn:null,pz:null,weak:null,rew:T.rew*(1+TUNE.rewL*L)*TUNE.rewK*dn*TUNE.goldK,pts:Math.round(10*(1+.1*L)*(T.boss?20:1)),ph:Math.random()*6,flash:0,ang:0};
   S.enemies.push(e);S.wave=Math.max(S.wave||0,s.w+1);
   if(T.boss)sfx(SFX.boss);
@@ -1303,9 +1361,9 @@ function step(dt){
     if(e.dead)continue;
     const v=e.stun>0?0:e.sp*e.slowF;
     e.d+=v*dt;const p=posAt(e.d);const q=posAt(e.d+3);if(q.x!==p.x||q.y!==p.y)e.ang=Math.atan2(q.y-p.y,q.x-p.x);e.x=p.x-Math.sin(e.ang)*(e.lo||0);e.y=p.y+Math.cos(e.ang)*(e.lo||0);
-    if(e.d>=PLEN){S.lives-=e.boss?10:1;S.leaks++;if(e.boss)S.bossLeaks=(S.bossLeaks||0)+1;sfx(SFX.leak,'leak');S.shake=RM?0:.25;fxText(Math.min(e.x,CW-34),Math.min(e.y,CH-30),e.boss?'-10':'-1','#c0392b');
+    if(e.d>=PLEN){const lc=e.boss?(e.ty==='apex'?((e.lap||0)>=1?S.lives:TUNE.vanLeak):10):1;S.lives-=lc;S.leaks++;if(e.ty==='apex'&&(e.lap||0)>=1)banner('The CAAT Van reached the terminal again','Second run: the terminal is lost');if(e.boss)S.bossLeaks=(S.bossLeaks||0)+1;if(e.ty==='apex')S.vanLeaks=(S.vanLeaks||0)+1;sfx(SFX.leak,'leak');S.shake=RM?0:.25;fxText(Math.min(e.x,CW-34),Math.min(e.y,CH-30),'-'+lc,'#c0392b');
       /* it damaged the terminal and starts the route again from the beginning */
-      e.d=-rnd(10,70);e.lap=(e.lap||0)+1;const p0=posAt(e.d);e.x=p0.x;e.y=p0.y;}
+      e.d=-rnd(10,70);e.lap=(e.lap||0)+1;if(e.ty==='apex'){e.hp=Math.max(1,e.hp*TUNE.vanLap);e.sp*=TUNE.vanSp2;e.flash=.4;}const p0=posAt(e.d);e.x=p0.x;e.y=p0.y;}
   }
   for(const p of S.pools){
     p.t-=dt;
@@ -1356,6 +1414,7 @@ function finishRun(win){
   if(S.over)return;S.over=true;S.running=false;musicStop();clearRun();
   const L=S.level;
   if(win){for(let i=0;i<3;i++)dropOrb(PADS[0].x,PADS[0].y);S.winBonus=TUNE.winB+S.lives*TUNE.lifeB;S.score+=S.winBonus;}
+  S.goldLeft=Math.max(0,Math.floor(S.credits));S.goldBonus=S.goldLeft*TUNE.goldPts;S.score+=S.goldBonus;
   bankJewels();
   RUN={score:Math.round(S.score),level:L,win:!!win,kills:S.kills,lives:S.lives,start:S.runStart,saved:false};
   if(RUN.score>(SAVE.bestRun||0))SAVE.bestRun=RUN.score;
@@ -1367,7 +1426,7 @@ function finishRun(win){
 function openResult(win){
   const jc=Object.keys(S.jwRun).map(k=>'<span class="jc"><i class="gem" style="--c:'+SKM[k].c+'"></i>'+esc(SKM[k].n)+' ×'+S.jwRun[k]+'</span>').join('')||'<span class="hint">No orbs this time.</span>';
   let h='<h2>'+(win?'All '+MAXL+' levels cleared':'Run over at level '+RUN.level)+'</h2>';
-  h+=(win?'<div class="kv"><span>Terminal health left</span><b class="mono">'+S.lives+' of '+S.maxLives+'</b></div><div class="kv"><span>Clearance bonus (100,000 + 50,000 per health point)</span><b class="mono">'+fmt(S.winBonus||0)+'</b></div>':'')+'<div class="kv"><span>Run score</span><b class="mono">'+fmt(RUN.score)+'</b></div>'
+  h+=(win?'<div class="kv"><span>Terminal health left</span><b class="mono">'+S.lives+' of '+S.maxLives+'</b></div><div class="kv"><span>Clearance bonus (100,000 + 50,000 per health point)</span><b class="mono">'+fmt(S.winBonus||0)+'</b></div>':'')+'<div class="kv"><span>Gold left: '+fmt(S.goldLeft||0)+' ('+TUNE.goldPts+' points per gold)</span><b class="mono">'+fmt(S.goldBonus||0)+'</b></div><div class="kv"><span>Run score</span><b class="mono">'+fmt(RUN.score)+'</b></div>'
     +'<div class="kv"><span>Best run score</span><b class="mono">'+fmt(SAVE.bestRun)+'</b></div>'
     +'<div class="kv"><span>Levels reached</span><b class="mono">'+RUN.level+' of '+MAXL+'</b></div>'
     +'<div class="kv"><span>Threats stopped</span><b class="mono">'+RUN.kills+'</b></div>'
@@ -1384,10 +1443,11 @@ function openResult(win){
 /* ============ LEADERBOARD ============ */
 function localBoard(){try{return JSON.parse(localStorage.getItem('ad_local_scores')||'[]');}catch(e){return[];}}
 function setConn(st,tx){const c=$('conn');c.className='badge '+(st||'');$('connTx').textContent=tx;c.setAttribute('aria-label','Leaderboard connection: '+tx);}
-async function fetchTop(){
+async function fetchTop(mode){
   if(!db)throw new Error('Database library not loaded');
   const to=new Promise((_,rej)=>setTimeout(()=>rej(new Error('Connection timed out')),10000));
-  const q=db.from(TBL).select('id,nickname,division,score,level_reached,won,created_at').order('score',{ascending:false}).limit(80);
+  let q=db.from(TBL).select('id,nickname,division,score,level_reached,won,created_at');
+  q=(mode==='level'?q.order('level_reached',{ascending:false}).order('score',{ascending:false}):q.order('score',{ascending:false})).limit(80);
   const r=await Promise.race([q,to]);
   if(r.error)throw new Error(r.error.message||'Query failed');
   const seen={},out=[];
@@ -1419,17 +1479,18 @@ async function saveScore(){
     toast('Could not save online: '+e.message,true);
   }
 }
-async function openTop10(meNick,meDiv){
-  openModal('<h2>Top 10</h2><div class="hint">Run score by nickname and division. Saved at the end of a run.</div><div class="spin" id="lbSpin"></div><div id="lbBody"></div><div class="row" style="margin-top:12px"><button class="btn" data-act="'+(S&&S.over?'menu':'closeM')+'">'+(S&&S.over?'Back to menu':'Close')+'</button></div>');
+async function openTop10(meNick,meDiv,mode){
+  mode=mode==='level'?'level':'score';
+  openModal('<h2>Top 10</h2><div class="row" style="margin:6px 0"><button class="btn'+(mode==='score'?' p':'')+'" data-lb="score">Highest score</button><button class="btn'+(mode==='level'?' p':'')+'" data-lb="level">Highest level</button></div><div class="hint">'+(mode==='level'?'Furthest level reached, ties broken by score.':'Run score by nickname and division.')+' Saved at the end of a run.</div><div class="spin" id="lbSpin"></div><div id="lbBody"></div><div class="row" style="margin-top:12px"><button class="btn" data-act="'+(S&&S.over?'menu':'closeM')+'">'+(S&&S.over?'Back to menu':'Close')+'</button></div>');
   let rows=null,err=null;
-  try{rows=await fetchTop();setConn('ok','Connected');}catch(e){err=e;setConn('bad','Offline');}
+  try{rows=await fetchTop(mode);setConn('ok','Connected');}catch(e){err=e;setConn('bad','Offline');}
   const sp=$('lbSpin');if(sp)sp.remove();
   const body=$('lbBody');if(!body)return;
   let note='';
-  if(!rows){rows=localBoard().slice(0,10);note='<div class="hint" style="margin-top:8px;color:var(--err)">Showing scores saved on this device only ('+esc(err&&err.message)+').</div>';}
+  if(!rows){rows=localBoard().slice().sort((a,b)=>mode==='level'?((b.level_reached||0)-(a.level_reached||0)||b.score-a.score):b.score-a.score).slice(0,10);note='<div class="hint" style="margin-top:8px;color:var(--err)">Showing scores saved on this device only ('+esc(err&&err.message)+').</div>';}
   const nk=(meNick||SAVE.nick||'').toLowerCase(),dv=meDiv||SAVE.div;
   if(!rows.length){body.innerHTML='<div class="empty">No scores yet. Finish a run and be the first.</div>'+note;return;}
-  body.innerHTML='<ul class="lb">'+rows.map((r,i)=>'<li class="'+((r.nickname||'').toLowerCase()===nk&&r.division===dv?'me':'')+'"><span class="rk">'+(i+1)+'</span><span>'+esc(r.nickname)+(r.level_reached?'<span class="lvl">Level '+esc(r.level_reached)+(r.won?' · cleared':'')+'</span>':'')+'</span><span class="dv">'+esc(r.division)+'</span><span class="sc">'+fmt(r.score)+'</span></li>').join('')+'</ul>'+note;
+  body.innerHTML='<ul class="lb">'+rows.map((r,i)=>'<li class="'+((r.nickname||'').toLowerCase()===nk&&r.division===dv?'me':'')+'"><span class="rk">'+(i+1)+'</span><span>'+esc(r.nickname)+(r.level_reached?'<span class="lvl">'+(mode==='level'?(r.won?'Cleared all levels':'Run ended'):'Level '+esc(r.level_reached)+(r.won?' · cleared':''))+'</span>':'')+'</span><span class="dv">'+esc(r.division)+'</span><span class="sc">'+(mode==='level'?'Lv '+esc(r.level_reached||0)+' · '+fmt(r.score):fmt(r.score))+'</span></li>').join('')+'</ul>'+note;
 }
 
 /* ============ UI: SCREENS ============ */
@@ -1459,54 +1520,164 @@ function renderHome(){
     h+='<div class="zr'+(SAVE.maxL>b?' done':'')+'"><div><b>Zone '+(z+1)+' · '+ZONES[z].n+'</b><small>Levels '+a+' to '+b+' · Boss: '+esc(ET[ZONES[z].boss].n)+(z>=6?' · Storm Shield':'')+'</small></div>'
       +'<div class="zg" aria-label="New element orbs">'+els.map(s=>'<i class="gem" style="--c:'+s.c+'" title="'+esc(s.n)+' from level '+s.at+'"></i>').join('')+'</div></div>';
   }
-  h+='<div class="hint" style="margin-top:10px">You start with Fire, Water, Earth, Lightning and the two beacons. Lightning is a starter and Gravity always arrives at level 4. After that, every 4 levels you receive one random new element. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</div>';
+  h+='<div class="hint" style="margin-top:10px">You start with Fire, Water, Earth, Lightning and two random elements. Gravity always arrives at level 4. After that, every 4 levels you receive one random new element or beacon. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</div>';
   $('lvGrid').innerHTML=h;
 }
 /* title art, drawn in code: dusk runway, elemental towers, an airliner climbing out, threats on the horizon */
+/* ----- home cover art: static scenery drawn once, live details drawn each frame ----- */
+let TITLEBG=null,TITLEBGW=0;
+function titleBG(dp,W){
+  const c=document.createElement('canvas');c.width=Math.round(W*dp);c.height=Math.round(W*9/16*dp);
+  const x=c.getContext('2d'),old=ctx;ctx=x;x.setTransform(dp*W/640,0,0,dp*W/640,0,0);
+  const w=640,h=360,hz=200,vx=330,R=mulb(42);let g;
+  /* sky */
+  g=x.createLinearGradient(0,0,0,hz);g.addColorStop(0,'#0e1b30');g.addColorStop(.35,'#1a3a66');g.addColorStop(.7,'#4f7aa0');g.addColorStop(.9,'#b98f72');g.addColorStop(1,'#d9a66e');x.fillStyle=g;x.fillRect(0,0,w,hz+2);
+  for(let i=0;i<120;i++){const sx=R()*w,sy=R()*hz*.45,a=(.25+R()*.6)*(1-sy/(hz*.45));x.fillStyle='rgba(255,255,255,'+a.toFixed(2)+')';x.fillRect(sx,sy,R()<.1?1.6:1,R()<.1?1.6:1);}
+  /* low sun behind the haze */
+  g=x.createRadialGradient(492,hz-4,2,492,hz-4,210);g.addColorStop(0,'rgba(255,226,160,.9)');g.addColorStop(.08,'rgba(250,200,130,.55)');g.addColorStop(.35,'rgba(214,150,96,.2)');g.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=g;x.fillRect(0,0,w,hz+2);
+  x.fillStyle='rgba(255,236,190,.95)';x.beginPath();x.arc(492,hz+2,9,Math.PI,0);x.fill();
+  /* cloud banks: soft puffs, lit from below by the sun, darker storm mass on the left */
+  const puff=(cx,cy,rw,rh,top,bot,a)=>{const gg=x.createRadialGradient(cx,cy-rh*.3,1,cx,cy,Math.max(rw,rh));gg.addColorStop(0,top);gg.addColorStop(.7,bot);gg.addColorStop(1,'rgba(0,0,0,0)');x.globalAlpha=a;x.fillStyle=gg;x.beginPath();x.ellipse(cx,cy,rw,rh,0,0,TAU);x.fill();x.globalAlpha=1;};
+  for(let i=0;i<46;i++){const cx=R()*w,cy=70+R()*95,rw=30+R()*70,rh=8+R()*16,warm=cx>330;
+    puff(cx,cy,rw,rh,warm?'rgba(236,190,150,.55)':'rgba(120,140,170,.5)',warm?'rgba(150,120,120,.25)':'rgba(50,66,96,.35)',.8);}
+  for(let i=0;i<26;i++){const cx=R()*230,cy=110+R()*70,rw=40+R()*60,rh=18+R()*22;puff(cx,cy,rw,rh,'rgba(70,84,112,.95)','rgba(34,46,72,.85)',.9);}
+  for(let i=0;i<10;i++){const cx=20+R()*200,cy=150+R()*40;puff(cx,cy+8,50,10,'rgba(150,120,140,.35)','rgba(80,70,90,0)',.7);}
+  /* far hills and haze */
+  x.fillStyle='#4a5f7a';x.beginPath();x.moveTo(0,hz);for(let px=0;px<=w;px+=8)x.lineTo(px,hz-8-10*Math.sin(px*.012)-6*Math.sin(px*.031+1));x.lineTo(w,hz);x.closePath();x.fill();
+  x.fillStyle='#3b4f68';x.beginPath();x.moveTo(0,hz);for(let px=0;px<=w;px+=6)x.lineTo(px,hz-3-5*Math.sin(px*.02+2)-3*Math.sin(px*.05));x.lineTo(w,hz);x.closePath();x.fill();
+  /* distant city on the right, with lit windows */
+  for(let i=0;i<26;i++){const bx=520+i*5+R()*3,bw=4+R()*5,bh=6+R()*22;x.fillStyle=R()<.5?'#2f405a':'#35486a';x.fillRect(bx,hz-bh,bw,bh);
+    for(let k=0;k<bh/3;k++)if(R()<.35){x.fillStyle='rgba(255,214,150,'+(.5+R()*.4).toFixed(2)+')';x.fillRect(bx+1+R()*(bw-2),hz-bh+2+k*3,1,1);}}
+  g=x.createLinearGradient(0,hz-30,0,hz+4);g.addColorStop(0,'rgba(217,166,110,0)');g.addColorStop(1,'rgba(217,166,110,.35)');x.fillStyle=g;x.fillRect(0,hz-30,w,34);
+  /* ground: grass with mowing bands and texture */
+  g=x.createLinearGradient(0,hz,0,h);g.addColorStop(0,'#4d6b5c');g.addColorStop(.25,'#3a5a4c');g.addColorStop(1,'#1d3530');x.fillStyle=g;x.fillRect(0,hz,w,h-hz);
+  for(let i=0;i<9;i++){const t0=Math.pow(i/9,1.8),t1=Math.pow((i+.5)/9,1.8);x.fillStyle='rgba(255,255,255,.035)';x.fillRect(0,hz+(h-hz)*t0,w,(h-hz)*(t1-t0));}
+  for(let i=0;i<2600;i++){const py=hz+Math.pow(R(),1.4)*(h-hz),px=R()*w,s=.6+(py-hz)/(h-hz)*1.6;x.fillStyle=R()<.5?'rgba(20,40,32,.28)':'rgba(140,170,140,.12)';x.fillRect(px,py,s,s*1.6);}
+  /* terminal building with glass facade and jet bridges, mid distance on the left */
+  const ty0=hz+16;
+  x.fillStyle='rgba(10,20,30,.35)';x.beginPath();x.ellipse(120,ty0+8,120,6,0,0,TAU);x.fill();
+  g=x.createLinearGradient(0,ty0-26,0,ty0);g.addColorStop(0,'#c9d3de');g.addColorStop(1,'#8796a8');x.fillStyle=g;x.fillRect(20,ty0-26,200,26);
+  x.fillStyle='#e6ecf2';x.beginPath();x.moveTo(14,ty0-26);x.quadraticCurveTo(120,ty0-40,226,ty0-26);x.lineTo(226,ty0-23);x.quadraticCurveTo(120,ty0-36,14,ty0-23);x.closePath();x.fill();
+  g=x.createLinearGradient(0,ty0-20,0,ty0-4);g.addColorStop(0,'#5d8bb0');g.addColorStop(1,'#2c4a6a');x.fillStyle=g;x.fillRect(24,ty0-20,192,14);
+  for(let k=0;k<32;k++){x.fillStyle='rgba(20,36,59,.6)';x.fillRect(24+k*6,ty0-20,.8,14);if(R()<.55){x.fillStyle='rgba(255,220,160,'+(.35+R()*.5).toFixed(2)+')';x.fillRect(25+k*6,ty0-18+R()*8,4.4,3);}}
+  x.fillStyle='rgba(255,255,255,.18)';x.fillRect(24,ty0-20,192,2);
+  [[60,1],[110,1],[160,1],[205,1]].forEach(q=>{x.fillStyle='#9aa7b6';x.fillRect(q[0],ty0-6,3,6);x.fillStyle='#b8c2ce';x.beginPath();x.moveTo(q[0],ty0-8);x.lineTo(q[0]+22,ty0+4);x.lineTo(q[0]+22,ty0+8);x.lineTo(q[0],ty0-4);x.closePath();x.fill();});
+  /* control tower */
+  x.fillStyle='#a9b5c3';x.beginPath();x.moveTo(246,ty0+2);x.lineTo(250,ty0-58);x.lineTo(258,ty0-58);x.lineTo(262,ty0+2);x.closePath();x.fill();
+  x.fillStyle='rgba(20,36,59,.25)';x.fillRect(255,ty0-58,3,60);
+  x.fillStyle='#d5dde6';x.beginPath();x.moveTo(242,ty0-58);x.lineTo(266,ty0-58);x.lineTo(270,ty0-64);x.lineTo(238,ty0-64);x.closePath();x.fill();
+  g=x.createLinearGradient(0,ty0-74,0,ty0-64);g.addColorStop(0,'#7fb3cf');g.addColorStop(1,'#2e5677');x.fillStyle=g;x.beginPath();x.moveTo(238,ty0-64);x.lineTo(270,ty0-64);x.lineTo(267,ty0-74);x.lineTo(241,ty0-74);x.closePath();x.fill();
+  x.fillStyle='rgba(255,230,180,.55)';x.fillRect(244,ty0-71,20,3);
+  x.fillStyle='#c4ced9';x.fillRect(240,ty0-77,28,3);x.fillStyle='#8a97a8';x.fillRect(253,ty0-84,1.4,7);
+  /* hangar on the right */
+  x.fillStyle='rgba(10,20,30,.35)';x.beginPath();x.ellipse(560,hz+28,70,6,0,0,TAU);x.fill();
+  g=x.createLinearGradient(0,hz+2,0,hz+26);g.addColorStop(0,'#b7c2cf');g.addColorStop(1,'#7c8a9c');x.fillStyle=g;
+  x.beginPath();x.moveTo(500,hz+26);x.lineTo(500,hz+10);x.quadraticCurveTo(560,hz-14,620,hz+10);x.lineTo(620,hz+26);x.closePath();x.fill();
+  x.strokeStyle='rgba(60,74,94,.5)';x.lineWidth=.6;for(let k=0;k<12;k++){const px=504+k*10;x.beginPath();x.moveTo(px,hz+26);x.lineTo(px,hz+8-Math.sin((k+.5)/12*Math.PI)*12);x.stroke();}
+  x.fillStyle='#2b3a4f';x.fillRect(522,hz+12,76,14);x.fillStyle='rgba(255,214,150,.4)';x.fillRect(524,hz+14,72,2);
+  /* taxiway from the runway to the terminal */
+  x.strokeStyle='#3e4b5c';x.lineWidth=12;x.lineCap='butt';x.beginPath();x.moveTo(vx-40,hz+40);x.quadraticCurveTo(220,hz+26,150,ty0+10);x.stroke();
+  x.strokeStyle='rgba(226,201,110,.8)';x.lineWidth=1.2;x.setLineDash([5,4]);x.beginPath();x.moveTo(vx-40,hz+40);x.quadraticCurveTo(220,hz+26,150,ty0+10);x.stroke();x.setLineDash([]);
+  /* runway in perspective: shoulders, asphalt texture, markings */
+  const L=(t)=>({y:hz+(h-hz)*t,hw:12+250*t});
+  x.fillStyle='#6b7684';x.beginPath();x.moveTo(vx-16,hz);x.lineTo(vx+16,hz);x.lineTo(vx+290,h);x.lineTo(vx-290,h);x.closePath();x.fill();
+  g=x.createLinearGradient(0,hz,0,h);g.addColorStop(0,'#3f4a5a');g.addColorStop(1,'#2d3746');x.fillStyle=g;x.beginPath();x.moveTo(vx-12,hz);x.lineTo(vx+12,hz);x.lineTo(vx+262,h);x.lineTo(vx-262,h);x.closePath();x.fill();
+  x.save();x.clip();
+  for(let i=0;i<5000;i++){const t=Math.pow(R(),1.3),p=L(t),px=vx+(R()*2-1)*p.hw,s=.4+t*1.4;x.fillStyle=R()<.5?'rgba(255,255,255,.06)':'rgba(0,0,0,.12)';x.fillRect(px,p.y,s,s);}
+  /* tyre marks in the touchdown zone */
+  for(let i=0;i<14;i++){const t=.35+R()*.3,p=L(t),o=(R()<.5?-1:1)*(.15+R()*.2)*p.hw;x.fillStyle='rgba(10,14,20,.18)';x.beginPath();x.ellipse(vx+o,p.y,1.5+t*4,1+t*6,0,0,TAU);x.fill();}
+  x.restore();
+  x.strokeStyle='rgba(240,244,248,.85)';x.lineWidth=1.4;x.beginPath();x.moveTo(vx-11,hz);x.lineTo(vx-256,h);x.moveTo(vx+11,hz);x.lineTo(vx+256,h);x.stroke();
+  for(let i=0;i<18;i++){const t0=Math.pow(i/18,2.1),t1=Math.pow((i+.45)/18,2.1),a=L(t0),b=L(t1),s0=.08+t0*3.2,s1=.08+t1*3.2;
+    x.fillStyle='rgba(240,244,248,.82)';x.beginPath();x.moveTo(vx-s0,a.y);x.lineTo(vx+s0,a.y);x.lineTo(vx+s1,b.y);x.lineTo(vx-s1,b.y);x.closePath();x.fill();}
+  /* touchdown zone bars */
+  [.42,.56].forEach(t=>{const a=L(t),b=L(t+.05);[-.55,-.35,.35,.55].forEach(f=>{x.fillStyle='rgba(240,244,248,.7)';x.beginPath();x.moveTo(vx+a.hw*f-a.hw*.06,a.y);x.lineTo(vx+a.hw*f+a.hw*.06,a.y);x.lineTo(vx+b.hw*f+b.hw*.06,b.y);x.lineTo(vx+b.hw*f-b.hw*.06,b.y);x.closePath();x.fill();});});
+  /* runway number and threshold piano keys near the viewer */
+  {const a=L(.74),b=L(.86);x.save();x.fillStyle='rgba(240,244,248,.85)';x.translate(vx,(a.y+b.y)/2);x.scale(1,.55);x.textAlign='center';x.font='800 46px Inter,Arial,sans-serif';x.fillText('09',0,16);x.restore();}
+  {const a=L(.9),b=L(1);for(let k=-6;k<=6;k++){if(k===0)continue;const f0=k/7.2-.035,f1=k/7.2+.035;x.fillStyle='rgba(240,244,248,.8)';
+    x.beginPath();x.moveTo(vx+a.hw*f0,a.y);x.lineTo(vx+a.hw*f1,a.y);x.lineTo(vx+b.hw*f1,b.y);x.lineTo(vx+b.hw*f0,b.y);x.closePath();x.fill();}}
+  /* windsock pole */
+  x.strokeStyle='#c9d3de';x.lineWidth=1.2;x.beginPath();x.moveTo(606,hz+52);x.lineTo(606,hz+28);x.stroke();
+  x.fillStyle='#e0743f';x.beginPath();x.moveTo(606,hz+28);x.lineTo(622,hz+30);x.lineTo(622,hz+33);x.lineTo(606,hz+34);x.closePath();x.fill();
+  x.fillStyle='#ffffff';x.fillRect(611,hz+28.6,3,4.8);x.fillRect(617,hz+29.4,2.6,3.8);
+  /* foreground vignette */
+  g=x.createRadialGradient(w/2,h*.55,h*.3,w/2,h*.55,w*.75);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(8,16,30,.55)');x.fillStyle=g;x.fillRect(0,0,w,h);
+  ctx=old;return c;
+}
+function titleTower(x,tx,ty,c,k,i,tm){
+  /* stone plinth, bronze ring, glass column and a glowing element core */
+  x.fillStyle='rgba(0,0,0,.4)';x.beginPath();x.ellipse(tx+7*k,ty+3*k,26*k,7*k,0,0,TAU);x.fill();
+  cylinder(tx,ty-6*k,20*k,7*k,8*k,'#3a4658','#6f7d91','#252f3d');
+  x.fillStyle='#7d8a9c';x.beginPath();x.ellipse(tx,ty-6*k,20*k,7*k,0,0,TAU);x.fill();
+  cylinder(tx,ty-20*k,14*k,5*k,14*k,'#22344d','#4a6a94','#182a40');
+  x.strokeStyle='rgba(255,255,255,.12)';x.lineWidth=.8*k;for(let q=0;q<4;q++){const px=tx-10*k+q*6.6*k;x.beginPath();x.moveTo(px,ty-20*k);x.lineTo(px,ty-7*k);x.stroke();}
+  x.fillStyle='#8aa3c4';x.beginPath();x.ellipse(tx,ty-20*k,14*k,5*k,0,0,TAU);x.fill();x.strokeStyle='#e3b64a';x.lineWidth=1.6*k;x.stroke();
+  x.strokeStyle='#c99a2e';x.lineWidth=1.2*k;x.beginPath();x.ellipse(tx,ty-7*k,20*k,7*k,0,0,Math.PI);x.stroke();
+  const oy=ty-44*k+Math.sin(tm*2+i)*3*k;
+  x.globalCompositeOperation='lighter';glowC(tx,oy,38*k,c,.5);glowC(tx,ty-20*k,18*k,c,.25);x.globalCompositeOperation='source-over';
+  x.strokeStyle=hx(c,.35);x.lineWidth=2*k;x.beginPath();x.moveTo(tx,ty-22*k);x.lineTo(tx,oy+9*k);x.stroke();
+  orb(tx,oy,9.5*k,'#ffffff',c,shade(c,-.45));
+  x.strokeStyle=hx(c,.75);x.lineWidth=1.2*k;x.beginPath();x.ellipse(tx,oy,18*k,5.5*k,Math.sin(tm+i)*.3,0,TAU);x.stroke();
+  for(let q=0;q<3;q++){const a=tm*1.6+q*2.1+i;x.fillStyle=hx(c,.9);x.beginPath();x.arc(tx+Math.cos(a)*18*k,oy+Math.sin(a)*5.5*k,1.4*k,0,TAU);x.fill();}
+}
+function titlePlane(x,tm){
+  /* generic twin-engine airliner climbing away, gear up, lights on */
+  const cyc=(tm*10)%70,px=430+cyc,py=128-cyc*.42;x.save();x.translate(px,py);x.rotate(-.3);
+  x.globalCompositeOperation='lighter';
+  [[-14,22],[-6,-16]].forEach(q=>{const gg=x.createLinearGradient(q[0]-150,q[1],q[0],q[1]);gg.addColorStop(0,'rgba(255,255,255,0)');gg.addColorStop(1,'rgba(255,255,255,.22)');x.strokeStyle=gg;x.lineWidth=2.2;x.beginPath();x.moveTo(q[0]-150,q[1]+8);x.lineTo(q[0],q[1]);x.stroke();});
+  x.globalCompositeOperation='source-over';
+  /* far wing */
+  x.fillStyle='#aeb9c6';x.beginPath();x.moveTo(-2,-2);x.lineTo(-20,-24);x.lineTo(-13,-24);x.lineTo(8,-3);x.closePath();x.fill();
+  x.fillStyle='#8e9bb0';x.beginPath();x.ellipse(-5,-14,5,2.4,-.1,0,TAU);x.fill();
+  /* fuselage */
+  let g=x.createLinearGradient(0,-7,0,7);g.addColorStop(0,'#ffffff');g.addColorStop(.5,'#e6ecf2');g.addColorStop(1,'#a9b5c3');x.fillStyle=g;
+  x.beginPath();x.moveTo(52,0);x.quadraticCurveTo(50,-6.5,40,-6.5);x.lineTo(-38,-5.5);x.quadraticCurveTo(-50,-4,-54,-1);x.lineTo(-54,1);x.quadraticCurveTo(-46,6,-36,6.5);x.lineTo(40,6.5);x.quadraticCurveTo(50,6.5,52,0);x.closePath();x.fill();
+  x.strokeStyle='rgba(60,74,94,.5)';x.lineWidth=.5;x.stroke();
+  x.fillStyle='#1e4d8c';x.fillRect(-40,1.6,80,1.4);x.fillStyle='#2a9d8f';x.fillRect(-40,3.2,80,.9);
+  x.fillStyle='#2c3e55';for(let k=0;k<20;k++)x.fillRect(-30+k*3.4,-2.6,1.6,1.4);
+  x.fillStyle='#20324a';x.beginPath();x.moveTo(46,-3.6);x.lineTo(50,-1.2);x.lineTo(45,-1.2);x.closePath();x.fill();
+  /* tail fin with teal livery */
+  x.fillStyle='#e6ecf2';x.beginPath();x.moveTo(-34,-5);x.lineTo(-49,-25);x.lineTo(-42,-25);x.lineTo(-24,-5.5);x.closePath();x.fill();
+  g=x.createLinearGradient(-48,-25,-30,-6);g.addColorStop(0,'#2a9d8f');g.addColorStop(1,'#1e4d8c');x.fillStyle=g;x.beginPath();x.moveTo(-39,-6);x.lineTo(-48,-24);x.lineTo(-43,-24);x.lineTo(-30,-6);x.closePath();x.fill();
+  x.fillStyle='#cfd8e2';x.beginPath();x.moveTo(-44,-1);x.lineTo(-54,-9);x.lineTo(-50,-9);x.lineTo(-38,-1);x.closePath();x.fill();
+  /* near wing and engine */
+  x.fillStyle='#d5dde6';x.beginPath();x.moveTo(-4,2);x.lineTo(-26,32);x.lineTo(-17,32);x.lineTo(12,3);x.closePath();x.fill();
+  x.strokeStyle='rgba(60,74,94,.4)';x.lineWidth=.5;x.stroke();
+  g=x.createLinearGradient(0,12,0,22);g.addColorStop(0,'#e6ecf2');g.addColorStop(1,'#8e9bb0');x.fillStyle=g;rr(-12,12,16,8,4);x.fill();x.fillStyle='#1c2838';x.beginPath();x.ellipse(4,16,1.6,3.4,0,0,TAU);x.fill();
+  x.globalCompositeOperation='lighter';glowC(-24,31,6,'#e04a3a',Math.sin(tm*5)>0?.9:.15);glowC(-20,-23,4,'#6fcf97',.5);glowC(48,1,7,'#ffffff',.75);
+  if(Math.sin(tm*7)>.6)glowC(-52,0,6,'#ffffff',.9);x.globalCompositeOperation='source-over';
+  x.restore();
+}
 function drawTitle(tm){
   const cvs=$('titleArt');if(!cvs||!cvs.offsetWidth)return;
   const W=cvs.offsetWidth,H=Math.round(W*9/16),dp=Math.min(2,window.devicePixelRatio||1);
   if(cvs.width!==Math.round(W*dp)){cvs.width=Math.round(W*dp);cvs.height=Math.round(H*dp);}
-  const x=cvs.getContext('2d'),old=ctx;ctx=x;x.setTransform(dp*W/640,0,0,dp*W/640,0,0);
-  const w=640,h=360,hz=196;
-  let g=x.createLinearGradient(0,0,0,hz);g.addColorStop(0,'#14243b');g.addColorStop(.55,'#1e4d8c');g.addColorStop(1,'#4f8fa8');x.fillStyle=g;x.fillRect(0,0,w,hz);
-  g=x.createRadialGradient(470,hz,10,470,hz,260);g.addColorStop(0,'rgba(241,210,122,.55)');g.addColorStop(.4,'rgba(217,154,82,.18)');g.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=g;x.fillRect(0,0,w,hz);
-  const R2=mulb(7);for(let i=0;i<70;i++){const sx=R2()*w,sy=R2()*hz*.7,tw=.35+.35*Math.sin(tm*2+i);x.fillStyle='rgba(255,255,255,'+(tw*(1-sy/hz))+')';x.fillRect(sx,sy,1.2,1.2);}
-  /* storm threats gathering on the horizon */
-  [[80,150,46],[150,160,36],[560,154,40],[610,166,30]].forEach((c,i)=>{const cx=c[0]+Math.sin(tm*.3+i)*6;
-    g=x.createRadialGradient(cx,c[1],4,cx,c[1],c[2]);g.addColorStop(0,'rgba(63,79,107,.95)');g.addColorStop(1,'rgba(63,79,107,0)');x.fillStyle=g;x.beginPath();x.ellipse(cx,c[1],c[2]*1.5,c[2]*.7,0,0,TAU);x.fill();
-    if(Math.sin(tm*3+i*2)>.93){x.strokeStyle='rgba(255,243,176,.9)';x.lineWidth=1.4;x.beginPath();x.moveTo(cx,c[1]);x.lineTo(cx-4,c[1]+14);x.lineTo(cx+3,c[1]+20);x.lineTo(cx-2,c[1]+34);x.stroke();}});
-  /* ground */
-  g=x.createLinearGradient(0,hz,0,h);g.addColorStop(0,'#2c4a52');g.addColorStop(1,'#16283d');x.fillStyle=g;x.fillRect(0,hz,w,h-hz);
-  /* runway in perspective */
-  const vx=330;x.fillStyle='#3a4658';x.beginPath();x.moveTo(vx-14,hz);x.lineTo(vx+14,hz);x.lineTo(vx+250,h);x.lineTo(vx-250,h);x.closePath();x.fill();
-  g=x.createLinearGradient(0,hz,0,h);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(1,'rgba(255,255,255,.06)');x.fillStyle=g;x.fill();
-  for(let i=0;i<14;i++){const t0=Math.pow(i/14,2),t1=Math.pow((i+.5)/14,2),y0=hz+(h-hz)*t0,y1=hz+(h-hz)*t1,s0=.06+t0*3,s1=.06+t1*3;
-    x.fillStyle='rgba(240,244,248,.8)';x.beginPath();x.moveTo(vx-s0,y0);x.lineTo(vx+s0,y0);x.lineTo(vx+s1,y1);x.lineTo(vx-s1,y1);x.closePath();x.fill();}
-  for(let i=1;i<=16;i++){const t=Math.pow(i/16,1.7),y=hz+(h-hz)*t,dx=14+236*t,on=((i+Math.floor(tm*6))%16)<2;
-    [-1,1].forEach(sd=>{const lx=vx+sd*dx;x.globalCompositeOperation='lighter';glowC(lx,y,3+9*t,on?'#ffffff':'#f1d27a',on?.9:.5);x.globalCompositeOperation='source-over';});}
+  if(!TITLEBG||TITLEBGW!==cvs.width){TITLEBG=titleBG(dp,W);TITLEBGW=cvs.width;}
+  const x=cvs.getContext('2d'),old=ctx;ctx=x;x.setTransform(1,0,0,1,0,0);x.drawImage(TITLEBG,0,0);x.setTransform(dp*W/640,0,0,dp*W/640,0,0);
+  const w=640,h=360,hz=200,vx=330;let g;
+  /* storm flashes inside the dark cloud bank */
+  [[70,150],[150,166],[40,178]].forEach((c,i)=>{const f=Math.sin(tm*2.3+i*2.7);if(f>.94){x.globalCompositeOperation='lighter';glowC(c[0],c[1],60,'#cfd8ff',(f-.94)*6);x.globalCompositeOperation='source-over';
+    x.strokeStyle='rgba(255,243,200,.9)';x.lineWidth=1.3;x.beginPath();x.moveTo(c[0],c[1]);x.lineTo(c[0]-5,c[1]+12);x.lineTo(c[0]+3,c[1]+18);x.lineTo(c[0]-3,c[1]+34);x.stroke();}});
+  /* tower beacon and terminal apron lights */
+  x.globalCompositeOperation='lighter';glowC(253.7,hz+16-84,4,'#e04a3a',Math.sin(tm*3)>0?.95:.2);
+  /* runway edge lights (white, chasing) and green threshold lights */
+  for(let i=1;i<=18;i++){const t=Math.pow(i/18,1.8),y=hz+(h-hz)*t,dx=12+250*t,on=((i+Math.floor(tm*7))%18)<2;
+    [-1,1].forEach(sd=>glowC(vx+sd*(dx+3),y,2.5+8*t,on?'#ffffff':'#f1d27a',on?.95:.45));}
+  for(let k=-8;k<=8;k++){const y=hz+(h-hz)*.885;glowC(vx+k*28,y,4,'#6fcf97',.5);}
+  /* approach strobes running toward the runway */
+  const st=Math.floor(tm*9)%6;glowC(vx,hz-2-st*.6,4+st*.3,'#ffffff',.6);
+  x.globalCompositeOperation='source-over';
   /* elemental towers guarding the runway */
-  [[118,300,'#d9694a',1.15],[205,252,'#4a90c9',.85],[470,258,'#e8c547',.9],[548,306,'#8a6fc4',1.2]].forEach((q,i)=>{const tx=q[0],ty=q[1],c=q[2],k=q[3];
-    x.fillStyle='rgba(0,0,0,.35)';x.beginPath();x.ellipse(tx+6*k,ty+4*k,24*k,7*k,0,0,TAU);x.fill();
-    cylinder(tx,ty-14*k,16*k,6*k,14*k,'#22344d','#4a6a94','#182a40');x.fillStyle='#8aa3c4';x.beginPath();x.ellipse(tx,ty-14*k,16*k,6*k,0,0,TAU);x.fill();x.strokeStyle='#e3b64a';x.lineWidth=1.5*k;x.stroke();
-    const oy=ty-40*k+Math.sin(tm*2+i)*3*k;x.globalCompositeOperation='lighter';glowC(tx,oy,34*k,c,.55);x.globalCompositeOperation='source-over';orb(tx,oy,9*k,'#ffffff',c,shade(c,-.45));
-    x.strokeStyle=hx(c,.75);x.lineWidth=1.2*k;x.beginPath();x.ellipse(tx,oy,17*k,5*k,Math.sin(tm+i)*.3,0,TAU);x.stroke();});
-  /* energy link between two towers */
-  x.globalCompositeOperation='lighter';x.strokeStyle='rgba(185,163,230,.6)';x.lineWidth=1.6;x.beginPath();x.moveTo(470,232);const R3=mulb(Math.floor(tm*10));for(let i=1;i<10;i++)x.lineTo(470+78*i/10,232+(R3()-.5)*10+20*i/10);x.lineTo(548,258);x.stroke();x.globalCompositeOperation='source-over';
-  /* an airliner climbing out (generic design) */
-  const px=440+((tm*12)%50),py=150-((tm*12)%50)*.35;x.save();x.translate(px,py);x.rotate(-.33);
-  x.fillStyle='#e8edf3';x.beginPath();x.ellipse(0,0,46,6.5,0,0,TAU);x.fill();
-  x.beginPath();x.moveTo(-6,0);x.lineTo(-24,30);x.lineTo(-15,30);x.lineTo(10,2);x.closePath();x.fill();
-  x.beginPath();x.moveTo(-6,-1);x.lineTo(-18,-20);x.lineTo(-11,-20);x.lineTo(6,-2);x.closePath();x.fillStyle='#c9d3de';x.fill();
-  x.fillStyle='#e8edf3';x.beginPath();x.moveTo(-36,-2);x.lineTo(-48,-20);x.lineTo(-41,-20);x.lineTo(-28,-3);x.closePath();x.fill();
-  x.fillStyle='#2a9d8f';x.beginPath();x.moveTo(-40,-3);x.lineTo(-47,-19);x.lineTo(-43,-19);x.lineTo(-35,-4);x.closePath();x.fill();
-  x.fillStyle='#1e4d8c';x.fillRect(-30,-1,62,2);x.fillStyle='#4a6a8a';x.beginPath();x.ellipse(40,-1.5,4,2.4,0,0,TAU);x.fill();
-  x.globalCompositeOperation='lighter';glowC(-12,26,6,'#e04a3a',Math.sin(tm*5)>0?.9:.2);glowC(44,0,5,'#ffffff',.7);x.globalCompositeOperation='source-over';x.restore();
+  [[104,322,'#d9694a',1.2],[200,262,'#4a90c9',.86],[468,266,'#e8c547',.9],[560,326,'#8a6fc4',1.25]].forEach((q,i)=>titleTower(x,q[0],q[1],q[2],q[3],i,tm));
+  /* energy link between Gravity and Lightning */
+  x.globalCompositeOperation='lighter';x.strokeStyle='rgba(185,163,230,.65)';x.lineWidth=1.6;x.beginPath();x.moveTo(468,226);const R3=mulb(Math.floor(tm*10));for(let i=1;i<10;i++)x.lineTo(468+92*i/10,226+(R3()-.5)*10+46*i/10);x.lineTo(560,271);x.stroke();
+  x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=.6;x.stroke();x.globalCompositeOperation='source-over';
+  titlePlane(x,tm);
   /* title */
-  x.textAlign='center';x.font='800 50px Inter,system-ui,sans-serif';x.lineWidth=8;x.strokeStyle='rgba(20,36,59,.85)';x.strokeText('AIRPORT DEFENSE',w/2,64);
-  g=x.createLinearGradient(0,30,0,70);g.addColorStop(0,'#ffffff');g.addColorStop(1,'#9fe0d6');x.fillStyle=g;x.fillText('AIRPORT DEFENSE',w/2,64);
-  x.font='600 15px Inter,system-ui,sans-serif';x.fillStyle='rgba(241,210,122,.95)';x.fillText('HOLD THE LINE · PROTECT THE TERMINAL',w/2,90);
-  g=x.createLinearGradient(0,h-60,0,h);g.addColorStop(0,'rgba(26,46,74,0)');g.addColorStop(1,'rgba(26,46,74,.85)');x.fillStyle=g;x.fillRect(0,h-60,w,60);
+  x.textAlign='center';x.font='800 50px Inter,system-ui,sans-serif';x.lineWidth=9;x.strokeStyle='rgba(14,27,48,.85)';x.lineJoin='round';x.strokeText('AIRPORT DEFENSE',w/2,62);
+  g=x.createLinearGradient(0,28,0,68);g.addColorStop(0,'#ffffff');g.addColorStop(1,'#9fe0d6');x.fillStyle=g;x.fillText('AIRPORT DEFENSE',w/2,62);
+  x.font='600 15px Inter,system-ui,sans-serif';x.lineWidth=4;x.strokeStyle='rgba(14,27,48,.7)';x.strokeText('HOLD THE LINE · PROTECT THE TERMINAL',w/2,88);x.fillStyle='rgba(241,210,122,.95)';x.fillText('HOLD THE LINE · PROTECT THE TERMINAL',w/2,88);
+  g=x.createLinearGradient(0,h-50,0,h);g.addColorStop(0,'rgba(26,46,74,0)');g.addColorStop(1,'rgba(26,46,74,.8)');x.fillStyle=g;x.fillRect(0,h-50,w,50);
   ctx=old;
 }
 let titleRaf=0;
@@ -1544,7 +1715,7 @@ function towerStat(t,lvl){
   if(s.util)return 'Adjacent towers: '+(s.dmgB?'damage':'attack speed')+' +'+Math.round((s.dmgB||s.boost)*lvl*100)+'%';
   if(s.k==='aura')return 'Radius '+Math.round(s.rad*radM(o))+' · attack speed +'+Math.round(s.boost*(1+.15*(slv(t.id)-1))*LVB[lvl]*100)+'% nearby';
   if(s.k==='pool')return 'Zone '+(s.dps*dmgM(o)).toFixed(0)+' dmg/s';
-  if(s.k==='mirror')return 'Copies last skill at half strength';
+  if(s.k==='mirror')return 'Copies last skill at 90% strength';
   return 'Damage '+Math.round(s.dmg*dmgM(o))+' · range '+(s.rng>=999?'whole map':Math.round(s.rng*rngM(o)));
 }
 function renderPanel(){
@@ -1555,12 +1726,12 @@ function renderPanel(){
     const ids=S.avail.slice().sort((a,b)=>SKM[a].at-SKM[b].at);
     const nT=S.towers.length;
     p.innerHTML='<h3>Build tower '+(nT+1)+'</h3><div class="hint">Gold <b class="mono" id="pCred">'+Math.floor(S.credits)+'</b>. Pick an element for this pad.</div><div class="bgrid">'
-      +ids.map(id=>{const s=SKM[id];const cb=null;
-        return '<button class="ecard" data-build="'+id+'" style="--c:'+s.c+'" aria-label="'+esc(s.n)+', '+kindOf(s)+', '+buildCost(id)+' gold"><img alt="" src="'+cardImg(id)+'"><span class="en">'+esc(s.n)+'</span><small>'+kindOf(s)+'</small><small class="gc">'+buildCost(id)+' gold</small></button>';}).join('')
+      +ids.map(id=>{const s=SKM[id];const cb=comboPreview(pp,id);
+        return '<button class="ecard'+(cb?' cbh'+(cb.tri?' tri':''):'')+'"'+(cb?' data-hint="'+(cb.tri?'TRI':'PAIR')+'"':'')+' data-build="'+id+'" style="--c:'+s.c+'" aria-label="'+esc(s.n)+', '+kindOf(s)+', '+buildCost(id)+' gold'+(cb?', would form a '+(cb.tri?'tri':'pair')+' combination':'')+'"><img alt="" src="'+cardImg(id)+'"><span class="en">'+esc(s.n)+'</span><small>'+kindOf(s)+'</small><small class="gc">'+buildCost(id)+' gold</small></button>';}).join('')
       +'</div><div class="row" style="margin-top:8px"><button class="btn" data-act="deselect">Cancel</button></div>';
   }else if(S.sel&&S.sel.type==='move'){
     const t=S.towers[S.sel.i];
-    p.innerHTML='<h3>Move '+esc(SKM[t.id].n)+' tower</h3><div class="hint">Tap a free pad to move it there. Moving is free; the tower pauses for a second.</div><div class="row" style="margin-top:10px"><button class="btn" data-act="deselect">Cancel</button></div>';
+    p.innerHTML='<h3>Move '+esc(SKM[t.id].n)+' tower</h3><div class="hint">Tap a free pad to move it there. Moving costs '+fmt(TUNE.moveCost)+' gold; the tower pauses for a second.</div><div class="row" style="margin-top:10px"><button class="btn" data-act="deselect">Cancel</button></div>';
   }else if(S.sel&&S.sel.type==='tower'){
     const t=S.towers[S.sel.i];
     if(!t){S.sel=null;return renderPanel();}
@@ -1568,9 +1739,9 @@ function renderPanel(){
     p.innerHTML='<h3 style="display:flex;align-items:center;gap:8px"><i class="gem" style="--c:'+s.c+'"></i>'+esc(s.n)+' tower · Level '+t.lvl+'/'+MAXT+' · '+TIER[t.lvl].n+'</h3><div class="hint mono">'+towerStat(t,t.lvl)+(s.cd?' · reload '+s.cd+' s':'')+'</div>'
       +(t.lvl<MAXT?'<div class="hint mono" style="margin-top:2px">Next: '+towerStat(t,t.lvl+1)+(t.lvl+1===MAXT?' · becomes a hero':'')+'</div>':'')
       +'<div class="hint" style="margin-top:2px">'+(t.lvl>=MAXT?'Super: <b>'+esc(SUP[t.id].n)+'</b> · in <span id="supIn">'+Math.max(1,TUNE.supHits-(t.sh||0))+'</span> '+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?'pulses':'hits')+(hasMeteor()?' · Armageddon in <span id="armIn">'+Math.max(1,TUNE.armHits-(t.ah||0))+'</span>':' · Armageddon needs a Meteor tower'):'Level 5 super: '+esc(SUP[t.id].n)+', every '+TUNE.supHits+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?' pulses':' hits'))+'</div>'
-      +(t.cb?'<div class="hint" style="color:#1d776d;font-weight:600;margin-top:4px">'+(t.cb.def.tri?'Tri combo':'Combo')+': '+esc(t.cb.def.n)+' '+pct(t.cb.def.m)+' with '+t.cb.others.map(o=>esc(SKM[o.id].n)).join(' and ')+'</div><div class="hint">'+esc(t.cb.def.d)+'</div>':'')
+      +(t.cb?'<div class="hint" style="color:#1d776d;font-weight:600;margin-top:4px">'+(t.cb.def.tri?'Tri combo':'Combo')+': '+esc(t.cb.def.n)+' '+pct(t.cb.def.m)+(t.cb.others.length?' with '+t.cb.others.map(o=>esc(SKM[o.id].n)).join(' and '):'')+'</div><div class="hint">'+esc(t.cb.def.d)+'</div>':'')
       +'<div class="row" style="margin-top:10px">'+(t.lvl<MAXT?'<button class="btn p" data-act="upg" id="bUpg">Upgrade to '+(t.lvl+1)+' ('+upgCost(t)+')</button>':'<button class="btn" disabled>Max level</button>')
-      +'<button class="btn" data-act="move">Move</button><button class="btn d" data-act="sell">Sell (+'+sellVal(t)+')</button><button class="btn" data-act="deselect">Close</button></div>';
+      +'<button class="btn" data-act="move"'+(S.credits<TUNE.moveCost?' aria-disabled="true"':'')+'>Move ('+fmt(TUNE.moveCost)+')</button><button class="btn d" data-act="sell">Sell (+'+sellVal(t)+')</button><button class="btn" data-act="deselect">Close</button></div>';
   }else{
     p.innerHTML='<h3>Tap a pad to build</h3><div class="hint">Towers stay for the whole run. Upgrade them to level 5 for wider splash, a hero aura and super skills. Kills earn gold and sometimes drop element orbs.</div>'
       +'<div class="jchips">'+S.avail.slice().sort((a,b)=>SKM[a].at-SKM[b].at).map(id=>'<span class="jc"><i class="gem" style="--c:'+SKM[id].c+'"></i>'+esc(SKM[id].n)+'</span>').join('')+'</div>';
@@ -1636,7 +1807,7 @@ function placePanel(){
   const p=$('panel');if(!p)return;
   const fit=document.body.classList.contains('fit'),roomy=fit&&!document.body.classList.contains('tight')&&(window.innerHeight-$('cv').getBoundingClientRect().bottom)>=300;
   const sel=fit&&!roomy&&S&&S.sel;
-  p.classList.toggle('sh',!!sel);
+  p.classList.toggle('sh',!!sel);p.classList.toggle('idle',!(S&&S.sel));
   if(sel){let y=CH/2;if(S.sel.type==='pad'&&PADS[S.sel.i])y=PADS[S.sel.i].y;else if(S.towers[S.sel.i])y=S.towers[S.sel.i].y;
     const lower=y>CH*.5;p.classList.toggle('top',lower);p.classList.toggle('bot',!lower);}
   else p.classList.remove('top','bot');
@@ -1644,6 +1815,8 @@ function placePanel(){
 window.addEventListener('resize',()=>{if(document.body.classList.contains('ingame'))fitCanvas();});
 function moveTower(ti,pi){
   const t=S.towers[ti];if(!t||!padFree(pi))return;
+  if(S.credits<TUNE.moveCost){toast('Moving a tower costs '+fmt(TUNE.moveCost)+' gold.',true);S.sel={type:'tower',i:ti};renderPanel();return;}
+  S.credits-=TUNE.moveCost;fxText(t.x,t.y-20,'-'+fmt(TUNE.moveCost)+' gold','#8a6a1f');
   fxRing(t.x,t.y,24,SKM[t.id].c,.35);t.pad=pi;t.x=PADS[pi].x;t.y=PADS[pi].y;t.cd=Math.max(t.cd,1);
   fxRing(t.x,t.y,30,SKM[t.id].c,.45,3);sfx(SFX.build);updCombos();S.sel={type:'tower',i:ti};renderPanel();
 }
@@ -1672,17 +1845,18 @@ document.addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   const d=b.dataset;
   if(d.build&&S&&S.sel&&S.sel.type==='pad'){buildTower(S.sel.i,d.build);return;}
+  if(d.lb){openTop10(undefined,undefined,d.lb);return;}
   if(d.up){const id=d.up;const c=upCost(id);if(jw(id)>=c&&slv(id)<MAXLV){SAVE.jw[id]-=c;SAVE.lv[id]=slv(id)+1;persist();sfx(SFX.up);renderSkills();toast(SKM[id].n+' mastery is now '+slv(id)+'.');}return;}
   switch(d.act){
     case 'skills':auInit();auResume();showScreen('scrSkills');break;
     case 'home':showScreen('scrHome');break;
     case 'top10':openTop10();break;
-    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it becomes a hero with an aura) or sell it.</li><li>Every kill gives gold. You start with Fire, Water, Earth, Lightning and two beacons. Gravity always arrives at level 4; after that, every 4 levels you receive one random new element for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 18.5 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and becomes a hero with super skills.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Shadow, Poison) hit the strongest enemy in range much harder. The beacons boost adjacent towers.</li><li>Level 5 heroes release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. Nobody tells you which. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>Orbs are kept after the run. Spend them in Elements to raise mastery (max 5).</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 40 levels adds 100,000 points plus 50,000 for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
+    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it becomes a hero with an aura) or sell it.</li><li>Every kill gives gold. You start with Fire, Water, Earth, Lightning and two random elements. Gravity always arrives at level 4; after that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and becomes a hero with super skills.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Shadow, Poison) hit the strongest enemy in range much harder. The beacons boost adjacent towers.</li><li>Level 5 heroes release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. Nobody tells you which. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>Orbs are kept after the run. Spend them in Elements to raise mastery (max 5).</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds 100,000 points plus 50,000 for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
     case 'closeM':closeModal();break;
     case 'deselect':if(S){S.sel=null;renderPanel();}break;
     case 'upg':if(S&&S.sel&&S.sel.type==='tower')upgradeTower(S.sel.i);break;
     case 'sell':if(S&&S.sel&&S.sel.type==='tower')sellTower(S.sel.i);break;
-    case 'move':if(S&&S.sel&&S.sel.type==='tower'){S.sel={type:'move',i:S.sel.i};renderPanel();}break;
+    case 'move':if(S&&S.sel&&S.sel.type==='tower'){if(S.credits<TUNE.moveCost){toast('Moving a tower costs '+fmt(TUNE.moveCost)+' gold.',true);break;}S.sel={type:'move',i:S.sel.i};renderPanel();}break;
     case 'retry':closeModal();startLevel(1);break;
     case 'resume':{const r=loadRun();auInit();auResume();sfx(SFX.click);if(r)startLevel(r.level,r);else startLevel(1);break;}
     case 'newrun':{const r=loadRun();auInit();auResume();sfx(SFX.click);if(r)openModal('<h2>Start a new run?</h2><p class="hint">Your saved run at level '+r.level+' will be replaced.</p><div class="row" style="margin-top:10px"><button class="btn" data-act="closeM">Cancel</button><button class="btn p" data-act="newrunOk">Start new run</button></div>');else startLevel(1);break;}
@@ -2038,7 +2212,7 @@ function drawTower(t,tm){
   }
   if(lv>=4)drawPylons(x,y,col,tm,true);
   ctx.restore();
-  if(sk.util){const r=LINK,k=(tm*.6+x*.01)%1;ctx.strokeStyle=hx(col,.35*(1-k));ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(x,y+2,r*k,r*k*.45,0,0,TAU);ctx.stroke();}
+  if(sk.util){const r=LINK*TUNE.beaconR,k=(tm*.6+x*.01)%1;ctx.strokeStyle=hx(col,.35*(1-k));ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(x,y+2,r*k,r*k*.45,0,0,TAU);ctx.stroke();}
   if(t.cb)chargeFx(t,tm,t.cb.def.c);
 }
 
@@ -2113,6 +2287,32 @@ SPR.swirl=(e,r,tm,b)=>{
   orb(0,0,r*.28,'#ffffff',shade(col,.4),col);
   if(t==='ashs'){for(let i=0;i<4;i++){const k=(tm+i*.25)%1;ctx.fillStyle='rgba(240,150,80,'+(1-k)+')';ctx.beginPath();ctx.arc(Math.cos(i*2+tm)*r*.8,Math.sin(i*2+tm)*r*.8-k*5,1.3,0,TAU);ctx.fill();}}
   if(b){ctx.strokeStyle='rgba(232,237,255,.85)';ctx.lineWidth=1.4;ctx.beginPath();const a=tm*5;ctx.moveTo(Math.cos(a)*r*.3,Math.sin(a)*r*.3);ctx.lineTo(Math.cos(a+.15)*r*.8,Math.sin(a+.15)*r*.8);ctx.lineTo(Math.cos(a-.1)*r*1.05,Math.sin(a-.1)*r*1.05);ctx.stroke();}
+};
+/* final boss: white van with bold blue CAAT lettering (same design as the NC Calculator's Live City van) */
+SPR.van=(e,r,tm)=>{
+  const p2=posAt(e.d+2),left=p2.x<e.x-.01,ang=Math.atan2(p2.y-e.y,p2.x-e.x);
+  ctx.globalCompositeOperation='lighter';glowC(0,0,r*2.1,'#ffffff',.42+.12*Math.sin(tm*4));ctx.globalCompositeOperation='source-over';
+  let a=ang;if(left)a=ang-Math.PI;a=Math.max(-.35,Math.min(.35,a));
+  ctx.rotate(a);if(left)ctx.scale(-1,1);
+  const k=r/27;ctx.scale(k,k);ctx.translate(-36,-20);
+  /* body */
+  ctx.fillStyle='rgba(26,46,74,.22)';ctx.beginPath();ctx.ellipse(36,36,40,6,0,0,TAU);ctx.fill();
+  ctx.beginPath();ctx.moveTo(0,8);ctx.quadraticCurveTo(0,4,4,4);ctx.lineTo(55,4);ctx.quadraticCurveTo(59,4,61,8);ctx.lineTo(69,19);ctx.quadraticCurveTo(72,22,72,25);ctx.lineTo(72,31);ctx.lineTo(0,31);ctx.closePath();
+  let g=ctx.createLinearGradient(0,4,0,31);g.addColorStop(0,'#ffffff');g.addColorStop(.7,'#f2f5f9');g.addColorStop(1,'#d9e0e8');ctx.fillStyle=g;ctx.fill();ctx.strokeStyle='#a0aec0';ctx.lineWidth=.9;ctx.stroke();
+  /* windscreen, door line, skirt */
+  ctx.fillStyle='#9ecbe6';ctx.beginPath();ctx.moveTo(53,7);ctx.lineTo(58,7);ctx.quadraticCurveTo(60,7,61.5,9);ctx.lineTo(67,18);ctx.lineTo(53,18);ctx.closePath();ctx.fill();ctx.strokeStyle='#a0aec0';ctx.lineWidth=.6;ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.55)';ctx.beginPath();ctx.moveTo(55,8.5);ctx.lineTo(57.5,8.5);ctx.lineTo(55,16);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#cbd5e0';ctx.lineWidth=.8;ctx.beginPath();ctx.moveTo(51,5);ctx.lineTo(51,30);ctx.stroke();
+  ctx.fillStyle='#e2e8f0';ctx.fillRect(0,28,72,3);
+  /* CAAT lettering */
+  ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.font='900 13px Inter,Arial,sans-serif';ctx.lineJoin='round';
+  ctx.save();ctx.translate(26,0);if(left)ctx.scale(-1,1);ctx.strokeStyle='#1e4d8c';ctx.lineWidth=.9;ctx.fillStyle='#1e4d8c';ctx.strokeText('CAAT',0,24);ctx.fillText('CAAT',0,24);ctx.restore();
+  /* lights */
+  ctx.fillStyle='#f6c453';rr(69.5,23,3,3,1);ctx.fill();ctx.fillStyle='#c0392b';rr(0,20,2,5,.6);ctx.fill();
+  ctx.globalCompositeOperation='lighter';glowC(72,24.5,5,'#fff3c4',.6);ctx.globalCompositeOperation='source-over';
+  /* wheels */
+  const sp=tm*12;[15,57].forEach(wx=>{ctx.fillStyle='#2d3748';ctx.beginPath();ctx.arc(wx,31,6.2,0,TAU);ctx.fill();ctx.fillStyle='#cbd5e0';ctx.beginPath();ctx.arc(wx,31,2.6,0,TAU);ctx.fill();
+    ctx.strokeStyle='#8a97a8';ctx.lineWidth=.7;ctx.beginPath();for(let i=0;i<3;i++){const q=sp+i*2.09;ctx.moveTo(wx,31);ctx.lineTo(wx+Math.cos(q)*2.6,31+Math.sin(q)*2.6);}ctx.stroke();});
 };
 SPR.drone=(e,r,tm,b)=>{
   ctx.rotate(e.ang);const n=b?6:4;
@@ -2527,7 +2727,7 @@ async function init(){
   try{await fetchTop();setConn('ok','Connected');}catch(e){setConn('bad','Offline');}
 }
 init();
-window.RD={get S(){return S;},SK:SK,SKM:SKM,ET:ET,SAVE:()=>SAVE,setSave:o=>{SAVE=Object.assign(SAVE,o);},startLevel:startLevel,step:step,buildTower:buildTower,upgradeTower:upgradeTower,get PADS(){return PADS;},get PLEN(){return PLEN;},get CW(){return CW;},get CH(){return CH;},get ORI(){return ORI;},buildMap:buildMap,newAirport:newAirport,moveTower:moveTower,THEMES:THEMES,mapNo:mapNo,TRIS:TRIS,posAt:posAt,finish:finish,hpMul:hpMul,padFree:padFree,upgCost:upgCost,sellVal:sellVal,dropJewel:dropJewel,spawn:spawn,draw:draw,drawIcon:drawIcon,updCombos:updCombos,TUNE:TUNE,SHIELD:SHIELD,buildCost:buildCost,AU:AU,TUNES:TUNES,playStep:playStep,dropOrb:dropOrb,saveRun:saveRun,loadRun:loadRun,clearRun:clearRun,MAXT:MAXT,UPC:UPC,LVM:LVM,drawTower:(t,tm)=>drawTower(t,tm),withCtx:(c,fn)=>{const o=ctx;ctx=c;try{fn();}finally{ctx=o;}},finishRun:finishRun,advanceLevel:advanceLevel,shieldK:shieldK,COMBOS:COMBOS,LINK:LINK,sizeCanvas:sizeCanvas,fitCanvas:fitCanvas,bossHp:bossHp,baseHp:baseHp};
+window.RD={renderPanel:()=>renderPanel(),ZONES:ZONES,MAXL:MAXL,Ld:Ld,openTop10:openTop10,get S(){return S;},SK:SK,SKM:SKM,ET:ET,SAVE:()=>SAVE,setSave:o=>{SAVE=Object.assign(SAVE,o);},startLevel:startLevel,step:step,buildTower:buildTower,upgradeTower:upgradeTower,get PADS(){return PADS;},get PLEN(){return PLEN;},get CW(){return CW;},get CH(){return CH;},get ORI(){return ORI;},buildMap:buildMap,newAirport:newAirport,moveTower:moveTower,THEMES:THEMES,mapNo:mapNo,TRIS:TRIS,posAt:posAt,finish:finish,hpMul:hpMul,padFree:padFree,upgCost:upgCost,sellVal:sellVal,dropJewel:dropJewel,spawn:spawn,draw:draw,drawIcon:drawIcon,updCombos:updCombos,TUNE:TUNE,SHIELD:SHIELD,buildCost:buildCost,AU:AU,TUNES:TUNES,playStep:playStep,dropOrb:dropOrb,saveRun:saveRun,loadRun:loadRun,clearRun:clearRun,MAXT:MAXT,UPC:UPC,LVM:LVM,drawTower:(t,tm)=>drawTower(t,tm),withCtx:(c,fn)=>{const o=ctx;ctx=c;try{fn();}finally{ctx=o;}},finishRun:finishRun,advanceLevel:advanceLevel,shieldK:shieldK,COMBOS:COMBOS,LINK:LINK,sizeCanvas:sizeCanvas,fitCanvas:fitCanvas,bossHp:bossHp,baseHp:baseHp};
 </script>
 </body>
 </html>
