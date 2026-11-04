@@ -208,6 +208,44 @@ body.wide.ingame .wrap,body.wide.ingame footer{max-width:none}
   body.wide #scrGame.on{grid-template-columns:var(--cw,640px) 340px}
   .combo-card{max-height:var(--cbh,320px);overflow-y:auto}
 }
+/* fitted game screen on phones and tablets: map edge to edge, nothing to scroll */
+.ls{display:none}
+#sabProbe{position:fixed;left:0;bottom:0;width:0;height:env(safe-area-inset-bottom);pointer-events:none;visibility:hidden}
+body.fit.ingame{overflow:hidden}
+body.fit.ingame footer{display:none}
+body.fit.ingame .wrap{padding:0;max-width:none}
+body.fit #scrGame.on{position:fixed;inset:0;z-index:20;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto minmax(0,1fr);
+  background:linear-gradient(180deg,#1a2e4a,#22406a);padding-top:env(safe-area-inset-top);overflow:hidden;max-width:none!important;margin:0!important}
+body.fit .hud{grid-column:1;grid-row:1;margin:0;border-radius:0;background:none;padding:5px 4px 5px 10px;grid-template-columns:1fr 1fr;gap:1px 8px;font-size:11px;line-height:1.2;align-content:center;min-width:0}
+body.fit .hud>div{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.fit .hud br{display:none}
+body.fit .hud .coin{margin-right:3px}
+body.fit .hud{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:auto auto auto}
+body.fit .hud>div:nth-child(1){grid-column:1!important;grid-row:1;font-size:11px}
+body.fit .hud>div:nth-child(2){grid-column:2;grid-row:1;text-align:right}
+body.fit .hud>div:nth-child(3){grid-column:1;grid-row:2/4;align-self:center}
+body.fit .hud>div:nth-child(4){grid-column:2;grid-row:2;text-align:right!important}
+body.fit .hud>div:nth-child(5){grid-column:2;grid-row:3;text-align:right}
+body.fit .hud b{margin-left:3px}
+@media (max-width:360px){body.fit .hud{font-size:10px;padding-left:8px;gap:1px 5px}body.fit .hud>div:nth-child(1){font-size:10px}body.fit .hud .hl{display:none}body.fit .hud b{margin-left:1px}body.fit .ctl{gap:3px;padding-right:6px}}
+body.fit .hud .bar{height:5px;margin-top:2px}
+body.fit .ctl{grid-column:2;grid-row:1;background:none;padding:5px 8px 5px 0;gap:4px;align-items:center}
+body.fit .ctl .hbtn{flex:none;width:44px;min-width:44px;height:44px;padding:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+body.fit .ctl .lf{display:none}body.fit .ctl .ls{display:inline-flex;align-items:center}
+body.fit .cwrap{grid-column:1/3;grid-row:2;width:var(--mw,100%);justify-self:center;box-shadow:none}
+body.fit .gr{display:flex;flex-direction:column;grid-column:1/3;grid-row:3;min-height:0;overflow-y:auto;padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:8px}
+body.fit .gr #jstrip{margin:0!important}
+body.fit.tight .gr #panel:not(.sh){display:none}
+body.fit #panel{margin:0;border-radius:16px;min-height:0}
+body.fit #panel.sh{position:fixed;left:0;right:0;z-index:40;margin:0;border-radius:16px;max-height:var(--shh,55vh);overflow-y:auto;
+  box-shadow:0 -8px 24px rgba(26,46,74,.35),0 2px 6px rgba(26,46,74,.2);padding:10px 12px 12px;overscroll-behavior:contain}
+body.fit #panel.sh.bot{bottom:0;border-radius:16px 16px 0 0;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+body.fit #panel.sh.top{top:var(--sht,0px);border-radius:0 0 16px 16px}
+body.fit #panel.sh .hint{font-size:12px}
+body.fit #panel.sh .bgrid{grid-template-columns:repeat(4,1fr);gap:6px}
+body.fit #panel.sh .ecard .en{font-size:11.5px;padding:4px 5px 0}
+body.fit #panel.sh .ecard small{font-size:10px;padding-left:5px;padding-right:5px}
+@media (min-width:600px){body.fit #panel.sh{left:50%;right:auto;transform:translateX(-50%);width:min(560px,100%)}body.fit #panel.sh .bgrid{grid-template-columns:repeat(5,1fr)}}
 @media (max-width:420px){.panel .row{flex-wrap:wrap}.panel .row>.btn{min-width:calc(50% - 4px)}}
 @media (max-width:340px){.lvg{grid-template-columns:repeat(4,1fr)}.bgrid{gap:6px}.ecard .en{font-size:11.5px}}
 </style>
@@ -253,9 +291,9 @@ body.wide.ingame .wrap,body.wide.ingame footer{max-width:none}
   <section id="scrGame" class="scr">
     <div class="gl">
     <div class="hud">
-      <div id="hLvl" style="grid-column:1/3;font-weight:600">Level 1</div><div style="text-align:right">Pack <b id="hWave">0/3</b></div>
-      <div>Terminal <b id="hLife">50/50</b><div class="bar"><i id="hBar"></i></div></div>
-      <div style="text-align:center"><i class="coin" aria-hidden="true"></i>Gold<br><b id="hCred">0</b></div>
+      <div id="hLvl" style="grid-column:1/3;font-weight:600">Level 1</div><div style="text-align:right"><span class="hl">Pack </span><b id="hWave">0/3</b></div>
+      <div><span class="hl">Terminal </span><b id="hLife">50/50</b><div class="bar"><i id="hBar"></i></div></div>
+      <div style="text-align:center"><i class="coin" aria-hidden="true"></i><span class="hl">Gold</span><br><b id="hCred">0</b></div>
       <div style="text-align:right">Score<br><b id="hScore">0</b></div>
     </div>
     <div class="ctl">
@@ -280,6 +318,7 @@ body.wide.ingame .wrap,body.wide.ingame footer{max-width:none}
 
 <div id="modal" class="mo"><div class="sheet" id="sheet"></div></div>
 <div id="toasts" aria-live="polite"></div>
+<div id="sabProbe" aria-hidden="true"></div>
 
 <script>
 'use strict';
@@ -293,6 +332,13 @@ try{if(window.supabase)db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANO
 
 /* ============ UTILS ============ */
 const $=id=>document.getElementById(id);
+const IC={
+ pause:'<svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
+ play:'<svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg>',
+ snd:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#fff"/><path d="M16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11"/></svg>',
+ mute:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#fff"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5"/></svg>',
+ exit:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
+function lab(id,full,sh){const b=$(id);if(!b)return;b.innerHTML='<span class="lf">'+full+'</span><span class="ls">'+sh+'</span>';b.setAttribute('aria-label',full);b.title=full;}
 const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const clone=o=>JSON.parse(JSON.stringify(o));
 const rnd=(a,b)=>a+Math.random()*(b-a);
@@ -657,7 +703,7 @@ document.addEventListener('visibilitychange',()=>{
   else if(SAVE.sound)AU.ctx.resume().catch(()=>{});
 });
 function setSound(on){
-  SAVE.sound=on;persist();$('btnSound').textContent=on?'Sound On':'Sound Off';$('bSound').textContent=on?'Sound On':'Sound Off';
+  SAVE.sound=on;persist();$('btnSound').textContent=on?'Sound On':'Sound Off';lab('bSound',on?'Sound On':'Sound Off',on?IC.snd:IC.mute);
   if(on){auInit();auResume();musicStart(S&&S.running&&!S.paused?S.tuneIdx:randTune(AU.tuneIdx),0);}
   else{musicStop();}
 }
@@ -724,7 +770,7 @@ function startLevel(L,snap){
   S.waves=TUNE.waves;
   showScreen('scrGame');
   $('hLvl').textContent=lvlLabel();
-  $('bSpeed').textContent='Speed 1x';
+  lab('bSpeed','Speed 1x','1x');lab('bPause','Pause',IC.pause);
   renderPanel();updHud(true);
   const types=ZONES[zoneOf(L)].types.map(t=>ET[t].n);
   if(L%5===0)types.push(ET[ZONES[zoneOf(L)].boss].n+' (boss)');
@@ -797,7 +843,7 @@ function newAirport(N){
 }
 function setPause(p){
   if(!S||!S.running)return;S.paused=p;
-  $('bPause').textContent=p?'Resume':'Pause';
+  lab('bPause',p?'Resume':'Pause',p?IC.play:IC.pause);
   if(p){musicStop();$('ovl').innerHTML='<div class="box"><h3>Paused</h3><p>Take your time.'+(AU.tune?'<br><span style="font-size:12px">Music: '+esc(AU.tune.nm)+'</span>':'')+'</p><button class="btn p" id="bRes" style="width:100%">Resume</button></div>';$('ovl').classList.add('on');$('bRes').onclick=()=>setPause(false);}
   else{$('ovl').classList.remove('on');if(SAVE.sound&&AU.ctx){auResume();musicStart(S.tuneIdx,zoneOf(S.level)*6);}}
 }
@@ -1508,7 +1554,7 @@ function renderPanel(){
     const pp=PADS[S.sel.i];
     const ids=S.avail.slice().sort((a,b)=>SKM[a].at-SKM[b].at);
     const nT=S.towers.length;
-    p.innerHTML='<h3>Build tower '+(nT+1)+'</h3><div class="hint">Gold <b class="mono" id="pCred">'+Math.floor(S.credits)+'</b>. Pick an element for this pad. Upgraded towers splash more targets and become heroes at level 5.</div><div class="bgrid">'
+    p.innerHTML='<h3>Build tower '+(nT+1)+'</h3><div class="hint">Gold <b class="mono" id="pCred">'+Math.floor(S.credits)+'</b>. Pick an element for this pad.</div><div class="bgrid">'
       +ids.map(id=>{const s=SKM[id];const cb=null;
         return '<button class="ecard" data-build="'+id+'" style="--c:'+s.c+'" aria-label="'+esc(s.n)+', '+kindOf(s)+', '+buildCost(id)+' gold"><img alt="" src="'+cardImg(id)+'"><span class="en">'+esc(s.n)+'</span><small>'+kindOf(s)+'</small><small class="gc">'+buildCost(id)+' gold</small></button>';}).join('')
       +'</div><div class="row" style="margin-top:8px"><button class="btn" data-act="deselect">Cancel</button></div>';
@@ -1529,7 +1575,7 @@ function renderPanel(){
     p.innerHTML='<h3>Tap a pad to build</h3><div class="hint">Towers stay for the whole run. Upgrade them to level 5 for wider splash, a hero aura and super skills. Kills earn gold and sometimes drop element orbs.</div>'
       +'<div class="jchips">'+S.avail.slice().sort((a,b)=>SKM[a].at-SKM[b].at).map(id=>'<span class="jc"><i class="gem" style="--c:'+SKM[id].c+'"></i>'+esc(SKM[id].n)+'</span>').join('')+'</div>';
   }
-  refreshPanel();
+  refreshPanel();placePanel();
 }
 function refreshPanel(){
   if(!S)return;
@@ -1570,14 +1616,30 @@ function fitCanvas(){
     const availW=document.documentElement.clientWidth-(wide?340:380)-20-44;
     const w=wide?Math.max(420,Math.min(availW,Math.floor((window.innerHeight-over)*ar))):Math.max(340,Math.min(660,Math.floor((window.innerHeight-over)*ar)));
     g.style.setProperty('--cw',w+'px');g.style.setProperty('--cbh',Math.max(160,Math.floor(w/ar)-300)+'px');
+    document.body.classList.remove('fit','tight');
   }else{
-    g.style.removeProperty('--cw');
-    const ar=CW/CH,wide=ORI==='wide';
-    const avail=wide?document.documentElement.clientWidth-24:Math.min(480,document.documentElement.clientWidth-24);
-    const w=Math.max(280,Math.min(avail,Math.floor((window.innerHeight-(wide?260:320))*ar)));
-    g.style.maxWidth=Math.min(w,avail)+'px';g.style.margin='0 auto';
+    /* phones and tablets: the map fills the screen width; the build panel opens as a sheet over the map */
+    document.body.classList.add('fit');g.style.removeProperty('--cw');g.style.maxWidth='';g.style.margin='';
+    const vw=document.documentElement.clientWidth,vh=window.innerHeight,cw=g.querySelector('.cwrap');
+    const sab=($('sabProbe')&&$('sabProbe').offsetHeight)||0,top=cw.getBoundingClientRect().top;
+    const ar=CW/CH,w=Math.max(200,Math.min(vw,Math.floor((vh-top-sab)*ar)));
+    g.style.setProperty('--mw',w+'px');
+    const left=vh-top-w/ar;
+    document.body.classList.toggle('tight',left<150);
+    g.style.setProperty('--sht',Math.round(top)+'px');
+    g.style.setProperty('--shh',Math.round(Math.max(220,Math.min(vh*.62,w/ar*.62)))+'px');
   }
-  sizeCanvas();
+  sizeCanvas();placePanel();
+}
+/* phone sheet: open over the half of the map away from the selected pad or tower */
+function placePanel(){
+  const p=$('panel');if(!p)return;
+  const fit=document.body.classList.contains('fit'),roomy=fit&&!document.body.classList.contains('tight')&&(window.innerHeight-$('cv').getBoundingClientRect().bottom)>=300;
+  const sel=fit&&!roomy&&S&&S.sel;
+  p.classList.toggle('sh',!!sel);
+  if(sel){let y=CH/2;if(S.sel.type==='pad'&&PADS[S.sel.i])y=PADS[S.sel.i].y;else if(S.towers[S.sel.i])y=S.towers[S.sel.i].y;
+    const lower=y>CH*.5;p.classList.toggle('top',lower);p.classList.toggle('bot',!lower);}
+  else p.classList.remove('top','bot');
 }
 window.addEventListener('resize',()=>{if(document.body.classList.contains('ingame'))fitCanvas();});
 function moveTower(ti,pi){
@@ -1626,12 +1688,12 @@ document.addEventListener('click',e=>{
     case 'newrun':{const r=loadRun();auInit();auResume();sfx(SFX.click);if(r)openModal('<h2>Start a new run?</h2><p class="hint">Your saved run at level '+r.level+' will be replaced.</p><div class="row" style="margin-top:10px"><button class="btn" data-act="closeM">Cancel</button><button class="btn p" data-act="newrunOk">Start new run</button></div>');else startLevel(1);break;}
     case 'newrunOk':closeModal();clearRun();startLevel(1);break;
     case 'leave':closeModal();if(S){S.running=false;musicStop();}S=null;showScreen('scrHome');break;
-    case 'endrun':closeModal();if(S&&!S.over){S.paused=false;$('ovl').classList.remove('on');$('bPause').textContent='Pause';S.running=true;finishRun(false);}break;
+    case 'endrun':closeModal();if(S&&!S.over){S.paused=false;$('ovl').classList.remove('on');lab('bPause','Pause',IC.pause);S.running=true;finishRun(false);}break;
     case 'menu':closeModal();S=null;showScreen('scrHome');break;
   }
 });
 $('bPause').addEventListener('click',()=>{if(S&&S.running)setPause(!S.paused);});
-$('bSpeed').addEventListener('click',()=>{if(!S)return;S.speed=S.speed===1?2:(S.speed===2?3:1);$('bSpeed').textContent='Speed '+S.speed+'x';});
+$('bSpeed').addEventListener('click',()=>{if(!S)return;S.speed=S.speed===1?2:(S.speed===2?3:1);lab('bSpeed','Speed '+S.speed+'x',S.speed+'x');});
 $('bExit').addEventListener('click',()=>{
   if(!S)return;if(S.running&&!S.paused)setPause(true);
   openModal('<h2>Leave the game?</h2><p class="hint"><b>Save and leave</b>: continue later from the start of this level. <b>End run</b>: see your score now and save it to the Top 10. Orbs collected are kept either way.</p><div class="row" style="margin-top:10px;flex-wrap:wrap"><button class="btn" data-act="closeM">Keep playing</button><button class="btn" data-act="leave">Save and leave</button><button class="btn d" data-act="endrun">End run</button></div>');
@@ -2459,7 +2521,7 @@ function makeIcon(){
 }
 async function init(){
   makeIcon();
-  $('btnSound').textContent=SAVE.sound?'Sound On':'Sound Off';$('bSound').textContent=SAVE.sound?'Sound On':'Sound Off';
+  $('btnSound').textContent=SAVE.sound?'Sound On':'Sound Off';lab('bSound',SAVE.sound?'Sound On':'Sound Off',SAVE.sound?IC.snd:IC.mute);lab('bPause','Pause',IC.pause);lab('bExit','Exit',IC.exit);lab('bSpeed','Speed 1x','1x');
   showScreen('scrHome');
   setConn('','Connecting');
   try{await fetchTop();setConn('ok','Connected');}catch(e){setConn('bad','Offline');}
