@@ -132,6 +132,15 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:360/540;touch-action:ma
 .sk h4{margin:0;font-size:14px;color:var(--navy);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .sk p{margin:2px 0 6px;font-size:12px;color:var(--lbl)}
 .tag{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;background:var(--page);border:1px solid var(--bd);color:var(--lbl);text-transform:uppercase;letter-spacing:.4px}
+.sk h4 .th,.ecard small.th{font-family:'Sarabun','Leelawadee UI','Thonburi',Tahoma,sans-serif;font-weight:600;color:#b23a3a;font-size:12px}
+.ecard small.th{font-size:11px;padding-top:0}
+.sk .cl{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);margin:2px 0 3px}
+.clues{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+.clues li{font-size:12.5px;line-height:1.35;color:var(--txt);border-left:3px solid #9fd6cf;padding:3px 0 3px 8px;background:linear-gradient(90deg,rgba(42,157,143,.07),transparent)}
+.clues li.tri{border-left-color:#7da6d6;background:linear-gradient(90deg,rgba(30,77,140,.08),transparent)}
+.clues .ct{font:700 9.5px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;color:#1d776d;margin-right:4px}
+.clues li.tri .ct{color:#1e4d8c}
+.clues .found{color:#1d776d;font-weight:700;white-space:nowrap}
 .tag.on{background:#e3f2ee;color:#1d776d;border-color:#b9ddd5}
 .sk .row .btn{min-height:44px;font-size:13px;padding:0 8px}
 .pb{height:6px;background:var(--bd);border-radius:99px;overflow:hidden;margin:2px 0 6px}
@@ -146,6 +155,13 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:360/540;touch-action:ma
 .sheet label{display:block;font-size:12px;font-weight:600;color:var(--lbl);margin:8px 0 4px}
 .sheet input,.sheet select{width:100%;min-height:46px;border:1px solid #cbd5e1;border-radius:8px;padding:0 12px;background:#fff;color:var(--txt)}
 .stars{font-size:26px;letter-spacing:4px;color:#c99a2e;margin:2px 0 6px}
+.lbd{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 8px}
+.lbd p{margin:0;min-width:0;display:flex;flex-direction:column;gap:3px;padding:10px 10px 9px;border-radius:12px;color:#fff;box-shadow:0 6px 16px rgba(26,46,74,.28),inset 0 1px 0 rgba(255,255,255,.22)}
+.lbd .da{background:linear-gradient(145deg,#2563a8,#1e4d8c)}
+.lbd .dh{background:linear-gradient(145deg,#1f7f74,#175f58)}
+.lbd span{font-size:11px;font-weight:600;letter-spacing:.02em;color:#fff}
+.lbd b{font:700 20px/1.15 'JetBrains Mono',ui-monospace,monospace;color:#fff;overflow-wrap:anywhere}
+.lbd small{font-size:10.5px;line-height:1.3;color:#fff;opacity:.92}
 .lb{margin:6px 0 0;padding:0;list-style:none}
 .lb li{display:grid;grid-template-columns:30px 1fr auto auto;gap:8px;align-items:center;padding:9px 6px;border-bottom:1px solid var(--bd);font-size:14px}
 .lb li.me{background:#e8f4f1;border-radius:8px}
@@ -242,6 +258,7 @@ body.fit .cwrap{grid-column:1/3;grid-row:2;width:var(--mw,100%);justify-self:cen
 body.fit .gr{display:flex;flex-direction:column;grid-column:1/3;grid-row:3;min-height:0;overflow-y:auto;padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:8px}
 body.fit .gr #jstrip{margin:0!important}
 body.fit .gr>*{flex:none}
+#jstrip{display:none}
 body.fit #jstrip{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
 body.fit #jstrip::-webkit-scrollbar{display:none}
 body.fit #jstrip .jc,body.fit #jstrip .hint{flex:none}
@@ -278,12 +295,12 @@ body.fit #panel.sh .ecard small{font-size:10px;padding-left:5px;padding-right:5p
     <div class="card hero">
       <canvas id="titleArt" class="tart" role="img" aria-label="Airport Defense title: elemental towers guarding a runway at dusk while an airliner climbs away"></canvas>
       <h2>Defend the airport</h2>
-      <p>Build towers that stay for the whole run and upgrade them to level 5 heroes with super skills. Gravity at level 4, then one random new element every 4 levels. 50 levels, each with three packs of 68 threats. A random airport map every run. One run, one score.</p>
-      <div class="stat"><span class="chip" id="stLv">Level 1</span><span class="chip" id="stSc">Score 0</span><span class="chip" id="stJw">Orbs 0</span></div>
+      <p>Build towers that stay for the whole run and upgrade them to level 5 for a grand aura and super skills. Gravity at level 4, then one random new element every 4 levels. 50 levels, each with three packs of 68 threats. A random airport map every run. One run, one score.</p>
+      <div class="stat"><span class="chip" id="stLv">Level 1</span><span class="chip" id="stSc">Score 0</span></div>
       <div class="row" id="runBtns" style="margin-top:12px;position:relative"></div>
     </div>
     <div class="row3">
-      <button class="btn" data-act="skills">Elements</button>
+      <button class="btn" data-act="skills">Library</button>
       <button class="btn" data-act="top10">Top 10</button>
       <button class="btn" data-act="how">How to play</button>
     </div>
@@ -293,10 +310,10 @@ body.fit #panel.sh .ecard small{font-size:10px;padding-left:5px;padding-right:5p
   <section id="scrSkills" class="scr">
     <div class="row" style="margin-bottom:12px">
       <button class="btn" data-act="home">Back</button>
-      <div class="card" style="margin:0;padding:8px 12px;display:flex;align-items:center;justify-content:center"><b id="loadCnt">Orbs 0</b></div>
+      <div class="card" style="margin:0;padding:8px 12px;display:flex;align-items:center;justify-content:center"><b>Element library</b></div>
     </div>
-    <div class="card"><h2>Elements and mastery</h2>
-      <div class="hint" style="margin-bottom:6px">In a run you start with Fire, Water, Earth, Lightning and two random elements, and receive one random new element or beacon every 4 levels (Gravity always at level 4). Element orbs dropped by threats are kept here to raise mastery (max 5, +15% damage per level).</div>
+    <div class="card"><h2>Element library</h2>
+      <div class="hint" style="margin-bottom:6px">Each element has a short story and some clues. The clues tell you what it can make together with other elements. Elements join when their towers stand on pads next to each other, and every tower in the group is level 4 or higher. The library does not give the names of the partners. Read the clues and try. When you make a combination in a game, its name is saved here.</div>
       <div id="skList"></div>
     </div>
   </section>
@@ -367,31 +384,31 @@ const SK=[
 {id:'earth',n:'Earth',c:'#a98a5b',k:'splash',dmg:30,rad:62,cd:1.6,rng:110,cost:80,fx:{stun:.6},s:['sawtooth',120,50,.22,.22],d:'Wide ground splash with a short stun.'},
 {id:'nature',n:'Nature',c:'#4f8a5b',k:'splash',dmg:16,rad:56,cd:1.3,rng:120,cost:80,fx:{slow:[.55,2]},s:['triangle',500,820,.2,.14],d:'Thorn vines that tangle and slow enemies.'},
 {id:'lightning',n:'Lightning',c:'#e8c547',k:'chain',dmg:22,hops:4,jump:70,cd:1.2,rng:130,cost:90,fx:{},s:['square',1200,200,.14,.1],d:'Chain strike that jumps between enemies.'},
-{id:'gravity',n:'Gravity',c:'#8a6fc4',k:'splash',dmg:20,rad:70,cd:2.2,rng:120,cost:100,fx:{pull:.8},s:['sine',300,70,.3,.25],d:'Pulls enemies into a clump.'},
+{id:'gravity',n:'Gravity',c:'#8a6fc4',k:'splash',dmg:20,rad:70,cd:2.2,rng:120,cost:100,fx:{pull:.8},s:['sine',300,70,.3,.25],d:'Pulls enemies together.'},
 {id:'stars',n:'Stars',c:'#c9d4ff',k:'shower',dmg:12,rad:28,cnt:5,spread:55,cd:2.0,rng:140,cost:110,fx:{},s:['triangle',1600,900,.2,.14],d:'Star shower across an area.'},
 {id:'ice',n:'Ice',c:'#8fd6e8',k:'splash',dmg:12,rad:44,cd:1.6,rng:120,cost:90,fx:{stun:1.0,slow:[.6,2]},s:['sine',2000,900,.15,.14],d:'Freezes enemies in place briefly.'},
-{id:'wind',n:'Wind',c:'#9fc9b4',k:'splash',dmg:10,rad:54,cd:1.4,rng:120,cost:80,fx:{push:60},s:['n',600,1800,.25,.16],d:'Pushes enemies back along the path.'},
-{id:'poison',n:'Poison',c:'#7fb04f',k:'single',dmg:30,cd:.8,rng:130,cost:80,fx:{poison:[6,4]},s:['sine',300,500,.14,.16],d:'Venom dart on one target, with stacking poison.'},
-{id:'light',n:'Light',c:'#fff6dc',k:'single',dmg:95,cd:1.5,rng:150,cost:100,fx:{},s:['sawtooth',900,1800,.22,.08],d:'Lance of light. Heavy damage to one target.'},
-{id:'shadow',n:'Shadow',c:'#5b4b7a',k:'single',dmg:60,cd:1.3,rng:130,cost:90,fx:{weak:[1.35,4]},s:['sine',150,80,.3,.22],d:'Shadow bolt on one target. It then takes extra damage.'},
-{id:'thunder',n:'Thunder',c:'#4f5fa8',k:'delay',dmg:50,rad:60,del:.8,cd:2.4,rng:140,cost:120,fx:{stun:.8},s:['n',200,60,.4,.28],d:'Delayed big blast with a ring stun.'},
+{id:'laser',n:'Laser',c:'#d4577a',k:'beam',dmg:26,w:12,cd:1.1,rng:150,cost:90,fx:{},s:['sawtooth',1800,900,.12,.08],d:'A thin, hot beam that cuts through every enemy in a line.'},
+{id:'poison',n:'Poison',c:'#7fb04f',k:'single',dmg:30,cd:.8,rng:130,cost:80,fx:{poison:[6,4]},s:['sine',300,500,.14,.16],d:'A poison dart on one target. The poison stacks.'},
+{id:'light',n:'Light',c:'#fff6dc',k:'single',dmg:95,cd:1.5,rng:150,cost:100,fx:{},s:['sawtooth',900,1800,.22,.08],d:'A beam of light. Heavy damage to one target.'},
+{id:'shadow',n:'Shadow',c:'#5b4b7a',k:'single',dmg:60,cd:1.3,rng:130,cost:90,fx:{weak:[1.35,4]},s:['sine',150,80,.3,.22],d:'A dark bolt on one target. After that, the target takes extra damage.'},
+{id:'thunder',n:'Thunder',c:'#4f5fa8',k:'delay',dmg:50,rad:60,del:.8,cd:2.4,rng:140,cost:120,fx:{stun:.8},s:['n',200,60,.4,.28],d:'A delayed big blast. It also stuns in a ring.'},
 {id:'lava',n:'Lava',c:'#c0462f',k:'pool',dps:14,rad:40,dur:4,cd:3,rng:120,cost:110,fx:{},s:['sawtooth',90,60,.35,.18],d:'Leaves a burning pool on the ground.'},
-{id:'nova',n:'Frost Nova',c:'#6bc2c9',k:'nova',dmg:10,rad:80,cd:3,rng:80,cost:100,fx:{slow:[.45,2.5]},s:['sine',1500,300,.3,.16],d:'Instant ring that slows everything near the tower.'},
+{id:'nova',n:'Frost Nova',c:'#6bc2c9',k:'nova',dmg:10,rad:80,cd:3,rng:80,cost:100,fx:{slow:[.45,2.5]},s:['sine',1500,300,.3,.16],d:'An instant ring that slows every enemy near the tower.'},
 {id:'meteor',n:'Meteor',c:'#b5683c',k:'delay',dmg:32,rad:60,del:1,cd:5,rng:9999,cost:150,fx:{},s:['n',300,40,.5,.32],d:'Reaches anywhere on the map, but hits for about a quarter of a normal tower.'},
-{id:'magnet',n:'Magnet',c:'#c0566f',k:'splash',dmg:6,rad:60,cd:1.4,rng:120,cost:90,fx:{pull:1},s:['square',200,420,.18,.1],d:'Drags enemies together with small hits.'},
-{id:'jet',n:'Jet Blast',c:'#7f9cc0',k:'beam',dmg:40,w:24,cd:1.3,rng:135,cost:100,fx:{push:22},s:['n',900,260,.35,.2],d:'Engine exhaust that hits every threat in a line and pushes them back.'},
-{id:'spore',n:'Spore Cloud',c:'#a6a85a',k:'pool',dps:7,rad:46,dur:5,cd:2.5,rng:120,cost:100,fx:{slow:[.7,1]},s:['n',500,250,.3,.12],d:'Lingering cloud that damages and slows.'},
-{id:'crystal',n:'Crystal',c:'#b57fc4',k:'single',dmg:78,cd:1.1,rng:140,cost:100,fx:{},s:['triangle',1800,1100,.16,.1],d:'Crystal spear. High damage to one target.'},
+{id:'magnet',n:'Magnet',c:'#c0566f',k:'splash',dmg:6,rad:60,cd:1.4,rng:120,cost:90,fx:{pull:1},s:['square',200,420,.18,.1],d:'Pulls enemies together with small hits.'},
+{id:'jet',n:'Jet Blast',c:'#7f9cc0',k:'beam',dmg:40,w:24,cd:1.3,rng:135,cost:100,fx:{push:22},s:['n',900,260,.35,.2],d:'An engine blast that hits every enemy in a line and pushes them back.'},
+{id:'spore',n:'Spore Cloud',c:'#a6a85a',k:'pool',dps:7,rad:46,dur:5,cd:2.5,rng:120,cost:100,fx:{slow:[.7,1]},s:['n',500,250,.3,.12],d:'A cloud that stays, hurts and slows enemies.'},
+{id:'crystal',n:'Crystal',c:'#b57fc4',k:'single',dmg:78,cd:1.1,rng:140,cost:100,fx:{},s:['triangle',1800,1100,.16,.1],d:'A crystal spear. High damage to one target.'},
 {id:'warp',n:'Time Warp',c:'#d99a52',k:'aura',rad:80,boost:.25,slow:.8,cost:130,rng:80,s:['sine',400,200,.2,.08],d:'Speeds up nearby towers and slows enemies.'},
-{id:'mirror',n:'Mirror',c:'#c8cdd6',k:'mirror',cd:1.2,rng:120,cost:140,s:['triangle',1000,1000,.1,.1],d:'Copies the last skill cast by another tower at 90% strength.'},
-{id:'power',n:'Power Beacon',c:'#c98a3a',k:'aura',rad:165,boost:0,dmgB:.05,slow:1,cost:120,rng:165,util:1,s:['sawtooth',220,440,.14,.08],d:'Support tower. Nearby towers deal 5% more damage per beacon level (25% at level 5).'},
-{id:'speed',n:'Speed Beacon',c:'#3bbfb0',k:'aura',rad:165,boost:.05,slow:1,cost:110,rng:165,util:1,s:['triangle',700,1400,.12,.08],d:'Support tower. Adjacent towers attack 5% faster per beacon level (25% at level 5).'}
+{id:'letter',n:'Official Letter',th:'หนังสือราชการ',c:'#b23a3a',k:'paper',dmg:22,cnt:3,cd:1.2,rng:140,cost:120,fx:{slow:[.75,1.5]},s:['triangle',900,1300,.08,.06],d:'Throws A4 papers at up to 3 enemies (one more per level). The paperwork slows them down.'},
+{id:'power',n:'Power Beacon',c:'#c98a3a',k:'aura',rad:165,boost:0,dmgB:.05,slow:1,cost:120,rng:165,util:1,s:['sawtooth',220,440,.14,.08],d:'Support tower. Nearby towers deal 5% more damage for each beacon level (25% at level 5).'},
+{id:'speed',n:'Speed Beacon',c:'#3bbfb0',k:'aura',rad:165,boost:.05,slow:1,cost:110,rng:165,util:1,s:['triangle',700,1400,.12,.08],d:'Support tower. Nearby towers attack 5% faster for each beacon level (25% at level 5).'}
 ];
-const AT={fire:1,water:1,earth:1,lightning:1,speed:2,power:2,wind:2,ice:2,poison:3,nature:3,light:4,spore:4,magnet:5,shadow:5,crystal:6,lava:6,jet:7,thunder:7,stars:8,nova:8,warp:9,meteor:9,gravity:10,mirror:10};
+const AT={fire:1,water:1,earth:1,lightning:1,speed:2,power:2,laser:2,ice:2,poison:3,nature:3,light:4,spore:4,magnet:5,shadow:5,crystal:6,lava:6,jet:7,thunder:7,stars:8,nova:8,warp:9,meteor:9,gravity:10,letter:10};
 SK.forEach(s=>s.at=AT[s.id]||1);SK.sort((a,b)=>a.at-b.at);
 const SKM={};SK.forEach(s=>SKM[s.id]=s);
 const STARTERS=['fire','water','earth','lightning'];
-const MAXLV=5,MAXL=50,MAXT=5,RUNKEY='ad_run_v6';
+const MAXLV=5,MAXL=50,MAXT=5,RUNKEY='ad_run_v7';
 /* upgrading is the better use of gold: level 5 gives 18x damage for 18.5x the build price, plus wider splash and super skills */
 const LVM=[0,1,2.6,5.4,10,18],LVB=[0,1,1.5,2,2.5,3],UPC=[0,1.5,3,5,9.6];
 
@@ -434,13 +451,13 @@ const ZONES=[
  {n:'Zenith',types:['super','ashs','drone','glare','ash','gust'],boss:'apex'}
 ];
 const zoneOf=L=>Math.min(9,Math.floor((L-1)/5));
-const TUNE={goldPts:10,moveCost:500,beaconR:1.2,sdN:8,vanK:1.3,vanLeak:7,vanLap:.75,vanSp2:.7,spEvery:6,spK:.4,pureM:1.08,spM:{"lightning":2.4,"gravity":3.5,"poison":1.8,"light":2.1,"shadow":1.4,"lava":2.0,"nova":4,"meteor":2.7,"magnet":4,"spore":2.1,"crystal":1.7,"nature":1.1,"earth":0.74,"stars":0.74,"wind":0.74,"jet":0.74,"thunder":0.74,"fire":0.9,"ice":1.2,"water":1.0},spB:{"lightning":4,"gravity":12,"poison":3.5,"light":5,"shadow":2.8,"lava":4,"nova":10,"meteor":6.5,"magnet":10,"spore":5,"crystal":3,"nature":1.2,"earth":0.05,"stars":0.05,"wind":0.05,"jet":0.05,"thunder":0.05,"fire":0.7,"ice":1.3,"water":1},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:2,capTri:5,winB:100000,lifeB:50000,pairP:.05,triP:.04,bossK:21.6,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:204,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:1,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
+const TUNE={goldPts:3,ptsK:.3,mobHp:1.1,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,spM:{"lightning":2.4,"gravity":3.5,"poison":1.8,"light":2.1,"shadow":1.4,"lava":2.0,"nova":4,"meteor":2.7,"magnet":4,"spore":2.1,"crystal":1.7,"nature":1.1,"earth":0.74,"stars":0.74,"jet":0.74,"thunder":0.74,"fire":1.0,"ice":1.2,"water":1.1,"laser":1.35,"letter":1.3},spB:{"lightning":4,"gravity":12,"poison":3.5,"light":5,"shadow":2.8,"lava":4,"nova":10,"meteor":6.5,"magnet":10,"spore":5,"crystal":3,"nature":1.2,"earth":0.05,"stars":0.05,"jet":0.05,"thunder":0.05,"fire":0.7,"ice":1.3,"water":1,"laser":1.3,"letter":1.5},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:10000,pairP:.05,triP:.04,bossK:21.6,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:204,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:1,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
 const dens=L=>(12+3.4*L)/TUNE.perL;
 const eF=L=>1+(Math.max(TUNE.eB,TUNE.eA-(TUNE.eA-TUNE.eB)*(L-1)/(TUNE.eL-1))-1);
 const hpMul=L=>1+TUNE.a*(L-1)+TUNE.b*Math.pow(L-1,2)+TUNE.c*Math.pow(L-1,3);
 const SHIELD=Array(30).fill(1).concat([.6,.5,.42,.37,.33,.31,.29,.28,.27,.27],[.26,.25,.24,.23,.22,.21,.2,.2,.19,.19]);
 /* difficulty index: levels 1 to 28 follow their own number; later levels follow a tuned curve so the run is hardest to survive through the last stretch */
-const LDA=[[1,1],[28,28],[34,38.4],[44,38.8],[49,41.3],[50,42]];
+const LDA=[[1,1],[28,28],[34,39.3],[37,39.4],[44,40.4],[49,42.8],[50,43.8]];
 function Ld(L){const A=TUNE.ld||LDA;if(L<=A[0][0])return A[0][1];for(let i=1;i<A.length;i++){if(L<=A[i][0]){const a=A[i-1],b=A[i];return a[1]+(b[1]-a[1])*(L-a[0])/(b[0]-a[0]);}}return A[A.length-1][1];}
 const shieldK=L=>SHIELD[Math.min(MAXL,Math.round(Ld(L)))-1]||1;
 
@@ -579,10 +596,9 @@ const DEF={unl:['fire','water','earth','lightning'],lv:{},jw:{},load:['fire','wa
 function loadSave(){try{const s=JSON.parse(localStorage.getItem('rd_save_v1')||'null');if(s&&s.unl)return Object.assign(clone(DEF),s);}catch(e){}return clone(DEF);}
 let SAVE=loadSave();
 function persist(){try{localStorage.setItem('rd_save_v1',JSON.stringify(SAVE));}catch(e){}}
-const slv=id=>SAVE.lv[id]||1;
+const MASTERY=3;/* fixed element strength for every player; the old orb mastery was removed */
+const slv=()=>MASTERY;
 const isUnl=id=>SAVE.unl.indexOf(id)>=0;
-const jw=id=>SAVE.jw[id]||0;
-const upCost=id=>3*slv(id);
 const totalScore=()=>SAVE.bestRun||0;
 
 /* ============ AUDIO ============ */
@@ -755,7 +771,7 @@ function buildSchedule(L,lead){
     const cnt=per+(w<rem?1:0),mix=[pool[(Math.random()*pool.length)|0],pool[(Math.random()*pool.length)|0],pool[(Math.random()*pool.length)|0]];
     for(let k=0;k<cnt;k++)sched.push({t:t0+w*TUNE.packGap,ty:mix[k%3],w:w,d0:-Math.random()*TUNE.spread});
     /* levels 36 to 50: fast Jet Wake runners slip through weaker defences, so the best defences keep more terminal health */
-    if(L>=TUNE.wakeFrom)for(let k=0;k<Math.round(TUNE.wakeN+TUNE.wakeG*Math.max(0,Ld(L)-TUNE.wakeFrom));k++)sched.push({t:t0+w*TUNE.packGap+k*.35,ty:'wake',w:w,d0:-rnd(0,60)});
+    if(L>=TUNE.wakeFrom)for(let k=0;k<Math.round(TUNE.wakeN+TUNE.wakeG*Math.max(0,Ld(L)-Ld(TUNE.wakeFrom)));k++)sched.push({t:t0+w*TUNE.packGap+k*.35,ty:'wake',w:w,d0:-rnd(0,60)});
     if(L%5===0&&w===W-1)sched.push({t:t0+w*TUNE.packGap,ty:ZONES[z].boss,w:w,d0:-TUNE.spread*.5});
   }
   sched.sort((a,b)=>a.t-b.t);
@@ -814,18 +830,18 @@ function pickNew(N){
 }
 function grantElement(N){
   const id=pickNew(N);if(!id)return null;const s=SKM[id];
-  S.avail.push(id);S.jw[id]=(S.jw[id]||0)+1;
+  S.avail.push(id);
   const x=CW/2,y=CH/2;fxGlow(x,y,70,s.c,.9,.8);burst(x,y,16,s.c,110,.9,3,{sh:'s',add:true});S.fx.push({k:'gem',x:x,y:y,c:s.c,t:1.6,max:1.6});
   S.fx.push({k:'stxt',x:x,y:y-30,s:'New element: '+s.n,c:s.c,t:2.2,max:2.2});
   seq([['triangle',784],['triangle',988],['triangle',1319]]);
   return s;
 }
-function bankJewels(){Object.keys(S.jw).forEach(k=>{SAVE.jw[k]=(SAVE.jw[k]||0)+S.jw[k];S.jwRun[k]=(S.jwRun[k]||0)+S.jw[k];});S.jw={};}
+function bankJewels(){S.jw={};}
 function advanceLevel(){
   const L=S.level;
   for(let i=0;i<2;i++)dropOrb(PADS[0].x,PADS[0].y);
   bankJewels();
-  const bonus=Math.round(400*L+S.lives*20),cr=Math.round(TUNE.bonusB+TUNE.bonusM*L);
+  const bonus=Math.round((400*L+S.lives*20)*TUNE.ptsK),cr=Math.round(TUNE.bonusB+TUNE.bonusM*L);
   S.score+=bonus;S.credits+=cr;
   SAVE.maxL=Math.max(SAVE.maxL,Math.min(MAXL,L+1));persist();
   const N=L+1,newZone=zoneOf(N)!==zoneOf(L);
@@ -887,6 +903,7 @@ function fxText(x,y,s,c){S.fx.push({k:'txt',x:x,y:y,s:s,c:c||'#1a2e4a',t:.9,max:
 function fxP(x,y,vx,vy,c,t,r,o){S.fx.push(Object.assign({k:'p',x:x,y:y,vx:vx,vy:vy,c:c,t:t,max:t,r:r,g:0,sh:'c',add:false,rot:rnd(0,TAU),vr:0},o||{}));}
 function fxParts(x,y,c,n,o){n=cnt(n);for(let i=0;i<n;i++){const a=rnd(0,TAU),v=rnd(20,80);fxP(x,y,Math.cos(a)*v,Math.sin(a)*v,c,.55,rnd(1.5,3.2),o);}}
 function fxProj(a,b,c,t){S.fx.push({k:'proj',x0:a.x,y0:a.y,x1:b.x,y1:b.y,c:c,t:t,max:t});}
+function fxPaper(a,b,i){const sd=i%2?1:-1;S.fx.push({k:'paper',x0:a.x,y0:a.y,x1:b.x,y1:b.y,sd:sd*(1+(i>>1)*.35),r0:rnd(-.3,.3),t:.34,max:.34,dl:i*.045});}
 function burst(x,y,n,col,spd,t,r,o){for(let i=0;i<cnt(n);i++){const a=rnd(0,TAU),v=rnd(spd*.4,spd);fxP(x,y,Math.cos(a)*v,Math.sin(a)*v,col,t*rnd(.7,1.1),rnd(r*.6,r),o);}}
 function impactFx(sk,x,y,rad,dl){
   const n0=S.fx.length,c=sk.c;
@@ -898,7 +915,7 @@ function impactFx(sk,x,y,rad,dl){
     case 'gravity':fxGlow(x,y,rad,'#6a4fa8',.5,.55);fxRing(x,y,rad,'#8a6fc4',.5,2);
       for(let i=0;i<cnt(10);i++){const a=rnd(0,TAU);fxP(x+Math.cos(a)*rad,y+Math.sin(a)*rad,-Math.cos(a)*rad*2.2,-Math.sin(a)*rad*2.2,'#b9a3e6',.45,2.2,{add:true});}break;
     case 'ice':fxRing(x,y,rad,'#bfe9f5',.45,3);burst(x,y,9,'#d9f2f9',85,.6,3.4,{sh:'t',g:60});fxGlow(x,y,rad,'#8fd6e8',.3,.5);break;
-    case 'wind':fxRing(x,y,rad,'#bfe0cc',.4,2);for(let i=0;i<cnt(7);i++){const a=rnd(0,TAU);fxP(x,y,Math.cos(a)*110,Math.sin(a)*110,'#d6ecdf',.4,1.6,{sh:'l'});}break;
+    case 'seal':fxRing(x,y,rad,'#b3262c',.6,6);fxRing(x,y,rad*.6,'#e0675e',.5,3);S.fx.push({k:'shock',x:x,y:y,r:rad*.8,c:'#6e1418',t:.6,max:.6,n:14,seed:Math.random()*6});fxGlow(x,y,rad,'#c0392b',.4,.6);S.shake=RM?0:.45;break;
     case 'poison':fxGlow(x,y,rad,'#7fb04f',.45,.5);
       for(let i=0;i<cnt(9);i++)fxP(x+rnd(-rad*.6,rad*.6),y+rnd(-rad*.3,rad*.5),rnd(-8,8),rnd(-34,-10),'#a6d36e',rnd(.5,.8),rnd(2,4.2),{g:-10,sh:'o'});break;
     case 'shadow':fxGlow(x,y,rad*1.1,'#3b2f56',.5,.7);
@@ -935,20 +952,14 @@ function killE(e){
   if(e.dead)return;e.dead=true;S.kills++;S.score+=e.pts;S.credits+=e.rew;S.goldIn=(S.goldIn||0)+e.rew;
   if(S.t-(S.lkT==null?-9:S.lkT)<1.3)S.chain++;else{S.chain=1;S.chGold=0;}
   S.lkT=S.t;S.chGold=(S.chGold||0)+e.rew;S.kf=(S.kf||0)+1;
-  if(S.chain>=5){S.score+=Math.round(Math.min(20,S.chain)*(1+.1*S.level)*.5);S.chShow=1.6;if(S.chain>(S.bestChain||0))S.bestChain=S.chain;}
+  if(S.chain>=5){S.score+=Math.round(Math.min(20,S.chain)*(1+.1*S.level)*.5*TUNE.ptsK);S.chShow=1.6;if(S.chain>(S.bestChain||0))S.bestChain=S.chain;}
   fxGlow(e.x,e.y,e.r*2.2,'#ffffff',.25,.6);fxRing(e.x,e.y,e.r*(e.boss?4:2.4),e.c,.4,2);fxParts(e.x,e.y,e.c,e.boss?22:8,{g:60});
   goldFx(e.x,e.y,e.rew,e.boss);
   sfx(SFX.kill,'kill');const cp=Math.min(36,S.chain||0);sfx(['triangle',1500+cp*32,2300+cp*40,.06,.05],'coin');if(e.boss)seq([['triangle',523],['triangle',659],['triangle',784],['triangle',1046]]);
   if(e.boss){for(let i=0;i<3;i++)dropOrb(e.x,e.y);}
   else if(Math.random()<TUNE.orbP)dropOrb(e.x,e.y);
 }
-function dropOrb(x,y,id){
-  if(!id){const pool=SK.filter(s=>!s.util);id=pool[(Math.random()*pool.length)|0].id;}
-  const s=SKM[id];
-  S.jw[id]=(S.jw[id]||0)+1;
-  S.fx.push({k:'gem',x:x,y:y,c:s.c,t:1.1,max:1.1});
-  sfx(SFX.jewel,'jewel');
-}
+function dropOrb(){}
 function dropJewel(x,y){dropOrb(x,y);}
 /* the Storm Shield also weakens control effects (slow, stun, push, pull, weaken) unless they come from the Gravity + Lightning combo */
 function ccK(){return (S.shieldK<1&&!SRC_GL)?Math.pow(S.shieldK,SRC_TRI?TUNE.triP:SRC_PAIR?TUNE.pairP:1):1;}
@@ -982,7 +993,7 @@ function superHit(t){
 }
 const hasMeteor=()=>S.towers.some(u=>u.id==='meteor'&&u.lvl>=MAXT);
 function armageddon(t){
-  /* every 20th hit: the hero calls down fire across the whole map */
+  /* every 20th hit: the level 5 tower calls down fire across the whole map */
   const sk=SKM[t.id],cm=t.cb?t.cb.def.m:1,dm=dmgM(t)*cm*(1+(t.pw||0))*(S.bc>0?2:1)*TUNE.supK,b=(sk.dmg||(sk.dps?sk.dps*2:40))*dm;
   SRC_GL=!!(t.cb&&t.cb.def.gl);
   const L=alive().filter(e=>e.d>=0);
@@ -1016,7 +1027,7 @@ function comboHit(t,tg){
     case 'overgrow':hitList(near(65,cap),.25*b,{stun:.35,slow:[.6,1.5]},dm);break;
     case 'inferno':hitList(near(70,cap),.3*b,{burn:[10,3]},dm);break;
     case 'tstorm':near(110,6,tg).forEach(e=>{fxJag({x:x,y:y},e,'#9fd0f0',.2,1.8);dmgE(e,.65*b);applyFx(e,{slow:[.6,1.2]},dm);});break;
-    case 'wildfire':near(75,4,tg).forEach(e=>{fxProj({x:x,y:y},e,'#e0743f',.18);dmgE(e,.15*b);applyFx(e,{burn:[8,4]},dm);});break;
+    case 'heatray':near(75,4,tg).forEach(e=>{fxProj({x:x,y:y},e,'#e0743f',.18);dmgE(e,.15*b);applyFx(e,{burn:[8,4]},dm);});break;
     case 'magma':S.pools.push({x:x,y:y,r:38,dps:.6*b,t:1.8,max:1.8,sk:SKM.lava,gl:d.gl,pair:1,cap:cap});hitList(near(45,cap),.15*b,{stun:.3},dm);break;
     case 'frost':hitList(near(60,cap),.1*b,null,dm);break;
     case 'supernova':hitList(near(70,cap),.3*b,{slow:[.55,2]},dm);break;
@@ -1024,7 +1035,7 @@ function comboHit(t,tg){
     case 'prism':near(130,10,tg).forEach(e=>{fxBolt([{x:x,y:y},{x:e.x,y:e.y}],'#e4c9f0',.22,3,'beam');dmgE(e,1.3*b);});break;
     case 'volcanic':S.pend.push({t:.45,del:.45,x:x,y:y,sk:SKM.meteor,dmg:(t.ch%2===0?1.2:.8)*b,rad:55,dm:dm,gl:d.gl,tri:d.tri,pair:!d.tri&&!d.gl,cap:cap,big:true});break;
     case 'horizon':{const L=near(95,999);pullTo(L,.5);hitList(L,.1*b,null,dm);break;}
-    case 'blizzard':hitList(near(80,cap+4),.35*b,null,dm);break;
+    case 'cryobeam':hitList(near(80,cap+4),.35*b,null,dm);break;
     case 'solar':applyFx(tg,{burn:[8,3]},dm);for(let i=0;i<3;i++){const an=rnd(0,TAU),r=rnd(10,40);S.pend.push({t:.12+i*.1,del:.12+i*.1,x:x+Math.cos(an)*r,y:y+Math.sin(an)*r,sk:SKM.stars,dmg:.45*b,rad:28,dm:dm,gl:d.gl,cap:cap});}break;
     case 'starstorm':near(100,3,null).forEach((e,i)=>S.pend.push({t:.15+i*.08,del:.15+i*.08,x:e.x,y:e.y,sk:SKM.stars,dmg:.15*b,rad:26,dm:dm,pair:1,cap:cap}));break;
     case 'twilight':near(130,8,null).forEach(e=>{fxBolt([{x:x,y:y},{x:e.x,y:e.y}],'#a99ac8',.2,2.4,'beam');dmgE(e,1.3*b);applyFx(e,{weak:[1.4,3]},dm);});break;
@@ -1034,9 +1045,22 @@ function comboHit(t,tg){
     case 'permafrost':near(80,cap).forEach(e=>{const fr=e.stun>0||e.slowF<1;dmgE(e,(fr?1.8:.75)*b);applyFx(e,{slow:[.55,1.5]},dm);});break;
     case 'singularity':{const L=near(100,cap);pullTo(L,.5);L.forEach(e=>fxProj({x:x,y:y-20},e,'#b57fc4',.12));hitList(L,.75*b,null,dm);break;}
     case 'ironrain':{const L=near(90,cap);pullTo(L,.5);S.pend.push({t:.4,del:.4,x:x,y:y,sk:SKM.meteor,dmg:1.5*b,rad:62,dm:dm,pair:1,cap:cap,big:true});break;}
-    case 'jetstream':{const L=near(70,cap);pushBack(L,8);hitList(L,.1*b,{slow:[.6,1.5]},dm);break;}
+    case 'plasma':hitList(near(60,cap),.15*b,{burn:[6,3],slow:[.6,1.5]},dm);break;
     case 'afterburn':{const dx=x-t.x,dy=y-t.y;for(let i=1;i<=3;i++)S.pools.push({x:t.x+dx*i/3,y:t.y+dy*i/3,r:24,dps:.1*b,t:1.6,max:1.6,sk:SKM.lava,pair:1,cap:cap});applyFx(tg,{burn:[6,3]},dm);break;}
     case 'eclipse':{const L=near(100,cap);hitList(L,.1*b,{weak:[1.15,2]},dm);L.slice(0,3).forEach((e,i)=>S.pend.push({t:.3+i*.07,del:.3+i*.07,x:e.x,y:e.y,sk:SKM.stars,dmg:.15*b,rad:28,dm:dm,tri:1,cap:cap}));break;}
+    case 'frozen':{const L=near(80,cap);hitList(L,.3*b,{stun:.6},dm);fxRing(x,y,70,'#cfe9f2',.4,3);break;}
+    case 'timebloom':S.pools.push({x:x,y:y,r:58,dps:.9*b,t:2.5,max:2.5,sk:SKM.spore,pair:1,cap:cap});fxRing(x,y,56,'#d9b86a',.45,2);break;
+    case 'thornvenom':hitList(near(70,5),.2*b,{poison:[6,4],slow:[.65,1.5]},dm);break;
+    case 'shardblast':near(110,4,tg).forEach(e=>{fxProj({x:x,y:y},e,'#c79ad6',.14);dmgE(e,.6*b);});break;
+    case 'refraction':near(130,3,tg).forEach(e=>{fxBolt([{x:x,y:y},{x:e.x,y:e.y}],'#e9a3c6',.18,2.2,'beam');dmgE(e,.8*b);});break;
+    case 'deadline':{if(t.id!=='letter')break;applyFx(tg,{slow:[.5,2]},dm);const fut=posAt(tg.d+tg.sp*tg.slowF*2);S.pend.push({t:2,del:2,x:fut.x,y:fut.y,sk:SKM.letter,dmg:.8*b,rad:36,dm:dm,pair:1,cap:cap});break;}
+    case 'waxseal':{applyFx(tg,{burn:[8,3]},dm);S.pools.push({x:x,y:y,r:26,dps:.35*b,t:1.6,max:1.6,sk:SKM.lava,pair:1,cap:cap});break;}
+    case 'jungle':{hitList(near(80,cap),.3*b,{stun:.5,poison:[6,4]},dm);S.pools.push({x:x,y:y,r:48,dps:.5*b,t:2,max:2,sk:SKM.spore,tri:1,cap:cap});break;}
+    case 'frozentime':near(90,cap).forEach(e=>{const fr=e.stun>0;dmgE(e,(fr?1.6:.5)*b);applyFx(e,{stun:.7},dm);});fxRing(x,y,84,'#e6f4fa',.5,4);break;
+    case 'railgun':{const dx=x-t.x,dy=y-t.y,dl=Math.hypot(dx,dy)||1,ux=dx/dl,uy=dy/dl,L=420;
+      for(const e of S.enemies){if(e.dead||e.d<0)continue;const px=e.x-t.x,py=e.y-t.y,pr=px*ux+py*uy;if(pr<0||pr>L)continue;if(Math.abs(px*uy-py*ux)<=11+e.r)dmgE(e,.9*b);}
+      fxBolt([{x:t.x,y:t.y-10},{x:t.x+ux*L,y:t.y+uy*L}],'#aab8e0',.3,4,'beam');break;}
+    case 'bureaucracy':{const L=near(90,cap);hitList(L,.35*b,{stun:.6,slow:[.5,2]},dm);if(!S.botRun)L.slice(0,4).forEach((e,i)=>fxPaper({x:x+rnd(-30,30),y:y-50},e,i));break;}
     case 'comet':{const L=near(100,cap);pullTo(L,.55);S.pend.push({t:.5,del:.5,x:x,y:y,sk:SKM.meteor,dmg:.9*b,rad:60,dm:dm,tri:1,cap:cap,big:true});S.pools.push({x:x,y:y,r:40,dps:.35*b,t:2.5,max:2.5,sk:SKM.lava,tri:1,cap:cap});break;}
   }
   SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;
@@ -1059,7 +1083,8 @@ function cast0(t,sk,tg,mult){
       break;}
     case 'beam':{
       const L=sk.rng*rngM(t)*1.1,dx=tg.x-t.x,dy=tg.y-t.y,dl=Math.hypot(dx,dy)||1,ux=dx/dl,uy=dy/dl;
-      fxBolt([{x:t.x,y:t.y-8},{x:t.x+ux*L,y:t.y+uy*L}],sk.c,.25,sk.w*rm*.6,'beam');
+      if(sk.id==='laser'){fxBolt([{x:t.x,y:t.y-12},{x:t.x+ux*L,y:t.y+uy*L}],sk.c,.16,2.6,'beam');fxGlow(t.x,t.y-12,14,'#f3b3c4',.16,.8);}
+      else fxBolt([{x:t.x,y:t.y-8},{x:t.x+ux*L,y:t.y+uy*L}],sk.c,.25,sk.w*rm*.6,'beam');
       for(const e of S.enemies){if(e.dead)continue;const px=e.x-t.x,py=e.y-t.y,pr=px*ux+py*uy;
         if(pr<0||pr>L)continue;if(Math.abs(px*uy-py*ux)<=sk.w*rm/2+e.r){dmgE(e,sk.dmg*dm);applyFx(e,sk.fx,dm);if(sk.fx&&sk.fx.push&&!e.dead){e.d=Math.max(0,e.d-sk.fx.push*(e.boss?.4:1)*ccK());const q=posAt(e.d);e.x=q.x;e.y=q.y;}}}
       break;}
@@ -1071,6 +1096,12 @@ function cast0(t,sk,tg,mult){
     case 'delay':{
       const sp=tg.sp*(tg.stun>0?0:tg.slowF);const fut=posAt(tg.d+sp*sk.del);
       S.pend.push({t:sk.del,del:sk.del,x:fut.x,y:fut.y,sk:sk,dmg:sk.dmg*dm,rad:sk.rad*rm,dm:dm,gl:SRC_GL,tri:SRC_TRI,pair:SRC_PAIR,cap:SPLASH_CAP,big:true});break;}
+    case 'paper':{
+      /* A4 sheets glide in smooth curves to the target and the threats furthest along the taxiway */
+      const n=sk.cnt+(t.lvl-1),R=sk.rng*rngM(t),T=[tg];
+      for(const e of S.enemies.slice().sort((a,b)=>b.d-a.d)){if(T.length>=n)break;if(e.dead||e.d<0||e===tg)continue;if(Math.hypot(e.x-t.x,e.y-t.y)<=R+e.r)T.push(e);}
+      T.forEach((e,i)=>{fxPaper({x:t.x,y:t.y-14},e,i);dmgE(e,sk.dmg*dm);applyFx(e,sk.fx,dm);});
+      break;}
     case 'pool':S.pools.push({x:tg.x,y:tg.y,r:sk.rad*rm,dps:sk.dps*dm,t:sk.dur,max:sk.dur,sk:sk,gl:SRC_GL,tri:SRC_TRI,pair:SRC_PAIR,cap:SPLASH_CAP+4});break;
     case 'single':{
       if(sk.id==='light')fxBolt([{x:t.x,y:t.y-8},{x:tg.x,y:tg.y}],sk.c,.22,4,'beam');else fxProj({x:t.x,y:t.y-8},tg,sk.c,.12);
@@ -1079,16 +1110,16 @@ function cast0(t,sk,tg,mult){
 }
 /* ----- element combos ----- */
 let SRC_GL=false,SRC_TRI=false,SRC_PAIR=false,SRC_WI=false,SPLASH_CAP=999;
-const COMBO_M=1.15,COMBO_GL=1.3,TRI_M=1.35,TRI_GL=1.5;
+const COMBO_M=1.6,COMBO_GL=1.75,TRI_M=1.8,TRI_GL=2;
 const COMBOS=[
 {k:'inferno',a:'meteor',b:'fire',n:'Inferno Strike',m:COMBO_M,c:'#e0743f',d:'Meteor and Fire turn each impact into a firestorm that sets nearby threats burning.'},
 {k:'overgrow',a:'earth',b:'nature',n:'Overgrowth',m:COMBO_M,c:'#5c9a58',d:'Earth and Nature tear up the ground with vines that root and slow nearby threats.'},
-{k:'surge',a:'gravity',b:'lightning',n:'Storm Surge',m:1.9,gl:1,hops:5,c:'#8a6fc4',d:'+90% damage, +5 chain jumps at full strength, sky strikes on nearby threats, and its hits ignore the splash cap. Cuts through the Storm Shield of levels 31 to 40.'},
+{k:'surge',a:'gravity',b:'lightning',n:'Storm Surge',m:2.6,gl:1,hops:5,c:'#8a6fc4',d:'+160% damage, +5 chain jumps at full strength, sky strikes on nearby threats, and its hits ignore the splash cap. Cuts through the Storm Shield of levels 31 to 40.'},
 {k:'steam',a:'fire',b:'water',n:'Steam Burst',m:COMBO_M,c:'#cdd9e3',d:'Scalding steam: hits also burn and slow the threats around the target.'},
 {k:'tstorm',a:'water',b:'lightning',n:'Thunder Rain',m:COMBO_M,hops:3,c:'#3d7fc4',d:'Charged rain: +3 chain jumps at full strength, and each hit arcs to 6 nearby threats and slows them.'},
-{k:'wildfire',a:'fire',b:'wind',n:'Wildfire',m:COMBO_M,c:'#d9a03a',d:'The wind spreads the flames: burning spreads to 4 nearby threats.'},
+{k:'heatray',a:'fire',b:'laser',n:'Heat Ray',m:COMBO_M,c:'#e07a5f',d:'The beam ignites: burning spreads to 4 nearby threats.'},
 {k:'magma',a:'earth',b:'lava',n:'Magma Rift',m:COMBO_M,c:'#b8432c',d:'The ground splits: every hit opens a lava crack and briefly stuns.'},
-{k:'frost',a:'water',b:'ice',n:'Frost Tide',m:COMBO_GL,gl:1,wi:1,c:'#7fc4dc',d:'+30% damage. A freezing wave chills threats around the target, and its hits cut through the Storm Shield.'},
+{k:'frost',a:'water',b:'ice',n:'Frost Tide',m:COMBO_GL,gl:1,wi:1,c:'#7fc4dc',d:'+75% damage. A freezing wave chills threats around the target, and its hits cut through the Storm Shield.'},
 {k:'starstorm',a:'thunder',b:'stars',n:'Starstorm',m:COMBO_M,c:'#9aa6e8',d:'Starbolts rain down on threats around each blast.'},
 {k:'magstorm',a:'thunder',b:'magnet',n:'Magnetic Storm',m:COMBO_M,c:'#c0566f',d:'Drags nearby threats into the blast before it lands.'},
 {k:'twilight',a:'light',b:'shadow',n:'Twilight',m:COMBO_M,c:'#a99ac8',d:'Strikes up to 8 nearby threats and marks them so they take extra damage.'},
@@ -1100,16 +1131,27 @@ const COMBOS=[
 {k:'permafrost',a:'nova',b:'ice',n:'Permafrost',m:COMBO_M,c:'#9fdde6',d:'Frozen or slowed threats shatter for bonus damage.'},
 {k:'singularity',a:'gravity',b:'crystal',n:'Singularity Shard',m:COMBO_M,c:'#9a7fc8',d:'Pulls a group together, then a crystal burst hits them all.'},
 {k:'ironrain',a:'magnet',b:'meteor',n:'Iron Rain',m:COMBO_M,c:'#b5683c',d:'Drags threats under an extra iron meteor.'},
-{k:'jetstream',a:'jet',b:'wind',n:'Jetstream',m:COMBO_M,c:'#8fb5c4',d:'Exhaust pushes threats further back and slows them.'},
-{k:'afterburn',a:'jet',b:'lava',n:'Afterburn',m:COMBO_M,c:'#d9694a',d:'The blast leaves a burning trail on the taxiway.'}
+{k:'plasma',a:'jet',b:'laser',n:'Plasma Jet',m:COMBO_M,c:'#b06aa0',d:'Hot plasma: threats around each hit burn and are slowed.'},
+{k:'afterburn',a:'jet',b:'lava',n:'Afterburn',m:COMBO_M,c:'#d9694a',d:'The blast leaves a burning trail on the taxiway.'},
+{k:'frozen',a:'warp',b:'nova',n:'Frozen Moment',m:COMBO_M,c:'#9fc6d9',d:'Time stops in the cold: each burst also stuns the threats around the target.'},
+{k:'timebloom',a:'warp',b:'spore',n:'Time Bloom',m:COMBO_M,c:'#c9a35a',d:'Spore clouds grow in fast time: every hit adds a bigger cloud that hurts faster.'},
+{k:'thornvenom',a:'nature',b:'poison',n:'Thorn Venom',m:COMBO_M,c:'#6f9a3f',d:'Poisoned thorns: hits stack venom on up to 5 nearby threats and slow them.'},
+{k:'shardblast',a:'jet',b:'crystal',n:'Shard Blast',m:COMBO_M,c:'#a99ad0',d:'The blast carries crystal shards: each hit fires 4 shards at nearby threats.'},
+{k:'refraction',a:'laser',b:'crystal',n:'Refraction',m:COMBO_M,c:'#d68ab6',d:'The beam bends through crystal: each hit splits into 3 extra beams.'},
+{k:'deadline',a:'letter',b:'warp',n:'Deadline',m:COMBO_M,c:'#c27a4a',d:'Every letter has a deadline: the threat is slowed hard, and 2 seconds later the deadline hits again.'},
+{k:'waxseal',a:'letter',b:'lava',n:'Wax Seal',m:COMBO_M,c:'#b8432c',d:'Hot wax seals: each letter burns the threat it hits and drips a small burning pool.'}
 ];
 /* tri-element combos: three different elements on linked pads (a connected row, corner or triangle) */
 const TRIS=[
-{k:'volcanic',e:['fire','earth','lightning'],n:'Volcanic Storm',m:TRI_M,tri:1,c:'#e8853a',d:'+35% damage. Every hit calls a meteor down on the target, a bigger one every 2nd hit.'},
-{k:'horizon',e:['gravity','lightning','thunder'],n:'Event Horizon',m:TRI_GL,tri:1,gl:1,hops:5,c:'#6a4fa8',d:'+50% damage. Hits open a small black hole that pulls and stuns. Ignores the splash cap and cuts through the Storm Shield.'},
-{k:'blizzard',e:['water','ice','wind'],n:'Blizzard',m:TRI_GL,tri:1,gl:1,wi:1,c:'#bfe3ef',d:'+50% damage. Each hit sends an icy shock through a wide ring, and cuts through the Storm Shield.'},
-{k:'eclipse',e:['light','shadow','stars'],n:'Solar Eclipse',m:TRI_M,tri:1,c:'#7a6aa8',d:'+35% damage. The sky darkens around the target, then a starburst hits every marked threat.'},
-{k:'comet',e:['meteor','magnet','lava'],n:'Comet Fall',m:TRI_M,tri:1,c:'#c76a3a',d:'+35% damage. Drags threats under a comet that leaves a lava pool.'}
+{k:'volcanic',e:['fire','earth','lightning'],n:'Volcanic Storm',m:TRI_M,tri:1,c:'#e8853a',d:'+80% damage. Every hit calls a meteor down on the target, a bigger one every 2nd hit.'},
+{k:'horizon',e:['gravity','lightning','thunder'],n:'Event Horizon',m:TRI_GL,tri:1,gl:1,hops:5,c:'#6a4fa8',d:'+100% damage. Hits open a small black hole that pulls and stuns. Ignores the splash cap and cuts through the Storm Shield.'},
+{k:'cryobeam',e:['water','ice','laser'],n:'Cryo Beam',m:TRI_GL,tri:1,gl:1,wi:1,c:'#bfe3ef',d:'+100% damage. Each hit sends an icy shock through a wide ring, and cuts through the Storm Shield.'},
+{k:'eclipse',e:['light','shadow','stars'],n:'Solar Eclipse',m:TRI_M,tri:1,c:'#7a6aa8',d:'+80% damage. The sky darkens around the target, then a starburst hits every marked threat.'},
+{k:'comet',e:['meteor','magnet','lava'],n:'Comet Fall',m:TRI_M,tri:1,c:'#c76a3a',d:'+80% damage. Drags threats under a comet that leaves a lava pool.'},
+{k:'jungle',e:['nature','poison','spore'],n:'Toxic Jungle',m:TRI_M,tri:1,c:'#6a8f3a',d:'+80% damage. A poison jungle grows: threats are held, poisoned and caught in a toxic cloud.'},
+{k:'frozentime',e:['warp','nova','crystal'],n:'Frozen Time',m:TRI_M,tri:1,c:'#a8d4e6',d:'+80% damage. Threats freeze in time, and frozen threats break for big damage.'},
+{k:'railgun',e:['magnet','laser','jet'],n:'Railgun',m:TRI_M,tri:1,c:'#8a9ac8',d:'+80% damage. Magnetic rails fire an iron slug through every threat in a long line.'},
+{k:'bureaucracy',e:['letter','warp','earth'],n:'Bureaucracy',m:TRI_M,tri:1,c:'#9a6a4a',d:'+80% damage. Everything stops for the paperwork: threats near the target are stunned, slowed and buried in papers.'}
 ];
 const pct=m=>'+'+Math.round((m-1)*100)+'%';
 function comboFor(x,y){for(const c of COMBOS){if((c.a===x&&c.b===y)||(c.a===y&&c.b===x))return c;}return null;}
@@ -1120,7 +1162,7 @@ const PURE={};
 function pureDef(id){return PURE[id]||(PURE[id]={k:'pure',n:'Pure Connection',m:TUNE.pureM,pure:1,c:SKM[id].c,d:'Two '+SKM[id].n+' towers side by side at level 5: +8% damage and wider splash.'});}
 /* every pad on the map holds a tower of the same element, all at level 5 */
 const SUPERP={};
-function superDef(id){return SUPERP[id]||(SUPERP[id]={k:'superpure',n:'Super Duper Pure Connection',m:TRI_M*(TUNE.spM[id]||1),tri:1,sp:1,c:SKM[id].c,d:'Every pad holds a '+SKM[id].n+' tower: bonus damage tuned to the element, wider splash, and a blast hits every threat on the map every '+TUNE.spEvery+' seconds.'});}
+function superDef(id){return SUPERP[id]||(SUPERP[id]={k:'superpure',n:'Super Duper Pure Connection',m:TRI_M*(TUNE.spM[id]||1)*TUNE.sdM,tri:1,sp:1,c:SKM[id].c,d:'Every pad holds a '+SKM[id].n+' tower: bonus damage tuned to the element, wider splash, and a blast hits every threat on the map every '+TUNE.spEvery+' seconds.'});}
 function updCombos(){
   if(!S.seen)S.seen={};
   const sig=S.towers.map(t=>t.pad+':'+t.id+':'+t.lvl).join(',');
@@ -1158,7 +1200,7 @@ function updCombos(){
   /* super duper pure connection */
   const A=S.towers,id0=A.length?A[0].id:null;
   S.superPure=null;
-  if(A.length>=PADS.length&&SKM[id0].k!=='aura'&&SKM[id0].k!=='mirror'&&A.every(t=>t.id===id0&&t.lvl>=MAXT)){
+  if(A.length>=PADS.length&&SKM[id0].k!=='aura'&&A.every(t=>t.id===id0&&t.lvl>=MAXT)){
     const d=superDef(id0);S.superPure=d;A.forEach(t=>{t.cb={def:d,others:[],other:null};});
     if(!S.seen.superpure){S.seen.superpure=1;if(!S.quiet){comboForm(A,d);banner('Super Duper Pure Connection',SKM[id0].n+' everywhere · map-wide blast every '+TUNE.spEvery+' s');}}
   }
@@ -1186,6 +1228,7 @@ function comboPreview(pp,id){
   return best;
 }
 function comboForm(L,d){
+  try{SAVE.disc=SAVE.disc||{};if(!SAVE.disc[d.k]){SAVE.disc[d.k]=1;persist();}}catch(e){}
   const mx=L.reduce((s,t)=>s+t.x,0)/L.length,my=L.reduce((s,t)=>s+t.y,0)/L.length;
   if(d.tri)S.fx.push({k:'stxt',x:mx,y:my-30,s:d.n+' '+pct(d.m),c:d.c,t:2,max:2});else fxText(mx,my-24,d.n+' '+pct(d.m),'#1e4d8c');
   L.forEach(t=>fxRing(t.x,t.y,30,d.c,.5,3));fxGlow(mx,my-8,d.tri?60:34,d.c,.5,.7);
@@ -1223,7 +1266,7 @@ function comboFx(t,tg){
       S.shake=RM?0:.1;break;}
     case 'steam':fxGlow(x,y,56,'#eef3f7',.5,.6);for(let i=0;i<cnt(10);i++)fxP(x+rnd(-26,26),y+rnd(-8,10),rnd(-12,12),rnd(-46,-16),i%2?'#ffffff':'#cdd9e3',rnd(.6,1),rnd(4,7),{g:-8});fxRing(x,y,50,'#f0a55a',.35,2);break;
     case 'tstorm':for(let i=0;i<cnt(8);i++){const rx=x+rnd(-40,40);fxP(rx,y-60+rnd(-10,10),-8,220,'#9fd0f0',.3,1.4,{sh:'l'});}fxGlow(x,y,44,'#3d7fc4',.3,.5);break;
-    case 'wildfire':fxGlow(x,y,60,'#f0a55a',.4,.6);for(let i=0;i<cnt(10);i++){const a=rnd(0,TAU);fxP(x,y,Math.cos(a)*90,Math.sin(a)*90-20,i%2?'#f7d98a':'#d9a03a',rnd(.4,.7),rnd(2,3.6),{g:-20,add:true});}break;
+    case 'heatray':fxGlow(x,y,60,'#f0a55a',.4,.6);for(let i=0;i<cnt(10);i++){const a=rnd(0,TAU);fxP(x,y,Math.cos(a)*90,Math.sin(a)*90-20,i%2?'#f7d98a':'#d9a03a',rnd(.4,.7),rnd(2,3.6),{g:-20,add:true});}break;
     case 'magma':S.fx.push({k:'shock',x:x,y:y,r:52,c:'#8a2f1f',t:.6,max:.6,n:7,seed:Math.random()*6});fxGlow(x,y,40,'#e0743f',.4,.7);break;
     case 'frost':fxGlow(x,y,60,'#dff4f9',.45,.6);fxRing(x,y,64,'#7fc4dc',.5,4);fxRing(x,y,40,'#ffffff',.4,2);for(let i=0;i<cnt(10);i++){const a=rnd(0,TAU),v=rnd(60,120);fxP(x,y,Math.cos(a)*v,Math.sin(a)*v,i%2?'#ffffff':'#9fd0e0',rnd(.45,.7),rnd(2.4,3.8),{sh:'t',vr:8});}break;
     case 'supernova':{const n0=S.fx.length;fxRing(x,y,70,'#f1d27a',.5,4);fxRing(x,y,46,'#bfeef0',.45,3);for(let i=n0;i<S.fx.length;i++)S.fx[i].dl=i===n0?0:.06;burst(x,y,10,'#fff3c4',110,.5,2.4,{sh:'s',add:true});break;}
@@ -1232,7 +1275,7 @@ function comboFx(t,tg){
     case 'volcanic':fxGlow(x,y,64,'#e8853a',.4,.7);fxRing(x,y,56,'#e8c547',.4,3);if(t.ch%2===1)fxJag({x:x+rnd(-12,12),y:y-220},{x:x,y:y},'#fff3b0',.25,2.6);break;
     case 'horizon':fxGlow(x,y,90,'#2a1d4a',.6,.75);fxRing(x,y,88,'#8a6fc4',.55,4);fxRing(x,y,40,'#e8c547',.45,3);
       for(let i=0;i<cnt(14);i++){const a=rnd(0,TAU);fxP(x+Math.cos(a)*92,y+Math.sin(a)*92,-Math.cos(a)*200,-Math.sin(a)*200,i%2?'#b9a3e6':'#fff3b0',.45,2.4,{add:true});}S.shake=RM?0:.12;break;
-    case 'blizzard':fxGlow(x,y,90,'#dff4f9',.45,.6);fxRing(x,y,90,'#ffffff',.55,4);for(let i=0;i<cnt(16);i++){const a=rnd(0,TAU),v=rnd(60,140);fxP(x,y,Math.cos(a)*v,Math.sin(a)*v,i%2?'#ffffff':'#bfe3ef',rnd(.5,.8),rnd(2,3.6),{sh:'s',vr:6});}break;
+    case 'cryobeam':fxGlow(x,y,90,'#dff4f9',.45,.6);fxRing(x,y,90,'#ffffff',.55,4);for(let i=0;i<cnt(16);i++){const a=rnd(0,TAU),v=rnd(60,140);fxP(x,y,Math.cos(a)*v,Math.sin(a)*v,i%2?'#ffffff':'#bfe3ef',rnd(.5,.8),rnd(2,3.6),{sh:'s',vr:6});}break;
     case 'starstorm':fxGlow(x,y,56,'#c9d4ff',.4,.6);for(let i=0;i<cnt(8);i++)fxP(x+rnd(-50,50),y-90+rnd(-10,10),rnd(-20,20),230,'#e6ebff',.35,1.8,{sh:'s',add:true});break;
     case 'twilight':fxGlow(x,y,56,'#5b4b7a',.45,.6);fxRing(x,y,48,'#fff6dc',.4,3);break;
     case 'nightshade':fxGlow(x,y,52,'#4a5a3a',.5,.6);for(let i=0;i<cnt(8);i++)fxP(x+rnd(-26,26),y+rnd(-10,12),rnd(-8,8),rnd(-34,-12),i%2?'#7fb04f':'#5b4b7a',rnd(.6,1),rnd(2.4,4),{g:-6,sh:'o'});break;
@@ -1241,7 +1284,7 @@ function comboFx(t,tg){
     case 'permafrost':fxGlow(x,y,58,'#dff4f9',.45,.6);fxRing(x,y,60,'#6bc2c9',.5,3);for(let i=0;i<cnt(10);i++){const a=rnd(0,TAU),v=rnd(70,130);fxP(x,y,Math.cos(a)*v,Math.sin(a)*v,i%2?'#ffffff':'#8fd6e8',rnd(.4,.6),rnd(2.4,3.8),{sh:'t',g:60,vr:8});}break;
     case 'singularity':fxGlow(x,y,70,'#2a1d4a',.5,.6);fxRing(x,y,70,'#b57fc4',.5,3);for(let i=0;i<cnt(10);i++){const a=rnd(0,TAU);fxP(x+Math.cos(a)*75,y+Math.sin(a)*75,-Math.cos(a)*170,-Math.sin(a)*170,'#d9b8e6',.4,2.4,{sh:'t',add:true});}break;
     case 'ironrain':for(let i=0;i<cnt(8);i++){const a=rnd(0,TAU);fxP(x+Math.cos(a)*80,y+Math.sin(a)*80,-Math.cos(a)*180,-Math.sin(a)*180,'#f0b2c0',.4,2,{sh:'l',add:true});}fxGlow(x,y,50,'#b5683c',.4,.6);break;
-    case 'jetstream':fxGlow(x,y,50,'#dfeef3',.4,.6);for(let i=0;i<cnt(10);i++)fxP(x+rnd(-20,20),y+rnd(-20,20),rnd(-120,120),rnd(-120,120),i%2?'#ffffff':'#9fc9b4',rnd(.3,.5),rnd(2,3.4),{sh:'l'});break;
+    case 'plasma':fxGlow(x,y,50,'#dfeef3',.4,.6);for(let i=0;i<cnt(10);i++)fxP(x+rnd(-20,20),y+rnd(-20,20),rnd(-120,120),rnd(-120,120),i%2?'#ffffff':'#9fc9b4',rnd(.3,.5),rnd(2,3.4),{sh:'l'});break;
     case 'afterburn':fxGlow(x,y,46,'#e0743f',.4,.6);for(let i=0;i<cnt(8);i++){const k=rnd(0,1);fxP(t.x+(x-t.x)*k,t.y+(y-t.y)*k,rnd(-10,10),rnd(-60,-20),i%2?'#f7d98a':'#c0462f',rnd(.4,.7),rnd(2,3.6),{g:-20,add:true});}break;
     case 'eclipse':fxGlow(x,y,96,'#1f1838',.6,.8);fxRing(x,y,92,'#fff6dc',.55,4);fxRing(x,y,56,'#c9d4ff',.45,3);burst(x,y,12,'#fff6dc',120,.55,2.6,{sh:'s',add:true});S.shake=RM?0:.08;break;
     case 'comet':fxGlow(x,y,90,'#f0a55a',.5,.85);fxJag({x:x-120,y:y-240},{x:x,y:y},'#f7d98a',.4,3.6);fxRing(x,y,80,'#c76a3a',.5,4);for(let i=0;i<cnt(10);i++){const a=rnd(0,TAU);fxP(x+Math.cos(a)*90,y+Math.sin(a)*90,-Math.cos(a)*190,-Math.sin(a)*190,'#f0b2c0',.4,2,{sh:'l',add:true});}S.shake=RM?0:.1;break;
@@ -1261,7 +1304,7 @@ function pickStrong(t,range){
   for(const e of S.enemies){if(e.dead||e.d<0)continue;if(Math.hypot(e.x-t.x,e.y-t.y)<=range+e.r&&(!best||e.hp>best.hp))best=e;}
   return best;
 }
-/* ----- level 5 hero super skills (every 10th hit) ----- */
+/* ----- level 5 super skills (every 10th hit) ----- */
 const alive=()=>S.enemies.filter(e=>!e.dead);
 const inR=(t,r)=>alive().filter(e=>Math.hypot(e.x-t.x,e.y-t.y)<=r+e.r);
 const strongest=n=>alive().sort((a,b)=>b.hp-a.hp).slice(0,n);
@@ -1270,12 +1313,16 @@ function pullTo(L,k){if(L.length<2)return;k*=ccK();let sum=0;L.forEach(e=>sum+=e
 function pushBack(L,dd){dd*=ccK();L.forEach(e=>{if(e.dead)return;e.d=Math.max(0,e.d-dd*(e.boss?.4:1));const p=posAt(e.d);e.x=p.x;e.y=p.y;});}
 function skyHit(e,c){fxJag({x:e.x+rnd(-14,14),y:e.y-260},{x:e.x,y:e.y},c,.35,3.2);}
 function pendAt(x,y,sk,dmg,rad,dm,del,gl){S.pend.push({t:del,del:del,x:x,y:y,sk:sk,dmg:dmg,rad:rad,dm:dm,gl:gl,big:sk.id==='meteor'});}
+const SEALSK={id:'seal',c:'#b3262c',fx:{stun:1.4,slow:[.6,3],weak:[1.25,4]}};
 const SUP={
 fire:{n:'Firestorm',f(t,sk,b,dm){const L=inR(t,160);hitList(L,b*5,{burn:[18,4]},dm);impactFx(sk,t.x,t.y,160,0);L.slice(0,8).forEach((e,i)=>impactFx(sk,e.x,e.y,40,i*.05));}},
 water:{n:'Tidal Wave',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{slow:[.5,4]},dm);pushBack(L,60);impactFx(sk,t.x,t.y,170,0);fxRing(t.x,t.y,120,'#cfe7f7',.7,6);}},
 earth:{n:'Earthquake',f(t,sk,b,dm){const L=alive();hitList(L,b*2.5,{stun:1.5},dm);L.slice(0,10).forEach((e,i)=>impactFx(sk,e.x,e.y,36,i*.04));S.shake=RM?0:.4;}},
 lightning:{n:'Thunder Storm',f(t,sk,b,dm){const A=alive();for(let i=0;i<12&&A.length;i++){const e=A[(Math.random()*A.length)|0];skyHit(e,'#fff3b0');dmgE(e,b*5);fxGlow(e.x,e.y,22,'#e8c547',.3,.8);}}},
-wind:{n:'Tornado',f(t,sk,b,dm){const L=inR(t,190);hitList(L,b*2,null,dm);pushBack(L,120);impactFx(sk,t.x,t.y,190,0);fxRing(t.x,t.y,90,'#d6ecdf',.6,5);}},
+laser:{n:'Prism Cannon',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.length)return;const tg=A.slice().sort((p,q)=>q.hp-p.hp)[0];
+  const dx=tg.x-t.x,dy=tg.y-t.y,dl=Math.hypot(dx,dy)||1,ux=dx/dl,uy=dy/dl,L=Math.hypot(CW,CH),W=36;
+  A.forEach(e=>{const px=e.x-t.x,py=e.y-t.y,pr=px*ux+py*uy;if(pr<0||pr>L)return;if(Math.abs(px*uy-py*ux)<=W/2+e.r)dmgE(e,b*7);});
+  const P=[{x:t.x,y:t.y-12},{x:t.x+ux*L,y:t.y+uy*L}];fxBolt(P,sk.c,.7,12,'beam');fxBolt(P,'#ffffff',.55,3,'beam');fxGlow(t.x,t.y-12,70,sk.c,.6,.9);S.shake=RM?0:.2;}},
 ice:{n:'Deep Freeze',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{stun:3,slow:[.5,4]},dm);impactFx(sk,t.x,t.y,170,0);L.slice(0,8).forEach((e,i)=>impactFx(sk,e.x,e.y,26,i*.04));}},
 poison:{n:'Plague',f(t,sk,b,dm){const L=inR(t,170);for(let k=0;k<5;k++)hitList(L,0,{poison:[8,6]},dm);hitList(L,b*1,null,dm);impactFx(SKM.spore,t.x,t.y,170,0);}},
 nature:{n:'Entangle',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{stun:2.5},dm);L.slice(0,10).forEach((e,i)=>impactFx(sk,e.x,e.y,30,i*.04));}},
@@ -1292,7 +1339,10 @@ nova:{n:'Absolute Zero',f(t,sk,b,dm){const L=alive();hitList(L,b*2,{slow:[.6,5]}
 warp:{n:'Time Stop',f(t,sk,b,dm){const L=alive();L.forEach(e=>{e.stun=Math.max(e.stun,(e.boss?.6:2)*ccK());});fxRing(t.x,t.y,260,'#d99a52',.9,5);fxGlow(t.x,t.y,200,'#f7e1b8',.6,.35);}},
 meteor:{n:'Meteor Shower',f(t,sk,b,dm){alive().filter(e=>e.d>=0).slice(0,6).forEach((e,i)=>pendAt(e.x,e.y,sk,b*10,80,dm,.6+i*.2,SRC_GL));}},
 gravity:{n:'Black Hole',f(t,sk,b,dm){const L=inR(t,200);pullTo(L,1);hitList(L,b*6,{stun:.8},dm);fxGlow(t.x,t.y,150,'#3b2f56',.9,.6);impactFx(sk,t.x,t.y,200,0);S.shake=RM?0:.3;}},
-mirror:{n:'Reflection',f(t,sk,b,dm){const id=S.lastSuper&&S.lastSuper!=='mirror'?S.lastSuper:'lightning';const s2=SKM[id];SUP[id].f(t,s2,(s2.dmg||40)*dm*.9,dm);}},
+letter:{n:'Official Seal',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.length)return;const c=A.slice().sort((p,q)=>q.hp-p.hp)[0],R=150;
+  S.fx.push({k:'emblem',x:c.x,y:c.y,r:R,t:1.7,max:1.7});
+  S.pend.push({t:.58,del:.58,x:c.x,y:c.y,sk:SEALSK,dmg:b*5,rad:R,dm:dm,gl:SRC_GL,cap:999,big:true});
+  S.flashT=.5;S.flashC='#8a1f1f';sfx(['sawtooth',110,55,.6,.3],'seal');}},
 power:{n:'Battle Cry',f(t,sk,b,dm){S.bc=6;S.towers.forEach(u=>fxRing(u.x,u.y,24,'#c98a3a',.6,2));fxRing(t.x,t.y,220,'#c98a3a',.8,4);}},
 speed:{n:'Overdrive',f(t,sk,b,dm){S.od=6;S.towers.forEach(u=>fxRing(u.x,u.y,24,'#3bbfb0',.6,2));fxRing(t.x,t.y,200,'#3bbfb0',.8,4);}}
 };
@@ -1302,7 +1352,7 @@ function doSuper(t){
   SRC_GL=!!(t.cb&&t.cb.def.gl);
   sp.f(t,sk,b,dm);
   SRC_GL=false;
-  if(t.id!=='mirror')S.lastSuper=t.id;
+  S.lastSuper=t.id;
   t.superT=1;S.flashT=.45;S.flashC=sk.c;
   fxGlow(t.x,t.y-20,90,sk.c,.6,.9);fxRing(t.x,t.y,60,'#e3b64a',.6,4);burst(t.x,t.y-24,12,'#f1d27a',90,.7,2.6,{sh:'s',add:true});
   S.fx.push({k:'stxt',x:t.x,y:t.y-50,s:sp.n,c:sk.c,t:1.6,max:1.6});
@@ -1330,7 +1380,6 @@ function updTowers(dt){
       if(t.hc>=every){t.hc=0;if(S.lives<S.maxLives){S.lives=Math.min(S.maxLives,S.lives+2);fxText(t.x,t.y-18,"+2 terminal",'#3f7d5c');fxRing(t.x,t.y,26,sk.c,.5);sfx(sk.s,'heal');}}continue;}
     t.cd-=dt*(1+t.boost+(S.od>0?1:0));if(t.cd>0)continue;
     const tg=(sk.k==='single'?pickStrong:pickTarget)(t,sk.rng*rngM(t));if(!tg)continue;
-    if(sk.k==='mirror'){if(!S.last)continue;cast(t,SKM[S.last],tg,.9);t.cd=sk.cd;continue;}
     cast(t,sk,tg,1);t.cd=sk.cd;S.last=sk.id;
   }
 }
@@ -1339,9 +1388,9 @@ function baseHp(L,ty){const D=Ld(L);return ET[ty].hp*hpMul(D)*dens(D)*TUNE.hpK*e
 /* a boss has about 18 times the health of an average threat of its level */
 function bossHp(L){const z=ZONES[zoneOf(L)];return z.types.reduce((a,t)=>a+baseHp(L,t),0)/z.types.length*TUNE.bossK*(z.boss==='apex'?TUNE.vanK:1);}
 function spawn(s){
-  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=T.boss?bossHp(L):baseHp(L,s.ty);
+  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp;
   const e={ty:s.ty,n:T.n,hp:hp,max:hp,sp:(T.boss||T.fast?T.sp:(T.sp*.45+TUNE.packSp*.55)*(1+rnd(-TUNE.spV,TUNE.spV)))*(1+.012*(Ld(L)-1)),lo:T.boss?0:rnd(-14,14),r:T.r,c:T.c,sh:T.sh,boss:!!T.boss,d:s.d0||0,x:PP[0].x+(s.d0||0),y:PP[0].y,
-    slowF:1,slowT:0,stun:0,burn:null,pz:null,weak:null,rew:T.rew*(1+TUNE.rewL*L)*TUNE.rewK*dn*TUNE.goldK,pts:Math.round(10*(1+.1*L)*(T.boss?20:1)),ph:Math.random()*6,flash:0,ang:0};
+    slowF:1,slowT:0,stun:0,burn:null,pz:null,weak:null,rew:T.rew*(1+TUNE.rewL*L)*TUNE.rewK*dn*TUNE.goldK,pts:Math.round(10*(1+.1*L)*(T.boss?20:1)*TUNE.ptsK),ph:Math.random()*6,flash:0,ang:0};
   S.enemies.push(e);S.wave=Math.max(S.wave||0,s.w+1);
   if(T.boss)sfx(SFX.boss);
 }
@@ -1400,7 +1449,7 @@ function upgradeTower(i){
   const t=S.towers[i];if(!t||t.lvl>=MAXT)return;const c=upgCost(t);
   if(S.credits<c){sfx(SFX.err);return;}
   S.credits-=c;t.spent+=c;t.lvl++;const col=SKM[t.id].c;fxRing(t.x,t.y,28,col,.4);burst(t.x,t.y-10,cnt(6+t.lvl*2),col,70,.6,2.4,{sh:'s',add:true});sfx(SFX.up);
-  if(t.lvl===MAXT){t.sc=0;t.sh=0;fxGlow(t.x,t.y-16,60,col,.6,.8);fxRing(t.x,t.y,46,'#e3b64a',.6,4);fxText(t.x,t.y-44,'HERO','#a87512');seq([['triangle',523],['triangle',784],['triangle',1046],['triangle',1319,.3]]);}
+  if(t.lvl===MAXT){t.sc=0;t.sh=0;fxGlow(t.x,t.y-16,60,col,.6,.8);fxRing(t.x,t.y,46,'#e3b64a',.6,4);fxText(t.x,t.y-44,'LEVEL 5','#a87512');seq([['triangle',523],['triangle',784],['triangle',1046],['triangle',1319,.3]]);}
   renderPanel();updHud(true);
 }
 function sellTower(i){
@@ -1424,13 +1473,11 @@ function finishRun(win){
   setTimeout(()=>openResult(win),RM?0:500);
 }
 function openResult(win){
-  const jc=Object.keys(S.jwRun).map(k=>'<span class="jc"><i class="gem" style="--c:'+SKM[k].c+'"></i>'+esc(SKM[k].n)+' ×'+S.jwRun[k]+'</span>').join('')||'<span class="hint">No orbs this time.</span>';
   let h='<h2>'+(win?'All '+MAXL+' levels cleared':'Run over at level '+RUN.level)+'</h2>';
-  h+=(win?'<div class="kv"><span>Terminal health left</span><b class="mono">'+S.lives+' of '+S.maxLives+'</b></div><div class="kv"><span>Clearance bonus (100,000 + 50,000 per health point)</span><b class="mono">'+fmt(S.winBonus||0)+'</b></div>':'')+'<div class="kv"><span>Gold left: '+fmt(S.goldLeft||0)+' ('+TUNE.goldPts+' points per gold)</span><b class="mono">'+fmt(S.goldBonus||0)+'</b></div><div class="kv"><span>Run score</span><b class="mono">'+fmt(RUN.score)+'</b></div>'
+  h+=(win?'<div class="kv"><span>Terminal health left</span><b class="mono">'+S.lives+' of '+S.maxLives+'</b></div><div class="kv"><span>Clearance bonus ('+fmt(TUNE.winB)+' + '+fmt(TUNE.lifeB)+' per health point)</span><b class="mono">'+fmt(S.winBonus||0)+'</b></div>':'')+'<div class="kv"><span>Gold left: '+fmt(S.goldLeft||0)+' ('+TUNE.goldPts+' points per gold)</span><b class="mono">'+fmt(S.goldBonus||0)+'</b></div><div class="kv"><span>Run score</span><b class="mono">'+fmt(RUN.score)+'</b></div>'
     +'<div class="kv"><span>Best run score</span><b class="mono">'+fmt(SAVE.bestRun)+'</b></div>'
     +'<div class="kv"><span>Levels reached</span><b class="mono">'+RUN.level+' of '+MAXL+'</b></div>'
     +'<div class="kv"><span>Threats stopped</span><b class="mono">'+RUN.kills+'</b></div>'
-    +'<h3 style="margin-top:10px">Element orbs collected (kept)</h3><div class="jchips">'+jc+'</div>'
     +'<div class="card" style="margin:12px 0 10px;padding:12px;background:var(--page);box-shadow:none"><h3>Save to Top 10</h3>'
     +'<label for="inNick">Nickname (2 to 12 characters)</label><input id="inNick" maxlength="12" autocomplete="off" value="'+esc(SAVE.nick)+'">'
     +'<label for="selDiv">Division</label><select id="selDiv"><option value="">Select division</option>'+DIVS.map(d=>'<option'+(SAVE.div===d?' selected':'')+'>'+esc(d)+'</option>').join('')+'</select>'
@@ -1453,6 +1500,26 @@ async function fetchTop(mode){
   const seen={},out=[];
   (r.data||[]).forEach(x=>{const k=(x.nickname||'').toLowerCase()+'|'+x.division;if(!seen[k]){seen[k]=1;out.push(x);}});
   return out.slice(0,10);
+}
+/* Top Division: highest average (a division needs at least 3 saved scores) and best single score, from the latest 1,000 saves */
+function divStats(rows){
+  const m={};(rows||[]).forEach(r=>{if(DIVS.indexOf(r.division)<0||typeof r.score!=='number')return;const o=m[r.division]||(m[r.division]={d:r.division,n:0,sum:0,max:-1e9});o.n++;o.sum+=r.score;if(r.score>o.max)o.max=r.score;});
+  const L=Object.keys(m).map(k=>m[k]);if(!L.length)return null;
+  const el=L.filter(o=>o.n>=3).sort((a,b)=>(b.sum/b.n)-(a.sum/a.n)||b.n-a.n);
+  const hi=L.slice().sort((a,b)=>b.max-a.max||b.n-a.n)[0];
+  return {avg:el.length?{d:el[0].d,v:Math.round(el[0].sum/el[0].n),n:el[0].n}:null,hi:{d:hi.d,v:hi.max}};
+}
+async function fetchDivRows(){
+  if(!db)throw new Error('Database library not loaded');
+  const to=new Promise((_,rej)=>setTimeout(()=>rej(new Error('Connection timed out')),10000));
+  const r=await Promise.race([db.from(TBL).select('division,score').order('created_at',{ascending:false}).limit(1000),to]);
+  if(r.error)throw new Error(r.error.message||'Query failed');
+  return r.data||[];
+}
+function divCards(st){
+  if(!st)return '';
+  return '<div class="lbd"><p class="da"><span>Top Division (Average)</span><b>'+(st.avg?esc(st.avg.d):'None yet')+'</b><small>'+(st.avg?'Average '+fmt(st.avg.v)+' over '+st.avg.n+' scores':'A division needs at least 3 saved scores')+'</small></p>'
+    +'<p class="dh"><span>Top Division (Highest Score)</span><b>'+esc(st.hi.d)+'</b><small>Best single score '+fmt(st.hi.v)+'</small></p></div>';
 }
 async function saveScore(){
   const nick=($('inNick').value||'').replace(/[\x00-\x1f\x7f]/g,' ').trim();
@@ -1482,15 +1549,17 @@ async function saveScore(){
 async function openTop10(meNick,meDiv,mode){
   mode=mode==='level'?'level':'score';
   openModal('<h2>Top 10</h2><div class="row" style="margin:6px 0"><button class="btn'+(mode==='score'?' p':'')+'" data-lb="score">Highest score</button><button class="btn'+(mode==='level'?' p':'')+'" data-lb="level">Highest level</button></div><div class="hint">'+(mode==='level'?'Furthest level reached, ties broken by score.':'Run score by nickname and division.')+' Saved at the end of a run.</div><div class="spin" id="lbSpin"></div><div id="lbBody"></div><div class="row" style="margin-top:12px"><button class="btn" data-act="'+(S&&S.over?'menu':'closeM')+'">'+(S&&S.over?'Back to menu':'Close')+'</button></div>');
-  let rows=null,err=null;
+  let rows=null,err=null,drows=null;
   try{rows=await fetchTop(mode);setConn('ok','Connected');}catch(e){err=e;setConn('bad','Offline');}
+  if(rows){try{drows=await fetchDivRows();}catch(e){drows=rows;}}
   const sp=$('lbSpin');if(sp)sp.remove();
   const body=$('lbBody');if(!body)return;
   let note='';
   if(!rows){rows=localBoard().slice().sort((a,b)=>mode==='level'?((b.level_reached||0)-(a.level_reached||0)||b.score-a.score):b.score-a.score).slice(0,10);note='<div class="hint" style="margin-top:8px;color:var(--err)">Showing scores saved on this device only ('+esc(err&&err.message)+').</div>';}
   const nk=(meNick||SAVE.nick||'').toLowerCase(),dv=meDiv||SAVE.div;
+  if(!drows)drows=localBoard();
   if(!rows.length){body.innerHTML='<div class="empty">No scores yet. Finish a run and be the first.</div>'+note;return;}
-  body.innerHTML='<ul class="lb">'+rows.map((r,i)=>'<li class="'+((r.nickname||'').toLowerCase()===nk&&r.division===dv?'me':'')+'"><span class="rk">'+(i+1)+'</span><span>'+esc(r.nickname)+(r.level_reached?'<span class="lvl">'+(mode==='level'?(r.won?'Cleared all levels':'Run ended'):'Level '+esc(r.level_reached)+(r.won?' · cleared':''))+'</span>':'')+'</span><span class="dv">'+esc(r.division)+'</span><span class="sc">'+(mode==='level'?'Lv '+esc(r.level_reached||0)+' · '+fmt(r.score):fmt(r.score))+'</span></li>').join('')+'</ul>'+note;
+  body.innerHTML=divCards(divStats(drows))+'<ul class="lb">'+rows.map((r,i)=>'<li class="'+((r.nickname||'').toLowerCase()===nk&&r.division===dv?'me':'')+'"><span class="rk">'+(i+1)+'</span><span>'+esc(r.nickname)+(r.level_reached?'<span class="lvl">'+(mode==='level'?(r.won?'Cleared all levels':'Run ended'):'Level '+esc(r.level_reached)+(r.won?' · cleared':''))+'</span>':'')+'</span><span class="dv">'+esc(r.division)+'</span><span class="sc">'+(mode==='level'?'Lv '+esc(r.level_reached||0)+' · '+fmt(r.score):fmt(r.score))+'</span></li>').join('')+'</ul>'+note;
 }
 
 /* ============ UI: SCREENS ============ */
@@ -1510,7 +1579,6 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modal').classLis
 function renderHome(){
   $('stLv').textContent='Best level '+SAVE.maxL+' of '+MAXL;
   $('stSc').textContent='Best run '+fmt(totalScore());
-  $('stJw').textContent='Orbs '+SK.reduce((a,s)=>a+jw(s.id),0);
   const snap=loadRun();
   $('runBtns').innerHTML=snap?'<button class="btn p" data-act="resume">Continue · Level '+snap.level+'</button><button class="btn" data-act="newrun">New run</button>'
     :'<button class="btn p" data-act="newrun">Start run</button>';
@@ -1687,14 +1755,95 @@ function titleLoop(ts){
 }
 function startTitle(){if(!titleRaf)titleRaf=requestAnimationFrame(titleLoop);}
 window.addEventListener('resize',()=>{if($('scrHome').classList.contains('on'))drawTitle(performance.now()/1000);});
+/* ============ ELEMENT LIBRARY: background and clues; partners are never named ============ */
+const LIBBG={
+fire:'The first flame on the airfield. It spreads fast and burns what it touches.',
+water:'Rain water from many storms. It is soft, but over time it wears things down.',
+earth:'The ground under every runway. It is slow and very heavy.',
+nature:'Weeds, vines and roots. If nobody stops it, it grows over everything.',
+lightning:'A fast spark from the sky. It jumps from one place to the next.',
+gravity:'A quiet pull toward the ground. It makes everything move closer together.',
+stars:'Small lights in the night sky. There are always more than you can count.',
+ice:'Cold that makes things slow and still. What it catches, it holds.',
+laser:'A thin, hot beam from a machine. It cuts through everything in a straight line.',
+poison:'A slow sting. The damage keeps growing after the first hit.',
+light:'A thin, clean beam. It picks one target and hits it hard.',
+shadow:'The dark place behind every bright thing. It marks its target and waits.',
+thunder:'The loud sound after the flash. It is slow, but it hits very hard.',
+lava:'Hot, melted rock. It moves slowly and burns the ground.',
+nova:'A sudden burst of cold. It spreads in all directions at once.',
+meteor:'A rock that falls from space and burns. It lands where it was aimed.',
+magnet:'An invisible force that pulls things together. It does not care what it pulls.',
+jet:'A loud, hot blast of engine power in a straight line.',
+spore:'A cloud of tiny seeds that floats in the air. It stays for a long time.',
+crystal:'A hard, clear stone. It takes a beam and sends back a sharper one.',
+warp:'A small area where time moves differently. Friends move faster inside it, and enemies move slower.',
+letter:'An official letter on A4 paper, with a red seal at the top. When it arrives, everyone has to stop and read it.',
+power:'A steady energy in the ground. It makes nearby towers hit harder.',
+speed:'A fast, bright pulse. It makes nearby towers work faster.'
+};
+/* clue for each of the two members of a pair: [clue for the first, clue for the second]; short, simple English; partners are never named */
+const LIBPAIR={
+inferno:['Next to the oldest flame: each hit sets the ground burning.','Next to a rock that falls from the sky: your flames become a big burning storm.'],
+overgrow:['Next to the green plants: the ground opens and roots hold the enemies.','Next to the heavy ground: you break the ground and trap enemies with roots.'],
+surge:['Next to the fast spark from the sky: its strikes join and become much stronger. Even the Storm Shield cannot stop it.','Next to the quiet pull toward the ground: your jumps go farther and hit harder. Even the Storm Shield cannot stop it.'],
+steam:['Next to the thing that flows and puts out flames: a hot cloud forms and slows enemies.','Next to the thing that burns: your drops turn into hot steam.'],
+tstorm:['Next to a spark from the sky: the rain carries electricity from enemy to enemy.','Next to the falling rain: your bolts jump more times and slow wet enemies.'],
+heatray:['Next to the thin, hot beam from a machine: the flames jump to 4 enemies that were not touched.','Next to a flame: your beam makes enemies burn, and the burning spreads to 4 more.'],
+magma:['Next to hot, melted rock: the ground cracks, glows and stops enemies for a short time.','Next to the old stone ground: your heat opens a crack that stuns enemies.'],
+frost:['Next to the cold that holds things still: a freezing wave moves outward and passes through the Storm Shield.','Next to the thing that flows: your cold becomes a wave that goes farther. It also passes through the Storm Shield.'],
+starstorm:['Next to the small lights of the night: each blast makes a shower of sparks.','Next to the slow, loud blast: your sparks fall around every blast.'],
+magstorm:['Next to the invisible force that pulls iron: enemies are pulled into the blast before it lands.','Next to the slow, loud blast: you pull the crowd under it.'],
+twilight:['Next to its opposite: you hit many enemies and mark them, so they take more damage.','Next to the brightest beam: your dark marks enemies, so they take more damage.'],
+prism:['Next to the hard, clear stone: your beam splits and hits many more enemies.','Next to the thin, clean beam: you split it into many beams.'],
+nightshade:['Next to the slow sting: the dark spreads sickness and makes enemies weaker.','Next to the dark place: your venom jumps between enemies and makes them weaker.'],
+blight:['Next to the floating seeds: your sting becomes a cloud of venom that keeps hurting.','Next to the slow sting: your cloud becomes toxic and keeps hurting.'],
+wildbloom:['Next to the green plants: your cloud holds enemies in one place.','Next to the floating seeds: your plants grow into a cloud that holds enemies.'],
+supernova:['Next to the sudden burst of cold: a shock wave hurts and slows enemies.','Next to the small lights of the night: your burst becomes a shock wave that also slows.'],
+permafrost:['Next to the cold that holds things still: frozen or slow enemies break and take extra damage.','Next to the sudden burst of cold: chilled enemies break and take extra damage.'],
+singularity:['Next to the hard, clear stone: you pull the crowd together, and then it bursts.','Next to the pull toward the ground: a burst hits the crowd that is pulled together.'],
+ironrain:['Next to the rock that falls from space: enemies are pulled under an extra hit.','Next to the force that pulls iron: an extra rock falls where the enemies gather.'],
+plasma:['Next to the thin, hot beam from a machine: your blast becomes hot plasma that burns and slows.','Next to the loud engine: your beam becomes hot plasma that burns and slows.'],
+afterburn:['Next to hot, melted rock: your blast leaves flames on the road.','Next to the loud engine: the road burns behind each blast.'],
+frozen:['Next to the sudden burst of cold: each cold burst also stops the enemies around the target.','Next to the place where time moves differently: your burst also stops the enemies around the target for a moment.'],
+timebloom:['Next to the floating seeds: their clouds grow bigger and hurt faster.','Next to the place where time moves differently: each hit adds a bigger cloud that hurts faster.'],
+thornvenom:['Next to the slow sting: your thorns carry venom to 5 enemies and slow them.','Next to the green plants: thorns carry your venom to 5 enemies and slow them.'],
+shardblast:['Next to the hard, clear stone: your blast throws 4 sharp shards at nearby enemies.','Next to the loud engine: its blast throws your shards at 4 nearby enemies.'],
+refraction:['Next to the hard, clear stone: your beam bends and splits into 3 more beams.','Next to the thin, hot beam from a machine: you split it into 3 more beams.'],
+deadline:['Next to the place where time moves differently: each paper gives the enemy a deadline. It is slowed, and 2 seconds later it is hit again.','Next to the paperwork with a red seal: each paper gives the enemy a deadline. It is slowed, and 2 seconds later it is hit again.'],
+waxseal:['Next to hot, melted rock: each paper gets a hot wax seal that burns the enemy and drips a small burning pool.','Next to the paperwork with a red seal: you become hot wax that burns each enemy it hits.']
+};
+/* clue for each member of a triple, in the order of the combination's elements */
+const LIBTRI={
+volcanic:['Next to the heavy ground and a spark from the sky, together: each hit calls down a burning boulder.','Next to a flame and a spark from the sky, together: each hit calls down a burning boulder.','Next to a flame and the heavy ground, together: each hit calls down a burning boulder.'],
+horizon:['Next to a fast spark and a slow, loud blast, together: each hit makes a small black hole that pulls and stuns. Nothing can stop it.','Next to the pull toward the ground and a slow, loud blast, together: each hit makes a small black hole that pulls and stuns. Nothing can stop it.','Next to the pull toward the ground and a fast spark, together: each hit makes a small black hole that pulls and stuns. Nothing can stop it.'],
+cryobeam:['Next to the cold that holds things still and the thin, hot beam, together: each hit sends a cold shock in a wide circle. It passes through the Storm Shield.','Next to the thing that flows and the thin, hot beam, together: each hit sends a cold shock in a wide circle. It passes through the Storm Shield.','Next to the thing that flows and the cold that holds things still, together: each hit sends a cold shock in a wide circle. It passes through the Storm Shield.'],
+eclipse:['Next to its opposite and the small lights of the night, together: the sky turns dark around the target, and then a bright burst hits.','Next to the brightest beam and the small lights of the night, together: the sky turns dark around the target, and then a bright burst hits.','Next to the brightest beam and its opposite, together: the sky turns dark around the target, and then a bright burst hits.'],
+comet:['Next to the force that pulls iron and hot, melted rock, together: a burning streak pulls the crowd under it and leaves a hot pool.','Next to a rock from space and hot, melted rock, together: a burning streak pulls the crowd under it and leaves a hot pool.','Next to a rock from space and the force that pulls iron, together: a burning streak pulls the crowd under it and leaves a hot pool.'],
+jungle:['Next to the slow sting and the floating seeds, together: a toxic jungle grows. Enemies are held, poisoned and caught in a toxic cloud.','Next to the green plants and the floating seeds, together: a toxic jungle grows. Enemies are held, poisoned and caught in a toxic cloud.','Next to the green plants and the slow sting, together: a toxic jungle grows. Enemies are held, poisoned and caught in a toxic cloud.'],
+frozentime:['Next to the sudden burst of cold and the hard, clear stone, together: enemies freeze in time, and frozen enemies break for big damage.','Next to the place where time moves differently and the hard, clear stone, together: enemies freeze in time, and frozen enemies break for big damage.','Next to the place where time moves differently and the sudden burst of cold, together: enemies freeze in time, and frozen enemies break for big damage.'],
+railgun:['Next to the thin, hot beam and the loud engine, together: you shoot an iron bullet through every enemy in a long line.','Next to the force that pulls iron and the loud engine, together: you shoot an iron bullet through every enemy in a long line.','Next to the force that pulls iron and the thin, hot beam, together: you shoot an iron bullet through every enemy in a long line.'],
+bureaucracy:['Next to the place where time moves differently and the heavy ground, together: everything stops for the paperwork. Enemies are stuck, slowed and covered in papers.','Next to the paperwork with a red seal and the heavy ground, together: everything stops for the paperwork. Enemies are stuck, slowed and covered in papers.','Next to the paperwork with a red seal and the place where time moves differently, together: everything stops for the paperwork. Enemies are stuck, slowed and covered in papers.']
+};
+const LIBSUP={
+power:'Works next to any tower. It makes each nearby tower stronger. It does not join any combination.',
+speed:'Works next to any tower. It makes each nearby tower faster. It does not join any combination.'
+};
+function libClues(id){
+  const out=[];
+  COMBOS.forEach(d=>{if(d.a===id||d.b===id){const L=LIBPAIR[d.k];if(L)out.push({t:L[d.a===id?0:1],k:d.k,n:d.n,tri:0});}});
+  TRIS.forEach(d=>{const i=d.e.indexOf(id);if(i>=0){const L=LIBTRI[d.k];if(L)out.push({t:L[i],k:d.k,n:d.n,tri:1});}});
+  return out;
+}
 function renderSkills(){
-  $('loadCnt').textContent='Orbs '+SK.reduce((a,s)=>a+jw(s.id),0);
-  $('skList').innerHTML=SK.filter(s=>!s.util).map(s=>{
-    const lv=slv(s.id),have=jw(s.id),need=lv>=MAXLV?0:upCost(s.id);
-    const pct=need?Math.min(100,have/need*100):100;
-    const btn=lv>=MAXLV?'<button class="btn" disabled>Max mastery</button>':'<button class="btn p" data-up="'+s.id+'"'+(have>=need?'':' disabled')+'>Raise mastery · '+need+' orbs</button>';
-    return '<div class="sk" style="--c:'+s.c+'"><img class="gm" alt="" src="'+cardImg(s.id)+'"><div><h4>'+esc(s.n)+'<span class="tag on">Mastery '+lv+'</span><span class="tag">'+kindOf(s)+'</span><span class="tag">'+(s.at===1?'Starter':'Random draw')+'</span></h4>'
-      +'<p>'+esc(s.d)+' Level 5 super: '+esc(SUP[s.id].n)+' (every 10th hit).'+(s.id==='meteor'?' While a level 5 Meteor tower stands, level 5 heroes also call Armageddon every 20th hit.':'')+'</p><div class="pb"><i style="width:'+pct+'%"></i></div><p style="margin:0 0 6px" class="mono">'+have+' orbs'+(need?' / '+need+' needed':'')+'</p><div class="row">'+btn+'</div></div></div>';
+  const D=SAVE.disc||{};
+  const bonds='<div class="card" style="box-shadow:none;background:var(--page);margin:0 0 6px;padding:12px"><h3 style="margin:0 0 4px">Special bonds</h3><p style="margin:0 0 6px;font-size:12px;color:var(--lbl)">Two towers of the same kind, both at level 5, next to each other: they get a small bonus. If every pad on the airport has the same kind of tower, all at level 5, a very strong bonus starts. It hits enemies all over the map.'+(D.pure||D.superpure?' <b>'+(D.pure?'Found: Pure Connection. ':'')+(D.superpure?'Found: Super Duper Pure Connection.':'')+'</b>':'')+'</p></div>';
+  $('skList').innerHTML=bonds+SK.slice().sort((a,b)=>a.at-b.at).map(s=>{
+    const cl=libClues(s.id);
+    const clues=cl.length?'<ul class="clues">'+cl.map(c=>'<li class="'+(c.tri?'tri':'pair')+'"><span class="ct">'+(c.tri?'Triple':'Pair')+'</span> '+esc(c.t)+(D[c.k]?' <b class="found">✓ Found: '+esc(c.n)+'</b>':'')+'</li>').join('')+'</ul>':'<p>'+esc(LIBSUP[s.id]||'')+'</p>';
+    return '<div class="sk" style="--c:'+s.c+'"><img class="gm" alt="" src="'+cardImg(s.id)+'"><div><h4>'+esc(s.n)+(s.th?' <span class="th">'+esc(s.th)+'</span>':'')+'<span class="tag">'+(s.util?'Support':kindOf(s))+'</span><span class="tag">'+(s.at===1?'Starter':'Random draw')+'</span></h4>'
+      +'<p>'+esc(LIBBG[s.id]||s.d)+'</p><p class="mono" style="margin-top:0">'+esc(s.d)+(s.util?'':' Level 5 super: '+esc(SUP[s.id].n)+'.')+'</p>'
+      +'<div class="cl">Clues</div>'+clues+'</div></div>';
   }).join('');
 }
 
@@ -1708,14 +1857,14 @@ function comboHtml(full){
   return '<div class="zl" style="margin-top:2px">Tri-element</div>'+TRIS.map(d=>row(d,d.e)).join('')
     +'<div class="zl">Pairs</div>'+COMBOS.map(d=>row(d,[d.a,d.b])).join('');
 }
-function kindOf(sk){return {splash:'Splash',nova:'Splash',shower:'Splash',delay:'Splash',single:'Single',chain:'Chain',beam:'Line',pool:'Zone',aura:'Support',heal:'Support',mirror:'Copy'}[sk.k]||'';}
+function kindOf(sk){return {splash:'Splash',nova:'Splash',shower:'Splash',delay:'Splash',single:'Single',chain:'Chain',beam:'Line',pool:'Zone',aura:'Support',heal:'Support',paper:'Multi'}[sk.k]||'';}
 function towerStat(t,lvl){
   const s=SKM[t.id],o={id:t.id,lvl:lvl};
   if(s.k==='heal')return 'Repairs 2 terminal health every '+(s.every/(1+.2*(slv(t.id)-1)+.3*(lvl-1))).toFixed(1)+' s';
   if(s.util)return 'Adjacent towers: '+(s.dmgB?'damage':'attack speed')+' +'+Math.round((s.dmgB||s.boost)*lvl*100)+'%';
   if(s.k==='aura')return 'Radius '+Math.round(s.rad*radM(o))+' · attack speed +'+Math.round(s.boost*(1+.15*(slv(t.id)-1))*LVB[lvl]*100)+'% nearby';
   if(s.k==='pool')return 'Zone '+(s.dps*dmgM(o)).toFixed(0)+' dmg/s';
-  if(s.k==='mirror')return 'Copies last skill at 90% strength';
+  if(s.k==='paper')return 'Damage '+Math.round(s.dmg*dmgM(o))+' · '+(s.cnt+lvl-1)+' papers';
   return 'Damage '+Math.round(s.dmg*dmgM(o))+' · range '+(s.rng>=999?'whole map':Math.round(s.rng*rngM(o)));
 }
 function renderPanel(){
@@ -1727,7 +1876,7 @@ function renderPanel(){
     const nT=S.towers.length;
     p.innerHTML='<h3>Build tower '+(nT+1)+'</h3><div class="hint">Gold <b class="mono" id="pCred">'+Math.floor(S.credits)+'</b>. Pick an element for this pad.</div><div class="bgrid">'
       +ids.map(id=>{const s=SKM[id];const cb=comboPreview(pp,id);
-        return '<button class="ecard'+(cb?' cbh'+(cb.tri?' tri':''):'')+'"'+(cb?' data-hint="'+(cb.tri?'TRI':'PAIR')+'"':'')+' data-build="'+id+'" style="--c:'+s.c+'" aria-label="'+esc(s.n)+', '+kindOf(s)+', '+buildCost(id)+' gold'+(cb?', would form a '+(cb.tri?'tri':'pair')+' combination':'')+'"><img alt="" src="'+cardImg(id)+'"><span class="en">'+esc(s.n)+'</span><small>'+kindOf(s)+'</small><small class="gc">'+buildCost(id)+' gold</small></button>';}).join('')
+        return '<button class="ecard'+(cb?' cbh'+(cb.tri?' tri':''):'')+'"'+(cb?' data-hint="'+(cb.tri?'TRI':'PAIR')+'"':'')+' data-build="'+id+'" style="--c:'+s.c+'" aria-label="'+esc(s.n)+', '+kindOf(s)+', '+buildCost(id)+' gold'+(cb?', would form a '+(cb.tri?'tri':'pair')+' combination':'')+'"><img alt="" src="'+cardImg(id)+'"><span class="en">'+esc(s.n)+'</span>'+(s.th?'<small class="th">'+esc(s.th)+'</small>':'')+'<small>'+kindOf(s)+'</small><small class="gc">'+buildCost(id)+' gold</small></button>';}).join('')
       +'</div><div class="row" style="margin-top:8px"><button class="btn" data-act="deselect">Cancel</button></div>';
   }else if(S.sel&&S.sel.type==='move'){
     const t=S.towers[S.sel.i];
@@ -1737,13 +1886,13 @@ function renderPanel(){
     if(!t){S.sel=null;return renderPanel();}
     const s=SKM[t.id];
     p.innerHTML='<h3 style="display:flex;align-items:center;gap:8px"><i class="gem" style="--c:'+s.c+'"></i>'+esc(s.n)+' tower · Level '+t.lvl+'/'+MAXT+' · '+TIER[t.lvl].n+'</h3><div class="hint mono">'+towerStat(t,t.lvl)+(s.cd?' · reload '+s.cd+' s':'')+'</div>'
-      +(t.lvl<MAXT?'<div class="hint mono" style="margin-top:2px">Next: '+towerStat(t,t.lvl+1)+(t.lvl+1===MAXT?' · becomes a hero':'')+'</div>':'')
+      +(t.lvl<MAXT?'<div class="hint mono" style="margin-top:2px">Next: '+towerStat(t,t.lvl+1)+(t.lvl+1===MAXT?' · grand aura and super skill':'')+'</div>':'')
       +'<div class="hint" style="margin-top:2px">'+(t.lvl>=MAXT?'Super: <b>'+esc(SUP[t.id].n)+'</b> · in <span id="supIn">'+Math.max(1,TUNE.supHits-(t.sh||0))+'</span> '+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?'pulses':'hits')+(hasMeteor()?' · Armageddon in <span id="armIn">'+Math.max(1,TUNE.armHits-(t.ah||0))+'</span>':' · Armageddon needs a Meteor tower'):'Level 5 super: '+esc(SUP[t.id].n)+', every '+TUNE.supHits+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?' pulses':' hits'))+'</div>'
       +(t.cb?'<div class="hint" style="color:#1d776d;font-weight:600;margin-top:4px">'+(t.cb.def.tri?'Tri combo':'Combo')+': '+esc(t.cb.def.n)+' '+pct(t.cb.def.m)+(t.cb.others.length?' with '+t.cb.others.map(o=>esc(SKM[o.id].n)).join(' and '):'')+'</div><div class="hint">'+esc(t.cb.def.d)+'</div>':'')
       +'<div class="row" style="margin-top:10px">'+(t.lvl<MAXT?'<button class="btn p" data-act="upg" id="bUpg">Upgrade to '+(t.lvl+1)+' ('+upgCost(t)+')</button>':'<button class="btn" disabled>Max level</button>')
       +'<button class="btn" data-act="move"'+(S.credits<TUNE.moveCost?' aria-disabled="true"':'')+'>Move ('+fmt(TUNE.moveCost)+')</button><button class="btn d" data-act="sell">Sell (+'+sellVal(t)+')</button><button class="btn" data-act="deselect">Close</button></div>';
   }else{
-    p.innerHTML='<h3>Tap a pad to build</h3><div class="hint">Towers stay for the whole run. Upgrade them to level 5 for wider splash, a hero aura and super skills. Kills earn gold and sometimes drop element orbs.</div>'
+    p.innerHTML='<h3>Tap a pad to build</h3><div class="hint">Towers stay for the whole run. Upgrade them to level 5 for wider splash, a grand aura and super skills.</div>'
       +'<div class="jchips">'+S.avail.slice().sort((a,b)=>SKM[a].at-SKM[b].at).map(id=>'<span class="jc"><i class="gem" style="--c:'+SKM[id].c+'"></i>'+esc(SKM[id].n)+'</span>').join('')+'</div>';
   }
   refreshPanel();placePanel();
@@ -1762,8 +1911,7 @@ function updHud(force){
   $('hBar').style.width=(S.lives/S.maxLives*100)+'%';
   $('hCred').textContent=fmt(Math.floor(S.credits));
   $('hScore').textContent=fmt(S.score);
-  const jt={};Object.keys(S.jwRun).forEach(k=>jt[k]=S.jwRun[k]);Object.keys(S.jw).forEach(k=>jt[k]=(jt[k]||0)+S.jw[k]);const k=Object.keys(jt);
-  $('jstrip').innerHTML=k.length?'<span class="hint" style="align-self:center">Orbs this run</span>'+k.map(id=>'<span class="jc"><i class="gem" style="--c:'+SKM[id].c+'"></i>'+esc(SKM[id].n)+' ×'+jt[id]+'</span>').join(''):'';
+  $('jstrip').innerHTML='';
   refreshPanel();
 }
 
@@ -1846,12 +1994,11 @@ document.addEventListener('click',e=>{
   const d=b.dataset;
   if(d.build&&S&&S.sel&&S.sel.type==='pad'){buildTower(S.sel.i,d.build);return;}
   if(d.lb){openTop10(undefined,undefined,d.lb);return;}
-  if(d.up){const id=d.up;const c=upCost(id);if(jw(id)>=c&&slv(id)<MAXLV){SAVE.jw[id]-=c;SAVE.lv[id]=slv(id)+1;persist();sfx(SFX.up);renderSkills();toast(SKM[id].n+' mastery is now '+slv(id)+'.');}return;}
   switch(d.act){
     case 'skills':auInit();auResume();showScreen('scrSkills');break;
     case 'home':showScreen('scrHome');break;
     case 'top10':openTop10();break;
-    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it becomes a hero with an aura) or sell it.</li><li>Every kill gives gold. You start with Fire, Water, Earth, Lightning and two random elements. Gravity always arrives at level 4; after that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and becomes a hero with super skills.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Shadow, Poison) hit the strongest enemy in range much harder. The beacons boost adjacent towers.</li><li>Level 5 heroes release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. Nobody tells you which. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>Orbs are kept after the run. Spend them in Elements to raise mastery (max 5).</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds 100,000 points plus 50,000 for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
+    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it gets a crown and a grand aura) or sell it.</li><li>Every kill gives gold. You start with Fire, Water, Earth, Lightning and two random elements. Gravity always arrives at level 4; after that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and gains a super skill.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Shadow, Poison) hit the strongest enemy in range much harder. Line elements (Laser, Jet Blast) hit every enemy in a line. The Official Letter (หนังสือราชการ) throws A4 papers at several enemies at once and slows them; at level 5 it stamps a huge red seal that stops everything around it. The beacons boost adjacent towers.</li><li>Level 5 towers release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. Nobody tells you which. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>The Library on the home screen gives background and clues for every element and the combinations it can join. It never names a partner; the name of a combination is recorded there once you form it.</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
     case 'closeM':closeModal();break;
     case 'deselect':if(S){S.sel=null;renderPanel();}break;
     case 'upg':if(S&&S.sel&&S.sel.type==='tower')upgradeTower(S.sel.i);break;
@@ -1870,7 +2017,7 @@ $('bPause').addEventListener('click',()=>{if(S&&S.running)setPause(!S.paused);})
 $('bSpeed').addEventListener('click',()=>{if(!S)return;S.speed=S.speed===1?2:(S.speed===2?3:1);lab('bSpeed','Speed '+S.speed+'x',S.speed+'x');});
 $('bExit').addEventListener('click',()=>{
   if(!S)return;if(S.running&&!S.paused)setPause(true);
-  openModal('<h2>Leave the game?</h2><p class="hint"><b>Save and leave</b>: continue later from the start of this level. <b>End run</b>: see your score now and save it to the Top 10. Orbs collected are kept either way.</p><div class="row" style="margin-top:10px;flex-wrap:wrap"><button class="btn" data-act="closeM">Keep playing</button><button class="btn" data-act="leave">Save and leave</button><button class="btn d" data-act="endrun">End run</button></div>');
+  openModal('<h2>Leave the game?</h2><p class="hint"><b>Save and leave</b>: continue later from the start of this level. <b>End run</b>: see your score now and save it to the Top 10.</p><div class="row" style="margin-top:10px;flex-wrap:wrap"><button class="btn" data-act="closeM">Keep playing</button><button class="btn" data-act="leave">Save and leave</button><button class="btn d" data-act="endrun">End run</button></div>');
 });
 
 /* ============ RENDER ============ */
@@ -1945,11 +2092,16 @@ ice(tm,f){
   poly([[-8,0],[-9,-6],[-5,-10],[-3,-4]],'#b9e6f2','#6da9bd',1);ctx.fillStyle='rgba(255,255,255,.75)';ctx.fillRect(-2,-14,1.2,6);
   const k=.5+.5*Math.sin(tm*3);ctx.fillStyle='rgba(255,255,255,'+k+')';ctx.beginPath();ctx.arc(6,-11,1,0,TAU);ctx.fill();
 },
-wind(tm,f){
-  ctx.fillStyle='#8a97a6';ctx.fillRect(-1,-9,2,10);
-  ctx.save();ctx.translate(0,-10);ctx.rotate(tm*5);
-  for(let i=0;i<3;i++){ctx.rotate(TAU/3);ctx.fillStyle='#bfe0cc';ctx.beginPath();ctx.moveTo(0,0);ctx.quadraticCurveTo(5,-3,9,-1);ctx.quadraticCurveTo(5,2,0,1);ctx.fill();ctx.strokeStyle='#6f9a85';ctx.lineWidth=.8;ctx.stroke();}
-  ctx.restore();orb(0,-10,1.8,'#fff','#9fc9b4','#5a8a74');
+laser(tm,f){
+  ctx.fillStyle='#2f3b4d';ctx.beginPath();ctx.ellipse(0,-1.5,7.5,3,0,0,TAU);ctx.fill();
+  poly([[-5.5,-2],[-4.2,-9.5],[4.2,-9.5],[5.5,-2]],'#5b6b82','#27323f',.8);
+  poly([[-4.2,-9.5],[4.2,-9.5],[3.2,-11.5],[-3.2,-11.5]],'#7d8ca2','#27323f',.6);
+  ctx.save();ctx.translate(0,-11);ctx.rotate(-.42);
+  ctx.fillStyle='#8c9ab0';rr(-1.7,-10,3.4,10,1);ctx.fill();ctx.strokeStyle='#27323f';ctx.lineWidth=.7;ctx.stroke();
+  ctx.fillStyle='#3a4658';ctx.fillRect(-2.1,-4.5,4.2,1.2);
+  const k=.6+.4*Math.sin(tm*6);ctx.globalCompositeOperation='lighter';glowC(0,-10.5,5.5,'#d4577a',.55*k+.4*f);ctx.globalCompositeOperation='source-over';
+  orb(0,-10.5,1.8,'#ffffff','#ec93ab','#9a2f4c');ctx.restore();
+  orb(0,-11,2.2,'#c3cede','#7d8ca2','#3a4658');
 },
 poison(tm,f){
   ctx.fillStyle='rgba(215,235,215,.8)';ctx.beginPath();ctx.moveTo(-2.5,-15);ctx.lineTo(2.5,-15);ctx.lineTo(2.5,-10);ctx.quadraticCurveTo(8,-7,7,-2);ctx.quadraticCurveTo(0,2,-7,-2);ctx.quadraticCurveTo(-8,-7,-2.5,-10);ctx.closePath();ctx.fill();
@@ -2039,14 +2191,20 @@ speed(tm,f){
     ctx.beginPath();ctx.moveTo(-3.5,y+2.2);ctx.lineTo(0,y);ctx.lineTo(3.5,y+2.2);ctx.stroke();}
   ctx.lineCap='butt';ctx.strokeStyle='rgba(59,191,176,.7)';ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(0,-1,10+Math.sin(tm*6),3.5,0,0,TAU);ctx.stroke();
 },
-mirror(tm,f){
-  const s=.5+.5*Math.sin(tm*2);
-  poly([[0,-18],[7,-9],[0,0],[-7,-9]],'#dfe3ea','#8c95a3',1);poly([[0,-18],[7,-9],[0,-9]],'#f6f8fb');poly([[0,0],[-7,-9],[0,-9]],'#aab3c0');
-  ctx.strokeStyle='rgba(255,255,255,'+(.4+.5*s)+')';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(-3+s*6,-14);ctx.lineTo(-6+s*6,-6);ctx.stroke();
+letter(tm,f){
+  const b=Math.sin(tm*2)*.6;
+  [[-1.6,-1.6,-.18],[1.4,-1.2,.14]].forEach(q=>{ctx.save();ctx.translate(q[0],q[1]-4);ctx.rotate(q[2]);ctx.fillStyle='#e6e1d3';ctx.fillRect(-5,-7,10,14);ctx.strokeStyle='#a69f8c';ctx.lineWidth=.5;ctx.strokeRect(-5,-7,10,14);ctx.restore();});
+  ctx.save();ctx.translate(0,-8+b);
+  ctx.fillStyle='rgba(26,46,74,.25)';ctx.fillRect(-4.2,-6.2,10,14);
+  ctx.fillStyle='#fdfcf8';ctx.fillRect(-5,-7,10,14);ctx.strokeStyle='#b8b1a0';ctx.lineWidth=.6;ctx.strokeRect(-5,-7,10,14);
+  ctx.fillStyle='#b3262c';ctx.beginPath();ctx.arc(0,-4.3,1.9,0,TAU);ctx.fill();ctx.fillStyle='#fdfcf8';ctx.beginPath();ctx.arc(0,-4.3,.7,0,TAU);ctx.fill();
+  ctx.fillStyle='#98a1ae';for(let j=0;j<4;j++)ctx.fillRect(-3.6,-1.2+j*1.8,j===3?4.4:7.2,.6);
+  ctx.restore();
+  if(f){ctx.globalCompositeOperation='lighter';glowC(0,-8,10,'#e0675e',.5);ctx.globalCompositeOperation='source-over';}
 }
 };
 
-/* ----- towers: the look grows with each level; level 5 becomes an element hero ----- */
+/* ----- towers: the look grows with each level; level 5 gets a crown and a grand aura ----- */
 function cylinder(x,yTop,rx,ry,h,c0,c1,c2){
   const g=ctx.createLinearGradient(x-rx,0,x+rx,0);g.addColorStop(0,c0);g.addColorStop(.45,c1);g.addColorStop(1,c2);
   ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(x-rx,yTop);ctx.lineTo(x-rx,yTop+h);ctx.ellipse(x,yTop+h,rx,ry,0,Math.PI,0,true);ctx.lineTo(x+rx,yTop);ctx.closePath();ctx.fill();
@@ -2056,7 +2214,7 @@ const TIER=[null,
  {n:'Bronze',c:['#26405f','#4a6a94','#1c3350'],top:['#7894bb','#34507a'],rim:'#b07d3a',pip:'#d9a066'},
  {n:'Silver',c:['#2a3d55','#5d7899','#1f2f45'],top:['#a9bcd3','#4a6280'],rim:'#dfe3ea',pip:'#eef1f5'},
  {n:'Gold',c:['#22344d','#4a6a94','#182a40'],top:['#8aa3c4','#3a5579'],rim:'#d9b25a',pip:'#f1d27a'},
- {n:'Hero',c:['#22344d','#4a6a94','#182a40'],top:['#8aa3c4','#3a5579'],rim:'#e3b64a',pip:'#f1d27a'}];
+ {n:'Grand',c:['#22344d','#4a6a94','#182a40'],top:['#8aa3c4','#3a5579'],rim:'#e3b64a',pip:'#f1d27a'}];
 const TSC=[0,.84,.95,1.06,1.16,1.24],ESC=[0,.85,1,1.12,1.25,1];
 function drawPlinth(x,y,col,lv,tm){
   const T=TIER[lv];
@@ -2088,98 +2246,51 @@ function drawPylons(x,y,col,tm,front){
     poly([[px,py-12],[px+1.4,py-9],[px+2.2,py],[px,py]],'rgba(255,255,255,.25)');
     const k=.55+.45*Math.sin(tm*4+q[0]);ctx.globalCompositeOperation='lighter';glowC(px,py-12,6,col,.5*k);ctx.globalCompositeOperation='source-over';});
 }
-const HSTY={fire:'flame',lava:'flame',meteor:'flame',water:'drop',jet:'swift',earth:'rock',crystal:'rock',lightning:'spark',thunder:'spark',magnet:'spark',
-  gravity:'orbit',warp:'orbit',shadow:'orbit',stars:'orbit',ice:'frost',nova:'frost',nature:'leaf',spore:'leaf',poison:'leaf',wind:'leaf',light:'shine',mirror:'shine',speed:'swift',power:'might'};
-function heroCrest(st,col,tm){
-  const lt=shade(col,.35),dk=shade(col,-.35);
-  switch(st){
-    case 'flame':for(let i=-1;i<=1;i++){const h=6+2*Math.sin(tm*9+i*2)+(i===0?3:0);poly([[i*2.4-2,-26],[i*2.6+Math.sin(tm*7+i)*.8,-26-h],[i*2.4+2,-26]],i===0?'#f7d98a':'#e0743f');}break;
-    case 'drop':poly([[-1.5,-26.5],[0,-34+Math.sin(tm*3)],[1.5,-26.5]],lt,dk,.6);poly([[-3.6,-25],[-6.5,-29],[-2,-26.8]],lt);poly([[3.6,-25],[6.5,-29],[2,-26.8]],lt);break;
-    case 'rock':poly([[-3,-26],[-6.5,-32],[-1.4,-27]],lt,dk,.6);poly([[3,-26],[6.5,-32],[1.4,-27]],lt,dk,.6);break;
-    case 'spark':[[-3,-27,-6,-33],[0,-27.5,0,-35],[3,-27,6,-33]].forEach(q=>{ctx.strokeStyle='#f7e8a0';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(q[0],q[1]);ctx.lineTo((q[0]+q[2])/2+1.5,(q[1]+q[3])/2);ctx.lineTo((q[0]+q[2])/2-1,(q[1]+q[3])/2+.5);ctx.lineTo(q[2],q[3]);ctx.stroke();});break;
-    case 'orbit':ctx.strokeStyle=hx(col,.9);ctx.lineWidth=1.3;ctx.beginPath();ctx.ellipse(0,-29.5,6.5,1.9,Math.sin(tm)*.2,0,TAU);ctx.stroke();ctx.fillStyle='#efe6ff';ctx.beginPath();ctx.arc(Math.cos(tm*3)*6.5,-29.5+Math.sin(tm*3)*1.9,1.1,0,TAU);ctx.fill();break;
-    case 'frost':[[-4,-26,-6,-32],[0,-27,0,-35],[4,-26,6,-32]].forEach(q=>poly([[q[0]-1.2,q[1]],[q[2],q[3]],[q[0]+1.2,q[1]]],'#dff4f9','#7fb8cc',.5));break;
-    case 'leaf':[-1,0,1].forEach(i=>{ctx.save();ctx.translate(i*3,-26.5);ctx.rotate(i*.5+Math.sin(tm*2+i)*.1);ctx.fillStyle=i?'#86bb78':'#5c9a58';ctx.beginPath();ctx.ellipse(0,-3.5,1.8,4,0,0,TAU);ctx.fill();ctx.restore();});break;
-    case 'might':poly([[-4,-26],[-5,-32],[-2,-27.5],[0,-34],[2,-27.5],[5,-32],[4,-26]],'#f1d27a','#8a5f14',.6);break;
-    case 'swift':[-1,1].forEach(sx=>poly([[sx*2,-26],[sx*7.5,-31.5],[sx*4.5,-26.5]],'#d6f5f1','#1d776d',.6));break;
-    case 'shine':ctx.globalCompositeOperation='lighter';glowC(0,-29,8,'#fff6dc',.6);ctx.globalCompositeOperation='source-over';ctx.strokeStyle='#e9d48f';ctx.lineWidth=1.3;ctx.beginPath();ctx.ellipse(0,-30,5.5,1.6,0,0,TAU);ctx.stroke();break;
-  }
-}
-function heroAura(st,col,tm,back){
-  const lt=shade(col,.35);
-  switch(st){
-    case 'flame':if(!back)for(let i=0;i<5;i++){const k=(tm*.8+i*.2)%1,ax=Math.sin(i*2.3+tm)*12;ctx.fillStyle='rgba('+(i%2?'247,217,138':'224,116,63')+','+(1-k)+')';ctx.beginPath();ctx.arc(ax,-2-k*30,1.5*(1-k)+.5,0,TAU);ctx.fill();}break;
-    case 'drop':if(!back)for(let i=0;i<3;i++){const a=tm*2+i*2.1;ctx.fillStyle='rgba(180,220,245,.9)';ctx.beginPath();ctx.arc(Math.cos(a)*13,-14+Math.sin(a)*4,1.6,0,TAU);ctx.fill();}break;
-    case 'rock':for(let i=0;i<3;i++){const a=tm*1.4+i*2.1,z=Math.sin(a);if((z<0)!==back)continue;poly([[Math.cos(a)*14-2,-14+z*4],[Math.cos(a)*14,-16.5+z*4],[Math.cos(a)*14+2,-14+z*4],[Math.cos(a)*14,-12+z*4]],shade(col,-.1),shade(col,-.4),.5);}break;
-    case 'spark':if(!back&&Math.sin(tm*21)>.2){const a=(tm*5)%TAU;ctx.strokeStyle='rgba(255,247,200,.95)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(Math.cos(a)*6,-16+Math.sin(a)*6);ctx.lineTo(Math.cos(a)*11+2,-16+Math.sin(a)*9-1);ctx.lineTo(Math.cos(a)*15,-16+Math.sin(a)*12+2);ctx.stroke();}break;
-    case 'orbit':{ctx.strokeStyle=hx(col,back?.35:.75);ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(0,-15,15,4.5,-.25,back?Math.PI:0,back?TAU:Math.PI);ctx.stroke();
-      const a=tm*2.2,z=Math.sin(a);if((z<0)===back){ctx.fillStyle=lt;ctx.beginPath();ctx.arc(Math.cos(a)*15,-15+z*4.5-Math.cos(a)*15*.25,1.8,0,TAU);ctx.fill();}break;}
-    case 'frost':if(!back)for(let i=0;i<4;i++){const k=(tm*.35+i*.25)%1;ctx.fillStyle='rgba(223,247,248,'+(1-k)+')';ctx.beginPath();ctx.arc(Math.sin(i*2.7+tm)*13,-34+k*34,1.2,0,TAU);ctx.fill();}break;
-    case 'leaf':if(!back)for(let i=0;i<3;i++){const a=tm*1.6+i*2.1;ctx.save();ctx.translate(Math.cos(a)*14,-14+Math.sin(a)*5);ctx.rotate(a*2);ctx.fillStyle=i%2?'#86bb78':'#a6c46a';ctx.beginPath();ctx.ellipse(0,0,2.6,1.2,0,0,TAU);ctx.fill();ctx.restore();}break;
-    case 'might':if(!back)for(let i=0;i<3;i++){const k=(tm*.7+i/3)%1;ctx.fillStyle='rgba(241,210,122,'+(1-k)+')';const xx=Math.sin(i*2.4)*12,yy=-4-k*28;ctx.fillRect(xx-.6,yy-2,1.2,4);ctx.fillRect(xx-2,yy-.6,4,1.2);}break;
-    case 'swift':if(!back){ctx.strokeStyle='rgba(214,245,241,.8)';ctx.lineWidth=1;for(let i=0;i<4;i++){const a=tm*4+i*1.57;ctx.beginPath();ctx.arc(0,-15,13+i%2*2,a,a+.9);ctx.stroke();}}break;
-    case 'shine':if(back){ctx.save();ctx.translate(0,-18);ctx.rotate(tm*.3);ctx.globalCompositeOperation='lighter';for(let i=0;i<8;i++){ctx.rotate(Math.PI/4);const g=ctx.createLinearGradient(0,0,0,-22);g.addColorStop(0,'rgba(255,246,220,.35)');g.addColorStop(1,'rgba(255,246,220,0)');ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(-1.6,0);ctx.lineTo(0,-22);ctx.lineTo(1.6,0);ctx.fill();}ctx.globalCompositeOperation='source-over';ctx.restore();}break;
-  }
+function haloRing(ph,col,back){
+  ctx.save();ctx.translate(0,-17);
+  const a0=back?Math.PI:0,a1=back?TAU:Math.PI;
+  ctx.strokeStyle=hx('#f1d27a',back?.35:.9);ctx.lineWidth=1.5;ctx.beginPath();ctx.ellipse(0,0,17,5.4,0,a0,a1);ctx.stroke();
+  ctx.strokeStyle=hx(col,back?.3:.75);ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(0,0,20.5,6.6,0,a0,a1);ctx.stroke();
+  for(let i=0;i<8;i++){const a=ph*.9+i*TAU/8,z=Math.sin(a);if((z<0)!==back)continue;const x=Math.cos(a)*17,y=z*5.4;
+    poly([[x,y-2.2],[x+1.4,y],[x,y+2.2],[x-1.4,y]],back?hx('#f1d27a',.45):'#f7e3a0');}
+  ctx.restore();
 }
 function drawHero(t,tm,f){
-  const sk=SKM[t.id],col=sk.c,st=HSTY[t.id]||'shine',ph=tm+t.x*.013;
-  /* super charge ring around the base, and a light pillar when the super fires */
+  /* level 5: the element itself, larger, crowned and wrapped in a grand aura */
+  const sk=SKM[t.id],col=sk.c,ph=tm+t.x*.013,lt=shade(col,.4);
   const pr=Math.min(1,(t.sh||0)/TUNE.supHits),pa=Math.min(1,(t.ah||0)/TUNE.armHits);
   ctx.save();ctx.translate(t.x,t.y+4);ctx.scale(1,.4);
   ctx.strokeStyle='rgba(26,46,74,.35)';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,20,0,TAU);ctx.stroke();
   ctx.strokeStyle=pr>=1?'#f1d27a':'#e3b64a';ctx.lineWidth=pr>=1?3.4+Math.sin(tm*8):3;ctx.beginPath();ctx.arc(0,0,20,-Math.PI/2,-Math.PI/2+TAU*pr);ctx.stroke();
-  ctx.strokeStyle='rgba(192,70,47,.85)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,24.5,-Math.PI/2,-Math.PI/2+TAU*pa);ctx.stroke();
+  if(pa>0){ctx.strokeStyle='rgba(192,70,47,.85)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,24.5,-Math.PI/2,-Math.PI/2+TAU*pa);ctx.stroke();}
   ctx.restore();
   if(t.superT>0){const a=t.superT;ctx.save();ctx.globalCompositeOperation='lighter';
     const g=ctx.createLinearGradient(0,t.y-140,0,t.y);g.addColorStop(0,hx(col,0));g.addColorStop(.7,hx(col,.45*a));g.addColorStop(1,hx('#ffffff',.6*a));
     ctx.fillStyle=g;ctx.fillRect(t.x-9-6*(1-a),t.y-140,18+12*(1-a),141);ctx.restore();}
-  const lt=shade(col,.35),dk=shade(col,-.4),bob=Math.sin(ph*2)*.7,lift=f?1.6:0;
   ctx.save();ctx.translate(t.x,t.y+1);
-  ctx.globalCompositeOperation='lighter';glowC(0,-16,24,col,.22+.25*f);ctx.globalCompositeOperation='source-over';
-  ctx.scale(.94,.94);
-  heroAura(st,col,ph,true);
-  ctx.translate(0,bob);
-  /* wings of light, in the element colour */
-  [-1,1].forEach(sx=>{const fl=Math.sin(ph*2.2)*.12;ctx.save();ctx.translate(sx*4,-18);ctx.rotate(sx*(.25+fl));
-    for(let j=2;j>=0;j--){ctx.fillStyle=j===0?hx(col,.75):hx(col,.5-j*.1);ctx.strokeStyle=hx('#ffffff',.55);ctx.lineWidth=.6;ctx.beginPath();ctx.ellipse(sx*(9+j*3),-3+j*4,10-j*1.5,3.2,sx*(-.5+j*.35),0,TAU);ctx.fill();ctx.stroke();}
-    ctx.restore();});
-  /* cape */
-  const cw=Math.sin(ph*3)*1.5;
-  ctx.fillStyle=shade(col,-.3);ctx.beginPath();ctx.moveTo(-5,-19.5);ctx.quadraticCurveTo(-11+cw,-10,-10.5+cw,-.5);
-  for(let i=0;i<=6;i++){const xx=-10.5+cw+i*(21/6),yy=-.5+(i%2?2.2:0)*(st==='spark'||st==='frost'||st==='rock'?1:.6);ctx.lineTo(xx,yy);}
-  ctx.quadraticCurveTo(11+cw,-10,5,-19.5);ctx.closePath();ctx.fill();
-  if(st==='flame'){for(let i=0;i<4;i++){const xx=-8+cw+i*5.3,h=3+2*Math.sin(ph*8+i);poly([[xx-2,0],[xx,h+.5],[xx+2,0]],i%2?'#f7d98a':'#e0743f');}}
-  /* legs and boots */
-  ctx.fillStyle='#24344f';rr(-4.2,-8.5,3.4,8,1.2);ctx.fill();rr(.8,-8.5,3.4,8,1.2);ctx.fill();
-  ctx.fillStyle=dk;rr(-4.6,-2.4,4,2.6,1);ctx.fill();rr(.6,-2.4,4,2.6,1);ctx.fill();
-  /* torso armour */
-  let g=ctx.createLinearGradient(0,-20,0,-8);g.addColorStop(0,lt);g.addColorStop(1,dk);
-  ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(-5.8,-19.5);ctx.lineTo(5.8,-19.5);ctx.lineTo(4.6,-8);ctx.lineTo(-4.6,-8);ctx.closePath();ctx.fill();
-  ctx.strokeStyle=shade(col,-.55);ctx.lineWidth=.8;ctx.stroke();
-  ctx.fillStyle='#d9b25a';ctx.fillRect(-4.7,-10,9.4,1.6);
-  ctx.globalCompositeOperation='lighter';glowC(0,-14.5,5,col,.7);ctx.globalCompositeOperation='source-over';
-  poly([[0,-17],[1.8,-14.5],[0,-12],[-1.8,-14.5]],'#ffffff',shade(col,-.3),.6);
-  /* shoulders */
-  [-1,1].forEach(sx=>{orb(sx*6,-18.8,2.7,'#ffffff',lt,dk);});
-  /* arms raised, holding the element above the head */
-  ctx.strokeStyle=shade(col,-.2);ctx.lineWidth=2.6;ctx.lineCap='round';
-  [-1,1].forEach(sx=>{ctx.beginPath();ctx.moveTo(sx*6,-18.5);ctx.lineTo(sx*8.5,-24-lift);ctx.lineTo(sx*4.2,-29.5-lift);ctx.stroke();});
-  ctx.lineCap='butt';ctx.fillStyle='#dfe3ea';[-1,1].forEach(sx=>{ctx.beginPath();ctx.arc(sx*4.2,-29.5-lift,1.5,0,TAU);ctx.fill();});
-  /* helmet with glowing visor */
-  g=ctx.createRadialGradient(-1.2,-25,.5,0,-23.5,4.2);g.addColorStop(0,'#5d7299');g.addColorStop(1,'#22324d');
-  ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,-23.5,3.8,0,TAU);ctx.fill();ctx.strokeStyle=dk;ctx.lineWidth=.7;ctx.stroke();
-  ctx.fillStyle=lt;ctx.fillRect(-2.6,-24.2,5.2,1.3);ctx.globalCompositeOperation='lighter';glowC(0,-23.6,4,col,.6);ctx.globalCompositeOperation='source-over';
-  heroCrest(st,col,ph);
-  /* the element, floating between the hands */
-  ctx.save();ctx.translate(0,-31-lift-Math.sin(ph*3)*1.1);ctx.scale(.55,.55);
-  ctx.globalCompositeOperation='lighter';glowC(0,-8,16,col,.35+.3*f);ctx.globalCompositeOperation='source-over';
-  const fn=EMB[t.id];if(fn)fn(tm+t.x*.013,f,col,5);
+  /* a soft column of light and a halo glow behind the element */
+  ctx.globalCompositeOperation='lighter';
+  const g=ctx.createLinearGradient(0,-64,0,0);g.addColorStop(0,hx(col,0));g.addColorStop(.6,hx(col,.16));g.addColorStop(1,hx(col,.3));
+  ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(-10,0);ctx.lineTo(-4,-64);ctx.lineTo(4,-64);ctx.lineTo(10,0);ctx.closePath();ctx.fill();
+  glowC(0,-14,30,col,.26+.22*Math.sin(ph*2)*.5+.25*f);glowC(0,-14,14,'#fff6dc',.18);
+  haloRing(ph,col,true);
+  ctx.globalCompositeOperation='source-over';
+  /* the element, larger and floating */
+  ctx.save();ctx.translate(0,-2+Math.sin(ph*2)*1.2);ctx.scale(1.38,1.38);
+  const fn=EMB[t.id];if(fn)fn(ph,f,col,5);
   ctx.restore();
-  heroAura(st,col,ph,false);
+  /* a crown of three gold-tipped shards */
+  for(let i=-1;i<=1;i++){const xx=i*6,yy=-31+Math.abs(i)*2+Math.sin(ph*2.4+i)*1.2,h=i===0?5.5:4;
+    poly([[xx-1.7,yy+2.5],[xx,yy-h],[xx+1.7,yy+2.5],[xx,yy+4]],i===0?'#f1d27a':lt,'#8a5f14',.5);}
+  ctx.globalCompositeOperation='lighter';
+  haloRing(ph,col,false);
+  glowC(0,-32,7,'#f7e3a0',.35+.2*Math.sin(ph*3));
+  if(!RM)for(let i=0;i<6;i++){const k=(ph*.45+i/6)%1,a=i*1.05+ph*.3;glowC(Math.cos(a)*15*(1-.4*k),-2-k*46,2.6,i%2?'#f1d27a':col,.7*(1-k));}
+  ctx.globalCompositeOperation='source-over';
   ctx.restore();
 }
 function drawAura(t,tm){
-  /* a rotating ground circle in the element colour under every level 5 hero */
+  /* a rotating ground circle in the element colour under every level 5 tower */
   const col=SKM[t.id].c,x=t.x,y=t.y+5,ph=tm+t.pad*.7,p=.75+.25*Math.sin(ph*2),al=v=>Math.round(v*100)/100;
   ctx.save();ctx.translate(x,y);ctx.scale(1,.42);ctx.globalCompositeOperation='lighter';
   const g=ctx.createRadialGradient(0,0,8,0,0,44);g.addColorStop(0,hx(col,0));g.addColorStop(.62,hx(col,al(.26*p)));g.addColorStop(1,hx(col,0));
@@ -2586,6 +2697,25 @@ function drawPend(p,tm){
     ctx.beginPath();ctx.moveTo(sx-9*(1-f),sy-30*(1-f));ctx.lineTo(sx,sy);ctx.stroke();ctx.lineCap='butt';glowC(sx,sy,8,'#dfe6ff',.8);ctx.globalCompositeOperation='source-over';
     const sp=[];for(let i=0;i<8;i++){const r=i%2?1.6:4.2,t=-1.5708+i*Math.PI/4;sp.push([sx+Math.cos(t)*r,sy+Math.sin(t)*r]);}poly(sp,'#ffffff');}
 }
+/* an original stylised red seal: rings, ticks and a winged guardian (not a copy of any real emblem) */
+function drawSeal(R,tm,k){
+  const red='#b3262c',dk='#6e1418',lt='#e0675e';
+  /* outer red circle border */
+  ctx.strokeStyle=red;ctx.lineWidth=R*.07;ctx.beginPath();ctx.arc(0,0,R*1.18,0,TAU);ctx.stroke();
+  ctx.lineWidth=R*.025;ctx.beginPath();ctx.arc(0,0,R*1.28,0,TAU);ctx.stroke();
+  ctx.save();ctx.rotate(tm*.25);
+  ctx.strokeStyle=red;ctx.lineWidth=R*.12;ctx.beginPath();ctx.arc(0,0,R,0,TAU);ctx.stroke();
+  ctx.lineWidth=R*.03;ctx.beginPath();ctx.arc(0,0,R*.82,0,TAU);ctx.stroke();
+  for(let i=0;i<24;i++){const a=i*TAU/24;ctx.beginPath();ctx.moveTo(Math.cos(a)*R*.86,Math.sin(a)*R*.86);ctx.lineTo(Math.cos(a)*R*.93,Math.sin(a)*R*.93);ctx.stroke();}
+  ctx.restore();
+  ctx.fillStyle=red;ctx.strokeStyle=dk;ctx.lineWidth=R*.02;
+  [-1,1].forEach(sx=>{for(let j=0;j<3;j++){const w=R*(.62-j*.12),h=R*(.13+j*.02),y0=-R*.12+j*R*.15;
+    ctx.beginPath();ctx.moveTo(sx*R*.1,y0);ctx.quadraticCurveTo(sx*w*.7,y0-R*.32+j*R*.05,sx*w,y0-R*.18+j*R*.06);ctx.quadraticCurveTo(sx*w*.7,y0+h*.4,sx*R*.1,y0+h);ctx.closePath();ctx.fill();ctx.stroke();}});
+  ctx.beginPath();ctx.moveTo(0,-R*.3);ctx.lineTo(R*.17,-R*.05);ctx.lineTo(R*.12,R*.42);ctx.lineTo(0,R*.55);ctx.lineTo(-R*.12,R*.42);ctx.lineTo(-R*.17,-R*.05);ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.arc(0,-R*.4,R*.12,0,TAU);ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.moveTo(-R*.1,-R*.5);ctx.lineTo(0,-R*.72);ctx.lineTo(R*.1,-R*.5);ctx.closePath();ctx.fill();
+  ctx.globalCompositeOperation='lighter';[-1,1].forEach(sx=>glowC(sx*R*.045,-R*.41,R*.06,'#ffd2c2',.9));glowC(0,R*.05,R*.14,lt,.5);ctx.globalCompositeOperation='source-over';
+}
 function drawFx(tm){
   ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;
   const dim=Math.min(1,90/Math.max(1,S.fx.length));/* keep the swarm readable when many effects overlap */
@@ -2620,6 +2750,19 @@ function drawFx(tm){
         else if(f.sh==='s'){poly([[f.x,f.y-r*2],[f.x+r*.5,f.y-r*.5],[f.x+r*2,f.y],[f.x+r*.5,f.y+r*.5],[f.x,f.y+r*2],[f.x-r*.5,f.y+r*.5],[f.x-r*2,f.y],[f.x-r*.5,f.y-r*.5]],f.c);}
         ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;break;}
       case 'txt':ctx.globalCompositeOperation='source-over';ctx.globalAlpha=Math.min(1,a*1.5);ctx.fillStyle=f.c;ctx.font='700 11px JetBrains Mono,monospace';ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='rgba(255,255,255,.8)';ctx.strokeText(f.s,f.x,f.y);ctx.fillText(f.s,f.x,f.y);ctx.globalAlpha=1;break;
+      case 'paper':{const k0=1-a,k=k0*k0*(3-2*k0),mx=(f.x0+f.x1)/2,my=(f.y0+f.y1)/2,dx=f.x1-f.x0,dy=f.y1-f.y0,dd=Math.hypot(dx,dy)||1,
+          cx=mx-dy/dd*22*f.sd,cy=my+dx/dd*22*f.sd-18,u=1-k,x=u*u*f.x0+2*u*k*cx+k*k*f.x1,y=u*u*f.y0+2*u*k*cy+k*k*f.y1;
+        ctx.save();ctx.translate(x,y);ctx.rotate(f.r0+k*1.1*f.sd);ctx.globalAlpha=Math.min(1,a*5,k0*6+.2);
+        ctx.fillStyle='rgba(26,46,74,.22)';ctx.fillRect(-3.2,-4.1,7.6,10.4);
+        ctx.fillStyle='#fbfaf6';ctx.fillRect(-3.8,-5.3,7.6,10.6);ctx.strokeStyle='#c9c3b4';ctx.lineWidth=.5;ctx.strokeRect(-3.8,-5.3,7.6,10.6);
+        ctx.fillStyle='#b23a3a';ctx.beginPath();ctx.arc(0,-3.4,1.1,0,TAU);ctx.fill();
+        ctx.fillStyle='#9aa3b0';for(let j=0;j<4;j++)ctx.fillRect(-2.7,-1.4+j*1.55,j===3?3.4:5.4,.55);
+        ctx.restore();ctx.globalAlpha=1;break;}
+      case 'emblem':{const k=1-a,dn=Math.min(1,k/.34),sc=1.65-.65*dn*dn,al=k<.34?dn:Math.max(0,1-(k-.34)/.66*1.05);
+        ctx.save();ctx.globalAlpha=al*.32;ctx.fillStyle='#3a0d10';ctx.fillRect(0,0,CW,CH);ctx.restore();
+        ctx.save();ctx.translate(f.x,f.y);ctx.scale(sc,sc);ctx.globalAlpha=al;
+        ctx.globalCompositeOperation='lighter';glowC(0,0,f.r*.9,'#c0392b',.45+.25*Math.sin(tm*14));ctx.globalCompositeOperation='source-over';
+        drawSeal(f.r*.42,tm,k);ctx.restore();ctx.globalAlpha=1;break;}
       case 'gem':drawGem(f.x,f.y,6.5,f.c,Math.min(1,a*1.5));break;
       case 'stxt':break;
       case 'arm':{const k=1-a,x=f.x0+(f.x1-f.x0)*k,y=f.y0+(f.y1-f.y0)*k;ctx.globalCompositeOperation='lighter';
@@ -2727,7 +2870,7 @@ async function init(){
   try{await fetchTop();setConn('ok','Connected');}catch(e){setConn('bad','Offline');}
 }
 init();
-window.RD={renderPanel:()=>renderPanel(),ZONES:ZONES,MAXL:MAXL,Ld:Ld,openTop10:openTop10,get S(){return S;},SK:SK,SKM:SKM,ET:ET,SAVE:()=>SAVE,setSave:o=>{SAVE=Object.assign(SAVE,o);},startLevel:startLevel,step:step,buildTower:buildTower,upgradeTower:upgradeTower,get PADS(){return PADS;},get PLEN(){return PLEN;},get CW(){return CW;},get CH(){return CH;},get ORI(){return ORI;},buildMap:buildMap,newAirport:newAirport,moveTower:moveTower,THEMES:THEMES,mapNo:mapNo,TRIS:TRIS,posAt:posAt,finish:finish,hpMul:hpMul,padFree:padFree,upgCost:upgCost,sellVal:sellVal,dropJewel:dropJewel,spawn:spawn,draw:draw,drawIcon:drawIcon,updCombos:updCombos,TUNE:TUNE,SHIELD:SHIELD,buildCost:buildCost,AU:AU,TUNES:TUNES,playStep:playStep,dropOrb:dropOrb,saveRun:saveRun,loadRun:loadRun,clearRun:clearRun,MAXT:MAXT,UPC:UPC,LVM:LVM,drawTower:(t,tm)=>drawTower(t,tm),withCtx:(c,fn)=>{const o=ctx;ctx=c;try{fn();}finally{ctx=o;}},finishRun:finishRun,advanceLevel:advanceLevel,shieldK:shieldK,COMBOS:COMBOS,LINK:LINK,sizeCanvas:sizeCanvas,fitCanvas:fitCanvas,bossHp:bossHp,baseHp:baseHp};
+window.RD={doSuper:t=>doSuper(t),renderPanel:()=>renderPanel(),ZONES:ZONES,MAXL:MAXL,Ld:Ld,openTop10:openTop10,get S(){return S;},SK:SK,SKM:SKM,ET:ET,SAVE:()=>SAVE,setSave:o=>{SAVE=Object.assign(SAVE,o);},startLevel:startLevel,step:step,buildTower:buildTower,upgradeTower:upgradeTower,get PADS(){return PADS;},get PLEN(){return PLEN;},get CW(){return CW;},get CH(){return CH;},get ORI(){return ORI;},buildMap:buildMap,newAirport:newAirport,moveTower:moveTower,THEMES:THEMES,mapNo:mapNo,TRIS:TRIS,posAt:posAt,finish:finish,hpMul:hpMul,padFree:padFree,upgCost:upgCost,sellVal:sellVal,dropJewel:dropJewel,spawn:spawn,draw:draw,drawIcon:drawIcon,updCombos:updCombos,TUNE:TUNE,SHIELD:SHIELD,buildCost:buildCost,AU:AU,TUNES:TUNES,playStep:playStep,dropOrb:dropOrb,saveRun:saveRun,loadRun:loadRun,clearRun:clearRun,MAXT:MAXT,UPC:UPC,LVM:LVM,drawTower:(t,tm)=>drawTower(t,tm),withCtx:(c,fn)=>{const o=ctx;ctx=c;try{fn();}finally{ctx=o;}},finishRun:finishRun,advanceLevel:advanceLevel,shieldK:shieldK,COMBOS:COMBOS,LINK:LINK,sizeCanvas:sizeCanvas,fitCanvas:fitCanvas,bossHp:bossHp,baseHp:baseHp};
 </script>
 </body>
 </html>
