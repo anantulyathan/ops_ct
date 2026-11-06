@@ -493,7 +493,8 @@ const ZONES=[
 ];
 const zoneOf=L=>Math.min(9,Math.floor((L-1)/5));
 /* hardL/hardK: from level 15 every threat and boss has 15% more health */
-const TUNE={critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:204,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:1,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
+/* mobK: normal threats (not bosses) have 10% more health */
+const TUNE={mobK:1.1,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:204,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:1,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
 const dens=L=>(12+3.4*L)/TUNE.perL;
 const eF=L=>1+(Math.max(TUNE.eB,TUNE.eA-(TUNE.eA-TUNE.eB)*(L-1)/(TUNE.eL-1))-1);
 const hpMul=L=>1+TUNE.a*(L-1)+TUNE.b*Math.pow(L-1,2)+TUNE.c*Math.pow(L-1,3);
@@ -1301,6 +1302,7 @@ NEWS.forEach((N,i)=>{NXP.concat(NEWS.slice(i+1)).forEach(P=>{
 COMBOS.push({k:'photo',a:'nature',b:'light',n:'Photosynthesis',m:COMBO_M,c:'#9fcf6a',photo:1,d:'+60% damage. Sunlight feeds the plants: hits slow nearby enemies. While the link holds, every 5 minutes of play with at least 250 kills gives the terminal 1 health back.'});
 /* rainbow for the Game Console lasers */
 const RBW=['#e86a5a','#f0a64a','#f2d45a','#6cc47a','#4fa3d9','#8a6fc4'];
+const ICEWALL={id:'icewall',c:'#8fd6e8',fx:{slow:[.5,2]},st:2};
 const BRICKWALL={id:'bricks',c:'#e0584f',fx:{slow:[.55,.3]}},MELONSH={id:'icemelon',c:'#e8808a',fx:{slow:[.7,1]}};
 /* signature of each new element (c = context of the hit) */
 const NXS={
@@ -1522,7 +1524,12 @@ laser:{n:'Prism Cannon',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.len
   const dx=tg.x-t.x,dy=tg.y-t.y,dl=Math.hypot(dx,dy)||1,ux=dx/dl,uy=dy/dl,L=Math.hypot(CW,CH),W=36;
   A.forEach(e=>{const px=e.x-t.x,py=e.y-t.y,pr=px*ux+py*uy;if(pr<0||pr>L)return;if(Math.abs(px*uy-py*ux)<=W/2+e.r)dmgE(e,b*7);});
   const P=[{x:t.x,y:t.y-12},{x:t.x+ux*L,y:t.y+uy*L}];fxBolt(P,sk.c,.7,12,'beam');fxBolt(P,'#ffffff',.55,3,'beam');fxGlow(t.x,t.y-12,70,sk.c,.6,.9);S.shake=RM?0:.2;}},
-ice:{n:'Deep Freeze',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{stun:3,slow:[.5,4]},dm);impactFx(sk,t.x,t.y,170,0);L.slice(0,8).forEach((e,i)=>impactFx(sk,e.x,e.y,26,i*.04));}},
+ice:{n:'Ice Wall',f(t,sk,b,dm){
+  /* a wall of ice across the taxiway just ahead of the leading threat in range; anything that touches it is slowed by 50% for 2 s */
+  const L=inR(t,200).filter(e=>e.d>=0);const lead=L.length?L.reduce((a,e)=>e.d>a.d?e:a,L[0]):alive().filter(e=>e.d>=0).sort((p,q)=>q.d-p.d)[0];
+  const d=lead?lead.d+28:0,p0=posAt(d),p1=posAt(d+3),ang=Math.atan2(p1.y-p0.y,p1.x-p0.x);
+  S.pools.push({x:p0.x,y:p0.y,r:30,dps:0,t:6,max:6,sk:ICEWALL,ang:ang,cap:999});
+  impactFx(sk,p0.x,p0.y,40,0);fxRing(p0.x,p0.y,46,'#e6f4fa',.6,4);if(!S.botRun)fxText(p0.x,p0.y-30,'ICE WALL','#2a7f9e');}},
 poison:{n:'Plague',f(t,sk,b,dm){const L=inR(t,170);for(let k=0;k<5;k++)hitList(L,0,{poison:[8,6]},dm);hitList(L,b*1,null,dm);impactFx(SKM.spore,t.x,t.y,170,0);}},
 nature:{n:'Entangle',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{stun:2.5},dm);L.slice(0,10).forEach((e,i)=>impactFx(sk,e.x,e.y,30,i*.04));}},
 light:{n:'Judgement',f(t,sk,b,dm){strongest(5).forEach((e,i)=>{fxBolt([{x:e.x,y:e.y-260},{x:e.x,y:e.y}],'#fff6dc',.5,8,'beam');dmgE(e,b*8);fxGlow(e.x,e.y,30,'#fff6dc',.4,.9);});}},
@@ -1598,7 +1605,7 @@ function baseHp(L,ty){const D=Ld(L);return ET[ty].hp*hpMul(D)*dens(D)*TUNE.hpK*e
 /* a boss has about 18 times the health of an average threat of its level */
 function bossHp(L){const z=ZONES[zoneOf(L)];return z.types.reduce((a,t)=>a+baseHp(L,t),0)/z.types.length*TUNE.bossK*(z.boss==='apex'?TUNE.vanK:1);}
 function spawn(s){
-  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=(T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp)*(L>=TUNE.hardL?TUNE.hardK:1);
+  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=(T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp*TUNE.mobK)*(L>=TUNE.hardL?TUNE.hardK:1);
   const e={ty:s.ty,n:T.n,hp:hp,max:hp,sp:(T.boss||T.fast?T.sp:(T.sp*.45+TUNE.packSp*.55)*(1+rnd(-TUNE.spV,TUNE.spV)))*(1+.012*(Ld(L)-1)),lo:T.boss?0:rnd(-14,14),r:T.r,c:T.c,sh:T.sh,boss:!!T.boss,d:s.d0||0,x:PP[0].x+(s.d0||0),y:PP[0].y,
     slowF:1,slowT:0,stun:0,burn:null,pz:null,weak:null,rew:T.rew*(1+TUNE.rewL*L)*TUNE.rewK*dn*TUNE.goldK,pts:Math.round(10*(1+.1*L)*(T.boss?20:1)*TUNE.ptsK),ph:Math.random()*6,flash:0,ang:0};
   S.enemies.push(e);S.wave=Math.max(S.wave||0,s.w+1);
@@ -1626,7 +1633,7 @@ function step(dt){
   }
   for(const p of S.pools){
     p.t-=dt;CURT=p.src||null;
-    let ph=0;for(const e of S.enemies){if(ph>=(p.cap||TUNE.capB+4))break;if(!e.dead&&Math.hypot(e.x-p.x,e.y-p.y)<=p.r+e.r){ph++;SRC_GL=!!p.gl;SRC_TRI=!!p.tri;SRC_PAIR=!!p.pair;dmgE(e,p.dps*dt);SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;if(p.sk.fx&&p.sk.fx.slow){SRC_GL=!!p.gl;e.slowF=Math.min(e.slowF,1-(1-p.sk.fx.slow[0])*ccK());SRC_GL=false;e.slowT=Math.max(e.slowT,.3);}}}
+    let ph=0;for(const e of S.enemies){if(ph>=(p.cap||TUNE.capB+4))break;if(!e.dead&&Math.hypot(e.x-p.x,e.y-p.y)<=p.r+e.r){ph++;SRC_GL=!!p.gl;SRC_TRI=!!p.tri;SRC_PAIR=!!p.pair;dmgE(e,p.dps*dt);SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;if(p.sk.fx&&p.sk.fx.slow){SRC_GL=!!p.gl;e.slowF=Math.min(e.slowF,1-(1-p.sk.fx.slow[0])*ccK());SRC_GL=false;e.slowT=Math.max(e.slowT,p.sk.st||.3);}}}
   }
   CURT=null;S.pools=S.pools.filter(p=>p.t>0);
   for(const p of S.pend){p.t-=dt;if(p.t<=0){p.done=true;SRC_GL=!!p.gl;SRC_TRI=!!p.tri;SRC_PAIR=!!p.pair;SPLASH_CAP=p.cap||999;CURT=p.src||null;splashAt(p.x,p.y,p.rad,p.dmg,p.sk,p.dm);CURT=null;SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;SPLASH_CAP=999;if(p.big)S.shake=RM?0:.15;}}
@@ -3307,6 +3314,14 @@ function drawPool(p,tm){
     const g=ctx.createRadialGradient(p.x,p.y,2,p.x,p.y,p.r);g.addColorStop(0,'rgba(247,214,130,.95)');g.addColorStop(.45,'rgba(224,116,63,.92)');g.addColorStop(.85,'rgba(138,47,31,.92)');g.addColorStop(1,'rgba(60,30,24,0)');
     ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,TAU);ctx.fill();
     for(let i=0;i<4;i++){const k=(tm*.9+i*.25)%1,bx=p.x+Math.cos(i*2.2+p.x)*p.r*.5,by=p.y+Math.sin(i*2.2+p.x)*p.r*.4-k*8;ctx.fillStyle='rgba(255,236,170,'+(1-k)*.9+')';ctx.beginPath();ctx.arc(bx,by,1.6+k,0,TAU);ctx.fill();}
+  }else if(p.sk.id==='icewall'){
+    /* a row of ice blocks across the taxiway */
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang+Math.PI/2);
+    ctx.fillStyle='rgba(26,46,74,.18)';ctx.beginPath();ctx.ellipse(0,4,p.r,7,0,0,TAU);ctx.fill();
+    for(let i=-2;i<=2;i++){const bx=i*11,h=14+((i+5)%2)*4;const g=ctx.createLinearGradient(0,-h,0,4);g.addColorStop(0,'rgba(240,250,255,.95)');g.addColorStop(1,'rgba(143,214,232,.9)');
+      ctx.fillStyle=g;rr(bx-5.5,-h,11,h+4,2);ctx.fill();ctx.strokeStyle='rgba(42,127,158,.8)';ctx.lineWidth=.8;ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillRect(bx-3.5,-h+2,2,h-4);}
+    ctx.restore();
   }else if(p.sk.id==='bricks'){
     ctx.fillStyle='rgba(26,46,74,.18)';ctx.beginPath();ctx.ellipse(p.x,p.y+3,p.r*.9,p.r*.38,0,0,TAU);ctx.fill();
     const cs=['#e0584f','#e8c04a','#4a7fc9','#4f9a63'];for(let i=0;i<7;i++){const a=i*1.9+p.x,bx=p.x+Math.cos(a)*p.r*.55,by=p.y+Math.sin(a)*p.r*.3-(i%2)*3;ctx.fillStyle=cs[i%4];rr(bx-5,by-3,10,6,1);ctx.fill();ctx.strokeStyle='rgba(26,46,74,.5)';ctx.lineWidth=.7;ctx.stroke();}
