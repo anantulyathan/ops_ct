@@ -303,7 +303,12 @@ body.fit #panel.sh.mini{padding:8px 12px}
 html,body,*{touch-action:manipulation}
 .btn.sv{display:flex;align-items:center;justify-content:center;gap:8px}.btn.sv[aria-pressed=true]{background:#e3f4f1;border-color:#2a9d8f;color:#1f6f66}
 .pdet{margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)}.pdet[hidden]{display:none}
-.rsub{font-size:12px;color:var(--lab,#4a5568);margin:-4px 0 6px;text-align:right}
+.rsub{font-size:12px;color:var(--lab,#4a5568);margin:6px 0 0;text-align:center}
+.fscore{position:relative;text-align:center;padding:14px 10px 12px;margin:0 0 12px;border-radius:16px;background:linear-gradient(180deg,#e9f6f4,#f6fafc);border:1px solid #bfe3dd;box-shadow:0 8px 20px rgba(26,46,74,.12),inset 0 1px 0 #fff}
+.fscore .fsl{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#1e4d8c}
+.fscore b{display:block;font-size:44px;line-height:1.1;font-weight:800;color:#1a2e4a;margin:2px 0}
+.fscore .fsb{display:inline-block;font-style:normal;font-size:12px;font-weight:700;color:#fff;background:#2a9d8f;border-radius:999px;padding:3px 10px}
+@media (max-width:360px){.fscore b{font-size:36px}}
 .pmini{display:flex;align-items:center;gap:8px}.pmini>div{flex:1;min-width:0;font-size:13px}.pmini .btn{min-height:44px;padding:0 12px;flex:none}
 </style>
 </head>
@@ -430,16 +435,17 @@ const SK=[
 {id:'spore',n:'Spore Cloud',c:'#a6a85a',k:'pool',dps:7,rad:46,dur:5,cd:2.5,rng:120,cost:100,fx:{slow:[.7,1]},s:['n',500,250,.3,.12],d:'A cloud that stays, hurts and slows enemies.'},
 {id:'crystal',n:'Crystal',c:'#b57fc4',k:'single',dmg:78,cd:1.1,rng:140,cost:100,fx:{},s:['triangle',1800,1100,.16,.1],d:'A crystal spear. High damage to one target.'},
 {id:'warp',n:'Time Warp',c:'#d99a52',k:'aura',rad:80,boost:.25,slow:.8,cost:130,rng:80,s:['sine',400,200,.2,.08],d:'Speeds up nearby towers and slows enemies.'},
-{id:'letter',n:'Official Letter',th:'หนังสือราชการ',c:'#b23a3a',k:'paper',dmg:22,cnt:3,cd:1.2,rng:140,cost:120,fx:{slow:[.75,1.5]},s:['triangle',900,1300,.08,.06],d:'Throws A4 papers at up to 3 enemies (one more per level). The paperwork slows them down.'},
+{id:'letter',n:'Official Letter',th:'หนังสือราชการ',c:'#b23a3a',k:'paper',dmg:22,cnt:3,cd:1.2,rng:140,cost:120,fx:{slow:[.75,1.5]},s:['triangle',900,1300,.08,.06],d:'Throws A4 papers at up to 3 enemies (one more per level). The paperwork slows them down. Level 5 super, Official Seal: a big seal that stuns every enemy around it for 2 seconds.'},
 {id:'bricks',n:'Toy Bricks',c:'#e0584f',k:'splash',lob:'brick',dmg:16,rad:50,cd:1.4,rng:120,cost:85,fx:{stun:.35},s:['square',260,140,.2,.14],d:'Drops a pile of toy bricks that stun for a moment and leave a low wall that slows enemies.'},
-{id:'watergun',n:'Water Gun',c:'#3fa7c4',k:'squirt',dmg:17,cd:.35,rng:130,cost:70,fx:{weak:[1.1,2.5],slow:[.88,.6]},cbK:1,s:['sine',900,500,.08,.06],d:'Very fast jets of water on one enemy. Wet enemies take 10% more damage.'},
+{id:'watergun',n:'Water Gun',c:'#3fa7c4',k:'squirt',dmg:17,cd:.35,rng:130,cost:70,fx:{weak:[1.1,2.5],slow:[.88,.6]},cbK:1,s:['sine',900,500,.08,.06],d:'Very fast jets of water on one enemy. Wet enemies take 10% more damage. At level 5, each jet has a 15% chance to push the enemy back a little.'},
 {id:'icemelon',n:'Ice Watermelon',c:'#e8808a',k:'splash',lob:'melon',dmg:13,rad:56,cd:1.8,rng:125,cost:100,fx:{stun:.8,slow:[.55,2]},s:['sine',1500,600,.16,.14],d:'A frozen watermelon that breaks into cold slices. It freezes enemies, and the slices hit again.'},
-{id:'soldier',n:'Modern Soldier',c:'#6f7f4f',k:'burst',dmg:25,cnt:3,cd:1.3,rng:150,cost:100,fx:{},cbK:3,s:['square',500,160,.12,.09],d:'A burst of three rounds at one enemy. The last round hits twice as hard. More rounds at levels 3 and 5.'},
+{id:'soldier',n:'Modern Soldier',c:'#6f7f4f',k:'burst',mob:1,dmg:25,cnt:3,cd:1.3,rng:150,cost:100,fx:{},cbK:3,s:['square',500,160,.12,.09],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and fires a burst of three rounds at one enemy in range; the last round hits twice as hard. More rounds at levels 3 and 5, and a bigger gun at every level.'},
+{id:'console',n:'Game Console',c:'#5a6f8c',k:'beam',dmg:28,w:16,cd:1.2,rng:140,cost:110,fx:{weak:[1.12,2]},s:['square',880,1760,.1,.07],d:'A handheld game console that fires rainbow lasers through every enemy in a line. Dazzled enemies take 12% more damage for 2 seconds.'},
 {id:'soccer',n:'Soccer Player',c:'#3a5fb0',k:'kick',dmg:42,rad:48,cd:1,rng:111,cost:110,fx:{},crit:.15,s:['triangle',300,120,.14,.1],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and kicks a ball at enemies in range (a little shorter than Ice Watermelon). The ball splashes and has a 15% critical hit. Next to another tower, the ball takes its element.'},
 {id:'power',n:'Power Beacon',c:'#c98a3a',k:'aura',rad:165,boost:0,dmgB:.05,slow:1,cost:120,rng:165,util:1,s:['sawtooth',220,440,.14,.08],d:'Support tower. Nearby towers deal 5% more damage for each beacon level (25% at level 5).'},
 {id:'speed',n:'Speed Beacon',c:'#3bbfb0',k:'aura',rad:165,boost:.05,slow:1,cost:110,rng:165,util:1,s:['triangle',700,1400,.12,.08],d:'Support tower. Nearby towers attack 5% faster for each beacon level (25% at level 5).'}
 ];
-const AT={fire:1,water:1,earth:1,lightning:1,speed:2,power:2,laser:2,ice:2,poison:3,nature:3,light:4,spore:4,magnet:5,shadow:5,crystal:6,lava:6,jet:7,thunder:7,stars:8,nova:8,warp:9,meteor:9,gravity:10,letter:10,watergun:2,bricks:3,icemelon:5,soldier:6,soccer:7};
+const AT={fire:1,water:1,earth:1,lightning:1,speed:2,power:2,laser:2,ice:2,poison:3,nature:3,light:4,spore:4,magnet:5,shadow:5,crystal:6,lava:6,jet:7,thunder:7,stars:8,nova:8,warp:9,meteor:9,gravity:10,letter:10,watergun:2,bricks:3,icemelon:5,soldier:6,soccer:7,console:8};
 SK.forEach(s=>s.at=AT[s.id]||1);SK.sort((a,b)=>a.at-b.at);
 const SKM={};SK.forEach(s=>SKM[s.id]=s);
 const STARTERS=['fire','water','earth','lightning'];
@@ -486,7 +492,8 @@ const ZONES=[
  {n:'Zenith',types:['super','ashs','drone','glare','ash','gust'],boss:'apex'}
 ];
 const zoneOf=L=>Math.min(9,Math.floor((L-1)/5));
-const TUNE={goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.9,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:204,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:1,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
+/* hardL/hardK: from level 15 every threat and boss has 15% more health */
+const TUNE={critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:204,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:1,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
 const dens=L=>(12+3.4*L)/TUNE.perL;
 const eF=L=>1+(Math.max(TUNE.eB,TUNE.eA-(TUNE.eA-TUNE.eB)*(L-1)/(TUNE.eL-1))-1);
 const hpMul=L=>1+TUNE.a*(L-1)+TUNE.b*Math.pow(L-1,2)+TUNE.c*Math.pow(L-1,3);
@@ -815,6 +822,7 @@ document.addEventListener('pointerdown',()=>{
 let S=null;
 const dmgM=t=>(1+.15*(slv(t.id)-1))*LVM[t.lvl];
 const radM=t=>(1+.04*(slv(t.id)-1))*(1+.07*(t.lvl-1));
+const isMob=sk=>sk.k==='kick'||!!sk.mob;
 const rngM=t=>(1+.03*(slv(t.id)-1)+.08*(t.lvl-1))*TUNE.rngK;
 const sellVal=t=>Math.round(t.spent*.6);
 const upgCost=t=>Math.round(SKM[t.id].cost*UPC[t.lvl]*(t.cm||1));
@@ -949,19 +957,19 @@ function newAirport(N){
     $('ovl').classList.add('on');$('bGo').onclick=()=>{$('ovl').classList.remove('on');S.running=true;};}
   banner('New airport · '+THEME.n,'Level '+N);
 }
-const SVBAT='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style="flex:none"><rect x="2" y="7" width="18" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="20.5" y="10" width="2" height="4" rx="1" fill="currentColor"/><rect class="svl" x="4.5" y="9.5" width="6" height="5" rx="1" fill="currentColor"/></svg>';
-function saverBtn(){return '<button class="btn sv" data-act="saver" aria-pressed="'+!!SAVE.saver+'" style="width:100%;margin-top:8px">'+SVBAT+'<span>Battery saver: '+(SAVE.saver?'On':'Off')+'</span></button><p class="hint" style="margin:6px 0 0;font-size:12px">On: 30 frames a second, lower resolution and fewer particles. Saved on this device.</p>';}
-function setSaver(on){SAVE.saver=!!on;persist();sizeCanvas();document.querySelectorAll('[data-act=saver]').forEach(b=>{b.querySelector('span').textContent='Battery saver: '+(on?'On':'Off');b.setAttribute('aria-pressed',!!on);});forceUntil=performance.now()+700;}
+const SVHD='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style="flex:none"><rect x="3" y="4" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 20h8M12 17v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 13l3-4 2.5 3 1.5-2 3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+function hdBtn(){return '<button class="btn sv" data-act="hd" aria-pressed="'+!!SAVE.hd+'" style="width:100%;margin-top:8px">'+SVHD+'<span>High detail: '+(SAVE.hd?'On':'Off')+'</span></button><p class="hint" style="margin:6px 0 0;font-size:12px">On: sharpest drawing (3x) on high-resolution screens. Uses more battery.</p>';}
+function setHd(on){SAVE.hd=!!on;persist();sizeCanvas();document.querySelectorAll('[data-act=hd]').forEach(b=>{b.querySelector('span').textContent='High detail: '+(on?'On':'Off');b.setAttribute('aria-pressed',!!on);});forceUntil=performance.now()+700;}
 function setPause(p){
   if(!S||!S.running)return;S.paused=p;
   lab('bPause',p?'Resume':'Pause',p?IC.play:IC.pause);
-  if(p){if(!musicHold(true))musicStop();$('ovl').innerHTML='<div class="box"><h3>Paused</h3><p>Take your time.'+(AU.tune?'<br><span style="font-size:12px">Music: '+esc(AU.tune.nm)+'</span>':'')+'</p><button class="btn p" id="bRes" style="width:100%">Resume</button>'+saverBtn()+'</div>';$('ovl').classList.add('on');$('bRes').onclick=()=>setPause(false);}
+  if(p){if(!musicHold(true))musicStop();$('ovl').innerHTML='<div class="box"><h3>Paused</h3><p>Take your time.'+(AU.tune?'<br><span style="font-size:12px">Music: '+esc(AU.tune.nm)+'</span>':'')+'</p><button class="btn p" id="bRes" style="width:100%">Resume</button>'+hdBtn()+'</div>';$('ovl').classList.add('on');$('bRes').onclick=()=>setPause(false);}
   else{$('ovl').classList.remove('on');if(SAVE.sound&&AU.ctx){auResume();if(!musicHold(false))musicStart(S.tuneIdx,zoneOf(S.level)*6);}}
 }
 
 /* ----- effects helpers ----- */
 const TAU=Math.PI*2;
-function cnt(n){return RM?Math.max(1,Math.round(n*.3)):SAVE.saver?Math.max(1,Math.round(n*.5)):n;}
+function cnt(n){return RM?Math.max(1,Math.round(n*.3)):n;}
 function fxRing(x,y,r,c,t,w){if(RM)t=.15;S.fx.push({k:'ring',x:x,y:y,r:r,c:c,t:t||.3,max:t||.3,w:w||3});}
 function fxGlow(x,y,r,c,t,a){S.fx.push({k:'glow',x:x,y:y,r:r,c:c,t:t||.25,max:t||.25,a:a||.8});}
 function fxBolt(pts,c,t,w,st){S.fx.push({k:'bolt',pts:pts.map(p=>({x:p.x,y:p.y})),c:c,t:t,max:t,w:w||2,st:st||'line'});}
@@ -1150,15 +1158,19 @@ function comboHit(t,tg){
   SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;
 }
 function splashCap(t){return TUNE.capB+TUNE.capL*(t.lvl-1)+(t.cb?(t.cb.def.tri?TUNE.capTri:TUNE.capPair):0);}
+/* towers that hit one target, a chain or a line (no splash) get a 20% chance of a critical hit for double damage */
+const NSPL={single:1,chain:1,beam:1,burst:1,squirt:1,paper:1};
 function cast0(t,sk,tg,mult){
-  const cm=t.cb?t.cb.def.m:1,dm=dmgM(t)*mult*cm*(1+(t.pw||0))*(S.bc>0?2:1),rm=radM(t);const o={x:t.x,y:t.y};
+  const cr=!!NSPL[sk.k]&&Math.random()<TUNE.critC;
+  const cm=t.cb?t.cb.def.m:1,dm=dmgM(t)*mult*cm*(1+(t.pw||0))*(S.bc>0?2:1)*(cr?2:1),rm=radM(t);const o={x:t.x,y:t.y};
+  if(cr&&!S.botRun)fxText(tg.x,tg.y-24,'Critical!','#b7860f');
   sfx(sk.s,'c_'+sk.id);t.flash=.1;fxGlow(t.x,t.y-8,16,sk.c,.15,.7);
   switch(sk.k){
     case 'splash':{let dl=.1;if(sk.lob){dl=.3;fxLob({x:t.x,y:t.y-8},tg,sk.lob,sk.c,.28);}else fxProj({x:t.x,y:t.y-8},tg,sk.c,dl);splashAt(tg.x,tg.y,sk.rad*rm,sk.dmg*dm,sk,dm,dl);
       if(sk.id==='bricks')S.pools.push({x:tg.x,y:tg.y,r:sk.rad*rm*.7,dps:sk.dmg*dm*.12,t:3,max:3,sk:BRICKWALL,gl:SRC_GL,tri:SRC_TRI,pair:SRC_PAIR,cap:SPLASH_CAP+2});
       if(sk.id==='icemelon')for(let i=0;i<3;i++){const a=rnd(0,TAU),r=rnd(14,34),dd=.32+i*.08;S.pend.push({t:dd,del:dd,x:tg.x+Math.cos(a)*r,y:tg.y+Math.sin(a)*r,sk:MELONSH,dmg:sk.dmg*dm*.3,rad:24,dm:dm,gl:SRC_GL,tri:SRC_TRI,pair:SRC_PAIR,cap:SPLASH_CAP});}
       break;}
-    case 'squirt':{fxLob({x:t.x,y:t.y-8},tg,'drop',sk.c,.14);fxLob({x:t.x+2,y:t.y-8},tg,'drop','#cfeaf5',.17);dmgE(tg,sk.dmg*dm);applyFx(tg,sk.fx,dm);if(!S.botRun)burst(tg.x,tg.y,2,'#cfeaf5',45,.3,2,{g:120});break;}
+    case 'squirt':{fxLob({x:t.x,y:t.y-8},tg,'drop',sk.c,.14);fxLob({x:t.x+2,y:t.y-8},tg,'drop','#cfeaf5',.17);dmgE(tg,sk.dmg*dm);applyFx(tg,sk.fx,dm);if(t.lvl>=MAXT&&!tg.dead&&Math.random()<.15)pushBack([tg],12,true);if(!S.botRun)burst(tg.x,tg.y,2,'#cfeaf5',45,.3,2,{g:120});break;}
     case 'burst':{
       const n=sk.cnt+(t.lvl>=3?1:0)+(t.lvl>=5?1:0),R=sk.rng*rngM(t);let cur=tg;
       for(let i=0;i<n;i++){if(!cur||cur.dead){cur=pickTarget(t,R);if(!cur)break;}
@@ -1192,6 +1204,7 @@ function cast0(t,sk,tg,mult){
     case 'beam':{
       const L=sk.rng*rngM(t)*1.1,dx=tg.x-t.x,dy=tg.y-t.y,dl=Math.hypot(dx,dy)||1,ux=dx/dl,uy=dy/dl;
       if(sk.id==='laser'){fxBolt([{x:t.x,y:t.y-12},{x:t.x+ux*L,y:t.y+uy*L}],sk.c,.16,2.6,'beam');fxGlow(t.x,t.y-12,14,'#f3b3c4',.16,.8);}
+      else if(sk.id==='console'){const nx=-uy,ny=ux,k=S.botRun?1:RBW.length;for(let i=0;i<k;i++){const o=(i-2.5)*1.5;fxBolt([{x:t.x+nx*o,y:t.y-10+ny*o},{x:t.x+ux*L+nx*o*1.8,y:t.y+uy*L+ny*o*1.8}],RBW[i],.24,1.7,'beam');}fxGlow(t.x,t.y-10,14,'#ffffff',.14,.6);}
       else fxBolt([{x:t.x,y:t.y-8},{x:t.x+ux*L,y:t.y+uy*L}],sk.c,.25,sk.w*rm*.6,'beam');
       for(const e of S.enemies){if(e.dead)continue;const px=e.x-t.x,py=e.y-t.y,pr=px*ux+py*uy;
         if(pr<0||pr>L)continue;if(Math.abs(px*uy-py*ux)<=sk.w*rm/2+e.r){dmgE(e,sk.dmg*dm);applyFx(e,sk.fx,dm);if(sk.fx&&sk.fx.push&&!e.dead){e.d=Math.max(0,e.d-sk.fx.push*(e.boss?.4:1)*ccK());const q=posAt(e.d);e.x=q.x;e.y=q.y;}}}
@@ -1262,13 +1275,13 @@ const TRIS=[
 {k:'bureaucracy',e:['letter','warp','earth'],n:'Bureaucracy',m:TRI_M,tri:1,c:'#9a6a4a',d:'+80% damage. Everything stops for the paperwork: threats near the target are stunned, slowed and buried in papers.'}
 ];
 /* ===== combos of the five newer elements: Toy Bricks, Water Gun, Ice Watermelon, Modern Soldier, Soccer Player ===== */
-const NEWS=['bricks','watergun','icemelon','soldier','soccer'];
+const NEWS=['bricks','watergun','icemelon','soldier','soccer','console'];
 const NXP=['fire','water','earth','nature','lightning','gravity','stars','ice','laser','poison','light','shadow','thunder','lava','nova','meteor','magnet','jet','spore','crystal','warp','letter'];
 const NXADJ={fire:'Blazing',water:'Soaked',earth:'Rocky',nature:'Mossy',lightning:'Shocking',gravity:'Heavy',stars:'Starry',ice:'Frozen',laser:'Laser',poison:'Toxic',light:'Bright',shadow:'Dark',thunder:'Booming',lava:'Molten',nova:'Chilling',meteor:'Falling',magnet:'Magnetic',jet:'Turbo',spore:'Spore',crystal:'Crystal',warp:'Rewind',letter:'Official'};
-const NXNOUN={bricks:'Bricks',watergun:'Jets',icemelon:'Melon',soldier:'Squad',soccer:'Ball'};
-const NXNN={'bricks+watergun':'Sandcastle','bricks+icemelon':'Fruit Fort','bricks+soldier':'Barracks','bricks+soccer':'Goal Wall','watergun+icemelon':'Slush Cannon','watergun+soldier':'Water Patrol','watergun+soccer':'Sprinkler Pitch','icemelon+soldier':'Fruit Grenade','icemelon+soccer':'Melon Strike','soldier+soccer':'Counter Attack'};
+const NXNOUN={bricks:'Bricks',watergun:'Jets',icemelon:'Melon',soldier:'Squad',soccer:'Ball',console:'Pixels'};
+const NXNN={'bricks+watergun':'Sandcastle','bricks+icemelon':'Fruit Fort','bricks+soldier':'Barracks','bricks+soccer':'Goal Wall','watergun+icemelon':'Slush Cannon','watergun+soldier':'Water Patrol','watergun+soccer':'Sprinkler Pitch','icemelon+soldier':'Fruit Grenade','icemelon+soccer':'Melon Strike','soldier+soccer':'Counter Attack','bricks+console':'Block Builder','watergun+console':'Splash Mode','icemelon+console':'Frozen Combo','soldier+console':'Tactical Mode','soccer+console':'Pitch Pixels'};
 /* what each new element adds (sig) and what each partner adds (rider), in short words for the card text */
-const NXSD={bricks:'a low brick wall stops and slows enemies',watergun:'soaked enemies take 12% more damage',icemelon:'cold slices fly out and hit again',soldier:'extra bullets hit 3 nearby enemies',soccer:'the ball bounces on to a second enemy'};
+const NXSD={bricks:'a low brick wall stops and slows enemies',watergun:'soaked enemies take 12% more damage',icemelon:'cold slices fly out and hit again',soldier:'extra bullets hit 3 nearby enemies',soccer:'the ball bounces on to a second enemy',console:'rainbow lasers split to 3 more enemies'};
 const NXRD={fire:'enemies burn',water:'enemies are slowed',earth:'enemies are stunned',nature:'roots hold enemies',lightning:'lightning jumps to 2 more enemies',gravity:'enemies are pulled together',stars:'3 small stars fall',ice:'enemies are frozen for a moment',laser:'a beam cuts through the line',poison:'enemies are poisoned',light:'a bright bolt hits again',shadow:'enemies are marked for more damage',thunder:'a delayed blast lands',lava:'a burning pool stays on the road',nova:'a cold ring slows nearby enemies',meteor:'a small meteor falls',magnet:'enemies are pulled in',jet:'enemies are pushed back',spore:'a slow cloud stays on the road',crystal:'3 sharp shards fly out',warp:'time slows around the target',letter:'papers fly out and slow enemies'};
 function mixC(a,b){const p=parseInt(a.slice(1),16),q=parseInt(b.slice(1),16),m=s=>Math.round(((p>>s&255)+(q>>s&255))/2);return '#'+((1<<24)|(m(16)<<16)|(m(8)<<8)|m(0)).toString(16).slice(1);}
 NEWS.forEach((N,i)=>{NXP.concat(NEWS.slice(i+1)).forEach(P=>{
@@ -1281,10 +1294,13 @@ NEWS.forEach((N,i)=>{NXP.concat(NEWS.slice(i+1)).forEach(P=>{
  ['monsoon','Monsoon Squad',['watergun','water','thunder']],['firehose','Fire Hose',['watergun','fire','jet']],['acidrain','Acid Rain',['watergun','poison','spore']],['rainbow','Rainbow Spray',['watergun','light','crystal']],['slush','Slush Storm',['watergun','ice','nova']],['elecspray','Electric Spray',['watergun','lightning','laser']],
  ['summer','Summer Crush',['icemelon','fire','water']],['seedstorm','Seed Storm',['icemelon','nature','stars']],['sorbet','Sorbet Blizzard',['icemelon','ice','nova']],['smoothie','Smoothie Crash',['icemelon','meteor','gravity']],['melting','Melting Moment',['icemelon','warp','fire']],['pinkprism','Pink Prism',['icemelon','light','crystal']],
  ['airsupport','Air Support',['soldier','jet','meteor']],['nightraid','Night Raid',['soldier','shadow','laser']],['chemunit','Chemical Unit',['soldier','poison','spore']],['commandorder','Command Order',['soldier','letter','warp']],['armoured','Armoured Push',['soldier','earth','magnet']],['flare','Signal Flare',['soldier','light','stars']],
+ ['arcade','Arcade Night',['console','light','stars']],['glitch','Glitch Storm',['console','lightning','laser']],['replay','Instant Replay',['console','warp','crystal']],['bossfight','Boss Fight',['console','soldier','meteor']],['partymode','Party Mode',['console','bricks','soccer']],
  ['goldengoal','Golden Goal',['soccer','light','lightning']],['derby','Fire Derby',['soccer','fire','lava']],['wintercup','Winter Cup',['soccer','ice','water']],['whistle','Final Whistle',['soccer','letter','warp']],['curve','Curve Ball',['soccer','gravity','magnet']],['tackle','Toxic Tackle',['soccer','poison','shadow']]
 ].forEach(r=>{const E=r[2];TRIS.push({k:'nx3_'+r[0],e:E,n:r[1],m:TRI_M,tri:1,c:mixC(mixC(SKM[E[0]].c,SKM[E[1]].c),SKM[E[2]].c),nx:E,
   d:'+80% damage. '+E.map(id=>NEWS.indexOf(id)>=0?NXSD[id]:NXRD[id]).join('; ')+'.'});});
 COMBOS.push({k:'photo',a:'nature',b:'light',n:'Photosynthesis',m:COMBO_M,c:'#9fcf6a',photo:1,d:'+60% damage. Sunlight feeds the plants: hits slow nearby enemies. While the link holds, every 5 minutes of play with at least 250 kills gives the terminal 1 health back.'});
+/* rainbow for the Game Console lasers */
+const RBW=['#e86a5a','#f0a64a','#f2d45a','#6cc47a','#4fa3d9','#8a6fc4'];
 const BRICKWALL={id:'bricks',c:'#e0584f',fx:{slow:[.55,.3]}},MELONSH={id:'icemelon',c:'#e8808a',fx:{slow:[.7,1]}};
 /* signature of each new element (c = context of the hit) */
 const NXS={
@@ -1292,7 +1308,8 @@ bricks:c=>{S.pools.push({x:c.x,y:c.y,r:44,dps:.2*c.b,t:2.2,max:2.2,sk:BRICKWALL,
 watergun:c=>hitList(c.near(75,3),.15*c.b,{weak:[1.12,3],slow:[.85,1]},c.dm),
 icemelon:c=>{for(let i=0;i<4;i++){const a=i*TAU/4+rnd(0,1),r=rnd(18,42),dl=.1+i*.07;S.pend.push({t:dl,del:dl,x:c.x+Math.cos(a)*r,y:c.y+Math.sin(a)*r,sk:MELONSH,dmg:.22*c.b,rad:26,dm:c.dm,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap});}},
 soldier:c=>c.near(115,3,c.tg).forEach((e,i)=>{fxTrace({x:c.ox,y:c.oy-10},e,i*.06);dmgE(e,.45*c.b);}),
-soccer:c=>{const e=c.near(130,1,c.tg)[0];if(e){fxLob({x:c.x,y:c.y},e,'ball',c.d.c,.22);dmgE(e,.7*c.b);}}
+soccer:c=>{const e=c.near(130,1,c.tg)[0];if(e){fxLob({x:c.x,y:c.y},e,'ball',c.d.c,.22);dmgE(e,.7*c.b);}},
+console:c=>c.near(130,3,c.tg).forEach((e,i)=>{fxBolt([{x:c.ox,y:c.oy-10},{x:e.x,y:e.y}],RBW[(i*2)%6],.2,2,'beam');dmgE(e,.5*c.b);applyFx(e,{weak:[1.12,2]},c.dm);})
 };
 /* what each older element adds to a combo */
 const NXR={
@@ -1315,7 +1332,7 @@ lava:c=>S.pools.push({x:c.x,y:c.y,r:30,dps:.3*c.b,t:2,max:2,sk:SKM.lava,pair:!c.
 nova:c=>{hitList(c.near(80,c.cap),.05*c.b,{slow:[.55,2]},c.dm);fxRing(c.x,c.y,80,'#bfeef0',.4,3);},
 meteor:c=>S.pend.push({t:.55,del:.55,x:c.x,y:c.y,sk:SKM.meteor,dmg:.9*c.b,rad:52,dm:c.dm,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap,big:true}),
 magnet:c=>{const L=c.near(95,c.cap);pullTo(L,.55);hitList(L,.05*c.b,null,c.dm);},
-jet:c=>{const L=c.near(80,c.cap);pushBack(L,40);hitList(L,.1*c.b,null,c.dm);},
+jet:c=>{const L=c.near(80,c.cap);pushBack(L,40,true);hitList(L,.1*c.b,null,c.dm);},
 spore:c=>S.pools.push({x:c.x,y:c.y,r:40,dps:.28*c.b,t:2.2,max:2.2,sk:SKM.spore,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap}),
 crystal:c=>c.near(110,3,c.tg).forEach(e=>{fxProj({x:c.x,y:c.y},e,'#b57fc4',.14);dmgE(e,.5*c.b);}),
 warp:c=>{hitList(c.near(70,c.cap),.05*c.b,{slow:[.5,2]},c.dm);fxRing(c.x,c.y,64,'#d9b86a',.4,2);},
@@ -1491,13 +1508,14 @@ const inR=(t,r)=>alive().filter(e=>Math.hypot(e.x-t.x,e.y-t.y)<=r+e.r);
 const strongest=n=>alive().sort((a,b)=>b.hp-a.hp).slice(0,n);
 function hitList(L,amt,fx,dm){L.forEach(e=>{dmgE(e,amt);if(fx)applyFx(e,fx,dm);});}
 function pullTo(L,k){if(L.length<2)return;k*=ccK();let sum=0;L.forEach(e=>sum+=e.d);const avg=sum/L.length;L.forEach(e=>{if(e.dead)return;e.d+=(avg-e.d)*k*(e.boss?.4:1);const p=posAt(e.d);e.x=p.x;e.y=p.y;});}
-function pushBack(L,dd){dd*=ccK();L.forEach(e=>{if(e.dead)return;e.d=Math.max(0,e.d-dd*(e.boss?.4:1));const p=posAt(e.d);e.x=p.x;e.y=p.y;});}
+/* pushing enemies back: only Jet Blast and the level-5 Water Gun (force) */
+function pushBack(L,dd,force){if(!force)return;dd*=ccK();L.forEach(e=>{if(e.dead)return;e.d=Math.max(0,e.d-dd*(e.boss?.4:1));const p=posAt(e.d);e.x=p.x;e.y=p.y;});}
 function skyHit(e,c){fxJag({x:e.x+rnd(-14,14),y:e.y-260},{x:e.x,y:e.y},c,.35,3.2);}
 function pendAt(x,y,sk,dmg,rad,dm,del,gl){S.pend.push({t:del,del:del,x:x,y:y,sk:sk,dmg:dmg,rad:rad,dm:dm,gl:gl,big:sk.id==='meteor'});}
 const SEALSK={id:'seal',c:'#b3262c',fx:{stun:1.4,slow:[.6,3],weak:[1.25,4]}};
 const SUP={
 fire:{n:'Firestorm',f(t,sk,b,dm){const L=inR(t,160);hitList(L,b*5,{burn:[18,4]},dm);impactFx(sk,t.x,t.y,160,0);L.slice(0,8).forEach((e,i)=>impactFx(sk,e.x,e.y,40,i*.05));}},
-water:{n:'Tidal Wave',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{slow:[.5,4]},dm);pushBack(L,60);impactFx(sk,t.x,t.y,170,0);fxRing(t.x,t.y,120,'#cfe7f7',.7,6);}},
+water:{n:'Tidal Wave',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{slow:[.5,4]},dm);impactFx(sk,t.x,t.y,170,0);fxRing(t.x,t.y,120,'#cfe7f7',.7,6);}},
 earth:{n:'Earthquake',f(t,sk,b,dm){const L=alive();hitList(L,b*2.5,{stun:1.5},dm);L.slice(0,10).forEach((e,i)=>impactFx(sk,e.x,e.y,36,i*.04));S.shake=RM?0:.4;}},
 lightning:{n:'Thunder Storm',f(t,sk,b,dm){const A=alive();for(let i=0;i<12&&A.length;i++){const e=A[(Math.random()*A.length)|0];skyHit(e,'#fff3b0');dmgE(e,b*5);fxGlow(e.x,e.y,22,'#e8c547',.3,.8);}}},
 laser:{n:'Prism Cannon',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.length)return;const tg=A.slice().sort((p,q)=>q.hp-p.hp)[0];
@@ -1513,7 +1531,7 @@ magnet:{n:'Singularity',f(t,sk,b,dm){const L=inR(t,190);pullTo(L,1);hitList(L,b*
 shadow:{n:'Eclipse',f(t,sk,b,dm){const L=alive();hitList(L,b*1.5,{weak:[1.6,6]},dm);L.slice(0,10).forEach((e,i)=>impactFx(sk,e.x,e.y,26,i*.04));}},
 crystal:{n:'Crystal Barrage',f(t,sk,b,dm){const A=strongest(10);A.forEach((e,i)=>{fxProj({x:t.x,y:t.y-20},e,sk.c,.15+i*.02);dmgE(e,b*6);singleFx(sk,e.x,e.y,.15+i*.02);});}},
 lava:{n:'Eruption',f(t,sk,b,dm){inR(t,200).slice(0,5).forEach(e=>S.pools.push({x:e.x,y:e.y,r:52,dps:sk.dps*dm*3,t:6,max:6,sk:sk,gl:SRC_GL}));S.shake=RM?0:.25;}},
-jet:{n:'Afterburner',f(t,sk,b,dm){const L=inR(t,210);hitList(L,b*4,null,dm);pushBack(L,70);for(let i=0;i<3;i++){const e=L[i];if(e)fxBolt([{x:t.x,y:t.y-8},{x:e.x,y:e.y}],'#cfe0f5',.45,9,'beam');}fxGlow(t.x,t.y-8,120,'#8fb2e6',.5,.6);fxRing(t.x,t.y,150,'#cfe0f5',.6,4);}},
+jet:{n:'Afterburner',f(t,sk,b,dm){const L=inR(t,210);hitList(L,b*4,null,dm);pushBack(L,70,true);for(let i=0;i<3;i++){const e=L[i];if(e)fxBolt([{x:t.x,y:t.y-8},{x:e.x,y:e.y}],'#cfe0f5',.45,9,'beam');}fxGlow(t.x,t.y-8,120,'#8fb2e6',.5,.6);fxRing(t.x,t.y,150,'#cfe0f5',.6,4);}},
 thunder:{n:'Storm Front',f(t,sk,b,dm){inR(t,220).slice(0,6).forEach((e,i)=>pendAt(e.x,e.y,sk,b*6,70,dm,.4+i*.15,SRC_GL));}},
 stars:{n:'Starfall',f(t,sk,b,dm){const L=inR(t,190);for(let i=0;i<25&&L.length;i++){const e=L[(Math.random()*L.length)|0];pendAt(e.x+rnd(-15,15),e.y+rnd(-15,15),sk,b*2,30,dm,.1+i*.06,SRC_GL);}}},
 nova:{n:'Absolute Zero',f(t,sk,b,dm){const L=alive();hitList(L,b*2,{slow:[.6,5]},dm);fxRing(t.x,t.y,240,'#bfeef0',.8,6);impactFx(sk,t.x,t.y,200,0);}},
@@ -1523,11 +1541,15 @@ gravity:{n:'Black Hole',f(t,sk,b,dm){const L=inR(t,200);pullTo(L,1);hitList(L,b*
 letter:{n:'Official Seal',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.length)return;const c=A.slice().sort((p,q)=>q.hp-p.hp)[0],R=150;
   S.fx.push({k:'emblem',x:c.x,y:c.y,r:R,t:1.7,max:1.7});
   S.pend.push({t:.58,del:.58,x:c.x,y:c.y,sk:SEALSK,dmg:b*5,rad:R,dm:dm,gl:SRC_GL,cap:999,big:true});
+  /* everyone near the seal stops to read it: a stun of 2 s (bosses 0.8 s) */
+  A.forEach(e=>{if(Math.hypot(e.x-c.x,e.y-c.y)<=R+e.r)e.stun=Math.max(e.stun||0,(e.boss?.8:2)*ccK());});
+  if(!S.botRun)fxText(c.x,c.y-30,'STOP!','#b3262c');
   S.flashT=.5;S.flashC='#8a1f1f';sfx(['sawtooth',110,55,.6,.3],'seal');}},
 bricks:{n:'Great Wall',f(t,sk,b,dm){const L=inR(t,190);hitList(L,b*3,{stun:2},dm);L.slice(0,6).forEach((e,i)=>{impactFx(sk,e.x,e.y,36,i*.05);S.pools.push({x:e.x,y:e.y,r:44,dps:b*.5,t:5,max:5,sk:BRICKWALL,gl:SRC_GL});});impactFx(sk,t.x,t.y,150,0);S.shake=RM?0:.3;}},
-watergun:{n:'Flood',f(t,sk,b,dm){const L=inR(t,210);hitList(L,b*12,{weak:[1.35,6],slow:[.6,4]},dm);pushBack(L,45);fxRing(t.x,t.y,150,'#cfeaf5',.7,6);fxRing(t.x,t.y,100,'#3fa7c4',.6,4);burst(t.x,t.y,20,'#9fd6ea',130,.8,3,{g:140});}},
+watergun:{n:'Flood',f(t,sk,b,dm){const L=inR(t,210);hitList(L,b*12,{weak:[1.35,6],slow:[.6,4]},dm);fxRing(t.x,t.y,150,'#cfeaf5',.7,6);fxRing(t.x,t.y,100,'#3fa7c4',.6,4);burst(t.x,t.y,20,'#9fd6ea',130,.8,3,{g:140});}},
 icemelon:{n:'Melon Blizzard',f(t,sk,b,dm){const L=alive();hitList(L,b*3,{stun:2.5,slow:[.5,4]},dm);L.slice(0,12).forEach((e,i)=>impactFx(sk,e.x,e.y,34,i*.04));fxRing(t.x,t.y,240,'#e6f4fa',.8,5);}},
 soldier:{n:'Air Strike',f(t,sk,b,dm){alive().filter(e=>e.d>=0).slice(0,7).forEach((e,i)=>pendAt(e.x,e.y,sk,b*7,70,dm,.45+i*.14,SRC_GL));}},
+console:{n:'Rainbow Overdrive',f(t,sk,b,dm){strongest(6).forEach((e,i)=>{fxBolt([{x:t.x,y:t.y-22},{x:e.x,y:e.y}],RBW[i%6],.4,4,'beam');hitList([e],b*6,{weak:[1.3,3]},dm);fxGlow(e.x,e.y,26,RBW[i%6],.35,.7);});fxRing(t.x,t.y,60,'#ffffff',.5,4);}},
 soccer:{n:'Penalty Kick',f(t,sk,b,dm){strongest(4).forEach((e,i)=>{fxLob({x:t.px==null?t.x:t.px,y:(t.py==null?t.y:t.py)-8},e,'ball',sk.c,.3+i*.05);pendAt(e.x,e.y,sk,b*8,70,dm,.34+i*.12,SRC_GL);});}},
 power:{n:'Battle Cry',f(t,sk,b,dm){S.bc=6;S.towers.forEach(u=>fxRing(u.x,u.y,24,'#c98a3a',.6,2));fxRing(t.x,t.y,220,'#c98a3a',.8,4);}},
 speed:{n:'Overdrive',f(t,sk,b,dm){S.od=6;S.towers.forEach(u=>fxRing(u.x,u.y,24,'#3bbfb0',.6,2));fxRing(t.x,t.y,200,'#3bbfb0',.8,4);}}
@@ -1565,6 +1587,7 @@ function updTowers(dt){
     if(sk.k==='heal'){t.hc=(t.hc||0)+dt;const every=sk.every/(1+.2*(slv(t.id)-1)+.3*(t.lvl-1));
       if(t.hc>=every){t.hc=0;if(S.lives<S.maxLives){S.lives=Math.min(S.maxLives,S.lives+2);fxText(t.x,t.y-18,"+2 terminal",'#3f7d5c');fxRing(t.x,t.y,26,sk.c,.5);sfx(sk.s,'heal');}}continue;}
     if(sk.k==='kick'){soccerStep(t,sk,dt);continue;}
+    if(sk.mob){soldierStep(t,sk,dt);continue;}
     t.cd-=dt*(1+t.boost+(S.od>0?1:0));if(t.cd>0)continue;
     const tg=(sk.k==='single'?pickStrong:pickTarget)(t,sk.rng*rngM(t));if(!tg)continue;
     cast(t,sk,tg,1);t.cd=sk.cd;S.last=sk.id;
@@ -1575,7 +1598,7 @@ function baseHp(L,ty){const D=Ld(L);return ET[ty].hp*hpMul(D)*dens(D)*TUNE.hpK*e
 /* a boss has about 18 times the health of an average threat of its level */
 function bossHp(L){const z=ZONES[zoneOf(L)];return z.types.reduce((a,t)=>a+baseHp(L,t),0)/z.types.length*TUNE.bossK*(z.boss==='apex'?TUNE.vanK:1);}
 function spawn(s){
-  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp;
+  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=(T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp)*(L>=TUNE.hardL?TUNE.hardK:1);
   const e={ty:s.ty,n:T.n,hp:hp,max:hp,sp:(T.boss||T.fast?T.sp:(T.sp*.45+TUNE.packSp*.55)*(1+rnd(-TUNE.spV,TUNE.spV)))*(1+.012*(Ld(L)-1)),lo:T.boss?0:rnd(-14,14),r:T.r,c:T.c,sh:T.sh,boss:!!T.boss,d:s.d0||0,x:PP[0].x+(s.d0||0),y:PP[0].y,
     slowF:1,slowT:0,stun:0,burn:null,pz:null,weak:null,rew:T.rew*(1+TUNE.rewL*L)*TUNE.rewK*dn*TUNE.goldK,pts:Math.round(10*(1+.1*L)*(T.boss?20:1)*TUNE.ptsK),ph:Math.random()*6,flash:0,ang:0};
   S.enemies.push(e);S.wave=Math.max(S.wave||0,s.w+1);
@@ -1648,7 +1671,9 @@ function sellTower(i){
 let RUN=null;
 function finish(win){finishRun(win);}
 function finishRun(win){
-  if(S.over)return;S.over=true;S.running=false;musicStop();clearRun();
+  if(S.over)return;S.over=true;S.running=false;S.overAt=performance.now();S.resShown=false;S.sel=null;holdEnd();
+  try{musicStop();}catch(e){}
+  clearRun();
   const L=S.level;
   if(win){for(let i=0;i<3;i++)dropOrb(PADS[0].x,PADS[0].y);S.winBonus=TUNE.winB+S.lives*TUNE.lifeB;S.score+=S.winBonus;}
   S.goldLeft=Math.max(0,Math.floor(S.credits));S.goldBonus=S.goldLeft*TUNE.goldPts;S.score+=S.goldBonus;
@@ -1656,18 +1681,30 @@ function finishRun(win){
   S.score=Math.round(S.score);RUN={score:S.score,level:L,win:!!win,kills:S.kills,lives:S.lives,start:S.runStart,saved:false};
   if(RUN.score>(SAVE.bestRun||0))SAVE.bestRun=RUN.score;
   SAVE.maxL=Math.max(SAVE.maxL,L);persist();
-  if(win)seq([['triangle',523],['triangle',659],['triangle',784],['triangle',1046,.3]]);
-  else seq([['sawtooth',392,.25,.2],['sawtooth',330,.25,.2],['sawtooth',262,.4,.2]]);
-  setTimeout(()=>openResult(win),RM?0:500);
+  try{if(win)seq([['triangle',523],['triangle',659],['triangle',784],['triangle',1046,.3]]);
+  else seq([['sawtooth',392,.25,.2],['sawtooth',330,.25,.2],['sawtooth',262,.4,.2]]);}catch(e){}
+  try{renderPanel();}catch(e){}
+  setTimeout(()=>showResult(win),RM?0:500);
+}
+/* the end screen must always appear, even if something above failed */
+function showResult(win){
+  if(S&&S.resShown)return;
+  try{openResult(win);}catch(e){
+    if(S)S.resShown=true;
+    openModal('<div class="rbn '+(win?'win':'lose')+'" role="status"><b>'+(win?'VICTORY!':'Mission Failed')+'</b></div><div class="fscore"><span class="fsl">Final score</span><b class="mono">'+fmt(RUN?RUN.score:0)+'</b></div><div class="row"><button class="btn p" data-act="retry">Play again</button><button class="btn" data-act="menu">Menu</button></div>');
+  }
 }
 function scoreLine(){
   const play=Math.max(0,RUN.score-(S.goldBonus||0)-(S.winBonus||0)),pts=['Play score '+fmt(play),'gold bonus +'+fmt(S.goldBonus||0)];
   if(S.winBonus)pts.push('clearance bonus +'+fmt(S.winBonus));
-  pts.push('best flawless streak '+(S.bestStreak||0)+' levels');return pts.join(' · ');
+  {const n=S.bestStreak||0;pts.push('best flawless streak '+n+(n===1?' level':' levels'));}return pts.join(' · ');
 }
 function openResult(win){
-  let h='<div class="rbn '+(win?'win':'lose')+'" role="status"><b>'+(win?'VICTORY!':'Mission Failed')+'</b><span>'+(win?'All '+MAXL+' levels cleared':'Run over at level '+RUN.level)+'</span></div>';
-  h+=(win?'<div class="kv"><span>Terminal health left</span><b class="mono">'+S.lives+' of '+S.maxLives+'</b></div><div class="kv"><span>Clearance bonus ('+fmt(TUNE.winB)+' + '+fmt(TUNE.lifeB)+' per health point)</span><b class="mono">'+fmt(S.winBonus||0)+'</b></div>':'')+'<div class="kv"><span>Gold left: '+fmt(S.goldLeft||0)+' ('+TUNE.goldPts+' points per gold)</span><b class="mono">'+fmt(S.goldBonus||0)+'</b></div><div class="kv"><span>Run score</span><b class="mono">'+fmt(RUN.score)+'</b></div><div class="rsub">'+scoreLine()+'</div>'
+  if(S)S.resShown=true;
+  const best=RUN.score>0&&RUN.score>=(SAVE.bestRun||0);
+  let h='<div class="rbn '+(win?'win':'lose')+'" role="status"><b>'+(win?'VICTORY!':'Mission Failed')+'</b><span>'+(win?'All '+MAXL+' levels cleared':'Run over at level '+RUN.level)+'</span></div>'
+    +'<div class="fscore" aria-label="Final score '+fmt(RUN.score)+'"><span class="fsl">Final score</span><b class="mono" id="fsNum">'+fmt(RUN.score)+'</b>'+(best?'<i class="fsb">New best</i>':'')+'<div class="rsub">'+scoreLine()+'</div></div>';
+  h+=(win?'<div class="kv"><span>Terminal health left</span><b class="mono">'+S.lives+' of '+S.maxLives+'</b></div><div class="kv"><span>Clearance bonus ('+fmt(TUNE.winB)+' + '+fmt(TUNE.lifeB)+' per health point)</span><b class="mono">'+fmt(S.winBonus||0)+'</b></div>':'')+'<div class="kv"><span>Gold left: '+fmt(S.goldLeft||0)+' ('+TUNE.goldPts+' points per gold)</span><b class="mono">'+fmt(S.goldBonus||0)+'</b></div>'
     +'<div class="kv"><span>Best run score</span><b class="mono">'+fmt(SAVE.bestRun)+'</b></div>'
     +'<div class="kv"><span>Levels reached</span><b class="mono">'+RUN.level+' of '+MAXL+'</b></div>'
     +'<div class="kv"><span>Threats stopped</span><b class="mono">'+RUN.kills+'</b></div>'
@@ -1679,6 +1716,8 @@ function openResult(win){
     +'<div class="row"><button class="btn p" data-act="retry">Play again</button><button class="btn" data-act="menu">Menu</button></div>';
   openModal(h);
   $('btnSave').onclick=saveScore;
+  /* count the final score up (skipped with reduced motion) */
+  const el=$('fsNum'),end=RUN.score;if(el&&!RM&&end>0){const t0=performance.now(),D=1100;const tick=()=>{const k=Math.min(1,(performance.now()-t0)/D),e=1-Math.pow(1-k,3);el.textContent=fmt(end*e);if(k<1)requestAnimationFrame(tick);};requestAnimationFrame(tick);}
 }
 
 /* ============ LEADERBOARD ============ */
@@ -1771,7 +1810,7 @@ $('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeModal();})
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modal').classList.contains('on'))closeModal();});
 
 function renderHome(){
-  if($('saverHome'))$('saverHome').innerHTML=saverBtn();
+  if($('saverHome'))$('saverHome').innerHTML=hdBtn();
   $('stLv').textContent='Best level '+SAVE.maxL+' of '+MAXL;
   $('stSc').textContent='Best run '+fmt(totalScore());
   const snap=loadRun();
@@ -2026,11 +2065,12 @@ bricks:'Small plastic blocks left on the floor. They click together into a wall,
 watergun:'A bright toy that squirts a thin stream. One squirt is weak, but wet enemies are easier to hurt.',
 icemelon:'A summer fruit kept in the freezer. It is red inside, with black seeds. When it breaks, cold pieces fly everywhere.',
 soldier:'A trained fighter in a uniform. Calm and quick. Shoots short bursts, and the last shot is the strongest.',
+console:'A handheld game console with a bright screen and two grips. It fires rainbow lasers through a whole line of enemies, and dazzled enemies are easier to hurt.',
 soccer:'A football player in a red and blue striped shirt, number 10. Goes wherever you send him on the airport and kicks the ball at enemies. The ball can take the power of a friend nearby.'
 });
 const NXHINT={fire:'the oldest flame',water:'the thing that flows',earth:'the heavy ground',nature:'the green plants',lightning:'a fast spark from the sky',gravity:'the pull toward the ground',stars:'the small lights of the night',ice:'the cold that holds things still',laser:'the thin, hot beam from a machine',poison:'the slow sting',light:'the brightest beam',shadow:'the dark place',thunder:'the slow, loud blast',lava:'hot, melted rock',nova:'the sudden burst of cold',meteor:'a rock from space',magnet:'the force that pulls iron',jet:'the loud engine',spore:'the floating seeds',crystal:'the hard, clear stone',warp:'the place where time moves differently',letter:'the paperwork with a red seal',
- bricks:'the pile of colourful toy blocks',watergun:'the toy that squirts a thin stream',icemelon:'the frozen red and green fruit',soldier:'the trained fighter in uniform',soccer:'the runner in the red and blue shirt'};
-const NXSC={bricks:'a low wall of blocks stops and slows enemies',watergun:'wet enemies take more damage',icemelon:'cold pieces fly out and hit again',soldier:'extra bullets hit enemies nearby',soccer:'the ball bounces on to another enemy'};
+ bricks:'the pile of colourful toy blocks',watergun:'the toy that squirts a thin stream',icemelon:'the frozen red and green fruit',soldier:'the trained fighter in uniform',soccer:'the runner in the red and blue shirt',console:'the handheld game with the bright screen'};
+const NXSC={bricks:'a low wall of blocks stops and slows enemies',watergun:'wet enemies take more damage',icemelon:'cold pieces fly out and hit again',soldier:'extra bullets hit enemies nearby',soccer:'the ball bounces on to another enemy',console:'rainbow lasers split to more enemies'};
 const NXRC={fire:'enemies start to burn',water:'enemies are slowed',earth:'enemies are stunned for a short time',nature:'roots hold enemies in place',lightning:'sparks jump to 2 more enemies',gravity:'enemies are pulled together',stars:'3 small lights fall around the target',ice:'enemies are held still for a moment',laser:'a hot beam cuts through the line',poison:'enemies are made sick and lose health over time',light:'a bright bolt hits the target again',shadow:'enemies are marked and take more damage',thunder:'a loud blast lands a moment later',lava:'a burning pool stays on the road',nova:'a cold ring slows enemies near the target',meteor:'a small rock falls from the sky',magnet:'enemies are pulled in',jet:'enemies are pushed back',spore:'a slow cloud stays on the road',crystal:'3 sharp shards fly at enemies',warp:'time slows around the target',letter:'papers fly at enemies and slow them'};
 const NXCL=id=>NEWS.indexOf(id)>=0?NXSC[id]:NXRC[id];
 const capF=s=>s.charAt(0).toUpperCase()+s.slice(1);
@@ -2141,8 +2181,9 @@ function renderPanel(){
     const t=S.towers[S.sel.i];
     if(!t){S.sel=null;return renderPanel();}
     const s=SKM[t.id];
-    if(s.k==='kick'&&S.sel.mini){
-      p.innerHTML='<div class="pmini"><div><b>'+esc(s.n)+'</b> · Level '+t.lvl+' · Kills <b id="kCnt">'+(t.kills||0)+'</b><div class="hint" style="margin:2px 0 0">Tap the map to send him there.</div></div><button class="btn" data-act="player">Player</button><button class="btn" data-act="deselect" aria-label="Close">Close</button></div>';
+    if(isMob(s)&&S.sel.mini){
+      p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+t.lvl+'/'+MAXT+' · Kills <b id="kCnt">'+(t.kills||0)+'</b></span></h3><div class="hint" style="margin:-2px 0 6px">Tap the map to send him there.</div>'
+        +'<div class="row">'+(t.lvl<MAXT?'<button class="btn p wide" data-act="upg" id="bUpg">Upgrade · '+upgCost(t)+'</button>':'<button class="btn wide" disabled>Max level</button>')+'<button class="btn" data-act="player">'+(s.k==='kick'?'Player':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>';
       p.classList.add('mini');placePanel();return;
     }
     p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+t.lvl+'/'+MAXT+' · '+TIER[t.lvl].n+'</span></h3>'
@@ -2152,7 +2193,7 @@ function renderPanel(){
       +(t.lvl<MAXT?'<div class="hint mono" style="margin-top:2px">Next: '+towerStat(t,t.lvl+1)+(t.lvl+1===MAXT?' · grand aura and super skill':'')+'</div>':'')
       +'<div class="hint" style="margin-top:2px">'+(t.lvl>=MAXT?'Super: <b>'+esc(SUP[t.id].n)+'</b> · in <span id="supIn">'+Math.max(1,TUNE.supHits-(t.sh||0))+'</span> '+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?'pulses':'hits')+(hasMeteor()?' · Armageddon in <span id="armIn">'+Math.max(1,TUNE.armHits-(t.ah||0))+'</span>':' · Armageddon needs a Meteor tower'):'Level 5 super: '+esc(SUP[t.id].n)+', every '+TUNE.supHits+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?' pulses':' hits'))+'</div>'
       +'<div class="kline">Kills: <b id="kCnt">'+(t.kills||0)+'</b></div><div class="fxl" id="fxl">'+effectsHtml(t)+'</div>'
-      +(s.k==='kick'?'<div class="hint" style="margin-top:4px;color:#1e4d8c;font-weight:600">Tap anywhere on the map to send him there. He stays until you send him again.</div>'+(t.gx!=null?'<div class="row" style="margin-top:6px"><button class="btn" data-act="homepad">Back to his pad</button></div>':'')+ballHtml(t)+kitHtml():'')
+      +(isMob(s)?'<div class="hint" style="margin-top:4px;color:#1e4d8c;font-weight:600">Tap anywhere on the map to send him there. He stays until you send him again.</div>'+(t.gx!=null?'<div class="row" style="margin-top:6px"><button class="btn" data-act="homepad">Back to his pad</button></div>':'')+(s.k==='kick'?ballHtml(t)+kitHtml():''):'')
       +(t.cb?'<div class="hint" style="color:#1d776d;font-weight:600;margin-top:4px">'+(t.cb.def.tri?'Tri combo':'Combo')+': '+esc(t.cb.def.n)+' '+pct(t.cb.def.m)+(t.cb.others.length?' with '+t.cb.others.map(o=>esc(SKM[o.id].n)).join(' and '):'')+'</div><div class="hint">'+esc(t.cb.def.d)+'</div>':'')
       +'<div class="row" style="margin-top:8px"><button class="btn" data-act="move"'+(S.credits<TUNE.moveCost?' aria-disabled="true"':'')+'>Move ('+fmt(TUNE.moveCost)+')</button><button class="btn" data-act="shop">Shop</button></div></div>';
   }else{
@@ -2187,9 +2228,8 @@ let DPR=Math.min(2,window.devicePixelRatio||1);
 cv.width=CW*DPR;cv.height=CH*DPR;
 function sizeCanvas(){
   const r=cv.getBoundingClientRect();if(!r.width)return;
-  /* whole-number scaling only: fractional scales draw several times slower */
-  /* Battery saver draws at 2x at most */
-  const nd=Math.max(2,Math.min(SAVE.saver?2:3,Math.round(r.width*(window.devicePixelRatio||1)/CW+.25)));
+  /* 2.5x by default on sharp screens; High detail draws at 3x; steps of 0.5, never below 2x */
+  const nd=Math.max(2,Math.min(SAVE.hd?3:2.5,Math.round((r.width*(window.devicePixelRatio||1)/CW+.25)*2)/2));
   if(nd!==DPR){DPR=nd;cv.width=Math.round(CW*DPR);cv.height=Math.round(CH*DPR);BG=null;FGT=null;PADSPR=null;}
 }
 function fitCanvas(){
@@ -2223,7 +2263,7 @@ function placePanel(){
   const fit=document.body.classList.contains('fit'),roomy=fit&&!document.body.classList.contains('tight')&&(window.innerHeight-$('cv').getBoundingClientRect().bottom)>=300;
   const sel=fit&&!roomy&&S&&S.sel;
   p.classList.toggle('sh',!!sel);p.classList.toggle('idle',!(S&&S.sel));
-  if(sel){let y=CH/2;if(S.sel.type==='pad'&&PADS[S.sel.i])y=PADS[S.sel.i].y;else if(S.towers[S.sel.i]){const t=S.towers[S.sel.i];y=t.py!=null&&SKM[t.id].k==='kick'?t.py:t.y;}
+  if(sel){let y=CH/2;if(S.sel.type==='pad'&&PADS[S.sel.i])y=PADS[S.sel.i].y;else if(S.towers[S.sel.i]){const t=S.towers[S.sel.i];y=t.py!=null&&isMob(SKM[t.id])?t.py:t.y;}
     const lower=y>CH*.5;p.classList.toggle('top',lower);p.classList.toggle('bot',!lower);}
   else p.classList.remove('top','bot');
 }
@@ -2242,10 +2282,10 @@ function orderMove(t,x,y){
 function selectAt(x,y){
   if(!S||S.over||S.paused||!S.started)return;
   if(S.sel&&S.sel.type==='move'){for(let i=0;i<PADS.length;i++){if(padFree(i)&&Math.hypot(PADS[i].x-x,PADS[i].y-y)<=26){moveTower(S.sel.i,i);return;}}}
-  for(let i=0;i<S.towers.length;i++){const u=S.towers[i],ru=SKM[u.id].k==='kick'&&u.px!=null&&Math.hypot(u.px-x,u.py-y-10)<=26;
-    if(Math.hypot(u.x-x,u.y-y)<=26||ru){if(u.nap){u.nap=false;u.idle=0;fxText(u.px,u.py-30,'Awake!','#1d7a4a');}S.sel={type:'tower',i:i,mini:SKM[u.id].k==='kick'};renderPanel();sfx(SFX.click);return;}}
+  for(let i=0;i<S.towers.length;i++){const u=S.towers[i],ru=isMob(SKM[u.id])&&u.px!=null&&Math.hypot(u.px-x,u.py-y-10)<=26;
+    if(Math.hypot(u.x-x,u.y-y)<=26||ru){if(u.nap){u.nap=false;u.idle=0;fxText(u.px,u.py-30,'Awake!','#1d7a4a');}S.sel={type:'tower',i:i,mini:isMob(SKM[u.id])};renderPanel();sfx(SFX.click);return;}}
   for(let i=0;i<PADS.length;i++){if(padFree(i)&&Math.hypot(PADS[i].x-x,PADS[i].y-y)<=26){S.sel={type:'pad',i:i};renderPanel();sfx(SFX.click);return;}}
-  if(S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t&&SKM[t.id].k==='kick'){orderMove(t,x,y);return;}}
+  if(S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t&&isMob(SKM[t.id])){orderMove(t,x,y);return;}}
   S.sel=null;renderPanel();
 }
 /* no zoom on the phone: block pinch (iOS gesture events and two-finger moves) and double-tap zoom */
@@ -2256,7 +2296,7 @@ let HOLD=null;const HOLDMS=550;
 function holdEnd(){if(HOLD){clearTimeout(HOLD.tm);HOLD=null;}}
 function holdHit(x,y){
   /* the tower under the finger: its pad, or for the Soccer Player also where he is standing */
-  for(let i=0;i<S.towers.length;i++){const u=S.towers[i],kick=SKM[u.id].k==='kick';
+  for(let i=0;i<S.towers.length;i++){const u=S.towers[i],kick=isMob(SKM[u.id]);
     if(Math.hypot(u.x-x,u.y-y)<=26)return{i:i,kick:kick,hx:u.x,hy:u.y};
     if(kick&&u.px!=null&&Math.hypot(u.px-x,u.py-y-10)<=26)return{i:i,kick:true,hx:u.px,hy:u.py};}
   return null;
@@ -2315,7 +2355,7 @@ document.addEventListener('click',e=>{
     case 'shop':if(S&&S.started&&!S.over){S.sel={type:'shop'};renderPanel();}break;
     case 'deselect':if(S){S.sel=null;renderPanel();}break;
     case 'pdet':PDET=!PDET;sfx(SFX.click);renderPanel();break;
-    case 'saver':setSaver(!SAVE.saver);sfx(SFX.click);break;
+    case 'hd':setHd(!SAVE.hd);sfx(SFX.click);break;
     case 'upg':if(S&&S.sel&&S.sel.type==='tower')upgradeTower(S.sel.i);break;
     case 'sell':if(S&&S.sel&&S.sel.type==='tower')sellTower(S.sel.i);break;
     case 'move':if(S&&S.sel&&S.sel.type==='tower'){if(S.credits<TUNE.moveCost){toast('Moving a tower costs '+fmt(TUNE.moveCost)+' gold.',true);break;}S.sel={type:'move',i:S.sel.i};renderPanel();}break;
@@ -2634,7 +2674,7 @@ function soccerStep(t,sk,dt){
   if(S.botRun)t.nap=false;
   if(t.nap){t.run=0;return;}
   let anyE=false;for(const e of S.enemies){if(!e.dead&&e.d>=0){anyE=true;break;}}
-  if(anyE||t.run||t.kk>0)t.idle=0;else{t.idle=(t.idle||0)+dt;if(t.idle>=8&&!S.botRun&&S.running){t.nap=true;t.run=0;if(!S.napToast){S.napToast=1;toast('The Soccer Player fell asleep. Tap him to wake him.');}}}
+  if(anyE||t.run||t.kk>0)t.idle=0;else{t.idle=(t.idle||0)+dt;if(t.idle>=4&&!S.botRun&&S.running){t.nap=true;t.run=0;if(!S.napToast){S.napToast=1;toast('The Soccer Player fell asleep. Tap him to wake him.');}}}
   const sp=(250+30*t.lvl)*.85*dt,gx=t.gx==null?t.x:t.gx,gy=t.gy==null?t.y:t.gy;
   const dx=gx-t.px,dy=gy-t.py,dd=Math.hypot(dx,dy);
   if(dd>1){const v=Math.min(dd,sp);t.px+=dx/dd*v;t.py+=dy/dd*v;t.rph=(t.rph||0)+dt*15;t.run=1;if(Math.abs(dx)>3)t.face=dx>0?1:-1;}else t.run=0;
@@ -2642,6 +2682,50 @@ function soccerStep(t,sk,dt){
   const R=sk.rng*rngM(t);tg=null;
   for(const e of S.enemies){if(e.dead||e.d<0)continue;if(Math.hypot(e.x-t.px,e.y-t.py)<=R+e.r&&(!tg||e.d>tg.d))tg=e;}
   if(tg&&t.cd<=0){t.face=tg.x>=t.px?1:-1;t.kk=KICKD;t.bf=KICKL+KICKF+.2;cast(t,sk,tg,1);t.cd=sk.cd;S.last=sk.id;}
+}
+/* the soldier walks like the Soccer Player, never naps, and fires from where he stands */
+function mobMove(t,dt,spK){
+  if(t.px==null){t.px=t.x;t.py=t.y;}
+  const sp=(250+30*t.lvl)*.85*spK*dt,gx=t.gx==null?t.x:t.gx,gy=t.gy==null?t.y:t.gy,dx=gx-t.px,dy=gy-t.py,dd=Math.hypot(dx,dy);
+  if(dd>1){const v=Math.min(dd,sp);t.px+=dx/dd*v;t.py+=dy/dd*v;t.rph=(t.rph||0)+dt*15;t.run=1;if(Math.abs(dx)>3)t.face=dx>0?1:-1;}else t.run=0;
+}
+function soldierStep(t,sk,dt){
+  mobMove(t,dt,.9);if(t.shot>0)t.shot-=dt;
+  t.cd-=dt*(1+t.boost+(S.od>0?1:0));if(t.cd>0)return;
+  const ox=t.x,oy=t.y;t.x=t.px;t.y=t.py;
+  try{const tg=pickTarget(t,sk.rng*rngM(t));if(tg){t.face=tg.x>=t.x?1:-1;t.shot=.22;cast(t,sk,tg,1);t.cd=sk.cd;S.last=sk.id;}}
+  finally{t.x=ox;t.y=oy;}
+}
+/* gun length and weight grow with the level */
+const GUNL=[0,9,11,13,15,18],GUNW=[0,1.7,2.1,2.5,2.9,3.6];
+function drawTrooperFig(x,y,sc,ph,face,still,lv,shot){
+  ctx.save();ctx.translate(x,y);ctx.scale(sc*face,sc);
+  const sw=still?0:Math.sin(ph);ctx.translate(0,still?0:-Math.abs(Math.sin(ph))*1.2);
+  const leg=(sx,s)=>{const fx=sx+s*4,fy=-1.4-Math.max(0,-s)*1.4;ctx.lineCap='round';ctx.strokeStyle='#5b6a3f';ctx.lineWidth=3.2;ctx.beginPath();ctx.moveTo(sx,-10);ctx.lineTo(fx,fy-1.5);ctx.stroke();ctx.lineCap='butt';
+    ctx.fillStyle='#1c2430';ctx.beginPath();ctx.ellipse(fx+.9,fy+.4,2.6,1.3,0,0,TAU);ctx.fill();};
+  leg(-2.1,sw);leg(2.1,-sw);
+  const g=ctx.createLinearGradient(-5,0,5,0);g.addColorStop(0,'#7f8f5a');g.addColorStop(1,'#5b6a3f');ctx.fillStyle=g;rr(-5.6,-19,11.2,10,2);ctx.fill();
+  ctx.fillStyle='#4a5733';[[-3,-17,3,2],[1,-14,3.5,2.2],[-4,-12,2.5,2]].forEach(p=>{ctx.beginPath();ctx.ellipse(p[0]+1,p[1],p[2]/1.4,p[3]/1.6,.3,0,TAU);ctx.fill();});
+  ctx.fillStyle='#3a3226';ctx.fillRect(-5.6,-10.6,11.2,1.5);
+  ctx.fillStyle='#e0b08a';ctx.beginPath();ctx.arc(0,-22.2,3.3,0,TAU);ctx.fill();
+  ctx.fillStyle='#4f5c36';ctx.beginPath();ctx.arc(0,-23,4.1,Math.PI,0);ctx.closePath();ctx.fill();ctx.fillRect(-4.1,-23.2,8.2,1.1);
+  /* the gun */
+  const L=GUNL[lv]||9,W=GUNW[lv]||1.7,gy=-15.4;
+  ctx.strokeStyle='#e0b08a';ctx.lineWidth=2;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(3.5,-17.5);ctx.lineTo(7,gy+1);ctx.moveTo(-3.5,-17.5);ctx.lineTo(2,gy+2);ctx.stroke();ctx.lineCap='butt';
+  ctx.fillStyle='#2a3140';rr(-3,gy-W/2,L,W,.8);ctx.fill();ctx.fillRect(-3+L-1,gy-W*.32,4+lv*.6,W*.64);
+  rr(1,gy+W/2-.4,1.8,2.6+lv*.3,.5);ctx.fill();
+  if(lv>=3){ctx.fillRect(-5,gy-W/2+.3,2.2,W+.8);}
+  if(lv>=4){ctx.fillStyle='#1c2430';rr(2,gy-W/2-2,5,1.8,.6);ctx.fill();ctx.fillStyle='#4fa3d9';ctx.fillRect(6.4,gy-W/2-1.7,.8,1.2);}
+  if(lv>=5){ctx.fillStyle='#3a4250';ctx.beginPath();ctx.arc(4.5,gy+W/2+2.2,2.4,0,TAU);ctx.fill();ctx.strokeStyle='#2a3140';ctx.lineWidth=.8;ctx.beginPath();ctx.moveTo(L-2,gy+W/2);ctx.lineTo(L-4,gy+W/2+4);ctx.moveTo(L-2,gy+W/2);ctx.lineTo(L,gy+W/2+4);ctx.stroke();}
+  if(shot>0){ctx.globalCompositeOperation='lighter';glowC(L+3+lv*.6,gy,5+lv,'#ffe18a',.9*Math.min(1,shot/.12));ctx.globalCompositeOperation='source-over';}
+  ctx.restore();
+}
+function drawTrooper(t,tm){
+  if(t.px==null)return;
+  const sk=SKM[t.id],lv=t.lvl,sc=.74+.045*lv,x=t.px,y=t.py;
+  ctx.fillStyle='rgba(20,34,58,.28)';ctx.beginPath();ctx.ellipse(x,y+1,8*sc,2.6*sc,0,0,TAU);ctx.fill();
+  if(lv>=3){ctx.globalCompositeOperation='lighter';glowC(x,y-12*sc,16+lv*3,sk.c,.1+.04*lv);ctx.globalCompositeOperation='source-over';}
+  drawTrooperFig(x,y,sc,t.rph||0,t.face||1,!t.run,lv,t.shot||0);
 }
 const KITS={stripe:{n:'Striped',a:'#1d3f9a',b:'#a8223a',sh:'#1b2a5a',so:'#c63a4a',nc:'#f2c230',no:'rgba(18,28,70,.9)'},
  white:{n:'White',a:'#f4f6f9',b:'#f4f6f9',sh:'#f4f6f9',so:'#f4f6f9',nc:'#1a2e4a',no:'rgba(120,130,150,.5)'},
@@ -2729,6 +2813,26 @@ EMB.icemelon=function(tm,f,col,lv){
   for(let i=0;i<5;i++){const a=Math.PI+(i+.5)*Math.PI/5,r=11.4;poly([[Math.cos(a-.12)*r,-1+Math.sin(a-.12)*r],[Math.cos(a)*(r+4),-1+Math.sin(a)*(r+4)],[Math.cos(a+.12)*r,-1+Math.sin(a+.12)*r]],'#dff3fa','#8fd6e8',.5);}
   const k=.5+.5*Math.sin(tm*3);ctx.globalCompositeOperation='lighter';glowC(5,-9,4,'#ffffff',.5*k);ctx.globalCompositeOperation='source-over';
 };
+EMB.console=function(tm,f,col,lv){
+  /* an original handheld: dark body, wide screen, two grips in teal and muted green */
+  glowC(0,-9,14,col,.12+.3*f);
+  const g=ctx.createLinearGradient(0,-17,0,-1);g.addColorStop(0,'#4a5568');g.addColorStop(1,'#2d3748');
+  ctx.fillStyle='#2a9d8f';rr(-15,-15.5,6.5,13.5,3.2);ctx.fill();ctx.fillStyle='#7fae8f';rr(8.5,-15.5,6.5,13.5,3.2);ctx.fill();
+  ctx.fillStyle=g;rr(-10,-16,20,14.5,2);ctx.fill();ctx.strokeStyle='#1a2e4a';ctx.lineWidth=.7;ctx.stroke();
+  const sg=ctx.createLinearGradient(-8,0,8,0);RBW.forEach((c2,i)=>sg.addColorStop(i/5,c2));ctx.globalAlpha=.55+.25*Math.sin(tm*3);ctx.fillStyle=sg;rr(-8.4,-14.4,16.8,11.2,1.2);ctx.fill();ctx.globalAlpha=1;
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.fillRect(-7.6,-13.6,6,1.2);
+  ctx.fillStyle='#1a2e4a';ctx.beginPath();ctx.arc(-11.8,-11.5,1.6,0,TAU);ctx.fill();ctx.beginPath();ctx.arc(11.8,-6,1.6,0,TAU);ctx.fill();
+  ctx.fillStyle='#e2e8f0';[[11,-12.4],[12.6,-10.8],[11,-9.2],[9.4,-10.8]].forEach(q=>{ctx.beginPath();ctx.arc(q[0],q[1],.6,0,TAU);ctx.fill();});
+  ctx.fillStyle='#e2e8f0';ctx.fillRect(-12.6,-6.6,3.2,.9);ctx.fillRect(-11.45,-7.75,.9,3.2);
+  if(f>0){ctx.globalCompositeOperation='lighter';glowC(0,-9,12,'#ffffff',.5*f);ctx.globalCompositeOperation='source-over';}
+};
+EMB.soldierpad=function(tm,f,col,lv){
+  /* sandbags left at the post while the soldier is out */
+  [[-7,-1],[0,-1.5],[7,-1],[-3.5,-5.5],[3.5,-5.5]].forEach(q=>{ctx.fillStyle='#b9a77a';rr(q[0]-4,q[1]-3,8,4.2,1.8);ctx.fill();ctx.strokeStyle='#7d6c45';ctx.lineWidth=.6;ctx.stroke();});
+  ctx.strokeStyle='#5b4a2e';ctx.lineWidth=.9;ctx.beginPath();ctx.moveTo(9,-4);ctx.lineTo(9,-17);ctx.stroke();
+  ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(9,-17);ctx.lineTo(15,-15);ctx.lineTo(9,-13);ctx.closePath();ctx.fill();
+  glowC(0,-6,11,col,.1+.25*f);
+};
 EMB.soldier=function(tm,f,col,lv){
   glowC(0,-10,13,col,.1+.3*f);
   ctx.fillStyle='#1c2430';ctx.beginPath();ctx.ellipse(-2.6,.2,3,1.4,0,0,TAU);ctx.ellipse(2.6,.2,3,1.4,0,0,TAU);ctx.fill();
@@ -2782,7 +2886,7 @@ function drawHero(t,tm,f){
   ctx.globalCompositeOperation='source-over';
   /* the element, larger and floating */
   ctx.save();ctx.translate(0,-2+Math.sin(ph*2)*1.2);ctx.scale(1.38,1.38);
-  const fn=EMB[sk.k==='kick'?'soccerpad':t.id];if(fn)fn(ph,f,col,5);
+  const fn=EMB[sk.k==='kick'?'soccerpad':sk.mob?'soldierpad':t.id];if(fn)fn(ph,f,col,5);
   ctx.restore();
   /* a crown of three gold-tipped shards */
   for(let i=-1;i<=1;i++){const xx=i*6,yy=-31+Math.abs(i)*2+Math.sin(ph*2.4+i)*1.2,h=i===0?5.5:4;
@@ -2829,7 +2933,7 @@ function drawTower(t,tm){
   else{
     ctx.save();ctx.translate(x,y);ctx.scale(ESC[lv],ESC[lv]);
     if(lv>=2)glowC(0,-7,11+(lv-1)*4,col,.1+.08*lv+.3*f);else if(f)glowC(0,-7,11,col,.3);
-    const fn=EMB[sk.k==='kick'?'soccerpad':t.id];if(fn)fn(tm+x*.013,f,col,lv);
+    const fn=EMB[sk.k==='kick'?'soccerpad':sk.mob?'soldierpad':t.id];if(fn)fn(tm+x*.013,f,col,lv);
     ctx.restore();
     if(lv>=3){ctx.save();ctx.translate(x,y-7);ctx.strokeStyle=hx(lv>=4?'#d9b25a':col,.75);ctx.lineWidth=1.3;ctx.setLineDash([5,5]);ctx.lineDashOffset=-tm*14;
       ctx.beginPath();ctx.ellipse(0,0,17,7,0,0,TAU);ctx.stroke();ctx.setLineDash([]);ctx.restore();}
@@ -2839,7 +2943,7 @@ function drawTower(t,tm){
   }
   if(lv>=4)drawPylons(x,y,col,tm,true);
   ctx.restore();
-  if(sk.k==='kick')drawRunner(t,tm);
+  if(sk.k==='kick')drawRunner(t,tm);else if(sk.mob)drawTrooper(t,tm);
   if(sk.util){const r=LINK*TUNE.beaconR,k=(tm*.6+x*.01)%1;ctx.strokeStyle=hx(col,.35*(1-k));ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(x,y+2,r*k,r*k*.45,0,0,TAU);ctx.stroke();}
   if(t.cb)chargeFx(t,tm,t.cb.def.c);
 }
@@ -3362,7 +3466,7 @@ function draw(){
       if(sel.type==='move'){const t=S.towers[sel.i];if(t){sx=t.x;sy=t.y;}PADS.forEach((p,i)=>{if(padFree(i)){c.strokeStyle='rgba(42,157,143,'+(.45+.3*Math.sin(tm*6))+')';c.lineWidth=2.5;c.setLineDash([5,4]);c.beginPath();c.arc(p.x,p.y,21,0,TAU);c.stroke();c.setLineDash([]);}});}
       else if(sel.type==='pad'){sx=PADS[sel.i].x;sy=PADS[sel.i].y;}
       else if(S.towers[sel.i]){const t=S.towers[sel.i];sx=t.x;sy=t.y;rg=SKM[t.id].rng>=999?0:SKM[t.id].rng*rngM(t);
-        if(SKM[t.id].k==='kick'&&t.px!=null){const gx=t.gx==null?t.x:t.gx,gy=t.gy==null?t.y:t.gy;c.strokeStyle='rgba(59,191,176,.9)';c.lineWidth=2;c.beginPath();c.moveTo(gx-6,gy-6);c.lineTo(gx+6,gy+6);c.moveTo(gx+6,gy-6);c.lineTo(gx-6,gy+6);c.stroke();
+        if(isMob(SKM[t.id])&&t.px!=null){const gx=t.gx==null?t.x:t.gx,gy=t.gy==null?t.y:t.gy;c.strokeStyle='rgba(59,191,176,.9)';c.lineWidth=2;c.beginPath();c.moveTo(gx-6,gy-6);c.lineTo(gx+6,gy+6);c.moveTo(gx+6,gy-6);c.lineTo(gx-6,gy+6);c.stroke();
           c.strokeStyle='#2a9d8f';c.lineWidth=2;c.beginPath();c.arc(t.x,t.y,22,0,TAU);c.stroke();sx=t.px;sy=t.py;}}
       if(sx!=null){
         if(rg){const g=c.createRadialGradient(sx,sy,rg*.2,sx,sy,rg);g.addColorStop(0,'rgba(42,157,143,.04)');g.addColorStop(1,'rgba(42,157,143,.2)');c.fillStyle=g;c.beginPath();c.arc(sx,sy,rg,0,TAU);c.fill();
@@ -3403,8 +3507,8 @@ function draw(){
 let lastTs=0;
 function frame(ts){
   requestAnimationFrame(frame);
-  /* Battery saver: about 30 frames a second (the game clock still runs at true speed) */
-  if(SAVE.saver&&ts-lastTs<30)return;
+  /* safety net: if the run ended but no end screen is up after 2 s, show it */
+  if(S&&S.over&&!S.resShown&&S.overAt&&performance.now()-S.overAt>2000){try{showResult(S.level>=MAXL&&S.lives>0);}catch(e){S.resShown=true;}}
   const dt=Math.min(.05,(ts-lastTs)/1000||0);lastTs=ts;
   if(S&&S.running&&!S.paused){
     for(let i=0;i<S.speed;i++)step(dt);
