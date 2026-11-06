@@ -298,6 +298,7 @@ body.fit #panel.sh.mini{padding:8px 12px}
 .pslim h3{display:flex;align-items:center;gap:8px;margin:0 0 6px;min-width:0}.pslim h3 span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pslim .row .btn{min-height:44px;padding:0 8px;font-size:14px;flex:1 1 0;min-width:0;white-space:nowrap}.pslim .row .btn.wide{flex:2 1 0}
 @media (max-width:360px){.pslim .row{gap:6px}.pslim .row .btn{font-size:12.5px;padding:0 4px}}
+#scrHome .ver{text-align:center;font-size:12px;color:#4a5568;margin:14px 0 4px;letter-spacing:.04em}
 #saverHome .hint{color:rgba(255,255,255,.82)!important}
 /* no double-tap zoom anywhere; scrolling still works */
 html,body,*{touch-action:manipulation}
@@ -327,7 +328,7 @@ html,body,*{touch-action:manipulation}
     <div class="card hero">
       <canvas id="titleArt" class="tart" role="img" aria-label="Airport Defense title: elemental towers guarding a runway at dusk while an airliner climbs away"></canvas>
       <h2>Defend the airport</h2>
-      <p>Build towers that stay for the whole run and upgrade them to level 5 for a grand aura and super skills. Gravity at level 4, then one random new element every 4 levels. 50 levels, each with three packs of 68 threats. A random airport map every run. One run, one score.</p>
+      <p>Build towers that stay for the whole run and upgrade them to level 5 for a grand aura and super skills. Gravity at level 4, then one random new element every 4 levels. 50 levels, each with three packs of 50 threats (fewer, tougher ones on armoured stages 8, 18, 28, 38 and 48). A random airport map every run. One run, one score.</p>
       <div class="stat"><span class="chip" id="stLv">Level 1</span><span class="chip" id="stSc">Score 0</span></div>
       <div class="row" id="runBtns" style="margin-top:12px;position:relative"></div>
       <div id="saverHome"></div>
@@ -338,6 +339,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
+    <p class="ver mono" aria-label="Game version 54">v.54</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -421,14 +423,14 @@ const SK=[
 {id:'lightning',n:'Lightning',c:'#e8c547',k:'chain',dmg:22,hops:4,jump:70,cd:1.2,rng:130,cost:90,fx:{},s:['square',1200,200,.14,.1],d:'Chain strike that jumps between enemies.'},
 {id:'gravity',n:'Gravity',c:'#8a6fc4',k:'splash',dmg:20,rad:70,cd:2.2,rng:120,cost:100,fx:{pull:.8},s:['sine',300,70,.3,.25],d:'Pulls enemies together.'},
 {id:'stars',n:'Stars',c:'#c9d4ff',k:'shower',dmg:12,rad:28,cnt:5,spread:55,cd:2.0,rng:140,cost:110,fx:{},s:['triangle',1600,900,.2,.14],d:'Star shower across an area.'},
-{id:'ice',n:'Ice',c:'#8fd6e8',k:'splash',dmg:12,rad:44,cd:1.6,rng:120,cost:90,fx:{stun:1.0,slow:[.6,2]},s:['sine',2000,900,.15,.14],d:'Freezes enemies in place briefly.'},
+{id:'ice',n:'Ice',c:'#8fd6e8',k:'splash',dmg:12,rad:44,cd:1.6,rng:120,cost:90,fx:{stun:1.0,slow:[.35,2]},s:['sine',2000,900,.15,.14],d:'Freezes enemies in place briefly, then slows them by 65% for 2 seconds.'},
 {id:'laser',n:'Laser',c:'#d4577a',k:'beam',dmg:26,w:12,cd:1.1,rng:150,cost:90,fx:{},s:['sawtooth',1800,900,.12,.08],d:'A thin, hot beam that cuts through every enemy in a line.'},
 {id:'poison',n:'Poison',c:'#7fb04f',k:'single',dmg:30,cd:.8,rng:130,cost:80,fx:{poison:[6,4]},s:['sine',300,500,.14,.16],d:'A poison dart on one target. The poison stacks.'},
 {id:'light',n:'Light',c:'#fff6dc',k:'single',dmg:95,cd:1.5,rng:150,cost:100,fx:{},s:['sawtooth',900,1800,.22,.08],d:'A beam of light. Heavy damage to one target.'},
 {id:'shadow',n:'Shadow',c:'#5b4b7a',k:'single',dmg:60,cd:1.3,rng:130,cost:90,fx:{weak:[1.35,4]},s:['sine',150,80,.3,.22],d:'A dark bolt on one target. After that, the target takes extra damage.'},
 {id:'thunder',n:'Thunder',c:'#4f5fa8',k:'delay',dmg:50,rad:60,del:.8,cd:2.4,rng:140,cost:120,fx:{stun:.8},s:['n',200,60,.4,.28],d:'A delayed big blast. It also stuns in a ring.'},
 {id:'lava',n:'Lava',c:'#c0462f',k:'pool',dps:14,rad:40,dur:4,cd:3,rng:120,cost:110,fx:{},s:['sawtooth',90,60,.35,.18],d:'Leaves a burning pool on the ground.'},
-{id:'nova',n:'Frost Nova',c:'#6bc2c9',k:'nova',dmg:10,rad:80,cd:3,rng:80,cost:100,fx:{slow:[.45,2.5]},s:['sine',1500,300,.3,.16],d:'An instant ring that slows every enemy near the tower.'},
+{id:'nova',n:'Frost Nova',c:'#6bc2c9',k:'nova',dmg:10,rad:80,cd:3,rng:80,cost:100,fx:{slow:[.35,2.5]},s:['sine',1500,300,.3,.16],d:'An instant ring that slows every enemy near the tower by 65% for 2.5 seconds.'},
 {id:'meteor',n:'Meteor',c:'#b5683c',k:'delay',dmg:32,rad:60,del:1,cd:5,rng:9999,cost:150,fx:{},s:['n',300,40,.5,.32],d:'Reaches anywhere on the map, but hits for about a quarter of a normal tower.'},
 {id:'magnet',n:'Magnet',c:'#c0566f',k:'splash',dmg:6,rad:60,cd:1.4,rng:120,cost:90,fx:{pull:1},s:['square',200,420,.18,.1],d:'Pulls enemies together with small hits.'},
 {id:'jet',n:'Jet Blast',c:'#7f9cc0',k:'beam',dmg:40,w:24,cd:1.3,rng:135,cost:100,fx:{push:22},s:['n',900,260,.35,.2],d:'An engine blast that hits every enemy in a line and pushes them back.'},
@@ -439,7 +441,7 @@ const SK=[
 {id:'bricks',n:'Toy Bricks',c:'#e0584f',k:'splash',lob:'brick',dmg:16,rad:50,cd:1.4,rng:120,cost:85,fx:{stun:.35},s:['square',260,140,.2,.14],d:'Drops a pile of toy bricks that stun for a moment and leave a low wall that slows enemies.'},
 {id:'watergun',n:'Water Gun',c:'#3fa7c4',k:'squirt',dmg:17,cd:.35,rng:130,cost:70,fx:{weak:[1.1,2.5],slow:[.88,.6]},cbK:1,s:['sine',900,500,.08,.06],d:'Very fast jets of water on one enemy. Wet enemies take 10% more damage. At level 5, each jet has a 15% chance to push the enemy back a little.'},
 {id:'icemelon',n:'Ice Watermelon',c:'#e8808a',k:'splash',lob:'melon',dmg:13,rad:56,cd:1.8,rng:125,cost:100,fx:{stun:.8,slow:[.55,2]},s:['sine',1500,600,.16,.14],d:'A frozen watermelon that breaks into cold slices. It freezes enemies, and the slices hit again.'},
-{id:'soldier',n:'Modern Soldier',c:'#6f7f4f',k:'burst',mob:1,dmg:25,cnt:3,cd:1.3,rng:150,cost:100,fx:{},cbK:3,s:['square',500,160,.12,.09],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and fires a burst of three rounds at one enemy in range; the last round hits twice as hard. More rounds at levels 3 and 5, and a bigger gun at every level.'},
+{id:'soldier',n:'Modern Soldier',c:'#6f7f4f',k:'burst',mob:1,dmg:25,cnt:3,cd:1.3,rng:150,cost:100,fx:{},cbK:3,s:['square',500,160,.12,.09],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and fires a burst of three rounds at one enemy in range; the last round hits twice as hard. More rounds at levels 3 and 5,, and a bigger gun at every level. Each round also splits to one more enemy per level above 1, at the same power (4 more at level 5).'},
 {id:'console',n:'Game Console',c:'#5a6f8c',k:'beam',dmg:28,w:16,cd:1.2,rng:140,cost:110,fx:{weak:[1.12,2]},s:['square',880,1760,.1,.07],d:'A handheld game console that fires rainbow lasers through every enemy in a line. Dazzled enemies take 12% more damage for 2 seconds.'},
 {id:'soccer',n:'Soccer Player',c:'#3a5fb0',k:'kick',dmg:42,rad:48,cd:1,rng:111,cost:110,fx:{},crit:.15,s:['triangle',300,120,.14,.1],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and kicks a ball at enemies in range (a little shorter than Ice Watermelon). The ball splashes and has a 15% critical hit. Next to another tower, the ball takes its element.'},
 {id:'power',n:'Power Beacon',c:'#c98a3a',k:'aura',rad:165,boost:0,dmgB:.05,slow:1,cost:120,rng:165,util:1,s:['sawtooth',220,440,.14,.08],d:'Support tower. Nearby towers deal 5% more damage for each beacon level (25% at level 5).'},
@@ -493,9 +495,12 @@ const ZONES=[
 ];
 const zoneOf=L=>Math.min(9,Math.floor((L-1)/5));
 /* hardL/hardK: from level 15 every threat and boss has 15% more health */
-/* mobK: normal threats (not bosses) have 10% more health */
-const TUNE={mobK:1.1,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:204,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:1,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
-const dens=L=>(12+3.4*L)/TUNE.perL;
+/* mobK: normal threats (not bosses) have more health: 1.1 x 1.08 x 1.15 */
+/* mobK10: normal threats from level 10 have 25% more health. armD/armS: on armoured stages (8, 18, 28, 38, 48) splash and area hits do 10%, single shots 150% */
+/* bossK2: bosses have 8% more health, except the CAAT Van */
+const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.1,armD:1.5,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.635,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
+/* health and gold per threat stay as they were with 204 threats a level (perRef), so fewer threats means less in total */
+const dens=L=>(12+3.4*L)/TUNE.perRef;
 const eF=L=>1+(Math.max(TUNE.eB,TUNE.eA-(TUNE.eA-TUNE.eB)*(L-1)/(TUNE.eL-1))-1);
 const hpMul=L=>1+TUNE.a*(L-1)+TUNE.b*Math.pow(L-1,2)+TUNE.c*Math.pow(L-1,3);
 const SHIELD=Array(30).fill(1).concat([.6,.5,.42,.37,.33,.31,.29,.28,.27,.27],[.26,.25,.24,.23,.22,.21,.2,.2,.19,.19]);
@@ -830,7 +835,7 @@ const upgCost=t=>Math.round(SKM[t.id].cost*UPC[t.lvl]*(t.cm||1));
 
 function buildSchedule(L,lead){
   /* three packs of about 100, released one second apart; each pack is a long, wide column so splash cannot catch them all at once */
-  const total=TUNE.perL,W=TUNE.waves,per=Math.floor(total/W);let rem=total-per*W;
+  const total=Math.round(TUNE.perL*(armLv(L)?TUNE.armN:1)),W=TUNE.waves,per=Math.floor(total/W);let rem=total-per*W;
   const z=zoneOf(L);const pool=[];
   ZONES[z].types.forEach(t=>{for(let i=0;i<3;i++)pool.push(t);});
   if(z>0)ZONES[z-1].types.forEach(t=>pool.push(t));
@@ -887,6 +892,7 @@ function startLevel(L,snap){
     return;
   }
   $('ovl').innerHTML='<div class="box"><h3>'+(snap?'Continue · ':'')+'Level '+L+' · '+esc(ZONES[zoneOf(L)].n)+'</h3><p>Threats: '+esc(types.join(', '))+'.<br>'+(snap?'Your towers, gold and terminal health are as they were at the start of this level.':'Build towers on the pads, then start. Levels follow one another automatically and your towers stay for the whole run.')+'</p>'
+    +(armLv(L)?'<p style="color:#1e4d8c;font-weight:600">Armoured threats: splash and area hits do only 10% damage. Single shots, chains and beams do 150%.</p>':'')
     +(L>=31?'<p style="color:#1e4d8c;font-weight:600">Storm Shield: it blocks more each level. Combos push through it; a rare hidden combo cuts straight through.</p>':'')
     +'<button class="btn p" id="bStart" style="width:100%">'+(snap?'Continue':'Start')+'</button></div>';
   $('ovl').classList.add('on');
@@ -931,6 +937,7 @@ function advanceLevel(){
   S.tuneIdx=randTune(S.tuneIdx);if(SAVE.sound&&AU.ctx)musicStart(S.tuneIdx,0);
   if(newZone)banner('Level '+N+' · '+ZONES[zoneOf(N)].n,sub);else banner('Level '+N,sub);
   if(N===31)setTimeout(()=>banner('Storm Shield','Combos push through it'),3400);
+  if(armLv(N)&&!S.botRun)setTimeout(()=>banner('Armoured threats','Splash does 10%. Single shots do 150%.'),N===31?6800:3400);
   if(mapNo(N)!==mapNo(L))newAirport(N);
   saveRun();
   updHud(true);renderPanel();
@@ -1024,6 +1031,8 @@ let CURT=null;
 function dmgE(e,amt){
   if(e.dead)return;if(CURT)e.last=CURT;
   if(e.weak)amt*=e.weak.m;
+  /* armoured threats: splash and area hits barely scratch them, single shots hit hard */
+  if(e.arm)amt*=HIT1?TUNE.armD:TUNE.armS;
   if(S.shieldK<1){if(SRC_GL)e.crack=.25;else if(SRC_TRI||SRC_PAIR){amt*=Math.pow(S.shieldK,SRC_TRI?TUNE.triP:TUNE.pairP);e.crack=.15;}else{amt*=S.shieldK;e.deflect=.15;}}
   e.hp-=amt;e.flash=.08;
   if(e.hp<=0)killE(e);
@@ -1098,7 +1107,7 @@ function armageddon(t){
 function cast(t,sk,tg,mult){
   const p0=S.pend.length,q0=S.pools.length;CURT=t;
   SRC_GL=!!(t.cb&&t.cb.def.gl);SRC_TRI=!!(t.cb&&t.cb.def.tri);SRC_PAIR=!!(t.cb&&!t.cb.def.tri&&!t.cb.def.gl);SRC_WI=!!(t.cb&&t.cb.def.wi);SPLASH_CAP=(SRC_GL&&!t.cb.def.wi)?999:splashCap(t);
-  cast0(t,sk,tg,mult);
+  cast0(t,sk,tg,mult);HIT1=false;
   SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;SPLASH_CAP=999;
   if(t.cb){comboFx(t,tg);comboHit(t,tg);}
   superHit(t);
@@ -1162,7 +1171,7 @@ function splashCap(t){return TUNE.capB+TUNE.capL*(t.lvl-1)+(t.cb?(t.cb.def.tri?T
 /* towers that hit one target, a chain or a line (no splash) get a 20% chance of a critical hit for double damage */
 const NSPL={single:1,chain:1,beam:1,burst:1,squirt:1,paper:1};
 function cast0(t,sk,tg,mult){
-  const cr=!!NSPL[sk.k]&&Math.random()<TUNE.critC;
+  const cr=!!NSPL[sk.k]&&Math.random()<TUNE.critC;HIT1=!!NSPL[sk.k];
   const cm=t.cb?t.cb.def.m:1,dm=dmgM(t)*mult*cm*(1+(t.pw||0))*(S.bc>0?2:1)*(cr?2:1),rm=radM(t);const o={x:t.x,y:t.y};
   if(cr&&!S.botRun)fxText(tg.x,tg.y-24,'Critical!','#b7860f');
   sfx(sk.s,'c_'+sk.id);t.flash=.1;fxGlow(t.x,t.y-8,16,sk.c,.15,.7);
@@ -1174,8 +1183,12 @@ function cast0(t,sk,tg,mult){
     case 'squirt':{fxLob({x:t.x,y:t.y-8},tg,'drop',sk.c,.14);fxLob({x:t.x+2,y:t.y-8},tg,'drop','#cfeaf5',.17);dmgE(tg,sk.dmg*dm);applyFx(tg,sk.fx,dm);if(t.lvl>=MAXT&&!tg.dead&&Math.random()<.15)pushBack([tg],12,true);if(!S.botRun)burst(tg.x,tg.y,2,'#cfeaf5',45,.3,2,{g:120});break;}
     case 'burst':{
       const n=sk.cnt+(t.lvl>=3?1:0)+(t.lvl>=5?1:0),R=sk.rng*rngM(t);let cur=tg;
+      /* split shots: every round also hits one more enemy per level above 1, at the same power */
+      const ex=[];if(t.lvl>1){for(const e of S.enemies){if(e.dead||e.d<0||e===tg)continue;if(Math.hypot(e.x-t.x,e.y-t.y)<=R+e.r)ex.push(e);}ex.sort((p,q)=>q.d-p.d);ex.length=Math.min(ex.length,t.lvl-1);}
       for(let i=0;i<n;i++){if(!cur||cur.dead){cur=pickTarget(t,R);if(!cur)break;}
-        fxTrace({x:t.x,y:t.y-12},cur,i*.08);dmgE(cur,sk.dmg*dm*(i===n-1?2:1));if(!S.botRun&&i===n-1)burst(cur.x,cur.y,3,'#ffe18a',60,.25,2,{add:true});}
+        const amt=sk.dmg*dm*(i===n-1?2:1);
+        fxTrace({x:t.x,y:t.y-12},cur,i*.08);dmgE(cur,amt);if(!S.botRun&&i===n-1)burst(cur.x,cur.y,3,'#ffe18a',60,.25,2,{add:true});
+        for(const e of ex){if(e.dead||e===cur)continue;if(!S.botRun)fxTrace({x:t.x,y:t.y-12},e,i*.08);dmgE(e,amt);}}
       fxGlow(t.x+6,t.y-12,10,'#ffe18a',.12,.8);break;}
     case 'kick':{
       const ox=t.px==null?t.x:t.px,oy=t.py==null?t.y:t.py,crit=Math.random()<sk.crit,kd=dm*(crit?2:1),P=ballParts(t);
@@ -1231,6 +1244,7 @@ function cast0(t,sk,tg,mult){
   }
 }
 /* ----- element combos ----- */
+let HIT1=false;
 let SRC_GL=false,SRC_TRI=false,SRC_PAIR=false,SRC_WI=false,SPLASH_CAP=999;
 const COMBO_M=1.6,COMBO_GL=1.75,TRI_M=1.8,TRI_GL=2;
 const COMBOS=[
@@ -1302,7 +1316,7 @@ NEWS.forEach((N,i)=>{NXP.concat(NEWS.slice(i+1)).forEach(P=>{
 COMBOS.push({k:'photo',a:'nature',b:'light',n:'Photosynthesis',m:COMBO_M,c:'#9fcf6a',photo:1,d:'+60% damage. Sunlight feeds the plants: hits slow nearby enemies. While the link holds, every 5 minutes of play with at least 250 kills gives the terminal 1 health back.'});
 /* rainbow for the Game Console lasers */
 const RBW=['#e86a5a','#f0a64a','#f2d45a','#6cc47a','#4fa3d9','#8a6fc4'];
-const ICEWALL={id:'icewall',c:'#8fd6e8',fx:{slow:[.5,2]},st:2};
+const ICEWALL={id:'icewall',c:'#8fd6e8',fx:{slow:[.1,2]},st:2};
 const BRICKWALL={id:'bricks',c:'#e0584f',fx:{slow:[.55,.3]}},MELONSH={id:'icemelon',c:'#e8808a',fx:{slow:[.7,1]}};
 /* signature of each new element (c = context of the hit) */
 const NXS={
@@ -1525,7 +1539,7 @@ laser:{n:'Prism Cannon',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.len
   A.forEach(e=>{const px=e.x-t.x,py=e.y-t.y,pr=px*ux+py*uy;if(pr<0||pr>L)return;if(Math.abs(px*uy-py*ux)<=W/2+e.r)dmgE(e,b*7);});
   const P=[{x:t.x,y:t.y-12},{x:t.x+ux*L,y:t.y+uy*L}];fxBolt(P,sk.c,.7,12,'beam');fxBolt(P,'#ffffff',.55,3,'beam');fxGlow(t.x,t.y-12,70,sk.c,.6,.9);S.shake=RM?0:.2;}},
 ice:{n:'Ice Wall',f(t,sk,b,dm){
-  /* a wall of ice across the taxiway just ahead of the leading threat in range; anything that touches it is slowed by 50% for 2 s */
+  /* a wall of ice across the taxiway just ahead of the leading threat in range; anything that touches it is slowed by 90% for 2 s */
   const L=inR(t,200).filter(e=>e.d>=0);const lead=L.length?L.reduce((a,e)=>e.d>a.d?e:a,L[0]):alive().filter(e=>e.d>=0).sort((p,q)=>q.d-p.d)[0];
   const d=lead?lead.d+28:0,p0=posAt(d),p1=posAt(d+3),ang=Math.atan2(p1.y-p0.y,p1.x-p0.x);
   S.pools.push({x:p0.x,y:p0.y,r:30,dps:0,t:6,max:6,sk:ICEWALL,ang:ang,cap:999});
@@ -1603,11 +1617,13 @@ function updTowers(dt){
 /* levels 36 to 50 climb harder, so the best defences are separated by the terminal health they keep */
 function baseHp(L,ty){const D=Ld(L);return ET[ty].hp*hpMul(D)*dens(D)*TUNE.hpK*eF(D)*(D>35?1+TUNE.late*(D-35):1);}
 /* a boss has about 18 times the health of an average threat of its level */
-function bossHp(L){const z=ZONES[zoneOf(L)];return z.types.reduce((a,t)=>a+baseHp(L,t),0)/z.types.length*TUNE.bossK*(z.boss==='apex'?TUNE.vanK:1);}
+function bossHp(L){const z=ZONES[zoneOf(L)];return z.types.reduce((a,t)=>a+baseHp(L,t),0)/z.types.length*TUNE.bossK*(z.boss==='apex'?TUNE.vanK:TUNE.bossK2);}
+const armLv=L=>L%10===8;
 function spawn(s){
-  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=(T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp*TUNE.mobK)*(L>=TUNE.hardL?TUNE.hardK:1);
+  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=(T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp*TUNE.mobK*(L>=10?TUNE.mobK10:1))*(L>=TUNE.hardL?TUNE.hardK:1);
   const e={ty:s.ty,n:T.n,hp:hp,max:hp,sp:(T.boss||T.fast?T.sp:(T.sp*.45+TUNE.packSp*.55)*(1+rnd(-TUNE.spV,TUNE.spV)))*(1+.012*(Ld(L)-1)),lo:T.boss?0:rnd(-14,14),r:T.r,c:T.c,sh:T.sh,boss:!!T.boss,d:s.d0||0,x:PP[0].x+(s.d0||0),y:PP[0].y,
     slowF:1,slowT:0,stun:0,burn:null,pz:null,weak:null,rew:T.rew*(1+TUNE.rewL*L)*TUNE.rewK*dn*TUNE.goldK,pts:Math.round(10*(1+.1*L)*(T.boss?20:1)*TUNE.ptsK),ph:Math.random()*6,flash:0,ang:0};
+  if(armLv(L))e.arm=1;
   S.enemies.push(e);S.wave=Math.max(S.wave||0,s.w+1);
   if(T.boss)sfx(SFX.boss);
 }
@@ -3122,6 +3138,7 @@ function drawEnemy(e,tm){
   const lite=S.enemies.length>120&&!e.boss;/* lighter drawing when the swarm is huge */
   if(!lite){ctx.fillStyle='rgba(26,46,74,.16)';ctx.beginPath();ctx.ellipse(x+4,y+r*.9+5,r*.9,r*.34,0,0,TAU);ctx.fill();}
   if(e.boss){ctx.save();ctx.translate(x,y);ctx.strokeStyle='rgba(201,154,46,.8)';ctx.lineWidth=2;ctx.setLineDash([6,5]);ctx.lineDashOffset=-tm*18;ctx.beginPath();ctx.arc(0,0,r+7,0,TAU);ctx.stroke();ctx.setLineDash([]);ctx.restore();}
+  if(e.arm){ctx.save();ctx.translate(x,y);ctx.strokeStyle='rgba(138,150,168,.95)';ctx.lineWidth=2.2;ctx.fillStyle='rgba(203,213,224,.28)';ctx.beginPath();for(let i=0;i<6;i++){const a=i*Math.PI/3+Math.PI/6;ctx.lineTo(Math.cos(a)*(r+5),Math.sin(a)*(r+5));}ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();}
   ctx.save();ctx.translate(x,y);
   const fn=SPR[e.sh];if(fn)fn(e,r,tm,e.boss);
   if(e.flash>0)glowC(0,0,r*1.5,'#ffffff',.55);
