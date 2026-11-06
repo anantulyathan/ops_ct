@@ -298,6 +298,8 @@ body.fit #panel.sh.mini{padding:8px 12px}
 .pslim h3{display:flex;align-items:center;gap:8px;margin:0 0 6px;min-width:0}.pslim h3 span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pslim .row .btn{min-height:44px;padding:0 8px;font-size:14px;flex:1 1 0;min-width:0;white-space:nowrap}.pslim .row .btn.wide{flex:2 1 0}
 @media (max-width:360px){.pslim .row{gap:6px}.pslim .row .btn{font-size:12.5px;padding:0 4px}}
+#saverHome .hint{color:rgba(255,255,255,.82)!important}
+.btn.sv{display:flex;align-items:center;justify-content:center;gap:8px}.btn.sv[aria-pressed=true]{background:#e3f4f1;border-color:#2a9d8f;color:#1f6f66}
 .pdet{margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)}.pdet[hidden]{display:none}
 .rsub{font-size:12px;color:var(--lab,#4a5568);margin:-4px 0 6px;text-align:right}
 .pmini{display:flex;align-items:center;gap:8px}.pmini>div{flex:1;min-width:0;font-size:13px}.pmini .btn{min-height:44px;padding:0 12px;flex:none}
@@ -321,6 +323,7 @@ body.fit #panel.sh.mini{padding:8px 12px}
       <p>Build towers that stay for the whole run and upgrade them to level 5 for a grand aura and super skills. Gravity at level 4, then one random new element every 4 levels. 50 levels, each with three packs of 68 threats. A random airport map every run. One run, one score.</p>
       <div class="stat"><span class="chip" id="stLv">Level 1</span><span class="chip" id="stSc">Score 0</span></div>
       <div class="row" id="runBtns" style="margin-top:12px;position:relative"></div>
+      <div id="saverHome"></div>
     </div>
     <div class="row3">
       <button class="btn" data-act="skills">Library</button>
@@ -944,8 +947,9 @@ function newAirport(N){
     $('ovl').classList.add('on');$('bGo').onclick=()=>{$('ovl').classList.remove('on');S.running=true;};}
   banner('New airport · '+THEME.n,'Level '+N);
 }
-function saverBtn(){return '<button class="btn" data-act="saver" aria-pressed="'+!!SAVE.saver+'" style="width:100%;margin-top:8px">Battery saver: '+(SAVE.saver?'On':'Off')+'</button><p class="hint" style="margin:6px 0 0;font-size:12px">On: 30 frames a second, lower resolution and fewer particles. Saved on this device.</p>';}
-function setSaver(on){SAVE.saver=!!on;persist();sizeCanvas();document.querySelectorAll('[data-act=saver]').forEach(b=>{b.textContent='Battery saver: '+(on?'On':'Off');b.setAttribute('aria-pressed',!!on);});forceUntil=performance.now()+700;}
+const SVBAT='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style="flex:none"><rect x="2" y="7" width="18" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="20.5" y="10" width="2" height="4" rx="1" fill="currentColor"/><rect class="svl" x="4.5" y="9.5" width="6" height="5" rx="1" fill="currentColor"/></svg>';
+function saverBtn(){return '<button class="btn sv" data-act="saver" aria-pressed="'+!!SAVE.saver+'" style="width:100%;margin-top:8px">'+SVBAT+'<span>Battery saver: '+(SAVE.saver?'On':'Off')+'</span></button><p class="hint" style="margin:6px 0 0;font-size:12px">On: 30 frames a second, lower resolution and fewer particles. Saved on this device.</p>';}
+function setSaver(on){SAVE.saver=!!on;persist();sizeCanvas();document.querySelectorAll('[data-act=saver]').forEach(b=>{b.querySelector('span').textContent='Battery saver: '+(on?'On':'Off');b.setAttribute('aria-pressed',!!on);});forceUntil=performance.now()+700;}
 function setPause(p){
   if(!S||!S.running)return;S.paused=p;
   lab('bPause',p?'Resume':'Pause',p?IC.play:IC.pause);
@@ -1765,6 +1769,7 @@ $('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeModal();})
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modal').classList.contains('on'))closeModal();});
 
 function renderHome(){
+  if($('saverHome'))$('saverHome').innerHTML=saverBtn();
   $('stLv').textContent='Best level '+SAVE.maxL+' of '+MAXL;
   $('stSc').textContent='Best run '+fmt(totalScore());
   const snap=loadRun();
