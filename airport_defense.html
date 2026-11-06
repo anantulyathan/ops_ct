@@ -89,7 +89,7 @@ body.ingame .hdr{display:none}
 .ctl{display:flex;gap:6px;background:#22406a;padding:0 10px 8px;border-radius:0}
 .ctl .hbtn{flex:1;font-size:11.5px;padding:0 2px;white-space:nowrap}
 .cwrap{position:relative;background:#bcd5c4;box-shadow:var(--sh)}
-canvas{display:block;width:100%;height:auto;aspect-ratio:360/540;touch-action:manipulation;border-radius:0}
+canvas{display:block;width:100%;height:auto;aspect-ratio:360/540;touch-action:manipulation;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;border-radius:0}
 .ovl{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(26,46,74,.55);backdrop-filter:blur(2px)}
 .ovl.on{display:flex}
 .ovl .box{background:#fff;border-radius:16px;padding:16px;text-align:center;box-shadow:var(--sh);max-width:300px;width:100%}
@@ -295,6 +295,11 @@ body.fit #panel.sh .ecard small{font-size:10px;padding-left:5px;padding-right:5p
 .zz{color:#1e4d8c}
 .hmul{color:#8fe0b0;margin-left:4px}.hmul:empty{display:none}body.fit .hmul{display:none}body.fit .hud>div:nth-child(4) .hl{display:none}
 body.fit #panel.sh.mini{padding:8px 12px}
+.pslim h3{display:flex;align-items:center;gap:8px;margin:0 0 6px;min-width:0}.pslim h3 span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pslim .row .btn{min-height:44px;padding:0 8px;font-size:14px;flex:1 1 0;min-width:0;white-space:nowrap}.pslim .row .btn.wide{flex:2 1 0}
+@media (max-width:360px){.pslim .row{gap:6px}.pslim .row .btn{font-size:12.5px;padding:0 4px}}
+.pdet{margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)}.pdet[hidden]{display:none}
+.rsub{font-size:12px;color:var(--lab,#4a5568);margin:-4px 0 6px;text-align:right}
 .pmini{display:flex;align-items:center;gap:8px}.pmini>div{flex:1;min-width:0;font-size:13px}.pmini .btn{min-height:44px;padding:0 12px;flex:none}
 </style>
 </head>
@@ -827,10 +832,12 @@ function buildSchedule(L,lead){
   return sched;
 }
 function lvlLabel(){return 'Level '+S.level+' of '+MAXL+' · '+ZONES[zoneOf(S.level)].n+(S.shieldK<1?' · Storm Shield':'');}
-function banner(t,sub){
+function banner(t,sub,tut){
   const b=$('banner');if(!b)return;b.innerHTML='<b>'+esc(t)+'</b>'+(sub?'<span>'+esc(sub)+'</span>':'');b.classList.add('on');
-  clearTimeout(banner.tm);banner.tm=setTimeout(()=>b.classList.remove('on'),3200);
+  clearTimeout(banner.tm);banner.tut=!!tut;if(!tut)banner.tm=setTimeout(()=>b.classList.remove('on'),3200);
 }
+/* the level-1 tutorial line stays until the first tap on the map, then is gone */
+function tutOff(){if(!banner.tut)return;banner.tut=false;const b=$('banner');if(b)b.classList.remove('on');}
 function saveRun(){
   if(!S||S.over)return;
   try{localStorage.setItem(RUNKEY,JSON.stringify({v:1,level:S.level,runStart:S.runStart,lives:S.lives,gold:Math.floor(S.credits),score:Math.round(S.score),kills:S.kills,stk:S.streak||0,bstk:S.bestStreak||0,
@@ -862,7 +869,7 @@ function startLevel(L,snap){
   if(L%5===0)types.push(ET[ZONES[zoneOf(L)].boss].n+' (boss)');
   if(!snap&&L===1){
     $('ovl').classList.remove('on');S.started=true;S.first=true;S.running=false;
-    banner('Level 1 · '+ZONES[zoneOf(L)].n,'Tap a pad and build your first tower. The threats arrive as soon as it is built.');
+    banner('Level 1 · '+ZONES[zoneOf(L)].n,'Tap a pad and build your first tower. The threats arrive as soon as it is built.',true);
     return;
   }
   $('ovl').innerHTML='<div class="box"><h3>'+(snap?'Continue · ':'')+'Level '+L+' · '+esc(ZONES[zoneOf(L)].n)+'</h3><p>Threats: '+esc(types.join(', '))+'.<br>'+(snap?'Your towers, gold and terminal health are as they were at the start of this level.':'Build towers on the pads, then start. Levels follow one another automatically and your towers stay for the whole run.')+'</p>'
@@ -937,16 +944,18 @@ function newAirport(N){
     $('ovl').classList.add('on');$('bGo').onclick=()=>{$('ovl').classList.remove('on');S.running=true;};}
   banner('New airport · '+THEME.n,'Level '+N);
 }
+function saverBtn(){return '<button class="btn" data-act="saver" aria-pressed="'+!!SAVE.saver+'" style="width:100%;margin-top:8px">Battery saver: '+(SAVE.saver?'On':'Off')+'</button><p class="hint" style="margin:6px 0 0;font-size:12px">On: 30 frames a second, lower resolution and fewer particles. Saved on this device.</p>';}
+function setSaver(on){SAVE.saver=!!on;persist();sizeCanvas();document.querySelectorAll('[data-act=saver]').forEach(b=>{b.textContent='Battery saver: '+(on?'On':'Off');b.setAttribute('aria-pressed',!!on);});forceUntil=performance.now()+700;}
 function setPause(p){
   if(!S||!S.running)return;S.paused=p;
   lab('bPause',p?'Resume':'Pause',p?IC.play:IC.pause);
-  if(p){if(!musicHold(true))musicStop();$('ovl').innerHTML='<div class="box"><h3>Paused</h3><p>Take your time.'+(AU.tune?'<br><span style="font-size:12px">Music: '+esc(AU.tune.nm)+'</span>':'')+'</p><button class="btn p" id="bRes" style="width:100%">Resume</button></div>';$('ovl').classList.add('on');$('bRes').onclick=()=>setPause(false);}
+  if(p){if(!musicHold(true))musicStop();$('ovl').innerHTML='<div class="box"><h3>Paused</h3><p>Take your time.'+(AU.tune?'<br><span style="font-size:12px">Music: '+esc(AU.tune.nm)+'</span>':'')+'</p><button class="btn p" id="bRes" style="width:100%">Resume</button>'+saverBtn()+'</div>';$('ovl').classList.add('on');$('bRes').onclick=()=>setPause(false);}
   else{$('ovl').classList.remove('on');if(SAVE.sound&&AU.ctx){auResume();if(!musicHold(false))musicStart(S.tuneIdx,zoneOf(S.level)*6);}}
 }
 
 /* ----- effects helpers ----- */
 const TAU=Math.PI*2;
-function cnt(n){return RM?Math.max(1,Math.round(n*.3)):n;}
+function cnt(n){return RM?Math.max(1,Math.round(n*.3)):SAVE.saver?Math.max(1,Math.round(n*.5)):n;}
 function fxRing(x,y,r,c,t,w){if(RM)t=.15;S.fx.push({k:'ring',x:x,y:y,r:r,c:c,t:t||.3,max:t||.3,w:w||3});}
 function fxGlow(x,y,r,c,t,a){S.fx.push({k:'glow',x:x,y:y,r:r,c:c,t:t||.25,max:t||.25,a:a||.8});}
 function fxBolt(pts,c,t,w,st){S.fx.push({k:'bolt',pts:pts.map(p=>({x:p.x,y:p.y})),c:c,t:t,max:t,w:w||2,st:st||'line'});}
@@ -1615,7 +1624,7 @@ function buildTower(pi,id){
   S.credits-=bc;
   S.towers.push({pad:pi,x:PADS[pi].x,y:PADS[pi].y,id:id,lvl:1,cd:.3,spent:bc,cm:costMul(S.towers.length),boost:0,flash:0});
   fxRing(PADS[pi].x,PADS[pi].y,24,sk.c,.35);sfx(SFX.build);
-  if(S.first){S.first=false;S.running=true;S.started=true;if(!S.botRun){auInit();auResume();musicStart(S.tuneIdx,zoneOf(S.level)*6);saveRun();}}
+  if(S.first){tutOff();S.first=false;S.running=true;S.started=true;if(!S.botRun){auInit();auResume();musicStart(S.tuneIdx,zoneOf(S.level)*6);saveRun();}}
   updCombos();S.sel={type:'tower',i:S.towers.length-1};renderPanel();updHud(true);return true;
 }
 function upgradeTower(i){
@@ -1645,9 +1654,14 @@ function finishRun(win){
   else seq([['sawtooth',392,.25,.2],['sawtooth',330,.25,.2],['sawtooth',262,.4,.2]]);
   setTimeout(()=>openResult(win),RM?0:500);
 }
+function scoreLine(){
+  const play=Math.max(0,RUN.score-(S.goldBonus||0)-(S.winBonus||0)),pts=['Play score '+fmt(play),'gold bonus +'+fmt(S.goldBonus||0)];
+  if(S.winBonus)pts.push('clearance bonus +'+fmt(S.winBonus));
+  pts.push('best flawless streak '+(S.bestStreak||0)+' levels');return pts.join(' · ');
+}
 function openResult(win){
   let h='<div class="rbn '+(win?'win':'lose')+'" role="status"><b>'+(win?'VICTORY!':'Mission Failed')+'</b><span>'+(win?'All '+MAXL+' levels cleared':'Run over at level '+RUN.level)+'</span></div>';
-  h+=(win?'<div class="kv"><span>Terminal health left</span><b class="mono">'+S.lives+' of '+S.maxLives+'</b></div><div class="kv"><span>Clearance bonus ('+fmt(TUNE.winB)+' + '+fmt(TUNE.lifeB)+' per health point)</span><b class="mono">'+fmt(S.winBonus||0)+'</b></div>':'')+'<div class="kv"><span>Gold left: '+fmt(S.goldLeft||0)+' ('+TUNE.goldPts+' points per gold)</span><b class="mono">'+fmt(S.goldBonus||0)+'</b></div><div class="kv"><span>Run score</span><b class="mono">'+fmt(RUN.score)+'</b></div>'
+  h+=(win?'<div class="kv"><span>Terminal health left</span><b class="mono">'+S.lives+' of '+S.maxLives+'</b></div><div class="kv"><span>Clearance bonus ('+fmt(TUNE.winB)+' + '+fmt(TUNE.lifeB)+' per health point)</span><b class="mono">'+fmt(S.winBonus||0)+'</b></div>':'')+'<div class="kv"><span>Gold left: '+fmt(S.goldLeft||0)+' ('+TUNE.goldPts+' points per gold)</span><b class="mono">'+fmt(S.goldBonus||0)+'</b></div><div class="kv"><span>Run score</span><b class="mono">'+fmt(RUN.score)+'</b></div><div class="rsub">'+scoreLine()+'</div>'
     +'<div class="kv"><span>Best run score</span><b class="mono">'+fmt(SAVE.bestRun)+'</b></div>'
     +'<div class="kv"><span>Levels reached</span><b class="mono">'+RUN.level+' of '+MAXL+'</b></div>'
     +'<div class="kv"><span>Threats stopped</span><b class="mono">'+RUN.kills+'</b></div>'
@@ -2099,6 +2113,7 @@ function shopHtml(){
      return '<div class="shi"><img alt="" src="'+cardImg(id)+'"><div><b>'+esc(s.n)+'</b> <span class="mono">'+buildCost(id)+' gold · '+(s.util?'Support':kindOf(s))+'</span><br>'+esc(s.d)+(s.util?'':'<br>Level 5 super: '+esc(SUP[id].n))+'<br><span class="mono">Pair combos: '+pc+' · Tri combos: '+tc+'</span></div></div>';}).join('')
    +'</div><div class="row" style="margin-top:8px"><button class="btn" data-act="deselect">Close</button></div>';
 }
+let PDET=false;
 function renderPanel(){
   const p=$('panel');p.classList.remove('mini');
   if(!S){p.innerHTML='';return;}
@@ -2123,14 +2138,16 @@ function renderPanel(){
       p.innerHTML='<div class="pmini"><div><b>'+esc(s.n)+'</b> · Level '+t.lvl+' · Kills <b id="kCnt">'+(t.kills||0)+'</b><div class="hint" style="margin:2px 0 0">Tap the map to send him there.</div></div><button class="btn" data-act="player">Player</button><button class="btn" data-act="deselect" aria-label="Close">Close</button></div>';
       p.classList.add('mini');placePanel();return;
     }
-    p.innerHTML='<h3 style="display:flex;align-items:center;gap:8px"><i class="gem" style="--c:'+s.c+'"></i>'+esc(s.n)+' tower · Level '+t.lvl+'/'+MAXT+' · '+TIER[t.lvl].n+'</h3><div class="hint mono">'+towerStat(t,t.lvl)+(s.cd?' · reload '+s.cd+' s':'')+'</div>'
+    p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+t.lvl+'/'+MAXT+' · '+TIER[t.lvl].n+'</span></h3>'
+      +'<div class="row">'+(t.lvl<MAXT?'<button class="btn p wide" data-act="upg" id="bUpg">Upgrade · '+upgCost(t)+'</button>':'<button class="btn wide" disabled>Max level</button>')
+      +'<button class="btn d" data-act="sell">Sell +'+sellVal(t)+'</button><button class="btn" data-act="pdet" aria-expanded="'+PDET+'" aria-controls="pdet">'+(PDET?'Less':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>'
+      +'<div id="pdet" class="pdet"'+(PDET?'':' hidden')+'><div class="hint mono">'+towerStat(t,t.lvl)+(s.cd?' · reload '+s.cd+' s':'')+'</div>'
       +(t.lvl<MAXT?'<div class="hint mono" style="margin-top:2px">Next: '+towerStat(t,t.lvl+1)+(t.lvl+1===MAXT?' · grand aura and super skill':'')+'</div>':'')
       +'<div class="hint" style="margin-top:2px">'+(t.lvl>=MAXT?'Super: <b>'+esc(SUP[t.id].n)+'</b> · in <span id="supIn">'+Math.max(1,TUNE.supHits-(t.sh||0))+'</span> '+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?'pulses':'hits')+(hasMeteor()?' · Armageddon in <span id="armIn">'+Math.max(1,TUNE.armHits-(t.ah||0))+'</span>':' · Armageddon needs a Meteor tower'):'Level 5 super: '+esc(SUP[t.id].n)+', every '+TUNE.supHits+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?' pulses':' hits'))+'</div>'
       +'<div class="kline">Kills: <b id="kCnt">'+(t.kills||0)+'</b></div><div class="fxl" id="fxl">'+effectsHtml(t)+'</div>'
       +(s.k==='kick'?'<div class="hint" style="margin-top:4px;color:#1e4d8c;font-weight:600">Tap anywhere on the map to send him there. He stays until you send him again.</div>'+(t.gx!=null?'<div class="row" style="margin-top:6px"><button class="btn" data-act="homepad">Back to his pad</button></div>':'')+ballHtml(t)+kitHtml():'')
       +(t.cb?'<div class="hint" style="color:#1d776d;font-weight:600;margin-top:4px">'+(t.cb.def.tri?'Tri combo':'Combo')+': '+esc(t.cb.def.n)+' '+pct(t.cb.def.m)+(t.cb.others.length?' with '+t.cb.others.map(o=>esc(SKM[o.id].n)).join(' and '):'')+'</div><div class="hint">'+esc(t.cb.def.d)+'</div>':'')
-      +'<div class="row" style="margin-top:10px">'+(t.lvl<MAXT?'<button class="btn p" data-act="upg" id="bUpg">Upgrade to '+(t.lvl+1)+' ('+upgCost(t)+')</button>':'<button class="btn" disabled>Max level</button>')
-      +'<button class="btn" data-act="move"'+(S.credits<TUNE.moveCost?' aria-disabled="true"':'')+'>Move ('+fmt(TUNE.moveCost)+')</button><button class="btn d" data-act="sell">Sell (+'+sellVal(t)+')</button><button class="btn" data-act="shop">Shop</button><button class="btn" data-act="deselect">Close</button></div>';
+      +'<div class="row" style="margin-top:8px"><button class="btn" data-act="move"'+(S.credits<TUNE.moveCost?' aria-disabled="true"':'')+'>Move ('+fmt(TUNE.moveCost)+')</button><button class="btn" data-act="shop">Shop</button></div></div>';
   }else{
     p.innerHTML='<h3>Tap a pad to build</h3><div class="hint">Towers stay for the whole run. Upgrade them to level 5 for wider splash, a grand aura and super skills.</div><div class="row" style="margin-top:6px"><button class="btn" data-act="shop">Open shop</button></div>'
       +'<div class="jchips">'+S.avail.slice().sort((a,b)=>SKM[a].at-SKM[b].at).map(id=>'<span class="jc"><i class="gem" style="--c:'+SKM[id].c+'"></i>'+esc(SKM[id].n)+'</span>').join('')+'</div>';
@@ -2164,7 +2181,8 @@ cv.width=CW*DPR;cv.height=CH*DPR;
 function sizeCanvas(){
   const r=cv.getBoundingClientRect();if(!r.width)return;
   /* whole-number scaling only: fractional scales draw several times slower */
-  const nd=Math.max(2,Math.min(3,Math.round(r.width*(window.devicePixelRatio||1)/CW+.25)));
+  /* Battery saver draws at 2x at most */
+  const nd=Math.max(2,Math.min(SAVE.saver?2:3,Math.round(r.width*(window.devicePixelRatio||1)/CW+.25)));
   if(nd!==DPR){DPR=nd;cv.width=Math.round(CW*DPR);cv.height=Math.round(CH*DPR);BG=null;FGT=null;PADSPR=null;}
 }
 function fitCanvas(){
@@ -2223,9 +2241,37 @@ function selectAt(x,y){
   if(S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t&&SKM[t.id].k==='kick'){orderMove(t,x,y);return;}}
   S.sel=null;renderPanel();
 }
+let HOLD=null;const HOLDMS=550;
+function holdEnd(){if(HOLD){clearTimeout(HOLD.tm);HOLD=null;}}
+function holdHit(x,y){
+  /* the tower under the finger: its pad, or for the Soccer Player also where he is standing */
+  for(let i=0;i<S.towers.length;i++){const u=S.towers[i],kick=SKM[u.id].k==='kick';
+    if(Math.hypot(u.x-x,u.y-y)<=26)return{i:i,kick:kick,hx:u.x,hy:u.y};
+    if(kick&&u.px!=null&&Math.hypot(u.px-x,u.py-y-10)<=26)return{i:i,kick:true,hx:u.px,hy:u.py};}
+  return null;
+}
 cv.addEventListener('pointerdown',e=>{
-  const r=cv.getBoundingClientRect();selectAt((e.clientX-r.left)*CW/r.width,(e.clientY-r.top)*CH/r.height);
+  tutOff();holdEnd();
+  const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)*CW/r.width,y=(e.clientY-r.top)*CH/r.height;
+  const live=S&&!S.over&&!S.paused&&S.started,h=live&&!(S.sel&&S.sel.type==='move')?holdHit(x,y):null;
+  /* the Soccer Player: a tap selects him, a hold only upgrades him (so a hold never leaves him waiting for a move order) */
+  const kickWait=h&&h.kick&&S.towers[h.i].lvl<MAXT;
+  if(!kickWait)selectAt(x,y);
+  /* tap and hold a tower to upgrade it without the panel */
+  if(!h||S.towers[h.i].lvl>=MAXT)return;
+  const t=S.towers[h.i];
+  HOLD={t:t,hx:h.hx,hy:h.hy,kick:kickWait,x:x,y:y,cx:e.clientX,cy:e.clientY,t0:performance.now(),tm:setTimeout(()=>{
+    const k=S.towers.indexOf(t);HOLD=null;if(k<0||t.lvl>=MAXT)return;
+    if(S.credits<upgCost(t)){sfx(SFX.err);fxText(h.hx,h.hy-34,'Need '+fmt(upgCost(t)),'#c0392b');return;}
+    upgradeTower(k);if(navigator.vibrate)try{navigator.vibrate(12);}catch(_){}
+    /* the finger covers the tower, so say the new level above it (level 5 has its own label) */
+    if(t.lvl<MAXT)fxText(h.hx,h.hy-46,'Level '+t.lvl,'#1e4d8c');
+  },HOLDMS)};
 });
+cv.addEventListener('pointermove',e=>{if(HOLD&&Math.hypot(e.clientX-HOLD.cx,e.clientY-HOLD.cy)>12){HOLD.kick=false;holdEnd();}});
+cv.addEventListener('pointerup',()=>{if(HOLD){const h=HOLD;holdEnd();if(h.kick)selectAt(h.x,h.y);}});
+['pointercancel','pointerleave'].forEach(ev=>cv.addEventListener(ev,holdEnd));
+cv.addEventListener('contextmenu',e=>e.preventDefault());
 cv.addEventListener('keydown',e=>{
   if(!S||!S.started||S.over||S.paused)return;
   const spots=[];PADS.forEach((p,i)=>{const ti=S.towers.findIndex(t=>t.pad===i);spots.push(ti>=0?{type:'tower',i:ti,x:p.x,y:p.y}:{type:'pad',i:i,x:p.x,y:p.y});});
@@ -2253,10 +2299,12 @@ document.addEventListener('click',e=>{
     case 'top10':openTop10();break;
     case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it gets a crown and a grand aura) or sell it.</li><li>Every kill gives gold. You start with Fire, Water, Earth, Lightning and two random elements. Gravity always arrives at level 4; after that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and gains a super skill.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Shadow, Poison) hit the strongest enemy in range much harder. Line elements (Laser, Jet Blast) hit every enemy in a line. The Official Letter (หนังสือราชการ) throws A4 papers at several enemies at once and slows them; at level 5 it stamps a huge red seal that stops everything around it. The beacons boost adjacent towers.</li><li>Level 5 towers release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. The Library lists them. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>The Library on the home screen gives background and clues for every element and the combinations it can join. Each clue names the partner elements; the name of a combination is recorded there once you form it. You can also pick the shirt of the Soccer Player there.</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Soccer Player: tap him, then tap any spot on the map to send him there. He stays where you send him and never moves on his own; he kicks at threats within his range, a little shorter than the Ice Watermelon. If nothing happens for a while he falls asleep; tap him to wake him.</li><li>Flawless streak: every level you clear with no threat reaching the terminal adds ×'+TUNE.stkM.toFixed(2)+' to your score multiplier (shown next to your score, or in the top corner of the map on phones). The multiplier applies to all points from kills and level clears. A single leak resets it to ×1.00.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
     case 'closeM':closeModal();break;
-    case 'player':if(S&&S.sel&&S.sel.type==='tower'){S.sel.mini=false;renderPanel();}break;
+    case 'player':if(S&&S.sel&&S.sel.type==='tower'){S.sel.mini=false;PDET=true;renderPanel();}break;
     case 'homepad':if(S&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){orderMove(t,t.x,t.y);t.gx=null;t.gy=null;renderPanel();}}break;
     case 'shop':if(S&&S.started&&!S.over){S.sel={type:'shop'};renderPanel();}break;
     case 'deselect':if(S){S.sel=null;renderPanel();}break;
+    case 'pdet':PDET=!PDET;sfx(SFX.click);renderPanel();break;
+    case 'saver':setSaver(!SAVE.saver);sfx(SFX.click);break;
     case 'upg':if(S&&S.sel&&S.sel.type==='tower')upgradeTower(S.sel.i);break;
     case 'sell':if(S&&S.sel&&S.sel.type==='tower')sellTower(S.sel.i);break;
     case 'move':if(S&&S.sel&&S.sel.type==='tower'){if(S.credits<TUNE.moveCost){toast('Moving a tower costs '+fmt(TUNE.moveCost)+' gold.',true);break;}S.sel={type:'move',i:S.sel.i};renderPanel();}break;
@@ -3189,6 +3237,19 @@ function drawSeal(R,tm,k){
   ctx.beginPath();ctx.moveTo(-R*.1,-R*.5);ctx.lineTo(0,-R*.72);ctx.lineTo(R*.1,-R*.5);ctx.closePath();ctx.fill();
   ctx.globalCompositeOperation='lighter';[-1,1].forEach(sx=>glowC(sx*R*.045,-R*.41,R*.06,'#ffd2c2',.9));glowC(0,R*.05,R*.14,lt,.5);ctx.globalCompositeOperation='source-over';
 }
+/* small level bars under each tower and the hold-to-upgrade ring */
+function towerMarks(tm){
+  const c=ctx;c.save();
+  for(const t of S.towers){
+    const lv=t.lvl,ts=TSC[lv],bw=1.6,gap=1.3,bh=4.5,w=lv*bw+(lv-1)*gap,x0=t.x-w/2,y0=t.y+15*ts;
+    c.fillStyle='rgba(26,46,74,.62)';c.beginPath();c.roundRect?c.roundRect(x0-2.2,y0-1.6,w+4.4,bh+3.2,2.4):c.rect(x0-2.2,y0-1.6,w+4.4,bh+3.2);c.fill();
+    c.fillStyle=lv>=MAXT?'#e3b64a':'#bfeee8';
+    for(let k=0;k<lv;k++)c.fillRect(x0+k*(bw+gap),y0,bw,bh);
+  }
+  if(HOLD&&S.towers.indexOf(HOLD.t)>=0){const t=HOLD.t,k=Math.min(1,(performance.now()-HOLD.t0)/HOLDMS);
+    c.strokeStyle='rgba(227,182,74,.95)';c.lineWidth=3;c.lineCap='round';c.beginPath();c.arc(HOLD.hx,HOLD.hy-4,24*TSC[t.lvl],-Math.PI/2,-Math.PI/2+TAU*k);c.stroke();}
+  c.restore();
+}
 function drawFx(tm){
   ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;
   const dim=Math.min(1,90/Math.max(1,S.fx.length));/* keep the swarm readable when many effects overlap */
@@ -3308,6 +3369,7 @@ function draw(){
     for(const it of items){if(it.t)drawTower(it.t,tm);else drawEnemy(it.e,tm);}
     for(const p of S.pend)drawPend(p,tm);
     drawFx(tm);
+    towerMarks(tm);
   }
   c.drawImage(FGT,0,0,CW,CH);
   if(S&&S.armT>0){const a=Math.min(1,S.armT/.5);const g=c.createRadialGradient(CW/2,CH/2,CW*.2,CW/2,CH/2,CH*.75);g.addColorStop(0,'rgba(60,20,10,'+(.08*a)+')');g.addColorStop(1,'rgba(60,20,10,'+(.38*a)+')');c.fillStyle=g;c.fillRect(0,0,CW,CH);}
@@ -3330,6 +3392,8 @@ function draw(){
 let lastTs=0;
 function frame(ts){
   requestAnimationFrame(frame);
+  /* Battery saver: about 30 frames a second (the game clock still runs at true speed) */
+  if(SAVE.saver&&ts-lastTs<30)return;
   const dt=Math.min(.05,(ts-lastTs)/1000||0);lastTs=ts;
   if(S&&S.running&&!S.paused){
     for(let i=0;i<S.speed;i++)step(dt);
