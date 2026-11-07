@@ -340,7 +340,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 68">v.68</p>
+    <p class="ver mono" aria-label="Game version 69">v.69</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -1716,7 +1716,7 @@ const wkLv=L=>L===45||L===50;
 const WICE={water:1,ice:1,nova:1,icemelon:1,watergun:1,warp:1};
 let SHIPHIT=false;
 function spawn(s){
-  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=(T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp*TUNE.mobK*(L>=10?TUNE.mobK10:1))*(L>=TUNE.hardL?TUNE.hardK:1)*(armLv(L)?1:TUNE.n8K)*(L===49||L===50?1.15:1);
+  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=(T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp*TUNE.mobK*(L>=10?TUNE.mobK10:1))*(L>=TUNE.hardL?TUNE.hardK:1)*(armLv(L)?1:TUNE.n8K)*(L===49||L===50?1.15:1)*1.08*(L>=47?1.08:1);
   const e={ty:s.ty,n:T.n,hp:hp,max:hp,sp:(T.boss||T.fast?T.sp:(T.sp*.45+TUNE.packSp*.55)*(1+rnd(-TUNE.spV,TUNE.spV)))*(1+.012*(Ld(L)-1)),lo:T.boss?0:rnd(-14,14),r:T.r,c:T.c,sh:T.sh,boss:!!T.boss,d:s.d0||0,x:PP[0].x+(s.d0||0),y:PP[0].y,
     slowF:1,slowT:0,stun:0,burn:null,pz:null,weak:null,rew:T.rew*(1+TUNE.rewL*L)*TUNE.rewK*dn*TUNE.goldK,pts:Math.round(10*(1+.1*L)*(T.boss?20:1)*TUNE.ptsK),ph:Math.random()*6,flash:0,ang:0};
   if(armLv(L))e.arm=1;
