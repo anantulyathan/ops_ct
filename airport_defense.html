@@ -345,7 +345,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 83">v.83</p>
+    <p class="ver mono" aria-label="Game version 85">v.85</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -1659,8 +1659,9 @@ warp:{n:'Pirate Ship',f(t,sk,b,dm){
   const A=alive().filter(e=>e.d>=0);if(!A.length)return;let best=A[0],bn=-1;
   for(const e of A){let n=0;for(const o of A)if(Math.hypot(o.x-e.x,o.y-e.y)<=150)n++;if(n>bn){bn=n;best=e;}}
   const L=A.filter(e=>Math.hypot(e.x-best.x,e.y-best.y)<=180).sort((p,q)=>Math.hypot(p.x-best.x,p.y-best.y)-Math.hypot(q.x-best.x,q.y-best.y)).slice(0,40);
-  if(!S.ships)S.ships=[];S.ships.push({t:.75,L:L,amt:b*1.5/TUNE.supK,dm:dm,src:t,x:best.x,y:best.y});
-  S.fx.push({k:'gloom',t:1.9,max:1.9});S.fx.push({k:'ship',x:best.x,y:best.y,t:1.6,max:1.6});
+  const sf={k:'ship',x:best.x,y:best.y,t:1.1,max:1.1};
+  if(!S.ships)S.ships=[];S.ships.push({t:.55,L:L,amt:b*1.5/TUNE.supK,dm:dm,src:t,x:best.x,y:best.y,sf:sf});
+  S.fx.push({k:'gloom',t:1.9,max:1.9});S.fx.push(sf);
   fxRing(best.x,best.y,170,'#3a2a4a',.9,4);}},
 meteor:{n:'Meteor Shower',f(t,sk,b,dm){alive().filter(e=>e.d>=0).slice(0,6).forEach((e,i)=>pendAt(e.x,e.y,sk,b*10,80,dm,.6+i*.2,SRC_GL));}},
 gravity:{n:'Black Hole',f(t,sk,b,dm){const L=inR(t,200);pullTo(L,1);hitList(L,b*6,{stun:.8},dm);fxGlow(t.x,t.y,150,'#3b2f56',.9,.6);impactFx(sk,t.x,t.y,200,0);S.shake=RM?0:.3;}},
@@ -1778,7 +1779,7 @@ function step(dt){
   CURT=null;S.pools=S.pools.filter(p=>p.t>0);
   for(const p of S.pend){p.t-=dt;if(p.t<=0){p.done=true;SRC_GL=!!p.gl;SRC_TRI=!!p.tri;SRC_PAIR=!!p.pair;SPLASH_CAP=p.cap||999;CURT=p.src||null;splashAt(p.x,p.y,p.rad,p.dmg,p.sk,p.dm);CURT=null;SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;SPLASH_CAP=999;if(p.big)S.shake=RM?0:.15;}}
   S.pend=S.pend.filter(p=>!p.done);
-  if(S.ships&&S.ships.length){for(const h of S.ships){h.t-=dt;if(h.t<=0){h.done=true;shipCrash(h);}}S.ships=S.ships.filter(h=>!h.done);}
+  if(S.ships&&S.ships.length){for(const h of S.ships){h.t-=dt;let n=0,sx=0,sy=0;for(const e of h.L)if(!e.dead){n++;sx+=e.x;sy+=e.y;}if(n){h.x=sx/n;h.y=sy/n;if(h.sf){h.sf.x=h.x;h.sf.y=h.y;}}if(h.t<=0){h.done=true;shipCrash(h);}}S.ships=S.ships.filter(h=>!h.done);}
   for(const f of S.fx){if(f.dl>0){f.dl-=dt;continue;}f.t-=dt;if(f.k==='p'){f.vy+=f.g*dt;f.x+=f.vx*dt;f.y+=f.vy*dt;f.rot+=f.vr*dt;}else if(f.k==='coin'){f.vy+=340*dt;f.x+=f.vx*dt;f.y+=f.vy*dt;if(f.y>f.fy&&f.vy>0){f.y=f.fy;f.vy*=-.38;f.vx*=.6;}}if(f.k==='gem'||f.k==='txt')f.y-=18*dt;}
   if((S.kf||0)>=6&&!RM)S.shake=Math.max(S.shake,.07);S.kf=0;if(S.chShow>0)S.chShow-=dt;
   S.fx=S.fx.filter(f=>f.t>0);
@@ -2251,7 +2252,7 @@ function renderSkills(){
   const bonds='<div class="card" style="box-shadow:none;background:var(--page);margin:0 0 6px;padding:12px"><h3 style="margin:0 0 4px">Special bonds</h3><p style="margin:0 0 6px;font-size:12px;color:var(--lbl)">Two towers of the same kind, both at level 5, next to each other: they get a small bonus. If every pad on the airport has the same kind of tower, all at level 5, a very strong bonus starts. It hits enemies all over the map.'+(D.pure||D.superpure?' <b>'+(D.pure?'Found: Pure Connection. ':'')+(D.superpure?'Found: Super Duper Pure Connection.':'')+'</b>':'')+'</p></div>';
   $('skList').innerHTML=bonds+SK.slice().sort((a,b)=>a.at-b.at).map(s=>{
     const cl=libClues(s.id);
-    const clues=cl.length?(cl.length>10?'<details><summary style="cursor:pointer;font-weight:600;color:#1e4d8c;min-height:44px;display:flex;align-items:center">Show all '+cl.length+' clues</summary>':'')+'<ul class="clues">'+cl.map(c=>'<li class="'+(c.tri?'tri':'pair')+'"><span class="ct">'+(c.tri?'Triple':'Pair')+'</span> '+esc(c.t)+(D[c.k]?' <b class="found">✓ Found: '+esc(c.n)+'</b>':'')+'</li>').join('')+'</ul>'+(cl.length>10?'</details>':''):'<p>'+esc(LIBSUP[s.id]||'')+'</p>';
+    const clues=cl.length?(cl.length>10?'<details'+(isDesk()?' open':'')+'><summary style="cursor:pointer;font-weight:600;color:#1e4d8c;min-height:44px;display:flex;align-items:center">Show all '+cl.length+' clues</summary>':'')+'<ul class="clues">'+cl.map(c=>'<li class="'+(c.tri?'tri':'pair')+'"><span class="ct">'+(c.tri?'Triple':'Pair')+'</span> '+esc(c.t)+(D[c.k]?' <b class="found">✓ Found: '+esc(c.n)+'</b>':'')+'</li>').join('')+'</ul>'+(cl.length>10?'</details>':''):'<p>'+esc(LIBSUP[s.id]||'')+'</p>';
     return '<div class="sk" style="--c:'+s.c+'"><img class="gm" alt="" src="'+cardImg(s.id)+'"><div><h4>'+esc(s.n)+(s.th?' <span class="th">'+esc(s.th)+'</span>':'')+'<span class="tag">'+(s.util?'Support':kindOf(s))+'</span><span class="tag">'+(s.at===1?'Starter':'Random draw')+'</span></h4>'
       +'<p>'+esc(LIBBG[s.id]||s.d)+'</p><p class="mono" style="margin-top:0">'+esc(s.d)+(s.util?'':' Level 5 super: '+esc(SUP[s.id].n)+'.')+'</p>'
       +'<div class="cl">Clues</div>'+clues+(s.id==='soccer'?kitHtml():'')+'</div></div>';
@@ -2317,7 +2318,8 @@ function shopHtml(){
    +'</div><div class="row" style="margin-top:8px"><button class="btn" data-act="deselect">Close</button></div>';
 }
 /* tower details are open by default; the player's choice to close them is remembered */
-let PDET=false;
+const DESKQ=window.matchMedia('(min-width:900px) and (min-height:520px)');const isDesk=()=>DESKQ.matches;
+let PDET=null;const pdetOn=()=>PDET===null?isDesk():PDET;
 function renderPanel(){
   const p=$('panel');p.classList.remove('mini');
   if(!S){p.innerHTML='';return;}
@@ -2346,8 +2348,8 @@ function renderPanel(){
     }
     p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+t.lvl+'/'+MAXT+' · '+TIER[t.lvl].n+'</span></h3>'
       +'<div class="row">'+(t.lvl<MAXT?'<button class="btn p wide" data-act="upg" id="bUpg"><span class="ul">Upgrade</span><span class="us">Up</span> · '+upgCost(t)+'</button>'+(t.lvl<MAXT-1?'<button class="btn" data-act="upgmax" id="bUpgM" aria-label="Upgrade as far as your gold allows">Max</button>':''):'<button class="btn wide" disabled>Max level</button>')
-      +'<button class="btn d" data-act="sell">Sell +'+sellVal(t)+'</button><button class="btn" data-act="pdet" aria-expanded="'+PDET+'" aria-controls="pdet">'+(PDET?'Less':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>'
-      +'<div id="pdet" class="pdet"'+(PDET?'':' hidden')+'><div class="bx bxd"><h5>Details</h5><div class="hint mono">'+towerStat(t,t.lvl)+(s.cd?' · reload '+s.cd+' s':'')+'</div>'
+      +'<button class="btn d" data-act="sell">Sell +'+sellVal(t)+'</button><button class="btn" data-act="pdet" aria-expanded="'+pdetOn()+'" aria-controls="pdet">'+(pdetOn()?'Less':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>'
+      +'<div id="pdet" class="pdet"'+(pdetOn()?'':' hidden')+'><div class="bx bxd"><h5>Details</h5><div class="hint mono">'+towerStat(t,t.lvl)+(s.cd?' · reload '+s.cd+' s':'')+'</div>'
       +(t.lvl<MAXT?'<div class="hint mono" style="margin-top:2px">Next: '+towerStat(t,t.lvl+1)+(t.lvl+1===MAXT?' · grand aura and super skill':'')+'</div>':'')
       +'<div class="hint" style="margin-top:2px">'+(t.lvl>=MAXT?'Super: <b>'+esc(SUP[t.id].n)+'</b> · in <span id="supIn">'+Math.max(1,supN(t)-(t.sh||0))+'</span> '+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?'pulses':'hits')+(hasMeteor()?' · Armageddon in <span id="armIn">'+Math.max(1,TUNE.armHits-(t.ah||0))+'</span>':' · Armageddon needs a Meteor tower'):'Level 5 super: '+esc(SUP[t.id].n)+', every '+supN(t)+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?' pulses':' hits'))+'</div>'
       +'<div class="kline">Kills: <b id="kCnt">'+(t.kills||0)+'</b></div></div>'
@@ -2446,7 +2448,7 @@ function selectAt(x,y){
   if(!S||S.over||S.paused||!S.started)return;
   if(S.sel&&S.sel.type==='move'){for(let i=0;i<PADS.length;i++){if(padFree(i)&&Math.hypot(PADS[i].x-x,PADS[i].y-y)<=26){moveTower(S.sel.i,i);return;}}}
   for(let i=0;i<S.towers.length;i++){const u=S.towers[i],ru=isMob(SKM[u.id])&&u.px!=null&&Math.hypot(u.px-x,u.py-y-10)<=26;
-    if(Math.hypot(u.x-x,u.y-y)<=26||ru){if(u.nap){u.nap=false;u.idle=0;fxText(u.px,u.py-30,'Awake!','#1d7a4a');}const mob=isMob(SKM[u.id]),same=S.sel&&S.sel.type==='tower'&&S.sel.i===i&&S.sel.mini&&!S.sel.hide;S.sel={type:'tower',i:i,mini:mob,hide:mob&&!same};renderPanel();sfx(SFX.click);return;}}
+    if(Math.hypot(u.x-x,u.y-y)<=26||ru){if(u.nap){u.nap=false;u.idle=0;fxText(u.px,u.py-30,'Awake!','#1d7a4a');}const mob=isMob(SKM[u.id])&&!isDesk(),same=S.sel&&S.sel.type==='tower'&&S.sel.i===i&&S.sel.mini&&!S.sel.hide;S.sel={type:'tower',i:i,mini:mob,hide:mob&&!same};renderPanel();sfx(SFX.click);return;}}
   for(let i=0;i<PADS.length;i++){if(padFree(i)&&Math.hypot(PADS[i].x-x,PADS[i].y-y)<=26){S.sel={type:'pad',i:i};renderPanel();sfx(SFX.click);return;}}
   if(S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t&&isMob(SKM[t.id])){orderMove(t,x,y);return;}}
   S.sel=null;renderPanel();
@@ -2473,6 +2475,7 @@ cv.addEventListener('pointerdown',e=>{
   if(!h)return;
   const t=S.towers[h.i],mob=isMob(SKM[t.id]);
   if(mob){
+    if(isDesk())return;
     HOLD={t:t,mob:true,hx:h.hx,hy:h.hy,kick:false,x:x,y:y,cx:e.clientX,cy:e.clientY,t0:performance.now(),tm:setTimeout(()=>{
       const k=S.towers.indexOf(t);HOLD=null;if(k<0||!S||S.over||S.paused)return;
       S.sel={type:'tower',i:k,mini:true,hide:false};renderPanel();sfx(SFX.click);if(navigator.vibrate)try{navigator.vibrate(20);}catch(_){}
@@ -2525,7 +2528,7 @@ document.addEventListener('click',e=>{
     case 'homepad':if(S&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){orderMove(t,t.x,t.y);t.gx=null;t.gy=null;renderPanel();}}break;
     case 'shop':if(S&&S.started&&!S.over){S.sel={type:'shop'};renderPanel();}break;
     case 'deselect':if(S){S.sel=null;renderPanel();}break;
-    case 'pdet':PDET=!PDET;sfx(SFX.click);renderPanel();break;
+    case 'pdet':PDET=!pdetOn();sfx(SFX.click);renderPanel();break;
     case 'hd':setHd(!SAVE.hd);sfx(SFX.click);break;
     case 'upg':if(S&&S.sel&&S.sel.type==='tower')upgradeTower(S.sel.i);break;
     case 'upgmax':if(S&&S.sel&&S.sel.type==='tower'){const i=S.sel.i,t=S.towers[i];if(t){const l0=t.lvl;while(t.lvl<MAXT&&S.credits>=upgCost(t))upgradeTower(i);
