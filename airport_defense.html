@@ -132,7 +132,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:360/540;touch-action:ma
 .sk h4{margin:0;font-size:14px;color:var(--navy);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .sk p{margin:2px 0 6px;font-size:12px;color:var(--lbl)}
 .tag{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;background:var(--page);border:1px solid var(--bd);color:var(--lbl);text-transform:uppercase;letter-spacing:.4px}
-.sk h4 .th,.ecard small.th{font-family:'Sarabun','Leelawadee UI','Thonburi',Tahoma,sans-serif;font-weight:600;color:#b23a3a;font-size:12px}
+.sk h4 .th,.ecard small.th{font-family:'Sarabun','Leelawadee UI','Thonburi',Tahoma,sans-serif;font-weight:600;color:#1f2329;font-size:12px}
 .ecard small.th{font-size:11px;padding-top:0}
 .sk .cl{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);margin:2px 0 3px}
 .clues{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
@@ -340,7 +340,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 69">v.69</p>
+    <p class="ver mono" aria-label="Game version 75">v.75</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -438,8 +438,8 @@ const SK=[
 {id:'spore',n:'Spore Cloud',c:'#a6a85a',k:'pool',dps:7,rad:46,dur:5,cd:2.5,rng:120,cost:100,fx:{slow:[.7,1]},s:['n',500,250,.3,.12],d:'A cloud that stays, hurts and slows enemies.'},
 {id:'crystal',n:'Crystal',c:'#b57fc4',k:'single',dmg:78,cd:1.1,rng:140,cost:100,fx:{},s:['triangle',1800,1100,.16,.1],d:'A crystal spear. High damage to one target.'},
 {id:'warp',n:'Captain Tide',c:'#2f7fa6',k:'splash',dmg:36,rad:64,cd:1.5,rng:125,cost:120,fx:{},s:['n',700,160,.32,.18],d:'A sea captain who sends a crashing wave onto a group of enemies. Level 5 super, Pirate Ship: one big ship hits up to 40 enemies in the biggest group for 1.5 times normal damage.'},
-{id:'letter',n:'Official Letter',th:'หนังสือราชการ',c:'#b23a3a',k:'paper',dmg:22,cnt:3,cd:1.2,rng:140,cost:120,fx:{slow:[.75,1.5]},s:['triangle',900,1300,.08,.06],d:'Throws A4 papers at up to 3 enemies (one more per level). The paperwork slows them down. Level 5 super, Official Seal: a big seal that stuns every enemy around it for 1.5 seconds.'},
-{id:'bricks',n:'Toy Bricks',c:'#e0584f',k:'splash',lob:'brick',dmg:16,rad:50,cd:1.4,rng:120,cost:85,fx:{stun:.35},s:['square',260,140,.2,.14],d:'Drops a pile of toy bricks that stun for a moment and leave a low wall that slows enemies.'},
+{id:'letter',n:'Official Letter',th:'หนังสือราชการ',c:'#2b2f36',k:'paper',dmg:22,cnt:3,cd:1.2,rng:140,cost:120,fx:{slow:[.75,1.5]},s:['triangle',900,1300,.08,.06],d:'Throws A4 papers at up to 3 enemies (one more per level). The paperwork slows them down. Level 5 super, Official Seal: a big seal that stuns every enemy around it for 1.5 seconds.'},
+{id:'bricks',n:'Toy Bricks',c:'#e0584f',k:'splash',lob:'brick',dmg:16,rad:50,cd:1.4,rng:120,cost:85,fx:{stun:.35,stunP:.6},s:['square',260,140,.2,.14],d:'Drops a pile of toy bricks that have a 60% chance to stun for a moment and leave a low wall that slows enemies by 30% for 1.5 seconds.'},
 {id:'watergun',n:'Water Gun',c:'#3fa7c4',k:'squirt',dmg:17,cd:.35,rng:130,cost:70,fx:{weak:[1.1,2.5],slow:[.88,.6]},cbK:1,s:['sine',900,500,.08,.06],d:'Very fast jets of water on one enemy. Wet enemies take 10% more damage. At level 5, each jet has a 15% chance to push the enemy back a little.'},
 {id:'icemelon',n:'Ice Watermelon',c:'#e8808a',k:'splash',lob:'melon',dmg:13,rad:56,cd:1.8,rng:125,cost:100,fx:{stun:.8,slow:[.5,2]},s:['sine',1500,600,.16,.14],d:'A frozen watermelon that breaks into cold slices. It freezes enemies, and the slices hit again.'},
 {id:'soldier',n:'Modern Soldier',c:'#6f7f4f',k:'burst',mob:1,dmg:25,cnt:3,cd:1.3,rng:150,cost:100,fx:{},cbK:3,s:['square',500,160,.12,.09],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and fires a burst of three rounds at one enemy in range; the last round hits twice as hard. More rounds at levels 3 and 5,, and a bigger gun at every level. Each round also splits to one more enemy per level above 1, at the same power (4 more at level 5).'},
@@ -1020,7 +1020,7 @@ function impactFx(sk,x,y,rad,dl){
     case 'gravity':fxGlow(x,y,rad,'#6a4fa8',.5,.55);fxRing(x,y,rad,'#8a6fc4',.5,2);
       for(let i=0;i<cnt(10);i++){const a=rnd(0,TAU);fxP(x+Math.cos(a)*rad,y+Math.sin(a)*rad,-Math.cos(a)*rad*2.2,-Math.sin(a)*rad*2.2,'#b9a3e6',.45,2.2,{add:true});}break;
     case 'ice':fxRing(x,y,rad,'#bfe9f5',.45,3);burst(x,y,9,'#d9f2f9',85,.6,3.4,{sh:'t',g:60});fxGlow(x,y,rad,'#8fd6e8',.3,.5);break;
-    case 'seal':fxRing(x,y,rad,'#b3262c',.6,6);fxRing(x,y,rad*.6,'#e0675e',.5,3);S.fx.push({k:'shock',x:x,y:y,r:rad*.8,c:'#6e1418',t:.6,max:.6,n:14,seed:Math.random()*6});fxGlow(x,y,rad,'#c0392b',.4,.6);S.shake=RM?0:.45;break;
+    case 'seal':fxRing(x,y,rad,'#1f2329',.6,6);fxRing(x,y,rad*.6,'#5a626d',.5,3);S.fx.push({k:'shock',x:x,y:y,r:rad*.8,c:'#0b0c0e',t:.6,max:.6,n:14,seed:Math.random()*6});fxGlow(x,y,rad,'#9aa3ad',.4,.6);S.shake=RM?0:.45;break;
     case 'poison':fxGlow(x,y,rad,'#7fb04f',.45,.5);
       for(let i=0;i<cnt(9);i++)fxP(x+rnd(-rad*.6,rad*.6),y+rnd(-rad*.3,rad*.5),rnd(-8,8),rnd(-34,-10),'#a6d36e',rnd(.5,.8),rnd(2,4.2),{g:-10,sh:'o'});break;
     case 'shadow':fxGlow(x,y,rad*1.1,'#3b2f56',.5,.7);
@@ -1083,7 +1083,7 @@ function applyFx(e,fx,dm){
   if(!fx||e.dead)return;
   const k=ccK()*(SRC_WI?TUNE.wiCC:1);
   if(fx.slow){e.slowF=Math.min(e.slowF,1-(1-Math.max(TUNE.slowCap,fx.slow[0]))*k*(e.boss?TUNE.bossSlow:1));e.slowT=Math.max(e.slowT,fx.slow[1]);}
-  if(fx.stun){e.stun=Math.max(e.stun,Math.min(TUNE.stunCap,fx.stun)*(e.boss?.3:1)*k);}
+  if(fx.stun&&(!fx.stunP||Math.random()<fx.stunP)){e.stun=Math.max(e.stun,Math.min(TUNE.stunCap,fx.stun)*(e.boss?.3:1)*k);}
   if(fx.burn){e.burn={d:fx.burn[0]*dm,t:fx.burn[1],src:CURT};}
   if(fx.poison){if(!e.pz)e.pz={n:0,d:fx.poison[0]*dm,t:0};e.pz.src=CURT;e.pz.n=Math.min(5,e.pz.n+1);e.pz.t=fx.poison[1];}
   if(fx.weak){e.weak={m:1+(fx.weak[0]-1)*k,t:fx.weak[1]};}
@@ -1323,7 +1323,7 @@ const NXADJ={fire:'Blazing',water:'Soaked',earth:'Rocky',nature:'Mossy',lightnin
 const NXNOUN={bricks:'Bricks',watergun:'Jets',icemelon:'Melon',soldier:'Squad',soccer:'Ball',console:'Pixels',archer:'Volley'};
 const NXNN={'bricks+watergun':'Sandcastle','bricks+icemelon':'Fruit Fort','bricks+soldier':'Barracks','bricks+soccer':'Goal Wall','watergun+icemelon':'Slush Cannon','watergun+soldier':'Water Patrol','watergun+soccer':'Sprinkler Pitch','icemelon+soldier':'Fruit Grenade','icemelon+soccer':'Melon Strike','soldier+soccer':'Counter Attack','bricks+console':'Block Builder','watergun+console':'Splash Mode','icemelon+console':'Frozen Combo','soldier+console':'Tactical Mode','soccer+console':'Pitch Pixels','bricks+archer':'Arrow Slits','watergun+archer':'Rain Arrows','icemelon+archer':'Fruit Target','soldier+archer':'Sniper Nest','soccer+archer':'Long Shot','console+archer':'Pixel Bow'};
 /* what each new element adds (sig) and what each partner adds (rider), in short words for the card text */
-const NXSD={bricks:'a low brick wall stops and slows enemies',watergun:'soaked enemies take 12% more damage',icemelon:'cold slices fly out and hit again',soldier:'extra bullets hit 3 nearby enemies',soccer:'the ball bounces on to a second enemy',console:'rainbow lasers split to 3 more enemies',archer:'2 dark arrows hit nearby enemies'};
+const NXSD={bricks:'a low brick wall slows enemies by 30% for 1.5 seconds',watergun:'soaked enemies take 12% more damage',icemelon:'cold slices fly out and hit again',soldier:'extra bullets hit 3 nearby enemies',soccer:'the ball bounces on to a second enemy',console:'rainbow lasers split to 3 more enemies',archer:'2 dark arrows hit nearby enemies'};
 const NXRD={fire:'enemies burn',water:'enemies are slowed',earth:'enemies are stunned',nature:'roots hold enemies',lightning:'lightning jumps to 2 more enemies',gravity:'enemies are pulled together',stars:'3 small stars fall',ice:'enemies are frozen for a moment',laser:'a beam cuts through the line',poison:'enemies are poisoned',light:'a bright bolt hits again',shadow:'enemies are marked for more damage',thunder:'a delayed blast lands',lava:'a pool of dark magic stays on the road',nova:'a cold ring slows nearby enemies',meteor:'a small meteor falls',magnet:'enemies are pulled in',jet:'enemies are pushed back',spore:'a slow cloud stays on the road',crystal:'3 sharp shards fly out',warp:'a wave crashes over nearby enemies',letter:'papers fly out and slow enemies'};
 function mixC(a,b){const p=parseInt(a.slice(1),16),q=parseInt(b.slice(1),16),m=s=>Math.round(((p>>s&255)+(q>>s&255))/2);return '#'+((1<<24)|(m(16)<<16)|(m(8)<<8)|m(0)).toString(16).slice(1);}
 NEWS.forEach((N,i)=>{NXP.concat(NEWS.slice(i+1)).forEach(P=>{
@@ -1387,7 +1387,7 @@ COMBOS.push({k:'photo',a:'nature',b:'light',n:'Photosynthesis',m:COMBO_M,c:'#9fc
 /* rainbow for the Game Console lasers */
 const RBW=['#e86a5a','#f0a64a','#f2d45a','#6cc47a','#4fa3d9','#8a6fc4'];
 const ICEWALL={id:'icewall',c:'#8fd6e8',fx:{slow:[.3,1.5]},st:1.5};
-const BRICKWALL={id:'bricks',c:'#e0584f',fx:{slow:[.6,.3]}},MELONSH={id:'icemelon',c:'#e8808a',fx:{slow:[.6,1.5]}};
+const BRICKWALL={id:'bricks',c:'#e0584f',fx:{slow:[.7,1.5]},st:1.5},MELONSH={id:'icemelon',c:'#e8808a',fx:{slow:[.6,1.5]}};
 /* signature of each new element (c = context of the hit) */
 const NXS={
 bricks:c=>{S.pools.push({x:c.x,y:c.y,r:44,dps:.2*c.b,t:2.2,max:2.2,sk:BRICKWALL,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap});hitList(c.near(50,c.cap),.1*c.b,{stun:.3},c.dm);},
@@ -1600,7 +1600,7 @@ function pullTo(L,k){if(L.length<2)return;k*=ccK();let sum=0;L.forEach(e=>sum+=e
 function pushBack(L,dd,force){if(!force)return;dd*=ccK();L.forEach(e=>{if(e.dead)return;e.d=Math.max(0,e.d-dd*(e.boss?.4:1));const p=posAt(e.d);e.x=p.x;e.y=p.y;});}
 function skyHit(e,c){fxJag({x:e.x+rnd(-14,14),y:e.y-260},{x:e.x,y:e.y},c,.35,3.2);}
 function pendAt(x,y,sk,dmg,rad,dm,del,gl){S.pend.push({t:del,del:del,x:x,y:y,sk:sk,dmg:dmg,rad:rad,dm:dm,gl:gl,big:sk.id==='meteor'});}
-const SEALSK={id:'seal',c:'#b3262c',fx:{stun:1.4,slow:[.5,3],weak:[1.25,4]}};
+const SEALSK={id:'seal',c:'#1f2329',fx:{stun:1.4,slow:[.5,3],weak:[1.25,4]}};
 const SUP={
 fire:{n:'Firestorm',f(t,sk,b,dm){const L=inR(t,160);hitList(L,b*5,{burn:[18,4]},dm);impactFx(sk,t.x,t.y,160,0);L.slice(0,8).forEach((e,i)=>impactFx(sk,e.x,e.y,40,i*.05));}},
 water:{n:'Tidal Wave',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{slow:[.5,4]},dm);impactFx(sk,t.x,t.y,170,0);fxRing(t.x,t.y,120,'#cfe7f7',.7,6);}},
@@ -1651,8 +1651,8 @@ letter:{n:'Official Seal',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.l
   S.pend.push({t:.58,del:.58,x:c.x,y:c.y,sk:SEALSK,dmg:b*5,rad:R,dm:dm,gl:SRC_GL,cap:999,big:true});
   /* everyone near the seal stops to read it: a stun of 1.5 s (bosses 0.8 s) */
   A.forEach(e=>{if(Math.hypot(e.x-c.x,e.y-c.y)<=R+e.r)e.stun=Math.max(e.stun||0,(e.boss?.8:TUNE.stunCap)*ccK());});
-  if(!S.botRun)fxText(c.x,c.y-30,'STOP!','#b3262c');
-  S.flashT=.5;S.flashC='#8a1f1f';sfx(['sawtooth',110,55,.6,.3],'seal');}},
+  if(!S.botRun)fxText(c.x,c.y-30,'STOP!','#1f2329');
+  S.flashT=.5;S.flashC='#8a939e';sfx(['sawtooth',110,55,.6,.3],'seal');}},
 bricks:{n:'Great Wall',f(t,sk,b,dm){const L=inR(t,190);hitList(L,b*3,{stun:1.5},dm);L.slice(0,6).forEach((e,i)=>{impactFx(sk,e.x,e.y,36,i*.05);S.pools.push({x:e.x,y:e.y,r:44,dps:b*.5,t:5,max:5,sk:BRICKWALL,gl:SRC_GL});});impactFx(sk,t.x,t.y,150,0);S.shake=RM?0:.3;}},
 watergun:{n:'Flood',f(t,sk,b,dm){const L=inR(t,210);hitList(L,b*12,{weak:[1.35,6],slow:[.5,4]},dm);fxRing(t.x,t.y,150,'#cfeaf5',.7,6);fxRing(t.x,t.y,100,'#3fa7c4',.6,4);burst(t.x,t.y,20,'#9fd6ea',130,.8,3,{g:140});}},
 icemelon:{n:'Melon Blizzard',f(t,sk,b,dm){const L=alive();hitList(L,b*3,{stun:1.5,slow:[.5,4]},dm);L.slice(0,12).forEach((e,i)=>impactFx(sk,e.x,e.y,34,i*.04));fxRing(t.x,t.y,240,'#e6f4fa',.8,5);}},
@@ -2134,7 +2134,7 @@ jet:'A loud, hot blast of engine power in a straight line.',
 spore:'A cloud of tiny seeds that floats in the air. It stays for a long time.',
 crystal:'A hard, clear stone. It takes a beam and sends back a sharper one.',
 warp:'An old sea captain who commands the tide. He sends heavy waves crashing over groups of enemies.',
-letter:'An official letter on A4 paper, with a red seal at the top. When it arrives, everyone has to stop and read it.',
+letter:'An official letter on A4 paper, with a black seal at the top. When it arrives, everyone has to stop and read it.',
 power:'A steady energy in the ground. It makes nearby towers hit harder.',
 speed:'A fast, bright pulse. It makes nearby towers work faster.'
 };
@@ -2193,7 +2193,7 @@ soccer:'A football player in a red and blue striped shirt, number 10. Goes where
 });
 const NXHINT={fire:'the oldest flame',water:'the thing that flows',earth:'the heavy ground',nature:'the green plants',lightning:'a fast spark from the sky',gravity:'the pull toward the ground',stars:'the small lights of the night',ice:'the cold that holds things still',laser:'the thin, hot beam from a machine',poison:'the slow sting',light:'the brightest beam',shadow:'the dark place',thunder:'the slow, loud blast',lava:'the wizard of dark magic',nova:'the sudden burst of cold',meteor:'a rock from space',magnet:'the force that pulls iron',jet:'the loud engine',spore:'the floating seeds',crystal:'the hard, clear stone',warp:'the captain who commands the waves',letter:'the paperwork with a red seal',
  bricks:'the pile of colourful toy blocks',watergun:'the toy that squirts a thin stream',icemelon:'the frozen red and green fruit',soldier:'the trained fighter in uniform',soccer:'the runner in the red and blue shirt',console:'the handheld game with the bright screen',archer:'the dark archer with white eyes'};
-const NXSC={bricks:'a low wall of blocks stops and slows enemies',watergun:'wet enemies take more damage',icemelon:'cold pieces fly out and hit again',soldier:'extra bullets hit enemies nearby',soccer:'the ball bounces on to another enemy',console:'rainbow lasers split to more enemies',archer:'dark arrows hit more enemies'};
+const NXSC={bricks:'a low wall of blocks slows enemies by 30% for 1.5 seconds',watergun:'wet enemies take more damage',icemelon:'cold pieces fly out and hit again',soldier:'extra bullets hit enemies nearby',soccer:'the ball bounces on to another enemy',console:'rainbow lasers split to more enemies',archer:'dark arrows hit more enemies'};
 const NXRC={fire:'enemies start to burn',water:'enemies are slowed',earth:'enemies are stunned for a short time',nature:'roots hold enemies in place',lightning:'sparks jump to 2 more enemies',gravity:'enemies are pulled together',stars:'3 small lights fall around the target',ice:'enemies are held still for a moment',laser:'a hot beam cuts through the line',poison:'enemies are made sick and lose health over time',light:'a bright bolt hits the target again',shadow:'enemies are marked and take more damage',thunder:'a loud blast lands a moment later',lava:'a pool of dark magic stays on the road',nova:'a cold ring slows enemies near the target',meteor:'a small rock falls from the sky',magnet:'enemies are pulled in',jet:'enemies are pushed back',spore:'a slow cloud stays on the road',crystal:'3 sharp shards fly at enemies',warp:'a wave crashes over nearby enemies',letter:'papers fly at enemies and slow them'};
 const NXCL=id=>NEWS.indexOf(id)>=0?NXSC[id]:NXRC[id];
 const capF=s=>s.charAt(0).toUpperCase()+s.slice(1);
@@ -2257,7 +2257,7 @@ function towerEffects(t){
   const s=SKM[t.id],f=s.fx||{},o=[];
   if(f.burn)o.push({t:'Sets enemies on fire'});
   if(f.slow)o.push({t:'Slows enemies to '+Math.round(f.slow[0]*100)+'% speed for '+f.slow[1]+' s'});
-  if(f.stun)o.push({t:'Stuns enemies for '+f.stun+' s'});
+  if(f.stun)o.push({t:f.stunP?'Stuns '+Math.round(f.stunP*100)+'% of enemies for '+f.stun+' s':'Stuns enemies for '+f.stun+' s'});
   if(f.pull)o.push({t:'Pulls enemies inward'});
   if(f.push)o.push({t:'Pushes enemies back'});
   if(f.poison)o.push({t:'Poison, stacks up to 5 times'});
@@ -2545,6 +2545,7 @@ function drawGem(x,y,s,col,al){
 }
 
 /* ----- tower emblems (origin = centre of the plinth top, drawn upward) ----- */
+const LTG=new WeakMap(),WGG=new WeakMap();
 const EMB={
 fire(tm,f){
   ctx.fillStyle='#3a2a28';ctx.beginPath();ctx.ellipse(0,1,10,4.5,0,0,TAU);ctx.fill();
@@ -2710,17 +2711,53 @@ speed(tm,f){
     ctx.beginPath();ctx.moveTo(-3.5,y+2.2);ctx.lineTo(0,y);ctx.lineTo(3.5,y+2.2);ctx.stroke();}
   ctx.lineCap='butt';ctx.strokeStyle='rgba(59,191,176,.7)';ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(0,-1,10+Math.sin(tm*6),3.5,0,0,TAU);ctx.stroke();
 },
-letter(tm,f){
-  const b=Math.sin(tm*2)*.6;
-  [[-1.6,-1.6,-.18],[1.4,-1.2,.14]].forEach(q=>{ctx.save();ctx.translate(q[0],q[1]-4);ctx.rotate(q[2]);ctx.fillStyle='#e6e1d3';ctx.fillRect(-5,-7,10,14);ctx.strokeStyle='#a69f8c';ctx.lineWidth=.5;ctx.strokeRect(-5,-7,10,14);ctx.restore();});
-  ctx.save();ctx.translate(0,-8+b);
-  ctx.fillStyle='rgba(26,46,74,.25)';ctx.fillRect(-4.2,-6.2,10,14);
-  ctx.fillStyle='#fdfcf8';ctx.fillRect(-5,-7,10,14);ctx.strokeStyle='#b8b1a0';ctx.lineWidth=.6;ctx.strokeRect(-5,-7,10,14);
-  ctx.fillStyle='#b3262c';ctx.beginPath();ctx.arc(0,-4.3,1.9,0,TAU);ctx.fill();ctx.fillStyle='#fdfcf8';ctx.beginPath();ctx.arc(0,-4.3,.7,0,TAU);ctx.fill();
-  ctx.fillStyle='#98a1ae';for(let j=0;j<4;j++)ctx.fillRect(-3.6,-1.2+j*1.8,j===3?4.4:7.2,.6);
+letter(tm,f,col,lv){
+  /* a stack of official papers on a navy folder; the top sheet is a full A4 letter with a black seal */
+  const b=Math.sin(tm*2)*.6,ink='#1f2329',L=lv||1;
+  let G=LTG.get(ctx);
+  if(!G){G={};
+    G.fo=ctx.createLinearGradient(-8,-11,8,4);G.fo.addColorStop(0,'#3a5579');G.fo.addColorStop(1,'#1a2e4a');
+    G.pa=ctx.createLinearGradient(0,-7.7,0,7.7);G.pa.addColorStop(0,'#ffffff');G.pa.addColorStop(1,'#efebe2');
+    G.cl=ctx.createLinearGradient(-5,0,-3,0);G.cl.addColorStop(0,'#7d8794');G.cl.addColorStop(.5,'#eef1f5');G.cl.addColorStop(1,'#8b95a2');
+    LTG.set(ctx,G);}
+  /* folder */
+  ctx.save();ctx.translate(.4,-3.4);ctx.rotate(-.07);
+  ctx.fillStyle='rgba(26,46,74,.3)';rr(-7.2,-7.2,15,15.6,1.4);ctx.fill();
+  ctx.fillStyle=G.fo;rr(-7.8,-8,15,15.6,1.4);ctx.fill();ctx.fillStyle='#2a4468';rr(-7.8,-9.7,6,2.6,1);ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.18)';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(-7,-7.4);ctx.lineTo(6.4,-7.4);ctx.stroke();
   ctx.restore();
-  if(f){ctx.globalCompositeOperation='lighter';glowC(0,-8,10,'#e0675e',.5);ctx.globalCompositeOperation='source-over';}
+  /* two loose sheets under the letter */
+  [[-1.9,-1.5,-.2],[1.7,-1.1,.16]].forEach(q=>{ctx.save();ctx.translate(q[0],q[1]-4);ctx.rotate(q[2]);
+    ctx.fillStyle='#e9e5d9';ctx.fillRect(-5.3,-7.4,10.6,14.8);ctx.strokeStyle='#a9a291';ctx.lineWidth=.45;ctx.strokeRect(-5.3,-7.4,10.6,14.8);
+    ctx.fillStyle='#bdb6a6';for(let j=0;j<4;j++)ctx.fillRect(-3.8,-2+j*1.9,j===3?4:7.4,.4);ctx.restore();});
+  /* the letter */
+  ctx.save();ctx.translate(0,-8.6+b);
+  ctx.fillStyle='rgba(26,46,74,.28)';ctx.fillRect(-4.7,-6.9,11,15.4);
+  ctx.fillStyle=G.pa;ctx.beginPath();ctx.moveTo(-5.5,-7.7);ctx.lineTo(3.2,-7.7);ctx.lineTo(5.5,-5.4);ctx.lineTo(5.5,7.7);ctx.lineTo(-5.5,7.7);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#b4ad9c';ctx.lineWidth=.5;ctx.stroke();
+  poly([[3.2,-7.7],[3.2,-5.4],[5.5,-5.4]],'#dcd6c6','#b4ad9c',.4);
+  if(L>=4){ctx.strokeStyle='rgba(201,154,46,.85)';ctx.lineWidth=.35;ctx.strokeRect(-4.8,-7,9.6,14);}
+  /* black seal with a small winged mark */
+  ctx.fillStyle=ink;ctx.beginPath();ctx.arc(0,-5.1,1.75,0,TAU);ctx.fill();
+  ctx.strokeStyle='#fdfcf8';ctx.lineWidth=.22;ctx.beginPath();ctx.arc(0,-5.1,1.35,0,TAU);ctx.stroke();
+  ctx.fillStyle='#fdfcf8';poly([[-.95,-5.25],[-.15,-5.55],[-.15,-4.95]],'#fdfcf8');poly([[.95,-5.25],[.15,-5.55],[.15,-4.95]],'#fdfcf8');
+  ctx.beginPath();ctx.arc(0,-5.55,.24,0,TAU);ctx.fill();ctx.fillRect(-.14,-5.3,.28,.8);
+  /* reference number (left) and date (right) */
+  ctx.fillStyle='#4a5568';ctx.fillRect(-4.4,-2.9,2.8,.38);ctx.fillRect(1.5,-2.9,2.9,.38);
+  /* subject line, then the body with a first-line indent */
+  ctx.fillStyle=ink;ctx.fillRect(-2.6,-1.95,5.2,.55);
+  ctx.fillStyle='#7a8290';[[-3,7.4],[-4.4,8.8],[-4.4,8.8],[-4.4,8.8],[-4.4,5.2]].forEach((q,j)=>ctx.fillRect(q[0],-.75+j*1.08,q[1],.36));
+  /* receiving stamp, signature and name line */
+  ctx.save();ctx.translate(-2.7,5.2);ctx.rotate(-.14);ctx.strokeStyle='rgba(31,35,41,.6)';ctx.lineWidth=.32;ctx.strokeRect(-1.9,-1,3.8,2);
+  ctx.fillStyle='rgba(31,35,41,.5)';ctx.fillRect(-1.4,-.55,2.8,.28);ctx.fillRect(-1.4,.15,1.9,.28);ctx.restore();
+  ctx.strokeStyle=ink;ctx.lineWidth=.4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(.8,4.9);ctx.bezierCurveTo(1.4,3.2,1.9,5.6,2.5,4.3);ctx.bezierCurveTo(2.9,3.4,3.4,5.4,4.3,4.1);ctx.stroke();ctx.lineCap='butt';
+  ctx.fillStyle='#9aa3b0';ctx.fillRect(.9,5.9,3.4,.32);
+  /* paper clip */
+  ctx.strokeStyle=G.cl;ctx.lineWidth=.5;rr(-4.4,-9,1.7,4.2,.85);ctx.stroke();rr(-4,-8.4,.9,2.9,.45);ctx.stroke();
+  ctx.restore();
+  if(f){ctx.globalCompositeOperation='lighter';glowC(0,-8,11,'#c9d1da',.35);ctx.globalCompositeOperation='source-over';}
 }
+
 };
 
 /* ----- towers: the look grows with each level; level 5 gets a crown and a grand aura ----- */
@@ -2991,14 +3028,63 @@ EMB.bricks=function(tm,f,col,lv){
   B(0,1.5,21,'#d9534f');B(-3,-4.5,14,'#e8c04a');B(2+Math.sin(tm*2)*.4,-10.5,10,'#4a7fc9');
 };
 EMB.watergun=function(tm,f,col,lv){
-  glowC(0,-8,13,col,.12+.3*f);
-  ctx.fillStyle='rgba(120,200,235,.55)';rr(-6.5,-17,10,6,2);ctx.fill();ctx.strokeStyle='#2a7f9e';ctx.lineWidth=.9;ctx.stroke();
-  ctx.strokeStyle='rgba(255,255,255,.8)';ctx.lineWidth=.8;ctx.beginPath();for(let i=0;i<=8;i++){const xx=-6+i*1.1;ctx.lineTo(xx,-13.6+Math.sin(tm*5+i)*.5);}ctx.stroke();
-  const g=ctx.createLinearGradient(0,-12,0,-3);g.addColorStop(0,'#5fc4de');g.addColorStop(1,'#237f9c');ctx.fillStyle=g;rr(-10,-11.5,19,7.5,2.5);ctx.fill();ctx.strokeStyle='#1c6a85';ctx.lineWidth=.9;ctx.stroke();
-  ctx.fillStyle='#e8a24a';rr(9,-9.6,4.5,3.2,1);ctx.fill();
-  poly([[-8,-4],[-3,-4],[-2,3],[-7,3.5]],'#2a8aa8','#1c6a85',.8);
-  ctx.strokeStyle='#1c6a85';ctx.lineWidth=1;ctx.beginPath();ctx.arc(-1,-3,2.6,.2,2.4);ctx.stroke();
-  if(f>0||Math.sin(tm*4)>.7){ctx.fillStyle='rgba(150,215,240,.9)';[[15,-9],[18,-8],[21,-6.5]].forEach((p,i)=>{ctx.beginPath();ctx.arc(p[0],p[1]+i*.8,1.4-i*.2,0,TAU);ctx.fill();});}
+  /* a modern pressurised water blaster: clear tank with sloshing water, white shell, gauge, pump grip and nozzle */
+  const L=lv||1,sl=Math.sin(tm*3)*.55,pu=f?-1.4:0;
+  let G=WGG.get(ctx);
+  if(!G){G={};
+    G.sh=ctx.createLinearGradient(0,-12.6,0,-6);G.sh.addColorStop(0,'#ffffff');G.sh.addColorStop(.55,'#e3ebf1');G.sh.addColorStop(1,'#b7c7d4');
+    G.pn=ctx.createLinearGradient(0,-11,0,-8.4);G.pn.addColorStop(0,'#5fc4de');G.pn.addColorStop(1,'#1f7c99');
+    G.wt=ctx.createLinearGradient(0,-17,0,-12.6);G.wt.addColorStop(0,'#7fd8ef');G.wt.addColorStop(1,'#2a8fb4');
+    G.br=ctx.createLinearGradient(0,-11,0,-7.8);G.br.addColorStop(0,'#e6ebf0');G.br.addColorStop(.5,'#a9b4c0');G.br.addColorStop(1,'#6f7c8a');
+    G.gr=ctx.createLinearGradient(-8,0,-3,0);G.gr.addColorStop(0,'#1a2e4a');G.gr.addColorStop(1,'#2f4d74');
+    G.cn=ctx.createLinearGradient(-15.5,0,-10,0);G.cn.addColorStop(0,'#8795a3');G.cn.addColorStop(.5,'#eef2f6');G.cn.addColorStop(1,'#7a8896');
+    G.st=ctx.createLinearGradient(16,0,27,0);G.st.addColorStop(0,'rgba(235,248,255,.95)');G.st.addColorStop(1,'rgba(95,196,222,0)');
+    WGG.set(ctx,G);}
+  glowC(1,-10,15,col,.12+.3*f);
+  /* level 4+: spare water canister and hose on the back */
+  if(L>=4){ctx.fillStyle=G.cn;rr(-15.6,-15.4,5.4,12.4,2.6);ctx.fill();ctx.strokeStyle='#4a5868';ctx.lineWidth=.6;ctx.stroke();
+    ctx.fillStyle='rgba(63,167,196,.8)';rr(-14.7,-10.4+sl*.4,3.6,6.4-sl*.4,1.5);ctx.fill();
+    ctx.strokeStyle='#2a4468';ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(-12.9,-15.3);ctx.quadraticCurveTo(-12,-19.5,-7.6,-17.4);ctx.stroke();}
+  /* barrel, pump grip and nozzle */
+  ctx.fillStyle=G.br;rr(5,-11,10.4,3.2,1.4);ctx.fill();ctx.strokeStyle='#4a5868';ctx.lineWidth=.6;ctx.stroke();
+  ctx.fillStyle='#2a4468';rr(6.4+pu,-7.9,7,2.8,1.3);ctx.fill();ctx.strokeStyle='#1a2e4a';ctx.lineWidth=.5;ctx.stroke();
+  ctx.strokeStyle='rgba(191,238,232,.55)';ctx.lineWidth=.4;ctx.beginPath();for(let i=0;i<5;i++){const xx=7.6+pu+i*1.2;ctx.moveTo(xx,-7.5);ctx.lineTo(xx,-5.5);}ctx.stroke();
+  ctx.fillStyle=L>=5?'#e3b64a':'#e8a24a';rr(14.6,-11.5,2.4,4.2,1);ctx.fill();ctx.strokeStyle='#8a5a1c';ctx.lineWidth=.5;ctx.stroke();
+  ctx.fillStyle='#1a2e4a';rr(16.6,-10.3,1.3,1.8,.5);ctx.fill();
+  /* main shell */
+  ctx.fillStyle=G.sh;ctx.beginPath();ctx.moveTo(-9.8,-12.6);ctx.lineTo(6,-12.6);ctx.quadraticCurveTo(8.6,-12.6,8.6,-10);ctx.lineTo(8.6,-7.6);ctx.lineTo(-.8,-6.2);ctx.lineTo(-9,-6.2);
+  ctx.quadraticCurveTo(-11.2,-6.2,-11.2,-8.6);ctx.lineTo(-11.2,-11.2);ctx.quadraticCurveTo(-11.2,-12.6,-9.8,-12.6);ctx.closePath();ctx.fill();ctx.strokeStyle='#4a6a85';ctx.lineWidth=.8;ctx.stroke();
+  ctx.fillStyle=G.pn;rr(-8.6,-10.9,15,2.5,1.2);ctx.fill();
+  ctx.strokeStyle=L>=5?'#e3b64a':'#e8a24a';ctx.lineWidth=.45;ctx.beginPath();ctx.moveTo(-8.2,-7.6);ctx.lineTo(7.4,-7.6);ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.85)';ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(-9.6,-12);ctx.lineTo(5.8,-12);ctx.stroke();
+  ctx.fillStyle='#8795a3';rr(-12.2,-11.8,1.6,4.8,.7);ctx.fill();
+  /* pressure gauge */
+  ctx.fillStyle='#1a2e4a';ctx.beginPath();ctx.arc(-6.6,-9.6,2.15,0,TAU);ctx.fill();ctx.fillStyle='#f4f8fb';ctx.beginPath();ctx.arc(-6.6,-9.6,1.6,0,TAU);ctx.fill();
+  ctx.strokeStyle='#7a8290';ctx.lineWidth=.25;ctx.beginPath();for(let i=0;i<5;i++){const an=2.4+i*1.1;ctx.moveTo(-6.6+Math.cos(an)*1.15,-9.6+Math.sin(an)*1.15);ctx.lineTo(-6.6+Math.cos(an)*1.5,-9.6+Math.sin(an)*1.5);}ctx.stroke();
+  const na=3.2+(f?2.4:1.6+Math.sin(tm*2)*.35);ctx.strokeStyle='#c0392b';ctx.lineWidth=.35;ctx.beginPath();ctx.moveTo(-6.6,-9.6);ctx.lineTo(-6.6+Math.cos(na)*1.3,-9.6+Math.sin(na)*1.3);ctx.stroke();
+  /* status light */
+  const lp=.55+.45*Math.sin(tm*5);ctx.fillStyle='#2f6b52';ctx.beginPath();ctx.arc(4.4,-9.65,.75,0,TAU);ctx.fill();
+  ctx.globalCompositeOperation='lighter';glowC(4.4,-9.65,f?3.2:2.2,'#3fbf8a',f?.9:.5*lp);ctx.globalCompositeOperation='source-over';
+  /* grip, trigger guard and trigger */
+  ctx.fillStyle=G.gr;ctx.beginPath();ctx.moveTo(-8.8,-6.4);ctx.lineTo(-3.4,-6.4);ctx.lineTo(-2.3,2.4);ctx.quadraticCurveTo(-2.3,3.4,-3.4,3.5);ctx.lineTo(-6.8,3.8);ctx.quadraticCurveTo(-7.9,3.8,-7.9,2.8);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#12233a';ctx.lineWidth=.6;ctx.stroke();
+  ctx.strokeStyle='rgba(191,238,232,.35)';ctx.lineWidth=.35;ctx.beginPath();for(let i=0;i<4;i++){const yy=-4.4+i*1.8;ctx.moveTo(-7.4,yy+.4);ctx.lineTo(-4,yy);}ctx.stroke();
+  ctx.strokeStyle='#2a4468';ctx.lineWidth=.9;ctx.beginPath();ctx.moveTo(-3,-6.2);ctx.quadraticCurveTo(-2.6,-2.6,1.6,-3.2);ctx.lineTo(2.4,-6.6);ctx.stroke();
+  poly([[-1.2,-6.2],[.2,-6.2],[-.2,-4.2],[-1,-4.4]],'#e8a24a','#8a5a1c',.4);
+  /* clear pressure tank with sloshing water and rising bubbles */
+  rr(-7.4,-19.6,11.6,7,3.4);ctx.fillStyle='rgba(205,236,248,.45)';ctx.fill();
+  ctx.save();rr(-7.4,-19.6,11.6,7,3.4);ctx.clip();
+  ctx.fillStyle=G.wt;ctx.beginPath();ctx.moveTo(-7.6,-12.4);for(let i=0;i<=12;i++){const xx=-7.6+i*1;ctx.lineTo(xx,-16.6+sl*(i/12-.5)*1.6+Math.sin(tm*6+i*.9)*.25);}ctx.lineTo(4.4,-12.4);ctx.closePath();ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.75)';for(let i=0;i<3;i++){const k=(tm*.7+i/3)%1;ctx.beginPath();ctx.arc(-4.5+i*3.4+Math.sin(tm*3+i)*.4,-13.2-k*3.2,.35+.2*i,0,TAU);ctx.fill();}
+  ctx.restore();
+  rr(-7.4,-19.6,11.6,7,3.4);ctx.strokeStyle='#1c6a85';ctx.lineWidth=.8;ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(-5.2,-18.6);ctx.lineTo(1.6,-18.6);ctx.stroke();
+  ctx.fillStyle='#8795a3';rr(-8,-19,1.5,5.8,.6);ctx.fill();rr(3.6,-19,1.5,5.8,.6);ctx.fill();
+  ctx.fillStyle=L>=5?'#e3b64a':'#e8a24a';rr(-2.4,-21.1,3,1.7,.6);ctx.fill();ctx.strokeStyle='#8a5a1c';ctx.lineWidth=.4;ctx.stroke();
+  /* water: a strong jet when it fires, the odd drip when idle */
+  if(f){ctx.fillStyle=G.st;ctx.beginPath();ctx.moveTo(17.8,-10.2);ctx.quadraticCurveTo(22,-10.8,27,-9.6);ctx.lineTo(27,-7.6);ctx.quadraticCurveTo(22,-8.2,17.8,-8.6);ctx.closePath();ctx.fill();
+    ctx.fillStyle='rgba(180,228,244,.9)';[[24,-11.3,.7],[26.5,-6.9,.6],[21.5,-7.2,.5],[28.6,-8.7,.8]].forEach(q=>{ctx.beginPath();ctx.arc(q[0],q[1],q[2],0,TAU);ctx.fill();});}
+  else if(Math.sin(tm*4)>.75){ctx.fillStyle='rgba(150,215,240,.9)';[[18.8,-9.2],[20.4,-8.2]].forEach((q,i)=>{ctx.beginPath();ctx.arc(q[0],q[1]+i*.6,1.1-i*.3,0,TAU);ctx.fill();});}
 };
 EMB.icemelon=function(tm,f,col,lv){
   glowC(0,-7,14,'#bfe9f5',.14+.28*f);
@@ -3548,9 +3634,9 @@ function drawPend(p,tm){
     ctx.beginPath();ctx.moveTo(sx-9*(1-f),sy-30*(1-f));ctx.lineTo(sx,sy);ctx.stroke();ctx.lineCap='butt';glowC(sx,sy,8,'#dfe6ff',.8);ctx.globalCompositeOperation='source-over';
     const sp=[];for(let i=0;i<8;i++){const r=i%2?1.6:4.2,t=-1.5708+i*Math.PI/4;sp.push([sx+Math.cos(t)*r,sy+Math.sin(t)*r]);}poly(sp,'#ffffff');}
 }
-/* an original stylised red seal: rings, ticks and a winged guardian (not a copy of any real emblem) */
+/* an original stylised black seal: rings, ticks and a winged guardian (not a copy of any real emblem) */
 function drawSeal(R,tm,k){
-  const red='#b3262c',dk='#6e1418',lt='#e0675e';
+  const red='#1f2329',dk='#0b0c0e',lt='#8a939e';
   /* outer red circle border */
   ctx.strokeStyle=red;ctx.lineWidth=R*.07;ctx.beginPath();ctx.arc(0,0,R*1.18,0,TAU);ctx.stroke();
   ctx.lineWidth=R*.025;ctx.beginPath();ctx.arc(0,0,R*1.28,0,TAU);ctx.stroke();
@@ -3565,7 +3651,7 @@ function drawSeal(R,tm,k){
   ctx.beginPath();ctx.moveTo(0,-R*.3);ctx.lineTo(R*.17,-R*.05);ctx.lineTo(R*.12,R*.42);ctx.lineTo(0,R*.55);ctx.lineTo(-R*.12,R*.42);ctx.lineTo(-R*.17,-R*.05);ctx.closePath();ctx.fill();ctx.stroke();
   ctx.beginPath();ctx.arc(0,-R*.4,R*.12,0,TAU);ctx.fill();ctx.stroke();
   ctx.beginPath();ctx.moveTo(-R*.1,-R*.5);ctx.lineTo(0,-R*.72);ctx.lineTo(R*.1,-R*.5);ctx.closePath();ctx.fill();
-  ctx.globalCompositeOperation='lighter';[-1,1].forEach(sx=>glowC(sx*R*.045,-R*.41,R*.06,'#ffd2c2',.9));glowC(0,R*.05,R*.14,lt,.5);ctx.globalCompositeOperation='source-over';
+  ctx.globalCompositeOperation='lighter';[-1,1].forEach(sx=>glowC(sx*R*.045,-R*.41,R*.06,'#e8edf2',.9));glowC(0,R*.05,R*.14,lt,.5);ctx.globalCompositeOperation='source-over';
 }
 /* small level bars under each tower and the hold-to-upgrade ring */
 function towerMarks(tm){
@@ -3682,14 +3768,17 @@ function drawFx(tm){
           cx=mx-dy/dd*22*f.sd,cy=my+dx/dd*22*f.sd-18,u=1-k,x=u*u*f.x0+2*u*k*cx+k*k*f.x1,y=u*u*f.y0+2*u*k*cy+k*k*f.y1;
         ctx.save();ctx.translate(x,y);ctx.rotate(f.r0+k*1.1*f.sd);ctx.globalAlpha=Math.min(1,a*5,k0*6+.2);
         ctx.fillStyle='rgba(26,46,74,.22)';ctx.fillRect(-3.2,-4.1,7.6,10.4);
-        ctx.fillStyle='#fbfaf6';ctx.fillRect(-3.8,-5.3,7.6,10.6);ctx.strokeStyle='#c9c3b4';ctx.lineWidth=.5;ctx.strokeRect(-3.8,-5.3,7.6,10.6);
-        ctx.fillStyle='#b23a3a';ctx.beginPath();ctx.arc(0,-3.4,1.1,0,TAU);ctx.fill();
-        ctx.fillStyle='#9aa3b0';for(let j=0;j<4;j++)ctx.fillRect(-2.7,-1.4+j*1.55,j===3?3.4:5.4,.55);
+        poly([[-3.8,-5.3],[2.2,-5.3],[3.8,-3.7],[3.8,5.3],[-3.8,5.3]],'#fbfaf6','#b9b2a1',.5);
+        poly([[2.2,-5.3],[2.2,-3.7],[3.8,-3.7]],'#ddd7c8','#b9b2a1',.4);
+        ctx.fillStyle='#1f2329';ctx.beginPath();ctx.arc(0,-3.5,1.15,0,TAU);ctx.fill();ctx.fillStyle='#fbfaf6';ctx.beginPath();ctx.arc(0,-3.5,.5,0,TAU);ctx.fill();
+        ctx.fillStyle='#2d3748';ctx.fillRect(-1.8,-1.9,3.6,.6);
+        ctx.fillStyle='#9aa3b0';for(let j=0;j<4;j++)ctx.fillRect(j?-2.7:-1.9,-.7+j*1.35,j===3?3.4:(j?5.4:4.6),.5);
+        ctx.strokeStyle='#1f2329';ctx.lineWidth=.35;ctx.beginPath();ctx.moveTo(.2,4.3);ctx.quadraticCurveTo(1,3.3,1.5,4.2);ctx.quadraticCurveTo(2,4.9,2.7,3.8);ctx.stroke();
         ctx.restore();ctx.globalAlpha=1;break;}
       case 'emblem':{const k=1-a,dn=Math.min(1,k/.34),sc=1.65-.65*dn*dn,al=k<.34?dn:Math.max(0,1-(k-.34)/.66*1.05);
-        ctx.save();ctx.globalAlpha=al*.32;ctx.fillStyle='#3a0d10';ctx.fillRect(0,0,CW,CH);ctx.restore();
+        ctx.save();ctx.globalAlpha=al*.32;ctx.fillStyle='#0d1014';ctx.fillRect(0,0,CW,CH);ctx.restore();
         ctx.save();ctx.translate(f.x,f.y);ctx.scale(sc,sc);ctx.globalAlpha=al;
-        ctx.globalCompositeOperation='lighter';glowC(0,0,f.r*.9,'#c0392b',.45+.25*Math.sin(tm*14));ctx.globalCompositeOperation='source-over';
+        ctx.globalCompositeOperation='lighter';glowC(0,0,f.r*.9,'#c9d1da',.45+.25*Math.sin(tm*14));ctx.globalCompositeOperation='source-over';
         drawSeal(f.r*.42,tm,k);ctx.restore();ctx.globalAlpha=1;break;}
       case 'gem':drawGem(f.x,f.y,6.5,f.c,Math.min(1,a*1.5));break;
       case 'stxt':break;
@@ -3805,11 +3894,37 @@ requestAnimationFrame(frame);
 /* ============ INIT ============ */
 function makeIcon(){
   try{
-    const c=document.createElement('canvas');c.width=c.height=180;const x=c.getContext('2d');
-    const g=x.createLinearGradient(0,0,180,180);g.addColorStop(0,'#1a2e4a');g.addColorStop(1,'#1e4d8c');x.fillStyle=g;x.fillRect(0,0,180,180);
-    x.fillStyle='#56657d';x.fillRect(70,0,40,180);x.fillStyle='#d9c98f';for(let y=8;y<180;y+=34)x.fillRect(88,y,4,18);
-    x.fillStyle='#2a9d8f';x.beginPath();x.moveTo(90,40);x.lineTo(150,95);x.lineTo(98,86);x.lineTo(98,128);x.lineTo(118,142);x.lineTo(90,136);x.lineTo(62,142);x.lineTo(82,128);x.lineTo(82,86);x.lineTo(30,95);x.closePath();x.fill();
+    /* dark red icon: a stealth jet locked inside a targeting ring (original artwork) */
+    const c=document.createElement('canvas');c.width=c.height=180;const x=c.getContext('2d'),TAU=Math.PI*2;
+    let g=x.createLinearGradient(0,0,180,180);g.addColorStop(0,'#5a0f19');g.addColorStop(.55,'#35080e');g.addColorStop(1,'#1c0407');x.fillStyle=g;x.fillRect(0,0,180,180);
+    g=x.createRadialGradient(90,86,4,90,86,98);g.addColorStop(0,'rgba(190,48,58,.62)');g.addColorStop(.55,'rgba(120,24,34,.28)');g.addColorStop(1,'rgba(40,6,10,0)');x.fillStyle=g;x.fillRect(0,0,180,180);
+    /* faint receding runway lines */
+    x.strokeStyle='rgba(235,170,170,.10)';x.lineWidth=1.6;[[90,100,20,180],[90,100,160,180],[90,100,56,180],[90,100,124,180]].forEach(q=>{x.beginPath();x.moveTo(q[0],q[1]);x.lineTo(q[2],q[3]);x.stroke();});
+    /* targeting rings with ticks */
+    x.strokeStyle='rgba(240,200,200,.55)';x.lineWidth=2.4;x.beginPath();x.arc(90,88,66,0,TAU);x.stroke();
+    x.strokeStyle='rgba(217,178,90,.85)';x.lineWidth=1.6;x.beginPath();x.arc(90,88,57,0,TAU);x.stroke();
+    x.strokeStyle='rgba(240,200,200,.7)';x.lineWidth=2.4;
+    for(let i=0;i<4;i++){const a=i*Math.PI/2;x.beginPath();x.moveTo(90+Math.cos(a)*58,88+Math.sin(a)*58);x.lineTo(90+Math.cos(a)*78,88+Math.sin(a)*78);x.stroke();}
+    x.lineWidth=1.4;for(let i=0;i<24;i++){if(i%6===0)continue;const a=i*TAU/24;x.beginPath();x.moveTo(90+Math.cos(a)*62,88+Math.sin(a)*62);x.lineTo(90+Math.cos(a)*68,88+Math.sin(a)*68);x.stroke();}
+    /* engine glow behind the jet */
+    g=x.createRadialGradient(90,126,2,90,126,30);g.addColorStop(0,'rgba(255,170,120,.85)');g.addColorStop(1,'rgba(200,60,40,0)');x.fillStyle=g;x.fillRect(50,96,80,60);
+    /* jet: swept delta wings, fuselage, twin tails */
+    x.save();x.shadowColor='rgba(0,0,0,.55)';x.shadowBlur=8;x.shadowOffsetY=4;
+    g=x.createLinearGradient(34,0,146,0);g.addColorStop(0,'#6f8399');g.addColorStop(.28,'#aebfce');g.addColorStop(.5,'#dbe6ef');g.addColorStop(.72,'#9fb2c3');g.addColorStop(1,'#667a90');x.fillStyle=g;
+    x.beginPath();x.moveTo(90,28);x.lineTo(101,66);x.lineTo(146,112);x.lineTo(146,122);x.lineTo(104,108);x.lineTo(100,138);x.lineTo(112,148);x.lineTo(112,154);x.lineTo(90,148);x.lineTo(68,154);x.lineTo(68,148);x.lineTo(80,138);x.lineTo(76,108);x.lineTo(34,122);x.lineTo(34,112);x.lineTo(79,66);x.closePath();x.fill();x.restore();
+    x.strokeStyle='rgba(32,44,58,.8)';x.lineWidth=1.4;x.stroke();
+    /* shading panels and spine */
+    x.fillStyle='rgba(54,72,92,.42)';x.beginPath();x.moveTo(90,28);x.lineTo(101,66);x.lineTo(146,112);x.lineTo(146,122);x.lineTo(104,108);x.lineTo(90,100);x.closePath();x.fill();
+    x.strokeStyle='rgba(40,54,70,.6)';x.lineWidth=1.2;[[90,34,90,146],[80,70,56,104],[100,70,124,104]].forEach(q=>{x.beginPath();x.moveTo(q[0],q[1]);x.lineTo(q[2],q[3]);x.stroke();});
+    /* canopy */
+    g=x.createLinearGradient(0,50,0,84);g.addColorStop(0,'#9fc3dc');g.addColorStop(1,'#1f3347');x.fillStyle=g;x.beginPath();x.moveTo(90,48);x.quadraticCurveTo(99,64,96,82);x.lineTo(84,82);x.quadraticCurveTo(81,64,90,48);x.closePath();x.fill();
+    x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=1.1;x.beginPath();x.moveTo(88,58);x.lineTo(87,72);x.stroke();
+    /* exhaust */
+    x.fillStyle='#ffb48a';[[82,150],[98,150]].forEach(q=>{x.beginPath();x.ellipse(q[0],q[1],3.4,5.4,0,0,TAU);x.fill();});
+    /* gold edge frame */
+    x.strokeStyle='rgba(217,178,90,.65)';x.lineWidth=3;x.strokeRect(1.5,1.5,177,177);
     $('appIcon').href=c.toDataURL('image/png');
+    window.__icon=c;
   }catch(e){}
 }
 async function init(){
