@@ -328,7 +328,7 @@ html,body,*{touch-action:manipulation}
     <div class="card hero">
       <canvas id="titleArt" class="tart" role="img" aria-label="Airport Defense title: elemental towers guarding a runway at dusk while an airliner climbs away"></canvas>
       <h2>Defend the airport</h2>
-      <p>Build towers that stay for the whole run and upgrade them to level 5 for a grand aura and super skills. Six random elements at the start, then one random new element every 4 levels. 50 levels, each with three packs of 50 threats (fewer, tougher ones on armoured stages 8, 18, 28, 38 and 48). A random airport map every run. One run, one score.</p>
+      <p>Build towers that stay for the whole run and upgrade them to level 5 for a grand aura and super skills. Six random elements at the start (always at least three splash), then one random new element every 4 levels. 50 levels, each with three packs of 50 threats (fewer, tougher ones on armoured stages 8, 18, 28, 38 and 48). A random airport map every run. One run, one score.</p>
       <div class="stat"><span class="chip" id="stLv">Level 1</span><span class="chip" id="stSc">Score 0</span></div>
       <div class="row" id="runBtns" style="margin-top:12px;position:relative"></div>
       <div id="saverHome"></div>
@@ -339,7 +339,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 59">v.59</p>
+    <p class="ver mono" aria-label="Game version 61">v.61</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -498,7 +498,7 @@ const zoneOf=L=>Math.min(9,Math.floor((L-1)/5));
 /* mobK: normal threats (not bosses) have more health: 1.1 x 1.08 x 1.15 */
 /* mobK10: normal threats from level 10 have 25% more health. armD/armS: on armoured stages (8, 18, 28, 38, 48) splash and area hits do 10%, single shots 150% */
 /* bossK2: bosses have 8% more health, except the CAAT Van */
-const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.4,armD:1.95,n8K:1.15,wkNs:1.3,wkWi:2,wkShip:1.7,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.876,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
+const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.4,armD:1.95,n8K:1.15,wkNs:1.3,wkWi:2,wkShip:1.7,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.925,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
 /* health and gold per threat stay as they were with 204 threats a level (perRef), so fewer threats means less in total */
 const dens=L=>(12+3.4*L)/TUNE.perRef;
 const eF=L=>1+(Math.max(TUNE.eB,TUNE.eA-(TUNE.eA-TUNE.eB)*(L-1)/(TUNE.eL-1))-1);
@@ -872,7 +872,7 @@ function startLevel(L,snap){
   S={level:L,runStart:L,running:false,paused:false,speed:1,over:false,t:0,lives:TUNE.lives,maxLives:TUNE.lives,credits:Math.round(TUNE.startB+TUNE.startM*(L-1)),score:0,kills:0,leaks:0,
      towers:[],enemies:[],fx:[],pools:[],pend:[],jw:{},jwRun:{},sched:buildSchedule(L,TUNE.leadFirst),si:0,sel:null,last:null,tuneIdx:tuneIdx,hudT:0,shake:0,kb:0,started:false,shieldK:shieldK(L),links:[],seen:{},
      avail:STARTERS.slice()};
-  if(!snap){for(let k=0;k<6;k++)S.avail.push(pickStart());for(let n=4;n<=L;n+=TUNE.newEvery)S.avail.push(pickNew(n));}
+  if(!snap){for(let k=0;k<6;k++)S.avail.push(pickStart(k<3));for(let n=4;n<=L;n+=TUNE.newEvery)S.avail.push(pickNew(n));}
   if(snap){
     S.runStart=snap.runStart||1;S.lives=snap.lives;S.credits=snap.gold;S.score=snap.score;S.kills=snap.kills||0;S.streak=snap.stk|0;S.bestStreak=snap.bstk|0;S.jwRun=snap.jwRun||{};
     S.avail=(snap.avail||STARTERS).filter(id=>SKM[id]);STARTERS.forEach(id=>{if(S.avail.indexOf(id)<0)S.avail.push(id);});
@@ -903,8 +903,8 @@ function startLevel(L,snap){
   };
   setTimeout(()=>{try{$('bStart').focus();}catch(e){}},50);
 }
-/* the six random starting elements: attacking elements only */
-function pickStart(){const c=SK.filter(s=>!s.util&&S.avail.indexOf(s.id)<0);return c[(Math.random()*c.length)|0].id;}
+/* the six random starting elements: attacking elements only, and the first three are always splash */
+function pickStart(spl){const c=SK.filter(s=>!s.util&&S.avail.indexOf(s.id)<0&&(!spl||kindOf(s)==='Splash'));return c[(Math.random()*c.length)|0].id;}
 function pickNew(N){
   const c=SK.filter(s=>S.avail.indexOf(s.id)<0);if(!c.length)return null;
   return c[(Math.random()*c.length)|0].id;
@@ -1313,7 +1313,48 @@ NEWS.forEach((N,i)=>{NXP.concat(NEWS.slice(i+1)).forEach(P=>{
  ['summer','Summer Crush',['icemelon','fire','water']],['seedstorm','Seed Storm',['icemelon','nature','stars']],['sorbet','Sorbet Blizzard',['icemelon','ice','nova']],['smoothie','Smoothie Crash',['icemelon','meteor','gravity']],['melting','Hot Beach',['icemelon','warp','fire']],['pinkprism','Pink Prism',['icemelon','light','crystal']],
  ['airsupport','Air Support',['soldier','jet','meteor']],['nightraid','Night Raid',['soldier','shadow','laser']],['chemunit','Chemical Unit',['soldier','poison','spore']],['commandorder','Beach Landing',['soldier','letter','warp']],['armoured','Armoured Push',['soldier','earth','magnet']],['flare','Signal Flare',['soldier','light','stars']],
  ['arcade','Arcade Night',['console','light','stars']],['glitch','Glitch Storm',['console','lightning','laser']],['replay','Treasure Hunt',['console','warp','crystal']],['bossfight','Boss Fight',['console','soldier','meteor']],['partymode','Party Mode',['console','bricks','soccer']],
- ['goldengoal','Golden Goal',['soccer','light','lightning']],['derby','Fire Derby',['soccer','fire','lava']],['wintercup','Winter Cup',['soccer','ice','water']],['whistle','Beach Final',['soccer','letter','warp']],['curve','Curve Ball',['soccer','gravity','magnet']],['tackle','Toxic Tackle',['soccer','poison','shadow']]
+ ['goldengoal','Golden Goal',['soccer','light','lightning']],['derby','Fire Derby',['soccer','fire','lava']],['wintercup','Winter Cup',['soccer','ice','water']],['whistle','Beach Final',['soccer','letter','warp']],['curve','Curve Ball',['soccer','gravity','magnet']],['tackle','Toxic Tackle',['soccer','poison','shadow']],
+ /* more tri combos, spread across every element */
+ ['thunderhead','Thunderhead',['thunder','water','nature']],
+ ['darkstorm','Dark Storm',['thunder','shadow','lightning']],
+ ['lavaquake','Lava Quake',['lava','earth','thunder']],
+ ['jetstream','Jet Stream',['jet','water','stars']],
+ ['nightshade','Nightshade',['shadow','nature','poison']],
+ ['poisonpen','Poison Pen',['letter','shadow','poison']],
+ ['stamped','Stamped Order',['letter','lava','earth']],
+ ['frostbite','Frostbite',['nova','poison','shadow']],
+ ['dustdevil','Dust Devil',['spore','jet','gravity']],
+ ['starfall','Star Fall',['stars','meteor','thunder']],
+ ['kelp','Kelp Forest',['warp','water','nature']],
+ ['afterburner','Afterburner',['lava','jet','fire']],
+ ['swampgas','Swamp Gas',['spore','water','poison']],
+ ['springbloom','Spring Bloom',['light','nature','earth']],
+ ['blackice','Black Ice',['ice','shadow','gravity']],
+ ['aurora','Aurora',['nova','light','stars']],
+ ['quicksand','Quicksand',['earth','gravity','spore']],
+ ['overtime','Overtime Shift',['letter','console','thunder']],
+ ['stormfront','Storm Front',['thunder','jet','nova']],
+ ['forge','Crystal Forge',['lava','crystal','magnet']],
+ ['thorncage','Thorn Cage',['nature','magnet','earth']],
+ ['wetink','Wet Ink',['letter','water','lightning']],
+ ['darkmatter','Dark Matter',['shadow','meteor','gravity']],
+ ['pollen','Pollen Glow',['spore','light','stars']],
+ ['coldfog','Cold Fog',['nova','spore','water']],
+ ['airmail','Air Mail',['letter','jet','stars']],
+ ['geode','Geode',['earth','nova','crystal']],
+ ['skyhammer','Sky Hammer',['thunder','meteor','earth']],
+ ['moonpull','Moon Pull',['gravity','water','stars']],
+ ['cavern','Deep Cavern',['shadow','lava','earth']],
+ ['sparkfire','Wildfire',['fire','nature','lightning']],
+ ['firefly','Firefly Night',['light','shadow','fire']],
+ ['lasergrid','Laser Grid',['laser','magnet','crystal']],
+ ['icecastle','Ice Castle',['ice','bricks','crystal']],
+ ['waterpark','Water Park',['watergun','bricks','soccer']],
+ ['melonslicer','Melon Slicer',['icemelon','laser','magnet']],
+ ['pixelfrost','Pixel Frost',['console','ice','watergun']],
+ ['icecannon','Ice Cannon',['ice','soldier','laser']],
+ ['melonmatch','Melon Match',['icemelon','soccer','console']],
+ ['brickstorm','Brick Storm',['bricks','meteor','magnet']]
 ].forEach(r=>{const E=r[2];TRIS.push({k:'nx3_'+r[0],e:E,n:r[1],m:TRI_M,tri:1,c:mixC(mixC(SKM[E[0]].c,SKM[E[1]].c),SKM[E[2]].c),nx:E,
   d:'+80% damage. '+E.map(id=>NEWS.indexOf(id)>=0?NXSD[id]:NXRD[id]).join('; ')+'.'});});
 COMBOS.push({k:'photo',a:'nature',b:'light',n:'Photosynthesis',m:COMBO_M,c:'#9fcf6a',photo:1,d:'+60% damage. Sunlight feeds the plants: hits slow nearby enemies. While the link holds, every 5 minutes of play with at least 250 kills gives the terminal 1 health back.'});
@@ -1858,7 +1899,7 @@ function renderHome(){
     h+='<div class="zr'+(SAVE.maxL>b?' done':'')+'"><div><b>Zone '+(z+1)+' · '+ZONES[z].n+'</b><small>Levels '+a+' to '+b+' · Boss: '+esc(ET[ZONES[z].boss].n)+(z>=6?' · Storm Shield':'')+'</small></div>'
       +'<div class="zg" aria-label="New element orbs">'+els.map(s=>'<i class="gem" style="--c:'+s.c+'" title="'+esc(s.n)+' from level '+s.at+'"></i>').join('')+'</div></div>';
   }
-  h+='<div class="hint" style="margin-top:10px">You start with six random elements. After that, every 4 levels you receive one random new element or beacon. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</div>';
+  h+='<div class="hint" style="margin-top:10px">You start with six random elements, always including at least three splash towers. After that, every 4 levels you receive one random new element or beacon. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</div>';
   $('lvGrid').innerHTML=h;
 }
 /* title art, drawn in code: dusk runway, elemental towers, an airliner climbing out, threats on the horizon */
@@ -2384,7 +2425,7 @@ document.addEventListener('click',e=>{
     case 'skills':auInit();auResume();showScreen('scrSkills');break;
     case 'home':showScreen('scrHome');break;
     case 'top10':openTop10();break;
-    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it gets a crown and a grand aura) or sell it.</li><li>Every kill gives gold. You start with six random elements. After that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and gains a super skill.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Shadow, Poison) hit the strongest enemy in range much harder. Line elements (Laser, Jet Blast) hit every enemy in a line. The Official Letter (หนังสือราชการ) throws A4 papers at several enemies at once and slows them; at level 5 it stamps a huge red seal that stops everything around it. The beacons boost adjacent towers.</li><li>Level 5 towers release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. The Library lists them. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>The Library on the home screen gives background and clues for every element and the combinations it can join. Each clue names the partner elements; the name of a combination is recorded there once you form it. You can also pick the shirt of the Soccer Player there.</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Soccer Player: tap him, then tap any spot on the map to send him there. He stays where you send him and never moves on his own; he kicks at threats within his range, a little shorter than the Ice Watermelon. If nothing happens for a while he falls asleep; tap him to wake him.</li><li>Flawless streak: every level you clear with no threat reaching the terminal adds ×'+TUNE.stkM.toFixed(2)+' to your score multiplier (shown next to your score, or in the top corner of the map on phones). The multiplier applies to all points from kills and level clears. A single leak resets it to ×1.00.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
+    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it gets a crown and a grand aura) or sell it.</li><li>Every kill gives gold. You start with six random elements, always including at least three splash towers. After that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and gains a super skill.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Shadow, Poison) hit the strongest enemy in range much harder. Line elements (Laser, Jet Blast) hit every enemy in a line. The Official Letter (หนังสือราชการ) throws A4 papers at several enemies at once and slows them; at level 5 it stamps a huge red seal that stops everything around it. The beacons boost adjacent towers.</li><li>Level 5 towers release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. The Library lists them. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>The Library on the home screen gives background and clues for every element and the combinations it can join. Each clue names the partner elements; the name of a combination is recorded there once you form it. You can also pick the shirt of the Soccer Player there.</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Soccer Player: tap him, then tap any spot on the map to send him there. He stays where you send him and never moves on his own; he kicks at threats within his range, a little shorter than the Ice Watermelon. If nothing happens for a while he falls asleep; he wakes up by himself when threats come into his range, or you can tap him.</li><li>Flawless streak: every level you clear with no threat reaching the terminal adds ×'+TUNE.stkM.toFixed(2)+' to your score multiplier (shown next to your score, or in the top corner of the map on phones). The multiplier applies to all points from kills and level clears. A single leak resets it to ×1.00.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
     case 'closeM':closeModal();break;
     case 'player':if(S&&S.sel&&S.sel.type==='tower'){S.sel.mini=false;PDET=true;renderPanel();}break;
     case 'homepad':if(S&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){orderMove(t,t.x,t.y);t.gx=null;t.gy=null;renderPanel();}}break;
@@ -2717,9 +2758,11 @@ function soccerStep(t,sk,dt){
   t.cd-=dt*(1+t.boost+(S.od>0?1:0));if(t.kk>0)t.kk-=dt;if(t.bf>0)t.bf-=dt;
   let tg=null;
   if(S.botRun)t.nap=false;
-  if(t.nap){t.run=0;return;}
+  if(t.nap){t.run=0;const R0=sk.rng*rngM(t);
+    /* he wakes up by himself as soon as a threat comes into his range */
+    if(S.enemies.some(e=>!e.dead&&e.d>=0&&Math.hypot(e.x-t.px,e.y-t.py)<=R0+e.r)){t.nap=false;t.idle=0;if(!S.botRun)fxText(t.px,t.py-30,'Awake!','#1d7a4a');}else return;}
   let anyE=false;for(const e of S.enemies){if(!e.dead&&e.d>=0){anyE=true;break;}}
-  if(anyE||t.run||t.kk>0)t.idle=0;else{t.idle=(t.idle||0)+dt;if(t.idle>=4&&!S.botRun&&S.running){t.nap=true;t.run=0;if(!S.napToast){S.napToast=1;toast('The Soccer Player fell asleep. Tap him to wake him.');}}}
+  if(anyE||t.run||t.kk>0)t.idle=0;else{t.idle=(t.idle||0)+dt;if(t.idle>=4&&!S.botRun&&S.running){t.nap=true;t.run=0;if(!S.napToast){S.napToast=1;toast('The Soccer Player fell asleep. He wakes up when threats come into range, or tap him.');}}}
   const sp=(250+30*t.lvl)*.85*dt,gx=t.gx==null?t.x:t.gx,gy=t.gy==null?t.y:t.gy;
   const dx=gx-t.px,dy=gy-t.py,dd=Math.hypot(dx,dy);
   if(dd>1){const v=Math.min(dd,sp);t.px+=dx/dd*v;t.py+=dy/dd*v;t.rph=(t.rph||0)+dt*15;t.run=1;if(Math.abs(dx)>3)t.face=dx>0?1:-1;}else t.run=0;
