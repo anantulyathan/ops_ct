@@ -65,6 +65,7 @@ body.ingame .hdr{display:none}
 .btn:hover{background:var(--page)}
 .btn.p{background:linear-gradient(135deg,#1d776d,#23877c);color:#fff;border-color:#1d776d;box-shadow:0 3px 8px rgba(29,119,109,.35),inset 0 1px 0 rgba(255,255,255,.25)}
 .btn.p:hover{filter:brightness(1.06)}
+.btn.pm{background:linear-gradient(135deg,#124a33,#1a6347);border-color:#124a33;box-shadow:0 3px 8px rgba(18,74,51,.4),inset 0 1px 0 rgba(255,255,255,.2)}
 .btn.d{background:#fff;color:var(--err);border-color:#e7c3be}
 .btn:disabled,.btn[aria-disabled=true]{opacity:.5;cursor:not-allowed;filter:none}
 .row{display:flex;gap:8px}.row>*{flex:1}
@@ -345,7 +346,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 85">v.85</p>
+    <p class="ver mono" aria-label="Game version 88">v.88</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -439,7 +440,7 @@ const SK=[
 {id:'nova',n:'Frost Nova',c:'#6bc2c9',k:'nova',dmg:10,rad:80,cd:3,rng:80,cost:100,fx:{slow:[.5,1.5]},s:['sine',1500,300,.3,.16],d:'An instant ring that slows every enemy near the tower by 50% for 1.5 seconds.'},
 {id:'meteor',n:'Meteor',c:'#b5683c',k:'delay',dmg:32,rad:60,del:1,cd:5,rng:9999,cost:150,fx:{},s:['n',300,40,.5,.32],d:'Reaches anywhere on the map, but hits for about a quarter of a normal tower.'},
 {id:'magnet',n:'Magnet',c:'#c0566f',k:'splash',dmg:6,rad:60,cd:1.4,rng:120,cost:90,fx:{pull:1},s:['square',200,420,.18,.1],d:'Pulls enemies together with small hits.'},
-{id:'jet',n:'Jet Blast',c:'#7f9cc0',k:'beam',dmg:40,w:24,cd:1.3,rng:135,cost:100,fx:{push:22,pushP:.8},s:['n',900,260,.35,.2],d:'An engine blast that hits every enemy in a line, with an 80% chance to push each one back.'},
+{id:'jet',n:'Jet Blast',c:'#7f9cc0',k:'beam',dmg:40,w:24,cd:1.3,rng:135,cost:100,fx:{push:22,pushP:.33},s:['n',900,260,.35,.2],d:'An engine blast that hits every enemy in a line, with a 33% chance to push each one back.'},
 {id:'spore',n:'Poison Clouds',c:'#6fa83a',k:'pool',dps:7,rad:46,dur:5,cd:2.5,rng:120,cost:100,fx:{slow:[.7,1]},ven:[1.5,3],s:['n',500,250,.3,.12],d:'Releases a cloud of poison gas. Enemies inside are slowed by 30% and gain a venom stack every second (up to 5). An enemy that dies inside the cloud bursts into a small new cloud.'},
 {id:'crystal',n:'Crystal',c:'#b57fc4',k:'single',dmg:78,cd:1.1,rng:140,cost:100,fx:{},s:['triangle',1800,1100,.16,.1],d:'A crystal spear. High damage to one target.'},
 {id:'warp',n:'Captain Tide',c:'#2f7fa6',k:'splash',dmg:36,rad:64,cd:1.5,rng:125,cost:120,fx:{},s:['n',700,160,.32,.18],d:'A sea captain who sends a crashing wave onto a group of enemies. Level 5 super, Pirate Ship: one big ship hits up to 40 enemies in the biggest group for 1.5 times normal damage.'},
@@ -505,7 +506,7 @@ const zoneOf=L=>Math.min(9,Math.floor((L-1)/5));
 /* mobK: normal threats (not bosses) have more health: 1.1 x 1.08 x 1.15 */
 /* mobK10: normal threats from level 10 have 25% more health. armD/armS: on armoured stages (8, 18, 28, 38, 48) splash and area hits do 10%, single shots 150% */
 /* bossK2: bosses have 8% more health, except the CAAT Van */
-const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.4,armD:1.95,n8K:1.15,wkNs:1.3,wkWi:2,wkShip:1.7,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,cbTri:600,cbPair:100,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,slowCap:.5,stunCap:1.5,iceSupK:1.5,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.825,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
+const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.4,armD:1.95,n8K:1.15,wkNs:1.3,wkWi:2,wkShip:1.7,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.7225,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,cbTri:600,cbPair:100,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,slowCap:.5,stunCap:1.5,iceSupK:1.5,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.825,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
 /* health and gold per threat stay as they were with 204 threats a level (perRef), so fewer threats means less in total */
 const dens=L=>(12+3.4*L)/TUNE.perRef;
 const eF=L=>1+(Math.max(TUNE.eB,TUNE.eA-(TUNE.eA-TUNE.eB)*(L-1)/(TUNE.eL-1))-1);
@@ -2343,11 +2344,11 @@ function renderPanel(){
     const s=SKM[t.id];
     if(isMob(s)&&S.sel.mini){
       p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+t.lvl+'/'+MAXT+' · Kills <b id="kCnt">'+(t.kills||0)+'</b></span></h3><div class="hint" style="margin:-2px 0 6px">Tap the map to send '+(t.id==='archer'?'her':'him')+' there.</div>'+(t.id==='archer'?archHtml(t):'')
-        +'<div class="row">'+(t.lvl<MAXT?'<button class="btn p wide" data-act="upg" id="bUpg"><span class="ul">Upgrade</span><span class="us">Up</span> · '+upgCost(t)+'</button>'+(t.lvl<MAXT-1?'<button class="btn" data-act="upgmax" id="bUpgM" aria-label="Upgrade as far as your gold allows">Max</button>':''):'<button class="btn wide" disabled>Max level</button>')+'<button class="btn" data-act="player">'+(s.k==='kick'?'Player':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>';
+        +'<div class="row">'+(t.lvl<MAXT?'<button class="btn p wide" data-act="upg" id="bUpg"><span class="ul">Upgrade</span><span class="us">Up</span> · '+upgCost(t)+'</button>'+(t.lvl<MAXT-1?'<button class="btn p pm" data-act="upgmax" id="bUpgM" aria-label="Upgrade as far as your gold allows">Max</button>':''):'<button class="btn wide" disabled>Max level</button>')+'<button class="btn" data-act="player">'+(s.k==='kick'?'Player':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>';
       p.classList.add('mini');placePanel();return;
     }
     p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+t.lvl+'/'+MAXT+' · '+TIER[t.lvl].n+'</span></h3>'
-      +'<div class="row">'+(t.lvl<MAXT?'<button class="btn p wide" data-act="upg" id="bUpg"><span class="ul">Upgrade</span><span class="us">Up</span> · '+upgCost(t)+'</button>'+(t.lvl<MAXT-1?'<button class="btn" data-act="upgmax" id="bUpgM" aria-label="Upgrade as far as your gold allows">Max</button>':''):'<button class="btn wide" disabled>Max level</button>')
+      +'<div class="row">'+(t.lvl<MAXT?'<button class="btn p wide" data-act="upg" id="bUpg"><span class="ul">Upgrade</span><span class="us">Up</span> · '+upgCost(t)+'</button>'+(t.lvl<MAXT-1?'<button class="btn p pm" data-act="upgmax" id="bUpgM" aria-label="Upgrade as far as your gold allows">Max</button>':''):'<button class="btn wide" disabled>Max level</button>')
       +'<button class="btn d" data-act="sell">Sell +'+sellVal(t)+'</button><button class="btn" data-act="pdet" aria-expanded="'+pdetOn()+'" aria-controls="pdet">'+(pdetOn()?'Less':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>'
       +'<div id="pdet" class="pdet"'+(pdetOn()?'':' hidden')+'><div class="bx bxd"><h5>Details</h5><div class="hint mono">'+towerStat(t,t.lvl)+(s.cd?' · reload '+s.cd+' s':'')+'</div>'
       +(t.lvl<MAXT?'<div class="hint mono" style="margin-top:2px">Next: '+towerStat(t,t.lvl+1)+(t.lvl+1===MAXT?' · grand aura and super skill':'')+'</div>':'')
