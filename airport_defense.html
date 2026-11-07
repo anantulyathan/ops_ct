@@ -279,7 +279,8 @@ body.fit #panel.sh .ecard small{font-size:10px;padding-left:5px;padding-right:5p
 @media (min-width:600px){body.fit #panel.sh{left:50%;right:auto;transform:translateX(-50%);width:min(560px,100%)}body.fit #panel.sh .bgrid{grid-template-columns:repeat(5,1fr)}}
 .panel .row{flex-wrap:wrap}@media (max-width:420px){.panel .row>.btn{min-width:calc(50% - 4px)}}
 @media (max-width:340px){.lvg{grid-template-columns:repeat(4,1fr)}.bgrid{gap:6px}.ecard .en{font-size:11.5px}}
-.fxl{margin-top:4px;font-size:12.5px;line-height:1.4}.fxl div{padding:1px 0}.fxl .pl{color:#1d7a4a;font-weight:700}.fxl .nt{color:var(--lbl)}
+.fxl{margin-top:4px;font-size:12.5px;line-height:1.4}.fxl div{padding:1px 0}.fxl .pl{color:#1e5fb8;font-weight:700}.fxl .nt{color:var(--lbl)}
+.bx{display:block;border-radius:10px;padding:8px 10px;margin-top:8px}.bx h5{margin:0 0 4px;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:800}.bx.bxd{border:1px solid var(--bd);background:transparent}.bx.bxd h5{color:#4a5568}.bx.bxs{background:#e4f5f1;border:1px solid #b7e0d8}.bx.bxs h5{color:#1f6f66}.bx.bxb{background:#e5eefb;border:1px solid #b9cff0}.bx.bxb h5{color:#1e5fb8}.bx.bxb .hint,.bx.bxb .cbt{color:#1e5fb8}.bx.bxb .cbt{font-weight:700;margin-top:4px}
 .kline{margin-top:4px;font-size:13px;color:var(--txt)}.kline b{font-family:'JetBrains Mono',monospace}
 .rbn{border-radius:14px;padding:16px 12px;text-align:center;margin-bottom:10px;color:#fff;box-shadow:0 6px 16px rgba(26,46,74,.25)}.rbn b{display:block;font-size:30px;letter-spacing:.05em;line-height:1.15}.rbn span{font-size:13px;opacity:.95}
 .rbn.win{background:linear-gradient(135deg,#1e4d8c,#2a9d8f)}.rbn.lose{background:linear-gradient(135deg,#1a2e4a,#a8362b)}
@@ -339,7 +340,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 63">v.63</p>
+    <p class="ver mono" aria-label="Game version 67">v.67</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -417,37 +418,38 @@ function toast(msg,err){const d=document.createElement('div');d.className='toast
 /* ============ SKILLS (22) ============ */
 const SK=[
 {id:'fire',n:'Fire',c:'#d9694a',k:'splash',dmg:26,rad:48,cd:1.0,rng:120,cost:70,fx:{burn:[6,3]},s:['n',1400,300,.22,.2],d:'Fire splash that keeps burning.'},
-{id:'water',n:'Water',c:'#4a90c9',k:'splash',dmg:14,rad:56,cd:1.1,rng:120,cost:60,fx:{slow:[.5,2]},s:['sine',700,260,.18,.2],d:'Splash that slows enemies.'},
+{id:'water',n:'Water',c:'#4a90c9',k:'splash',dmg:14,rad:56,cd:1.1,rng:120,cost:60,fx:{slow:[.6,2]},s:['sine',700,260,.18,.2],d:'Splash that slows enemies.'},
 {id:'earth',n:'Earth',c:'#a98a5b',k:'splash',dmg:30,rad:62,cd:1.6,rng:110,cost:80,fx:{stun:.6},s:['sawtooth',120,50,.22,.22],d:'Wide ground splash with a short stun.'},
-{id:'nature',n:'Nature',c:'#4f8a5b',k:'splash',dmg:16,rad:56,cd:1.3,rng:120,cost:80,fx:{slow:[.55,2]},s:['triangle',500,820,.2,.14],d:'Thorn vines that tangle and slow enemies.'},
+{id:'nature',n:'Nature',c:'#4f8a5b',k:'splash',dmg:16,rad:56,cd:1.3,rng:120,cost:80,fx:{slow:[.6,2]},s:['triangle',500,820,.2,.14],d:'Thorn vines that tangle and slow enemies.'},
 {id:'lightning',n:'Lightning',c:'#e8c547',k:'chain',dmg:22,hops:4,jump:70,cd:1.2,rng:130,cost:90,fx:{},s:['square',1200,200,.14,.1],d:'Chain strike that jumps between enemies.'},
 {id:'gravity',n:'Gravity',c:'#8a6fc4',k:'splash',dmg:20,rad:70,cd:2.2,rng:120,cost:100,fx:{pull:.8},s:['sine',300,70,.3,.25],d:'Pulls enemies together.'},
 {id:'stars',n:'Stars',c:'#c9d4ff',k:'shower',dmg:12,rad:28,cnt:5,spread:55,cd:2.0,rng:140,cost:110,fx:{},s:['triangle',1600,900,.2,.14],d:'Star shower across an area.'},
-{id:'ice',n:'Ice',c:'#8fd6e8',k:'splash',dmg:12,rad:44,cd:1.6,rng:120,cost:90,fx:{stun:1.0,slow:[.35,2]},s:['sine',2000,900,.15,.14],d:'Freezes enemies in place briefly, then slows them by 65% for 2 seconds.'},
+{id:'ice',n:'Ice',c:'#8fd6e8',k:'splash',dmg:12,rad:44,cd:1.6,rng:120,cost:90,fx:{stun:.6,slow:[.6,1.2]},s:['sine',2000,900,.15,.14],d:'Freezes enemies in place briefly (0.6 seconds), then slows them by 40% for 1.2 seconds.'},
 {id:'laser',n:'Laser',c:'#d4577a',k:'beam',dmg:26,w:12,cd:1.1,rng:150,cost:90,fx:{},s:['sawtooth',1800,900,.12,.08],d:'A thin, hot beam that cuts through every enemy in a line.'},
 {id:'poison',n:'Poison',c:'#7fb04f',k:'single',dmg:30,cd:.8,rng:130,cost:80,fx:{poison:[6,4]},s:['sine',300,500,.14,.16],d:'A poison dart on one target. The poison stacks.'},
 {id:'light',n:'Light',c:'#fff6dc',k:'single',dmg:95,cd:1.5,rng:150,cost:100,fx:{},s:['sawtooth',900,1800,.22,.08],d:'A beam of light. Heavy damage to one target.'},
 {id:'shadow',n:'Shadow',c:'#5b4b7a',k:'single',dmg:60,cd:1.3,rng:130,cost:90,fx:{weak:[1.35,4]},s:['sine',150,80,.3,.22],d:'A dark bolt on one target. After that, the target takes extra damage.'},
 {id:'thunder',n:'Thunder',c:'#4f5fa8',k:'delay',dmg:50,rad:60,del:.8,cd:2.4,rng:140,cost:120,fx:{stun:.8},s:['n',200,60,.4,.28],d:'A delayed big blast. It also stuns in a ring.'},
-{id:'lava',n:'Lava',c:'#c0462f',k:'pool',dps:14,rad:40,dur:4,cd:3,rng:120,cost:110,fx:{},s:['sawtooth',90,60,.35,.18],d:'Leaves a burning pool on the ground.'},
-{id:'nova',n:'Frost Nova',c:'#6bc2c9',k:'nova',dmg:10,rad:80,cd:3,rng:80,cost:100,fx:{slow:[.35,2.5]},s:['sine',1500,300,.3,.16],d:'An instant ring that slows every enemy near the tower by 65% for 2.5 seconds.'},
+{id:'lava',n:'Dark Wizard',c:'#6a4fa0',k:'pool',dps:14,rad:40,dur:4,cd:3,rng:120,cost:110,fx:{},s:['sawtooth',90,60,.35,.18],d:'A dark wizard who casts pools of dark magic on the road. Every enemy inside keeps taking damage. Level 5 super, Hex Blast: dark magic splashes over a group and stuns it for 1 second.'},
+{id:'nova',n:'Frost Nova',c:'#6bc2c9',k:'nova',dmg:10,rad:80,cd:3,rng:80,cost:100,fx:{slow:[.6,1.5]},s:['sine',1500,300,.3,.16],d:'An instant ring that slows every enemy near the tower by 40% for 1.5 seconds.'},
 {id:'meteor',n:'Meteor',c:'#b5683c',k:'delay',dmg:32,rad:60,del:1,cd:5,rng:9999,cost:150,fx:{},s:['n',300,40,.5,.32],d:'Reaches anywhere on the map, but hits for about a quarter of a normal tower.'},
 {id:'magnet',n:'Magnet',c:'#c0566f',k:'splash',dmg:6,rad:60,cd:1.4,rng:120,cost:90,fx:{pull:1},s:['square',200,420,.18,.1],d:'Pulls enemies together with small hits.'},
 {id:'jet',n:'Jet Blast',c:'#7f9cc0',k:'beam',dmg:40,w:24,cd:1.3,rng:135,cost:100,fx:{push:22},s:['n',900,260,.35,.2],d:'An engine blast that hits every enemy in a line and pushes them back.'},
 {id:'spore',n:'Spore Cloud',c:'#a6a85a',k:'pool',dps:7,rad:46,dur:5,cd:2.5,rng:120,cost:100,fx:{slow:[.7,1]},s:['n',500,250,.3,.12],d:'A cloud that stays, hurts and slows enemies.'},
 {id:'crystal',n:'Crystal',c:'#b57fc4',k:'single',dmg:78,cd:1.1,rng:140,cost:100,fx:{},s:['triangle',1800,1100,.16,.1],d:'A crystal spear. High damage to one target.'},
 {id:'warp',n:'Captain Tide',c:'#2f7fa6',k:'splash',dmg:36,rad:64,cd:1.5,rng:125,cost:120,fx:{},s:['n',700,160,.32,.18],d:'A sea captain who sends a crashing wave onto a group of enemies. Level 5 super, Pirate Ship: one big ship hits up to 40 enemies in the biggest group for 1.5 times normal damage.'},
-{id:'letter',n:'Official Letter',th:'หนังสือราชการ',c:'#b23a3a',k:'paper',dmg:22,cnt:3,cd:1.2,rng:140,cost:120,fx:{slow:[.75,1.5]},s:['triangle',900,1300,.08,.06],d:'Throws A4 papers at up to 3 enemies (one more per level). The paperwork slows them down. Level 5 super, Official Seal: a big seal that stuns every enemy around it for 2 seconds.'},
+{id:'letter',n:'Official Letter',th:'หนังสือราชการ',c:'#b23a3a',k:'paper',dmg:22,cnt:3,cd:1.2,rng:140,cost:120,fx:{slow:[.75,1.5]},s:['triangle',900,1300,.08,.06],d:'Throws A4 papers at up to 3 enemies (one more per level). The paperwork slows them down. Level 5 super, Official Seal: a big seal that stuns every enemy around it for 1.5 seconds.'},
 {id:'bricks',n:'Toy Bricks',c:'#e0584f',k:'splash',lob:'brick',dmg:16,rad:50,cd:1.4,rng:120,cost:85,fx:{stun:.35},s:['square',260,140,.2,.14],d:'Drops a pile of toy bricks that stun for a moment and leave a low wall that slows enemies.'},
 {id:'watergun',n:'Water Gun',c:'#3fa7c4',k:'squirt',dmg:17,cd:.35,rng:130,cost:70,fx:{weak:[1.1,2.5],slow:[.88,.6]},cbK:1,s:['sine',900,500,.08,.06],d:'Very fast jets of water on one enemy. Wet enemies take 10% more damage. At level 5, each jet has a 15% chance to push the enemy back a little.'},
-{id:'icemelon',n:'Ice Watermelon',c:'#e8808a',k:'splash',lob:'melon',dmg:13,rad:56,cd:1.8,rng:125,cost:100,fx:{stun:.8,slow:[.55,2]},s:['sine',1500,600,.16,.14],d:'A frozen watermelon that breaks into cold slices. It freezes enemies, and the slices hit again.'},
+{id:'icemelon',n:'Ice Watermelon',c:'#e8808a',k:'splash',lob:'melon',dmg:13,rad:56,cd:1.8,rng:125,cost:100,fx:{stun:.8,slow:[.6,2]},s:['sine',1500,600,.16,.14],d:'A frozen watermelon that breaks into cold slices. It freezes enemies, and the slices hit again.'},
 {id:'soldier',n:'Modern Soldier',c:'#6f7f4f',k:'burst',mob:1,dmg:25,cnt:3,cd:1.3,rng:150,cost:100,fx:{},cbK:3,s:['square',500,160,.12,.09],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and fires a burst of three rounds at one enemy in range; the last round hits twice as hard. More rounds at levels 3 and 5,, and a bigger gun at every level. Each round also splits to one more enemy per level above 1, at the same power (4 more at level 5).'},
 {id:'console',n:'Game Console',c:'#5a6f8c',k:'beam',dmg:28,w:16,cd:1.2,rng:140,cost:110,fx:{weak:[1.12,2]},s:['square',880,1760,.1,.07],d:'A handheld game console that fires rainbow lasers through every enemy in a line. Dazzled enemies take 12% more damage for 2 seconds.'},
 {id:'soccer',n:'Soccer Player',c:'#3a5fb0',k:'kick',dmg:42,rad:48,cd:1,rng:111,cost:110,fx:{},crit:.15,s:['triangle',300,120,.14,.1],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and kicks a ball at enemies in range (a little shorter than Ice Watermelon). The ball splashes and has a 15% critical hit. Next to another tower, the ball takes its element.'},
+{id:'archer',n:'Dark Archer',c:'#5b4a86',k:'volley',mob:1,dmg:17,cd:1.25,rng:150,cost:110,fx:{},s:['triangle',520,260,.08,.08],d:'A dark elf archer. Tap her, then tap the map to send her anywhere. She shoots 3 arrows at once (one more each level, 7 at level 5, with +15% damage per arrow at level 5). Pick the element of her arrows in her menu.'},
 {id:'power',n:'Power Beacon',c:'#c98a3a',k:'aura',rad:165,boost:0,dmgB:.05,slow:1,cost:120,rng:165,util:1,s:['sawtooth',220,440,.14,.08],d:'Support tower. Nearby towers deal 5% more damage for each beacon level (25% at level 5).'},
 {id:'speed',n:'Speed Beacon',c:'#3bbfb0',k:'aura',rad:165,boost:.05,slow:1,cost:110,rng:165,util:1,s:['triangle',700,1400,.12,.08],d:'Support tower. Nearby towers attack 5% faster for each beacon level (25% at level 5).'}
 ];
-const AT={fire:1,water:1,earth:1,lightning:1,speed:2,power:2,laser:2,ice:2,poison:3,nature:3,light:4,spore:4,magnet:5,shadow:5,crystal:6,lava:6,jet:7,thunder:7,stars:8,nova:8,warp:9,meteor:9,gravity:10,letter:10,watergun:2,bricks:3,icemelon:5,soldier:6,soccer:7,console:8};
+const AT={fire:1,water:1,earth:1,lightning:1,speed:2,power:2,laser:2,ice:2,poison:3,nature:3,light:4,spore:4,magnet:5,shadow:5,crystal:6,lava:6,jet:7,thunder:7,stars:8,nova:8,warp:9,meteor:9,gravity:10,letter:10,watergun:2,bricks:3,icemelon:5,soldier:6,soccer:7,console:8,archer:7};
 SK.forEach(s=>s.at=AT[s.id]||1);SK.sort((a,b)=>a.at-b.at);
 const SKM={};SK.forEach(s=>SKM[s.id]=s);
 const STARTERS=[];/* every element is random from level 1 */
@@ -498,7 +500,7 @@ const zoneOf=L=>Math.min(9,Math.floor((L-1)/5));
 /* mobK: normal threats (not bosses) have more health: 1.1 x 1.08 x 1.15 */
 /* mobK10: normal threats from level 10 have 25% more health. armD/armS: on armoured stages (8, 18, 28, 38, 48) splash and area hits do 10%, single shots 150% */
 /* bossK2: bosses have 8% more health, except the CAAT Van */
-const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.4,armD:1.95,n8K:1.15,wkNs:1.3,wkWi:2,wkShip:1.7,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,cbTri:600,cbPair:100,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.925,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
+const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.4,armD:1.95,n8K:1.15,wkNs:1.3,wkWi:2,wkShip:1.7,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,cbTri:600,cbPair:100,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,slowCap:.6,stunCap:1.5,iceSupK:1.5,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.825,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
 /* health and gold per threat stay as they were with 204 threats a level (perRef), so fewer threats means less in total */
 const dens=L=>(12+3.4*L)/TUNE.perRef;
 const eF=L=>1+(Math.max(TUNE.eB,TUNE.eA-(TUNE.eA-TUNE.eB)*(L-1)/(TUNE.eL-1))-1);
@@ -635,6 +637,12 @@ const THEMES=[
  {n:'Dusk Approach',g0:'#a7bcc0',g1:'#8ea6ad',tr:['#4d7480','#567d84','#456a74'],tuft:'rgba(30,60,80,.3)',sh:'rgba(20,30,50,.28)',light:'rgba(255,214,170,.10)',shade:'rgba(20,30,60,.26)',pond:['#9fbfd0','#4d7a96'],bank:'#b9c8c4',dusk:1},
  {n:'Midnight Apron',g0:'#8296a8',g1:'#6f8499',tr:['#3f6070','#476a78','#385868'],tuft:'rgba(20,44,70,.32)',sh:'rgba(14,24,44,.32)',light:'rgba(190,215,255,.10)',shade:'rgba(14,24,50,.3)',pond:['#8aa9c4','#41678a'],bank:'#9fb0b8',dusk:1}
 ];
+/* livelier colours: every map colour is made more saturated, without going neon */
+(function(){const sat=(h,k,lk)=>{if(typeof h!=='string'||h[0]!=='#'||h.length!==7)return h;let r=parseInt(h.slice(1,3),16)/255,g=parseInt(h.slice(3,5),16)/255,b=parseInt(h.slice(5,7),16)/255;
+  const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let H=0,Sx=0;if(mx!==mn){const d=mx-mn;Sx=l>.5?d/(2-mx-mn):d/(mx+mn);H=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;H/=6;}
+  Sx=Math.min(.7,Sx*k);const l2=l*(lk||1);const q=l2<.5?l2*(1+Sx):l2+Sx-l2*Sx,pp=2*l2-q,f=t=>{t=(t+1)%1;return t<1/6?pp+(q-pp)*6*t:t<.5?q:t<2/3?pp+(q-pp)*(2/3-t)*6:pp;};
+  const c=v=>Math.round(v*255).toString(16).padStart(2,'0');return '#'+c(f(H+1/3))+c(f(H))+c(f(H-1/3));};
+  THEMES.forEach(T=>{['g0','g1','bank'].forEach(k=>T[k]=sat(T[k],2.3,.93));T.tr=T.tr.map(x=>sat(x,1.6));T.pond=T.pond.map(x=>sat(x,1.7));});})();
 let THEME=THEMES[0];
 const mapNo=L=>Math.min(4,Math.floor((L-1)/10));
 const pickOri=()=>(window.innerWidth>=700&&window.innerHeight>=480)?'wide':'tall';
@@ -829,6 +837,10 @@ let S=null;
 const dmgM=t=>(1+.15*(slv(t.id)-1))*LVM[t.lvl];
 const radM=t=>(1+.04*(slv(t.id)-1))*(1+.07*(t.lvl-1));
 const isMob=sk=>sk.k==='kick'||!!sk.mob;
+/* the Dark Archer's arrows carry one element the player picks from the elements of this run */
+const archList=()=>S.avail.filter(id=>{const k=SKM[id];return k&&!k.util&&!isMob(k);}).sort((a,b)=>SKM[a].at-SKM[b].at);
+function archEl(t){const L=archList();return t.ael&&L.indexOf(t.ael)>=0?t.ael:(L[0]||'fire');}
+const arrowN=t=>Math.min(7,2+t.lvl);
 const rngM=t=>(1+.03*(slv(t.id)-1)+.08*(t.lvl-1))*TUNE.rngK;
 const sellVal=t=>Math.round(t.spent*.6);
 const upgCost=t=>Math.round(SKM[t.id].cost*UPC[t.lvl]*(t.cm||1));
@@ -860,7 +872,7 @@ function tutOff(){if(!banner.tut)return;banner.tut=false;const b=$('banner');if(
 function saveRun(){
   if(!S||S.over)return;
   try{localStorage.setItem(RUNKEY,JSON.stringify({v:1,level:S.level,runStart:S.runStart,lives:S.lives,gold:Math.floor(S.credits),score:Math.round(S.score),kills:S.kills,stk:S.streak||0,bstk:S.bestStreak||0,
-    avail:S.avail,jwRun:S.jwRun,cbp:S.cbPts||0,seed:MAPSEED,ori:ORI,towers:S.towers.map(t=>({pad:t.pad,id:t.id,lvl:t.lvl,spent:t.spent,cm:t.cm||1,k:t.kills||0,bl:t.ball||null,g:t.gx!=null?[Math.round(t.gx),Math.round(t.gy)]:null})),at:Date.now()}));}catch(e){}
+    avail:S.avail,jwRun:S.jwRun,pkT:S.pkT||0,pkP:S.pkP||0,seed:MAPSEED,ori:ORI,towers:S.towers.map(t=>({pad:t.pad,id:t.id,lvl:t.lvl,spent:t.spent,cm:t.cm||1,k:t.kills||0,bl:t.ball||null,ae:t.ael||null,g:t.gx!=null?[Math.round(t.gx),Math.round(t.gy)]:null})),at:Date.now()}));}catch(e){}
 }
 function loadRun(){try{const r=JSON.parse(localStorage.getItem(RUNKEY)||'null');return r&&r.v===1&&r.level>=1&&r.level<=MAXL?r:null;}catch(e){return null;}}
 function clearRun(){try{localStorage.removeItem(RUNKEY);}catch(e){}}
@@ -874,9 +886,9 @@ function startLevel(L,snap){
      avail:STARTERS.slice()};
   if(!snap){for(let k=0;k<6;k++)S.avail.push(pickStart(k<3));for(let n=4;n<=L;n+=TUNE.newEvery)S.avail.push(pickNew(n));}
   if(snap){
-    S.runStart=snap.runStart||1;S.lives=snap.lives;S.credits=snap.gold;S.score=snap.score;S.kills=snap.kills||0;S.streak=snap.stk|0;S.bestStreak=snap.bstk|0;S.jwRun=snap.jwRun||{};S.cbPts=snap.cbp||0;
+    S.runStart=snap.runStart||1;S.lives=snap.lives;S.credits=snap.gold;S.score=snap.score;S.kills=snap.kills||0;S.streak=snap.stk|0;S.bestStreak=snap.bstk|0;S.jwRun=snap.jwRun||{};S.pkT=snap.pkT|0;S.pkP=snap.pkP|0;
     S.avail=(snap.avail||STARTERS).filter(id=>SKM[id]);STARTERS.forEach(id=>{if(S.avail.indexOf(id)<0)S.avail.push(id);});
-    (snap.towers||[]).forEach(o=>{if(PADS[o.pad]&&SKM[o.id]&&padFree(o.pad))S.towers.push({pad:o.pad,x:PADS[o.pad].x,y:PADS[o.pad].y,id:o.id,lvl:Math.min(MAXT,Math.max(1,o.lvl|0)),cd:.3,spent:o.spent||SKM[o.id].cost,cm:o.cm||1,boost:0,flash:0,kills:o.k||0,ball:o.bl||null,gx:o.g?o.g[0]:null,gy:o.g?o.g[1]:null,px:o.g?o.g[0]:null,py:o.g?o.g[1]:null});});
+    (snap.towers||[]).forEach(o=>{if(PADS[o.pad]&&SKM[o.id]&&padFree(o.pad))S.towers.push({pad:o.pad,x:PADS[o.pad].x,y:PADS[o.pad].y,id:o.id,lvl:Math.min(MAXT,Math.max(1,o.lvl|0)),cd:.3,spent:o.spent||SKM[o.id].cost,cm:o.cm||1,boost:0,flash:0,kills:o.k||0,ball:o.bl||null,ael:o.ae||null,gx:o.g?o.g[0]:null,gy:o.g?o.g[1]:null,px:o.g?o.g[0]:null,py:o.g?o.g[1]:null});});
     S.quiet=true;updCombos();S.quiet=false;
   }
   S.waves=TUNE.waves;
@@ -922,7 +934,8 @@ function bankJewels(){S.jw={};}
 function scMul(){return 1+TUNE.stkM*(S.streak||0);}
 /* combo bonus at each level clear: every tri combo group is worth more than the one before it (1st 600, 2nd 1,200, 3rd 1,800 ...); each pair combo adds a flat 100 */
 function comboGroups(){let t=0,p=0;for(const u of S.towers){if(!u.cb)continue;if(u.cb.def.tri)t++;else p++;}return {tri:Math.round(t/3),pair:Math.floor(p/2)};}
-function comboPts(L){const g=comboGroups(),raw=TUNE.cbTri*g.tri*(g.tri+1)/2+TUNE.cbPair*g.pair;return {g:g,pts:Math.round(raw*(1+.1*L)*TUNE.ptsK*scMul())};}
+/* one final bonus from the best number of tri and pair combos reached at any time in the run, scaled by the levels played */
+function comboFinal(L){const T=S.pkT||0,P=S.pkP||0,raw=TUNE.cbTri*T*(T+1)/2+TUNE.cbPair*P,played=Math.max(1,L-(S.runStart||1)+1);return Math.round(raw*(1+.1*L)*TUNE.ptsK*scMul()*played);}
 function advanceLevel(){
   const L=S.level;
   for(let i=0;i<2;i++)dropOrb(PADS[0].x,PADS[0].y);
@@ -930,14 +943,13 @@ function advanceLevel(){
   const flaw=!S.lvLeak;if(flaw){S.streak=(S.streak||0)+1;if(S.streak>(S.bestStreak||0))S.bestStreak=S.streak;}else S.streak=0;S.lvLeak=false;
   const bonus=Math.round((400*L+S.lives*20)*TUNE.ptsK*scMul()),cr=Math.round(TUNE.bonusB+TUNE.bonusM*L);
   S.score+=bonus;S.credits+=cr;
-  const cbx=comboPts(L);if(cbx.pts>0){S.score+=cbx.pts;S.cbPts=(S.cbPts||0)+cbx.pts;}
   SAVE.maxL=Math.max(SAVE.maxL,Math.min(MAXL,L+1));persist();
   const N=L+1,newZone=zoneOf(N)!==zoneOf(L);
   S.level=N;S.t=0;S.si=0;S.wave=0;S.sched=buildSchedule(N,TUNE.lead);S.pools=[];S.pend=[];S.shieldK=shieldK(N);
   $('hLvl').textContent=lvlLabel();
   sfx(SFX.up);
   const ne=N%TUNE.newEvery===0?grantElement(N):null;
-  const sub=(flaw?'Flawless · score ×'+scMul().toFixed(2)+' · ':'')+(cbx.pts>0?'Combo bonus +'+fmt(cbx.pts)+(cbx.g.tri?' ('+cbx.g.tri+' tri)':'')+' · ':'')+(ne?'New element: '+ne.n+' · ':'')+'+'+cr+' gold';
+  const sub=(flaw?'Flawless · score ×'+scMul().toFixed(2)+' · ':'')+(ne?'New element: '+ne.n+' · ':'')+'+'+cr+' gold';
   S.tuneIdx=randTune(S.tuneIdx);if(SAVE.sound&&AU.ctx)musicStart(S.tuneIdx,0);
   if(newZone)banner('Level '+N+' · '+ZONES[zoneOf(N)].n,sub);else banner('Level '+N,sub);
   if(N===31)setTimeout(()=>banner('Storm Shield','Combos push through it'),3400);
@@ -1070,8 +1082,8 @@ function ccK(){return (S.shieldK<1&&!SRC_GL)?Math.pow(S.shieldK,SRC_TRI?TUNE.tri
 function applyFx(e,fx,dm){
   if(!fx||e.dead)return;
   const k=ccK()*(SRC_WI?TUNE.wiCC:1);
-  if(fx.slow){e.slowF=Math.min(e.slowF,1-(1-fx.slow[0])*k*(e.boss?TUNE.bossSlow:1));e.slowT=Math.max(e.slowT,fx.slow[1]);}
-  if(fx.stun){e.stun=Math.max(e.stun,fx.stun*(e.boss?.3:1)*k);}
+  if(fx.slow){e.slowF=Math.min(e.slowF,1-(1-Math.max(TUNE.slowCap,fx.slow[0]))*k*(e.boss?TUNE.bossSlow:1));e.slowT=Math.max(e.slowT,fx.slow[1]);}
+  if(fx.stun){e.stun=Math.max(e.stun,Math.min(TUNE.stunCap,fx.stun)*(e.boss?.3:1)*k);}
   if(fx.burn){e.burn={d:fx.burn[0]*dm,t:fx.burn[1],src:CURT};}
   if(fx.poison){if(!e.pz)e.pz={n:0,d:fx.poison[0]*dm,t:0};e.pz.src=CURT;e.pz.n=Math.min(5,e.pz.n+1);e.pz.t=fx.poison[1];}
   if(fx.weak){e.weak={m:1+(fx.weak[0]-1)*k,t:fx.weak[1]};}
@@ -1092,9 +1104,11 @@ function superHit(t){
   const any=S.enemies.some(e=>!e.dead&&e.d>=0);
   t.sh=(t.sh||0)+1;t.ah=(t.ah||0)+1;
   if(t.ah>=TUNE.armHits&&any&&hasMeteor()){t.ah=0;t.sh=0;armageddon(t);return;}
-  if(t.sh>=TUNE.supHits&&any){t.sh=0;doSuper(t);}
-  if(t.sh>TUNE.supHits)t.sh=TUNE.supHits;if(t.ah>TUNE.armHits)t.ah=TUNE.armHits;
+  const need=supN(t);if(t.sh>=need&&any){t.sh=0;doSuper(t);}
+  if(t.sh>need)t.sh=need;if(t.ah>TUNE.armHits)t.ah=TUNE.armHits;
 }
+/* hits needed for a super: Ice Wall comes a third less often */
+const supN=t=>t&&t.id==='ice'?Math.round(TUNE.supHits*TUNE.iceSupK):TUNE.supHits;
 const hasMeteor=()=>S.towers.some(u=>u.id==='meteor'&&u.lvl>=MAXT);
 function armageddon(t){
   /* every 20th hit: the level 5 tower calls down fire across the whole map */
@@ -1137,7 +1151,7 @@ function comboHit(t,tg){
     case 'heatray':near(75,4,tg).forEach(e=>{fxProj({x:x,y:y},e,'#e0743f',.18);dmgE(e,.15*b);applyFx(e,{burn:[8,4]},dm);});break;
     case 'magma':S.pools.push({x:x,y:y,r:38,dps:.6*b,t:1.8,max:1.8,sk:SKM.lava,gl:d.gl,pair:1,cap:cap});hitList(near(45,cap),.15*b,{stun:.3},dm);break;
     case 'frost':hitList(near(60,cap),.1*b,null,dm);break;
-    case 'supernova':hitList(near(70,cap),.3*b,{slow:[.55,2]},dm);break;
+    case 'supernova':hitList(near(70,cap),.3*b,{slow:[.6,2]},dm);break;
     case 'magstorm':{const L=near(95,cap);pullTo(L,.6);hitList(L,.2*b,null,dm);break;}
     case 'prism':near(130,10,tg).forEach(e=>{fxBolt([{x:x,y:y},{x:e.x,y:e.y}],'#e4c9f0',.22,3,'beam');dmgE(e,1.3*b);});break;
     case 'volcanic':S.pend.push({t:.45,del:.45,x:x,y:y,sk:SKM.meteor,dmg:(t.ch%2===0?1.2:.8)*b,rad:55,dm:dm,gl:d.gl,tri:d.tri,pair:!d.tri&&!d.gl,cap:cap,big:true});break;
@@ -1148,8 +1162,8 @@ function comboHit(t,tg){
     case 'twilight':near(130,8,null).forEach(e=>{fxBolt([{x:x,y:y},{x:e.x,y:e.y}],'#a99ac8',.2,2.4,'beam');dmgE(e,1.3*b);applyFx(e,{weak:[1.4,3]},dm);});break;
     case 'nightshade':hitList(near(85,cap),.5*b,{poison:[6,4],weak:[1.2,3]},dm);break;
     case 'blight':S.pools.push({x:x,y:y,r:50,dps:.7*b,t:2.5,max:2.5,sk:SKM.spore,pair:1,cap:cap});applyFx(tg,{poison:[6,4]},dm);break;
-    case 'wildbloom':hitList(near(60,cap),.2*b,{stun:.4,slow:[.55,1.5]},dm);break;
-    case 'permafrost':near(80,cap).forEach(e=>{const fr=e.stun>0||e.slowF<1;dmgE(e,(fr?1.8:.75)*b);applyFx(e,{slow:[.55,1.5]},dm);});break;
+    case 'wildbloom':hitList(near(60,cap),.2*b,{stun:.4,slow:[.6,1.5]},dm);break;
+    case 'permafrost':near(80,cap).forEach(e=>{const fr=e.stun>0||e.slowF<1;dmgE(e,(fr?1.8:.75)*b);applyFx(e,{slow:[.6,1.5]},dm);});break;
     case 'singularity':{const L=near(100,cap);pullTo(L,.5);L.forEach(e=>fxProj({x:x,y:y-20},e,'#b57fc4',.12));hitList(L,.75*b,null,dm);break;}
     case 'ironrain':{const L=near(90,cap);pullTo(L,.5);S.pend.push({t:.4,del:.4,x:x,y:y,sk:SKM.meteor,dmg:1.5*b,rad:62,dm:dm,pair:1,cap:cap,big:true});break;}
     case 'plasma':hitList(near(60,cap),.15*b,{burn:[6,3],slow:[.6,1.5]},dm);break;
@@ -1160,14 +1174,14 @@ function comboHit(t,tg){
     case 'thornvenom':hitList(near(70,5),.2*b,{poison:[6,4],slow:[.65,1.5]},dm);break;
     case 'shardblast':near(110,4,tg).forEach(e=>{fxProj({x:x,y:y},e,'#c79ad6',.14);dmgE(e,.6*b);});break;
     case 'refraction':near(130,3,tg).forEach(e=>{fxBolt([{x:x,y:y},{x:e.x,y:e.y}],'#e9a3c6',.18,2.2,'beam');dmgE(e,.8*b);});break;
-    case 'deadline':{if(t.id!=='letter')break;applyFx(tg,{slow:[.5,2]},dm);const fut=posAt(tg.d+tg.sp*tg.slowF*2);S.pend.push({t:2,del:2,x:fut.x,y:fut.y,sk:SKM.letter,dmg:.8*b,rad:36,dm:dm,pair:1,cap:cap});break;}
+    case 'deadline':{if(t.id!=='letter')break;applyFx(tg,{slow:[.6,2]},dm);const fut=posAt(tg.d+tg.sp*tg.slowF*2);S.pend.push({t:2,del:2,x:fut.x,y:fut.y,sk:SKM.letter,dmg:.8*b,rad:36,dm:dm,pair:1,cap:cap});break;}
     case 'waxseal':{applyFx(tg,{burn:[8,3]},dm);S.pools.push({x:x,y:y,r:26,dps:.35*b,t:1.6,max:1.6,sk:SKM.lava,pair:1,cap:cap});break;}
     case 'jungle':{hitList(near(80,cap),.3*b,{stun:.5,poison:[6,4]},dm);S.pools.push({x:x,y:y,r:48,dps:.5*b,t:2,max:2,sk:SKM.spore,tri:1,cap:cap});break;}
     case 'frozentime':near(90,cap).forEach(e=>{const fr=e.stun>0;dmgE(e,(fr?1.6:.5)*b);applyFx(e,{stun:.7},dm);});fxRing(x,y,84,'#e6f4fa',.5,4);break;
     case 'railgun':{const dx=x-t.x,dy=y-t.y,dl=Math.hypot(dx,dy)||1,ux=dx/dl,uy=dy/dl,L=420;
       for(const e of S.enemies){if(e.dead||e.d<0)continue;const px=e.x-t.x,py=e.y-t.y,pr=px*ux+py*uy;if(pr<0||pr>L)continue;if(Math.abs(px*uy-py*ux)<=11+e.r)dmgE(e,.9*b);}
       fxBolt([{x:t.x,y:t.y-10},{x:t.x+ux*L,y:t.y+uy*L}],'#aab8e0',.3,4,'beam');break;}
-    case 'bureaucracy':{const L=near(90,cap);hitList(L,.35*b,{stun:.6,slow:[.5,2]},dm);if(!S.botRun)L.slice(0,4).forEach((e,i)=>fxPaper({x:x+rnd(-30,30),y:y-50},e,i));break;}
+    case 'bureaucracy':{const L=near(90,cap);hitList(L,.35*b,{stun:.6,slow:[.6,2]},dm);if(!S.botRun)L.slice(0,4).forEach((e,i)=>fxPaper({x:x+rnd(-30,30),y:y-50},e,i));break;}
     case 'comet':{const L=near(100,cap);pullTo(L,.55);S.pend.push({t:.5,del:.5,x:x,y:y,sk:SKM.meteor,dmg:.9*b,rad:60,dm:dm,tri:1,cap:cap,big:true});S.pools.push({x:x,y:y,r:40,dps:.35*b,t:2.5,max:2.5,sk:SKM.lava,tri:1,cap:cap});break;}
     case 'photo':{hitList(near(60,cap),.12*b,{slow:[.7,1]},dm);fxGlow(x,y,40,'#d9f2a0',.35,.6);break;}
     default:if(d.nx)nxHit(d,t,tg,b,dm,cap,x,y,near);
@@ -1176,7 +1190,7 @@ function comboHit(t,tg){
 }
 function splashCap(t){return TUNE.capB+TUNE.capL*(t.lvl-1)+(t.cb?(t.cb.def.tri?TUNE.capTri:TUNE.capPair):0);}
 /* towers that hit one target, a chain or a line (no splash) get a 20% chance of a critical hit for double damage */
-const NSPL={single:1,chain:1,beam:1,burst:1,squirt:1,paper:1};
+const NSPL={single:1,chain:1,beam:1,burst:1,squirt:1,paper:1,volley:1};
 function cast0(t,sk,tg,mult){
   const cr=!!NSPL[sk.k]&&Math.random()<TUNE.critC;HIT1=!!NSPL[sk.k];
   const cm=t.cb?t.cb.def.m:1,dm=dmgM(t)*mult*cm*(1+(t.pw||0))*(S.bc>0?2:1)*(cr?2:1),rm=radM(t);const o={x:t.x,y:t.y};
@@ -1197,6 +1211,12 @@ function cast0(t,sk,tg,mult){
         fxTrace({x:t.x,y:t.y-12},cur,i*.08);dmgE(cur,amt);if(!S.botRun&&i===n-1)burst(cur.x,cur.y,3,'#ffe18a',60,.25,2,{add:true});
         for(const e of ex){if(e.dead||e===cur)continue;if(!S.botRun)fxTrace({x:t.x,y:t.y-12},e,i*.08);dmgE(e,amt);}}
       fxGlow(t.x+6,t.y-12,10,'#ffe18a',.12,.8);break;}
+    case 'volley':{
+      const el=archEl(t),es=SKM[el],n=arrowN(t),R=sk.rng*rngM(t),amt=sk.dmg*dm*(t.lvl>=MAXT?1.15:1);
+      const L=[];for(const e of S.enemies){if(e.dead||e.d<0)continue;if(Math.hypot(e.x-t.x,e.y-t.y)<=R+e.r)L.push(e);}
+      L.sort((p,q)=>q.d-p.d);if(!L.length)L.push(tg);
+      for(let i=0;i<n;i++){const e=L[i%L.length];if(e.dead)continue;if(!S.botRun)fxProj({x:t.x,y:t.y-14},e,es.c,.12+i*.015);dmgE(e,amt);applyFx(e,es.fx||{},dm);}
+      if(!S.botRun)fxGlow(t.x,t.y-14,10,es.c,.12,.7);break;}
     case 'kick':{
       const ox=t.px==null?t.x:t.px,oy=t.py==null?t.y:t.py,crit=Math.random()<sk.crit,kd=dm*(crit?2:1),P=ballParts(t);
       const ksk=P.length?{id:P[0].id,c:P[0].c,fx:mergeFx(P)}:{id:'soccer',c:sk.c,fx:{}};
@@ -1261,7 +1281,7 @@ const COMBOS=[
 {k:'steam',a:'fire',b:'water',n:'Steam Burst',m:COMBO_M,c:'#cdd9e3',d:'Scalding steam: hits also burn and slow the threats around the target.'},
 {k:'tstorm',a:'water',b:'lightning',n:'Thunder Rain',m:COMBO_M,hops:3,c:'#3d7fc4',d:'Charged rain: +3 chain jumps at full strength, and each hit arcs to 6 nearby threats and slows them.'},
 {k:'heatray',a:'fire',b:'laser',n:'Heat Ray',m:COMBO_M,c:'#e07a5f',d:'The beam ignites: burning spreads to 4 nearby threats.'},
-{k:'magma',a:'earth',b:'lava',n:'Magma Rift',m:COMBO_M,c:'#b8432c',d:'The ground splits: every hit opens a lava crack and briefly stuns.'},
+{k:'magma',a:'earth',b:'lava',n:'Cursed Rift',m:COMBO_M,c:'#6a4f8c',d:'The ground splits: every hit opens a crack of dark magic and briefly stuns.'},
 {k:'frost',a:'water',b:'ice',n:'Frost Tide',m:COMBO_GL,gl:1,wi:1,c:'#7fc4dc',d:'+75% damage. A freezing wave chills threats around the target, and its hits cut through the Storm Shield.'},
 {k:'starstorm',a:'thunder',b:'stars',n:'Starstorm',m:COMBO_M,c:'#9aa6e8',d:'Starbolts rain down on threats around each blast.'},
 {k:'magstorm',a:'thunder',b:'magnet',n:'Magnetic Storm',m:COMBO_M,c:'#c0566f',d:'Drags nearby threats into the blast before it lands.'},
@@ -1275,14 +1295,14 @@ const COMBOS=[
 {k:'singularity',a:'gravity',b:'crystal',n:'Singularity Shard',m:COMBO_M,c:'#9a7fc8',d:'Pulls a group together, then a crystal burst hits them all.'},
 {k:'ironrain',a:'magnet',b:'meteor',n:'Iron Rain',m:COMBO_M,c:'#b5683c',d:'Drags threats under an extra iron meteor.'},
 {k:'plasma',a:'jet',b:'laser',n:'Plasma Jet',m:COMBO_M,c:'#b06aa0',d:'Hot plasma: threats around each hit burn and are slowed.'},
-{k:'afterburn',a:'jet',b:'lava',n:'Afterburn',m:COMBO_M,c:'#d9694a',d:'The blast leaves a burning trail on the taxiway.'},
+{k:'afterburn',a:'jet',b:'lava',n:'Hex Trail',m:COMBO_M,c:'#7a6aa8',d:'The blast leaves a trail of dark magic on the taxiway.'},
 {k:'frozen',a:'warp',b:'nova',n:'Frozen Tide',m:COMBO_M,c:'#9fc6d9',d:'A freezing wave: each burst also stops the threats around the target for a moment.'},
 {k:'timebloom',a:'warp',b:'spore',n:'Sea Fog',m:COMBO_M,c:'#8fb3a8',d:'Fog rolls in with the tide: every hit adds a bigger cloud that hurts faster.'},
 {k:'thornvenom',a:'nature',b:'poison',n:'Thorn Venom',m:COMBO_M,c:'#6f9a3f',d:'Poisoned thorns: hits stack venom on up to 5 nearby threats and slow them.'},
 {k:'shardblast',a:'jet',b:'crystal',n:'Shard Blast',m:COMBO_M,c:'#a99ad0',d:'The blast carries crystal shards: each hit fires 4 shards at nearby threats.'},
 {k:'refraction',a:'laser',b:'crystal',n:'Refraction',m:COMBO_M,c:'#d68ab6',d:'The beam bends through crystal: each hit splits into 3 extra beams.'},
 {k:'deadline',a:'letter',b:'warp',n:'Message in a Bottle',m:COMBO_M,c:'#5f8fa6',d:'Every letter is sent by sea: the threat is slowed hard, and 2 seconds later the bottle lands and hits again.'},
-{k:'waxseal',a:'letter',b:'lava',n:'Wax Seal',m:COMBO_M,c:'#b8432c',d:'Hot wax seals: each letter burns the threat it hits and drips a small burning pool.'}
+{k:'waxseal',a:'letter',b:'lava',n:'Cursed Seal',m:COMBO_M,c:'#6a3a6a',d:'Each letter carries a curse: it burns the threat it hits and leaves a small pool of dark magic.'}
 ];
 /* tri-element combos: three different elements on linked pads (a connected row, corner or triangle) */
 const TRIS=[
@@ -1290,21 +1310,21 @@ const TRIS=[
 {k:'horizon',e:['gravity','lightning','thunder'],n:'Event Horizon',m:TRI_GL,tri:1,gl:1,hops:5,c:'#6a4fa8',d:'+100% damage. Hits open a small black hole that pulls and stuns. Ignores the splash cap and cuts through the Storm Shield.'},
 {k:'cryobeam',e:['water','ice','laser'],n:'Cryo Beam',m:TRI_GL,tri:1,gl:1,wi:1,c:'#bfe3ef',d:'+100% damage. Each hit sends an icy shock through a wide ring, and cuts through the Storm Shield.'},
 {k:'eclipse',e:['light','shadow','stars'],n:'Solar Eclipse',m:TRI_M,tri:1,c:'#7a6aa8',d:'+80% damage. The sky darkens around the target, then a starburst hits every marked threat.'},
-{k:'comet',e:['meteor','magnet','lava'],n:'Comet Fall',m:TRI_M,tri:1,c:'#c76a3a',d:'+80% damage. Drags threats under a comet that leaves a lava pool.'},
+{k:'comet',e:['meteor','magnet','lava'],n:'Dark Comet',m:TRI_M,tri:1,c:'#c76a3a',d:'+80% damage. Drags threats under a comet that leaves a pool of dark magic.'},
 {k:'jungle',e:['nature','poison','spore'],n:'Toxic Jungle',m:TRI_M,tri:1,c:'#6a8f3a',d:'+80% damage. A poison jungle grows: threats are held, poisoned and caught in a toxic cloud.'},
 {k:'frozentime',e:['warp','nova','crystal'],n:'Glacier Tide',m:TRI_M,tri:1,c:'#a8d4e6',d:'+80% damage. An icy wave freezes threats, and frozen threats break for big damage.'},
 {k:'railgun',e:['magnet','laser','jet'],n:'Railgun',m:TRI_M,tri:1,c:'#8a9ac8',d:'+80% damage. Magnetic rails fire an iron slug through every threat in a long line.'},
 {k:'bureaucracy',e:['letter','warp','earth'],n:'Port Customs',m:TRI_M,tri:1,c:'#5a7a8a',d:'+80% damage. Everything stops at the port for the paperwork: threats near the target are stunned, slowed and buried in papers.'}
 ];
 /* ===== combos of the five newer elements: Toy Bricks, Water Gun, Ice Watermelon, Modern Soldier, Soccer Player ===== */
-const NEWS=['bricks','watergun','icemelon','soldier','soccer','console'];
+const NEWS=['bricks','watergun','icemelon','soldier','soccer','console','archer'];
 const NXP=['fire','water','earth','nature','lightning','gravity','stars','ice','laser','poison','light','shadow','thunder','lava','nova','meteor','magnet','jet','spore','crystal','warp','letter'];
-const NXADJ={fire:'Blazing',water:'Soaked',earth:'Rocky',nature:'Mossy',lightning:'Shocking',gravity:'Heavy',stars:'Starry',ice:'Frozen',laser:'Laser',poison:'Toxic',light:'Bright',shadow:'Dark',thunder:'Booming',lava:'Molten',nova:'Chilling',meteor:'Falling',magnet:'Magnetic',jet:'Turbo',spore:'Spore',crystal:'Crystal',warp:'Tidal',letter:'Official'};
-const NXNOUN={bricks:'Bricks',watergun:'Jets',icemelon:'Melon',soldier:'Squad',soccer:'Ball',console:'Pixels'};
-const NXNN={'bricks+watergun':'Sandcastle','bricks+icemelon':'Fruit Fort','bricks+soldier':'Barracks','bricks+soccer':'Goal Wall','watergun+icemelon':'Slush Cannon','watergun+soldier':'Water Patrol','watergun+soccer':'Sprinkler Pitch','icemelon+soldier':'Fruit Grenade','icemelon+soccer':'Melon Strike','soldier+soccer':'Counter Attack','bricks+console':'Block Builder','watergun+console':'Splash Mode','icemelon+console':'Frozen Combo','soldier+console':'Tactical Mode','soccer+console':'Pitch Pixels'};
+const NXADJ={fire:'Blazing',water:'Soaked',earth:'Rocky',nature:'Mossy',lightning:'Shocking',gravity:'Heavy',stars:'Starry',ice:'Frozen',laser:'Laser',poison:'Toxic',light:'Bright',shadow:'Dark',thunder:'Booming',lava:'Cursed',nova:'Chilling',meteor:'Falling',magnet:'Magnetic',jet:'Turbo',spore:'Spore',crystal:'Crystal',warp:'Tidal',letter:'Official'};
+const NXNOUN={bricks:'Bricks',watergun:'Jets',icemelon:'Melon',soldier:'Squad',soccer:'Ball',console:'Pixels',archer:'Volley'};
+const NXNN={'bricks+watergun':'Sandcastle','bricks+icemelon':'Fruit Fort','bricks+soldier':'Barracks','bricks+soccer':'Goal Wall','watergun+icemelon':'Slush Cannon','watergun+soldier':'Water Patrol','watergun+soccer':'Sprinkler Pitch','icemelon+soldier':'Fruit Grenade','icemelon+soccer':'Melon Strike','soldier+soccer':'Counter Attack','bricks+console':'Block Builder','watergun+console':'Splash Mode','icemelon+console':'Frozen Combo','soldier+console':'Tactical Mode','soccer+console':'Pitch Pixels','bricks+archer':'Arrow Slits','watergun+archer':'Rain Arrows','icemelon+archer':'Fruit Target','soldier+archer':'Sniper Nest','soccer+archer':'Long Shot','console+archer':'Pixel Bow'};
 /* what each new element adds (sig) and what each partner adds (rider), in short words for the card text */
-const NXSD={bricks:'a low brick wall stops and slows enemies',watergun:'soaked enemies take 12% more damage',icemelon:'cold slices fly out and hit again',soldier:'extra bullets hit 3 nearby enemies',soccer:'the ball bounces on to a second enemy',console:'rainbow lasers split to 3 more enemies'};
-const NXRD={fire:'enemies burn',water:'enemies are slowed',earth:'enemies are stunned',nature:'roots hold enemies',lightning:'lightning jumps to 2 more enemies',gravity:'enemies are pulled together',stars:'3 small stars fall',ice:'enemies are frozen for a moment',laser:'a beam cuts through the line',poison:'enemies are poisoned',light:'a bright bolt hits again',shadow:'enemies are marked for more damage',thunder:'a delayed blast lands',lava:'a burning pool stays on the road',nova:'a cold ring slows nearby enemies',meteor:'a small meteor falls',magnet:'enemies are pulled in',jet:'enemies are pushed back',spore:'a slow cloud stays on the road',crystal:'3 sharp shards fly out',warp:'a wave crashes over nearby enemies',letter:'papers fly out and slow enemies'};
+const NXSD={bricks:'a low brick wall stops and slows enemies',watergun:'soaked enemies take 12% more damage',icemelon:'cold slices fly out and hit again',soldier:'extra bullets hit 3 nearby enemies',soccer:'the ball bounces on to a second enemy',console:'rainbow lasers split to 3 more enemies',archer:'2 dark arrows hit nearby enemies'};
+const NXRD={fire:'enemies burn',water:'enemies are slowed',earth:'enemies are stunned',nature:'roots hold enemies',lightning:'lightning jumps to 2 more enemies',gravity:'enemies are pulled together',stars:'3 small stars fall',ice:'enemies are frozen for a moment',laser:'a beam cuts through the line',poison:'enemies are poisoned',light:'a bright bolt hits again',shadow:'enemies are marked for more damage',thunder:'a delayed blast lands',lava:'a pool of dark magic stays on the road',nova:'a cold ring slows nearby enemies',meteor:'a small meteor falls',magnet:'enemies are pulled in',jet:'enemies are pushed back',spore:'a slow cloud stays on the road',crystal:'3 sharp shards fly out',warp:'a wave crashes over nearby enemies',letter:'papers fly out and slow enemies'};
 function mixC(a,b){const p=parseInt(a.slice(1),16),q=parseInt(b.slice(1),16),m=s=>Math.round(((p>>s&255)+(q>>s&255))/2);return '#'+((1<<24)|(m(16)<<16)|(m(8)<<8)|m(0)).toString(16).slice(1);}
 NEWS.forEach((N,i)=>{NXP.concat(NEWS.slice(i+1)).forEach(P=>{
   const nn=NEWS.indexOf(P)>=0;
@@ -1312,25 +1332,25 @@ NEWS.forEach((N,i)=>{NXP.concat(NEWS.slice(i+1)).forEach(P=>{
     d:SKM[N].n+' and '+SKM[P].n+': '+NXSD[N]+(nn?'; '+NXSD[P]:', and '+NXRD[P])+'.'});
 });});
 /* triples: [key, name, elements] */
-[['siege','Castle Siege',['bricks','earth','meteor']],['frostfort','Frost Fort',['bricks','ice','nova']],['foundry','Hot Foundry',['bricks','fire','lava']],['maze','Garden Maze',['bricks','nature','spore']],['zapstack','Zap Stack',['bricks','lightning','magnet']],['gravstack','Gravity Stack',['bricks','gravity','crystal']],
+[['siege','Castle Siege',['bricks','earth','meteor']],['frostfort','Frost Fort',['bricks','ice','nova']],['foundry','Witch Forge',['bricks','fire','lava']],['maze','Garden Maze',['bricks','nature','spore']],['zapstack','Zap Stack',['bricks','lightning','magnet']],['gravstack','Gravity Stack',['bricks','gravity','crystal']],
  ['monsoon','Monsoon Squad',['watergun','water','thunder']],['firehose','Fire Hose',['watergun','fire','jet']],['acidrain','Acid Rain',['watergun','poison','spore']],['rainbow','Rainbow Spray',['watergun','light','crystal']],['slush','Slush Storm',['watergun','ice','nova']],['elecspray','Electric Spray',['watergun','lightning','laser']],
  ['summer','Summer Crush',['icemelon','fire','water']],['seedstorm','Seed Storm',['icemelon','nature','stars']],['sorbet','Sorbet Blizzard',['icemelon','ice','nova']],['smoothie','Smoothie Crash',['icemelon','meteor','gravity']],['melting','Hot Beach',['icemelon','warp','fire']],['pinkprism','Pink Prism',['icemelon','light','crystal']],
  ['airsupport','Air Support',['soldier','jet','meteor']],['nightraid','Night Raid',['soldier','shadow','laser']],['chemunit','Chemical Unit',['soldier','poison','spore']],['commandorder','Beach Landing',['soldier','letter','warp']],['armoured','Armoured Push',['soldier','earth','magnet']],['flare','Signal Flare',['soldier','light','stars']],
  ['arcade','Arcade Night',['console','light','stars']],['glitch','Glitch Storm',['console','lightning','laser']],['replay','Treasure Hunt',['console','warp','crystal']],['bossfight','Boss Fight',['console','soldier','meteor']],['partymode','Party Mode',['console','bricks','soccer']],
- ['goldengoal','Golden Goal',['soccer','light','lightning']],['derby','Fire Derby',['soccer','fire','lava']],['wintercup','Winter Cup',['soccer','ice','water']],['whistle','Beach Final',['soccer','letter','warp']],['curve','Curve Ball',['soccer','gravity','magnet']],['tackle','Toxic Tackle',['soccer','poison','shadow']],
+ ['goldengoal','Golden Goal',['soccer','light','lightning']],['derby','Hex Derby',['soccer','fire','lava']],['wintercup','Winter Cup',['soccer','ice','water']],['whistle','Beach Final',['soccer','letter','warp']],['curve','Curve Ball',['soccer','gravity','magnet']],['tackle','Toxic Tackle',['soccer','poison','shadow']],
  /* more tri combos, spread across every element */
  ['thunderhead','Thunderhead',['thunder','water','nature']],
  ['darkstorm','Dark Storm',['thunder','shadow','lightning']],
- ['lavaquake','Lava Quake',['lava','earth','thunder']],
+ ['lavaquake','Dark Quake',['lava','earth','thunder']],
  ['jetstream','Jet Stream',['jet','water','stars']],
  ['nightshade','Nightshade',['shadow','nature','poison']],
  ['poisonpen','Poison Pen',['letter','shadow','poison']],
- ['stamped','Stamped Order',['letter','lava','earth']],
+ ['stamped','Cursed Decree',['letter','lava','earth']],
  ['frostbite','Frostbite',['nova','poison','shadow']],
  ['dustdevil','Dust Devil',['spore','jet','gravity']],
  ['starfall','Star Fall',['stars','meteor','thunder']],
  ['kelp','Kelp Forest',['warp','water','nature']],
- ['afterburner','Afterburner',['lava','jet','fire']],
+ ['afterburner','Shadow Flame',['lava','jet','fire']],
  ['swampgas','Swamp Gas',['spore','water','poison']],
  ['springbloom','Spring Bloom',['light','nature','earth']],
  ['blackice','Black Ice',['ice','shadow','gravity']],
@@ -1338,7 +1358,7 @@ NEWS.forEach((N,i)=>{NXP.concat(NEWS.slice(i+1)).forEach(P=>{
  ['quicksand','Quicksand',['earth','gravity','spore']],
  ['overtime','Overtime Shift',['letter','console','thunder']],
  ['stormfront','Storm Front',['thunder','jet','nova']],
- ['forge','Crystal Forge',['lava','crystal','magnet']],
+ ['forge','Crystal Curse',['lava','crystal','magnet']],
  ['thorncage','Thorn Cage',['nature','magnet','earth']],
  ['wetink','Wet Ink',['letter','water','lightning']],
  ['darkmatter','Dark Matter',['shadow','meteor','gravity']],
@@ -1348,7 +1368,7 @@ NEWS.forEach((N,i)=>{NXP.concat(NEWS.slice(i+1)).forEach(P=>{
  ['geode','Geode',['earth','nova','crystal']],
  ['skyhammer','Sky Hammer',['thunder','meteor','earth']],
  ['moonpull','Moon Pull',['gravity','water','stars']],
- ['cavern','Deep Cavern',['shadow','lava','earth']],
+ ['cavern','Dark Cavern',['shadow','lava','earth']],
  ['sparkfire','Wildfire',['fire','nature','lightning']],
  ['firefly','Firefly Night',['light','shadow','fire']],
  ['lasergrid','Laser Grid',['laser','magnet','crystal']],
@@ -1358,14 +1378,16 @@ NEWS.forEach((N,i)=>{NXP.concat(NEWS.slice(i+1)).forEach(P=>{
  ['pixelfrost','Pixel Frost',['console','ice','watergun']],
  ['icecannon','Ice Cannon',['ice','soldier','laser']],
  ['melonmatch','Melon Match',['icemelon','soccer','console']],
- ['brickstorm','Brick Storm',['bricks','meteor','magnet']]
+ ['brickstorm','Brick Storm',['bricks','meteor','magnet']],
+ /* Dark Archer tri combos */
+ ['shadowhunt','Shadow Hunt',['archer','shadow','poison']],['stormbow','Storm Bow',['archer','lightning','thunder']],['nightfall','Nightfall',['archer','meteor','stars']],['cursedarrows','Cursed Arrows',['archer','lava','crystal']],['windarrows','Wind Arrows',['archer','jet','spore']],['huntparty','Hunting Party',['archer','soldier','soccer']],['frostbow','Frost Bow',['archer','ice','light']]
 ].forEach(r=>{const E=r[2];TRIS.push({k:'nx3_'+r[0],e:E,n:r[1],m:TRI_M,tri:1,c:mixC(mixC(SKM[E[0]].c,SKM[E[1]].c),SKM[E[2]].c),nx:E,
   d:'+80% damage. '+E.map(id=>NEWS.indexOf(id)>=0?NXSD[id]:NXRD[id]).join('; ')+'.'});});
 COMBOS.push({k:'photo',a:'nature',b:'light',n:'Photosynthesis',m:COMBO_M,c:'#9fcf6a',photo:1,d:'+60% damage. Sunlight feeds the plants: hits slow nearby enemies. While the link holds, every 5 minutes of play with at least 250 kills gives the terminal 1 health back.'});
 /* rainbow for the Game Console lasers */
 const RBW=['#e86a5a','#f0a64a','#f2d45a','#6cc47a','#4fa3d9','#8a6fc4'];
-const ICEWALL={id:'icewall',c:'#8fd6e8',fx:{slow:[.1,2]},st:2};
-const BRICKWALL={id:'bricks',c:'#e0584f',fx:{slow:[.55,.3]}},MELONSH={id:'icemelon',c:'#e8808a',fx:{slow:[.7,1]}};
+const ICEWALL={id:'icewall',c:'#8fd6e8',fx:{slow:[.3,1.5]},st:1.5};
+const BRICKWALL={id:'bricks',c:'#e0584f',fx:{slow:[.6,.3]}},MELONSH={id:'icemelon',c:'#e8808a',fx:{slow:[.7,1]}};
 /* signature of each new element (c = context of the hit) */
 const NXS={
 bricks:c=>{S.pools.push({x:c.x,y:c.y,r:44,dps:.2*c.b,t:2.2,max:2.2,sk:BRICKWALL,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap});hitList(c.near(50,c.cap),.1*c.b,{stun:.3},c.dm);},
@@ -1373,12 +1395,13 @@ watergun:c=>hitList(c.near(75,3),.15*c.b,{weak:[1.12,3],slow:[.85,1]},c.dm),
 icemelon:c=>{for(let i=0;i<4;i++){const a=i*TAU/4+rnd(0,1),r=rnd(18,42),dl=.1+i*.07;S.pend.push({t:dl,del:dl,x:c.x+Math.cos(a)*r,y:c.y+Math.sin(a)*r,sk:MELONSH,dmg:.22*c.b,rad:26,dm:c.dm,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap});}},
 soldier:c=>c.near(115,3,c.tg).forEach((e,i)=>{fxTrace({x:c.ox,y:c.oy-10},e,i*.06);dmgE(e,.45*c.b);}),
 soccer:c=>{const e=c.near(130,1,c.tg)[0];if(e){fxLob({x:c.x,y:c.y},e,'ball',c.d.c,.22);dmgE(e,.7*c.b);}},
+archer:c=>c.near(140,2,c.tg).forEach((e,i)=>{if(!S.botRun)fxProj({x:c.ox,y:c.oy-14},e,'#5b4a86',.12+i*.03);dmgE(e,.45*c.b);}),
 console:c=>c.near(130,3,c.tg).forEach((e,i)=>{fxBolt([{x:c.ox,y:c.oy-10},{x:e.x,y:e.y}],RBW[(i*2)%6],.2,2,'beam');dmgE(e,.5*c.b);applyFx(e,{weak:[1.12,2]},c.dm);})
 };
 /* what each older element adds to a combo */
 const NXR={
 fire:c=>hitList(c.near(60,c.cap),.1*c.b,{burn:[8,3]},c.dm),
-water:c=>hitList(c.near(60,c.cap),.08*c.b,{slow:[.55,2]},c.dm),
+water:c=>hitList(c.near(60,c.cap),.08*c.b,{slow:[.6,2]},c.dm),
 earth:c=>hitList(c.near(65,c.cap),.12*c.b,{stun:.5},c.dm),
 nature:c=>hitList(c.near(60,c.cap),.08*c.b,{stun:.3,slow:[.6,1.5]},c.dm),
 lightning:c=>c.near(110,2,c.tg).forEach(e=>{fxJag({x:c.x,y:c.y},e,'#e8c547',.2,2);dmgE(e,.4*c.b);}),
@@ -1393,7 +1416,7 @@ light:c=>{if(!c.tg.dead){fxBolt([{x:c.x,y:c.y-120},{x:c.x,y:c.y}],'#fff6dc',.2,4
 shadow:c=>hitList(c.near(70,c.cap),.05*c.b,{weak:[1.2,3]},c.dm),
 thunder:c=>S.pend.push({t:.7,del:.7,x:c.x,y:c.y,sk:SKM.thunder,dmg:.8*c.b,rad:52,dm:c.dm,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap}),
 lava:c=>S.pools.push({x:c.x,y:c.y,r:30,dps:.3*c.b,t:2,max:2,sk:SKM.lava,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap}),
-nova:c=>{hitList(c.near(80,c.cap),.05*c.b,{slow:[.55,2]},c.dm);fxRing(c.x,c.y,80,'#bfeef0',.4,3);},
+nova:c=>{hitList(c.near(80,c.cap),.05*c.b,{slow:[.6,2]},c.dm);fxRing(c.x,c.y,80,'#bfeef0',.4,3);},
 meteor:c=>S.pend.push({t:.55,del:.55,x:c.x,y:c.y,sk:SKM.meteor,dmg:.9*c.b,rad:52,dm:c.dm,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap,big:true}),
 magnet:c=>{const L=c.near(95,c.cap);pullTo(L,.55);hitList(L,.05*c.b,null,c.dm);},
 jet:c=>{const L=c.near(80,c.cap);pushBack(L,40,true);hitList(L,.1*c.b,null,c.dm);},
@@ -1466,6 +1489,7 @@ function updCombos(){
   }
   S.links=Object.keys(lm).map(k=>lm[k]);
   S.photoOn=S.links.some(l=>l.d.k==='photo');
+  {const g=comboGroups();if(g.tri>(S.pkT||0))S.pkT=g.tri;if(g.pair>(S.pkP||0))S.pkP=g.pair;}
 }
 /* super duper pure connection: one blast across the whole map */
 function superBlast(){
@@ -1579,7 +1603,7 @@ function pendAt(x,y,sk,dmg,rad,dm,del,gl){S.pend.push({t:del,del:del,x:x,y:y,sk:
 const SEALSK={id:'seal',c:'#b3262c',fx:{stun:1.4,slow:[.6,3],weak:[1.25,4]}};
 const SUP={
 fire:{n:'Firestorm',f(t,sk,b,dm){const L=inR(t,160);hitList(L,b*5,{burn:[18,4]},dm);impactFx(sk,t.x,t.y,160,0);L.slice(0,8).forEach((e,i)=>impactFx(sk,e.x,e.y,40,i*.05));}},
-water:{n:'Tidal Wave',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{slow:[.5,4]},dm);impactFx(sk,t.x,t.y,170,0);fxRing(t.x,t.y,120,'#cfe7f7',.7,6);}},
+water:{n:'Tidal Wave',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{slow:[.6,4]},dm);impactFx(sk,t.x,t.y,170,0);fxRing(t.x,t.y,120,'#cfe7f7',.7,6);}},
 earth:{n:'Earthquake',f(t,sk,b,dm){const L=alive();hitList(L,b*2.5,{stun:1.5},dm);L.slice(0,10).forEach((e,i)=>impactFx(sk,e.x,e.y,36,i*.04));S.shake=RM?0:.4;}},
 lightning:{n:'Thunder Storm',f(t,sk,b,dm){const A=alive();for(let i=0;i<12&&A.length;i++){const e=A[(Math.random()*A.length)|0];skyHit(e,'#fff3b0');dmgE(e,b*5);fxGlow(e.x,e.y,22,'#e8c547',.3,.8);}}},
 laser:{n:'Prism Cannon',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.length)return;const tg=A.slice().sort((p,q)=>q.hp-p.hp)[0];
@@ -1587,19 +1611,27 @@ laser:{n:'Prism Cannon',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.len
   A.forEach(e=>{const px=e.x-t.x,py=e.y-t.y,pr=px*ux+py*uy;if(pr<0||pr>L)return;if(Math.abs(px*uy-py*ux)<=W/2+e.r)dmgE(e,b*7);});
   const P=[{x:t.x,y:t.y-12},{x:t.x+ux*L,y:t.y+uy*L}];fxBolt(P,sk.c,.7,12,'beam');fxBolt(P,'#ffffff',.55,3,'beam');fxGlow(t.x,t.y-12,70,sk.c,.6,.9);S.shake=RM?0:.2;}},
 ice:{n:'Ice Wall',f(t,sk,b,dm){
-  /* a wall of ice across the taxiway just ahead of the leading threat in range; anything that touches it is slowed by 90% for 2 s */
+  /* a wall of ice across the taxiway just ahead of the leading threat in range; threats walk through it and are slowed by 70% for 1.5 s */
   const L=inR(t,200).filter(e=>e.d>=0);const lead=L.length?L.reduce((a,e)=>e.d>a.d?e:a,L[0]):alive().filter(e=>e.d>=0).sort((p,q)=>q.d-p.d)[0];
   const d=lead?lead.d+28:0,p0=posAt(d),p1=posAt(d+3),ang=Math.atan2(p1.y-p0.y,p1.x-p0.x);
-  S.pools.push({x:p0.x,y:p0.y,r:30,dps:0,t:6,max:6,sk:ICEWALL,ang:ang,cap:999});
+  S.pools.push({x:p0.x,y:p0.y,r:30,dps:0,t:2,max:2,sk:ICEWALL,ang:ang,cap:999});
   impactFx(sk,p0.x,p0.y,40,0);fxRing(p0.x,p0.y,46,'#e6f4fa',.6,4);if(!S.botRun)fxText(p0.x,p0.y-30,'ICE WALL','#2a7f9e');}},
 poison:{n:'Plague',f(t,sk,b,dm){const L=inR(t,170);for(let k=0;k<5;k++)hitList(L,0,{poison:[8,6]},dm);hitList(L,b*1,null,dm);impactFx(SKM.spore,t.x,t.y,170,0);}},
-nature:{n:'Entangle',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{stun:2.5},dm);L.slice(0,10).forEach((e,i)=>impactFx(sk,e.x,e.y,30,i*.04));}},
+nature:{n:'Entangle',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{stun:1.5},dm);L.slice(0,10).forEach((e,i)=>impactFx(sk,e.x,e.y,30,i*.04));}},
 light:{n:'Judgement',f(t,sk,b,dm){strongest(5).forEach((e,i)=>{fxBolt([{x:e.x,y:e.y-260},{x:e.x,y:e.y}],'#fff6dc',.5,8,'beam');dmgE(e,b*8);fxGlow(e.x,e.y,30,'#fff6dc',.4,.9);});}},
 spore:{n:'Spore Bloom',f(t,sk,b,dm){inR(t,180).slice(0,4).forEach(e=>S.pools.push({x:e.x,y:e.y,r:60,dps:sk.dps*dm*3,t:6,max:6,sk:sk,gl:SRC_GL}));}},
 magnet:{n:'Singularity',f(t,sk,b,dm){const L=inR(t,190);pullTo(L,1);hitList(L,b*3,null,dm);impactFx(SKM.gravity,t.x,t.y,120,0);}},
 shadow:{n:'Eclipse',f(t,sk,b,dm){const L=alive();hitList(L,b*1.5,{weak:[1.6,6]},dm);L.slice(0,10).forEach((e,i)=>impactFx(sk,e.x,e.y,26,i*.04));}},
 crystal:{n:'Crystal Barrage',f(t,sk,b,dm){const A=strongest(10);A.forEach((e,i)=>{fxProj({x:t.x,y:t.y-20},e,sk.c,.15+i*.02);dmgE(e,b*6);singleFx(sk,e.x,e.y,.15+i*.02);});}},
-lava:{n:'Eruption',f(t,sk,b,dm){inR(t,200).slice(0,5).forEach(e=>S.pools.push({x:e.x,y:e.y,r:52,dps:sk.dps*dm*3,t:6,max:6,sk:sk,gl:SRC_GL}));S.shake=RM?0:.25;}},
+lava:{n:'Hex Blast',f(t,sk,b,dm){
+  /* a burst of dark magic splashes over the biggest group near the wizard: heavy damage and a 1 s stun */
+  const A=inR(t,230).filter(e=>e.d>=0);if(!A.length)return;let c=A[0],bn=-1;for(const e of A){let n=0;for(const o of A)if(Math.hypot(o.x-e.x,o.y-e.y)<=90)n++;if(n>bn){bn=n;c=e;}}
+  const L=A.filter(e=>Math.hypot(e.x-c.x,e.y-c.y)<=110);hitList(L,b*5,{stun:1},dm);
+  S.pools.push({x:c.x,y:c.y,r:60,dps:sk.dps*dm*1.5,t:3,max:3,sk:sk,gl:SRC_GL});
+  if(!S.botRun){S.fx.push({k:'gloom',t:1.1,max:1.1});fxGlow(c.x,c.y,140,'#2a1838',.8,.9);fxRing(c.x,c.y,115,'#6a4fa0',.7,6);fxRing(c.x,c.y,70,'#b9a3e6',.5,3);
+    S.fx.push({k:'shock',x:c.x,y:c.y,r:110,c:'#1c1424',t:.7,max:.7,n:16,seed:Math.random()*6});
+    for(let i=0;i<cnt(18);i++){const a=rnd(0,TAU),v=rnd(60,160);fxP(c.x,c.y,Math.cos(a)*v,Math.sin(a)*v-40,i%3?'#3b2a5a':'#b9a3e6',rnd(.5,.9),rnd(2,4),{g:60,add:i%3===0});}
+    L.slice(0,cnt(10)).forEach((e,i)=>S.fx.push({k:'shock',x:e.x,y:e.y,r:26,c:'#2a1838',t:.4,max:.4,n:7,seed:i,dl:i*.03}));S.shake=RM?0:.35;hexSound();}}},
 jet:{n:'Afterburner',f(t,sk,b,dm){const L=inR(t,210);hitList(L,b*4,null,dm);pushBack(L,70,true);for(let i=0;i<3;i++){const e=L[i];if(e)fxBolt([{x:t.x,y:t.y-8},{x:e.x,y:e.y}],'#cfe0f5',.45,9,'beam');}fxGlow(t.x,t.y-8,120,'#8fb2e6',.5,.6);fxRing(t.x,t.y,150,'#cfe0f5',.6,4);}},
 thunder:{n:'Storm Front',f(t,sk,b,dm){inR(t,220).slice(0,6).forEach((e,i)=>pendAt(e.x,e.y,sk,b*6,70,dm,.4+i*.15,SRC_GL));}},
 stars:{n:'Starfall',f(t,sk,b,dm){const L=inR(t,190);for(let i=0;i<25&&L.length;i++){const e=L[(Math.random()*L.length)|0];pendAt(e.x+rnd(-15,15),e.y+rnd(-15,15),sk,b*2,30,dm,.1+i*.06,SRC_GL);}}},
@@ -1617,13 +1649,18 @@ gravity:{n:'Black Hole',f(t,sk,b,dm){const L=inR(t,200);pullTo(L,1);hitList(L,b*
 letter:{n:'Official Seal',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.length)return;const c=A.slice().sort((p,q)=>q.hp-p.hp)[0],R=150;
   S.fx.push({k:'emblem',x:c.x,y:c.y,r:R,t:1.7,max:1.7});
   S.pend.push({t:.58,del:.58,x:c.x,y:c.y,sk:SEALSK,dmg:b*5,rad:R,dm:dm,gl:SRC_GL,cap:999,big:true});
-  /* everyone near the seal stops to read it: a stun of 2 s (bosses 0.8 s) */
-  A.forEach(e=>{if(Math.hypot(e.x-c.x,e.y-c.y)<=R+e.r)e.stun=Math.max(e.stun||0,(e.boss?.8:2)*ccK());});
+  /* everyone near the seal stops to read it: a stun of 1.5 s (bosses 0.8 s) */
+  A.forEach(e=>{if(Math.hypot(e.x-c.x,e.y-c.y)<=R+e.r)e.stun=Math.max(e.stun||0,(e.boss?.8:TUNE.stunCap)*ccK());});
   if(!S.botRun)fxText(c.x,c.y-30,'STOP!','#b3262c');
   S.flashT=.5;S.flashC='#8a1f1f';sfx(['sawtooth',110,55,.6,.3],'seal');}},
-bricks:{n:'Great Wall',f(t,sk,b,dm){const L=inR(t,190);hitList(L,b*3,{stun:2},dm);L.slice(0,6).forEach((e,i)=>{impactFx(sk,e.x,e.y,36,i*.05);S.pools.push({x:e.x,y:e.y,r:44,dps:b*.5,t:5,max:5,sk:BRICKWALL,gl:SRC_GL});});impactFx(sk,t.x,t.y,150,0);S.shake=RM?0:.3;}},
+bricks:{n:'Great Wall',f(t,sk,b,dm){const L=inR(t,190);hitList(L,b*3,{stun:1.5},dm);L.slice(0,6).forEach((e,i)=>{impactFx(sk,e.x,e.y,36,i*.05);S.pools.push({x:e.x,y:e.y,r:44,dps:b*.5,t:5,max:5,sk:BRICKWALL,gl:SRC_GL});});impactFx(sk,t.x,t.y,150,0);S.shake=RM?0:.3;}},
 watergun:{n:'Flood',f(t,sk,b,dm){const L=inR(t,210);hitList(L,b*12,{weak:[1.35,6],slow:[.6,4]},dm);fxRing(t.x,t.y,150,'#cfeaf5',.7,6);fxRing(t.x,t.y,100,'#3fa7c4',.6,4);burst(t.x,t.y,20,'#9fd6ea',130,.8,3,{g:140});}},
-icemelon:{n:'Melon Blizzard',f(t,sk,b,dm){const L=alive();hitList(L,b*3,{stun:2.5,slow:[.5,4]},dm);L.slice(0,12).forEach((e,i)=>impactFx(sk,e.x,e.y,34,i*.04));fxRing(t.x,t.y,240,'#e6f4fa',.8,5);}},
+icemelon:{n:'Melon Blizzard',f(t,sk,b,dm){const L=alive();hitList(L,b*3,{stun:1.5,slow:[.6,4]},dm);L.slice(0,12).forEach((e,i)=>impactFx(sk,e.x,e.y,34,i*.04));fxRing(t.x,t.y,240,'#e6f4fa',.8,5);}},
+archer:{n:'Black Rain',f(t,sk,b,dm){
+  /* a volley of dark arrows falls across the map, carrying the chosen element */
+  const es=SKM[archEl(t)],L=alive().filter(e=>e.d>=0).sort((p,q)=>q.d-p.d).slice(0,24);
+  hitList(L,b*4,es.fx||null,dm);
+  if(!S.botRun){S.fx.push({k:'gloom',t:1,max:1});L.slice(0,cnt(18)).forEach((e,i)=>{const dl=i*.03;S.fx.push({k:'arm',x0:e.x+rnd(-40,40),y0:-20,x1:e.x,y1:e.y,c:'#2a1838',t:.3,max:.3,dl:dl});fxGlow(e.x,e.y,18,es.c,.3,.6);});fxRing(t.px==null?t.x:t.px,(t.py==null?t.y:t.py),70,'#5b4a86',.6,4);}}},
 soldier:{n:'Air Strike',f(t,sk,b,dm){alive().filter(e=>e.d>=0).slice(0,7).forEach((e,i)=>pendAt(e.x,e.y,sk,b*7,70,dm,.45+i*.14,SRC_GL));}},
 console:{n:'Rainbow Overdrive',f(t,sk,b,dm){strongest(6).forEach((e,i)=>{fxBolt([{x:t.x,y:t.y-22},{x:e.x,y:e.y}],RBW[i%6],.4,4,'beam');hitList([e],b*6,{weak:[1.3,3]},dm);fxGlow(e.x,e.y,26,RBW[i%6],.35,.7);});fxRing(t.x,t.y,60,'#ffffff',.5,4);}},
 soccer:{n:'Penalty Kick',f(t,sk,b,dm){strongest(4).forEach((e,i)=>{fxLob({x:t.px==null?t.x:t.px,y:(t.py==null?t.y:t.py)-8},e,'ball',sk.c,.3+i*.05);pendAt(e.x,e.y,sk,b*8,70,dm,.34+i*.12,SRC_GL);});}},
@@ -1640,7 +1677,7 @@ function doSuper(t){
   t.superT=1;S.flashT=.45;S.flashC=sk.c;
   fxGlow(t.x,t.y-20,90,sk.c,.6,.9);fxRing(t.x,t.y,60,'#e3b64a',.6,4);burst(t.x,t.y-24,12,'#f1d27a',90,.7,2.6,{sh:'s',add:true});
   S.fx.push({k:'stxt',x:t.x,y:t.y-50,s:sp.n,c:sk.c,t:1.6,max:1.6});
-  if(t.id==='warp')shipSound();else{sfx(sk.s,'sup');seq([['triangle',392],['triangle',587],['triangle',784,.3]]);}
+  if(t.id==='warp')shipSound();else if(t.id==='lava'){}else{sfx(sk.s,'sup');seq([['triangle',392],['triangle',587],['triangle',784,.3]]);}
 }
 function pickTarget(t,range){
   let best=null;
@@ -1708,7 +1745,7 @@ function step(dt){
   }
   for(const p of S.pools){
     p.t-=dt;CURT=p.src||null;
-    let ph=0;for(const e of S.enemies){if(ph>=(p.cap||TUNE.capB+4))break;if(!e.dead&&Math.hypot(e.x-p.x,e.y-p.y)<=p.r+e.r){ph++;SRC_GL=!!p.gl;SRC_TRI=!!p.tri;SRC_PAIR=!!p.pair;dmgE(e,p.dps*dt);SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;if(p.sk.fx&&p.sk.fx.slow){SRC_GL=!!p.gl;e.slowF=Math.min(e.slowF,1-(1-p.sk.fx.slow[0])*ccK());SRC_GL=false;e.slowT=Math.max(e.slowT,p.sk.st||.3);}}}
+    let ph=0;for(const e of S.enemies){if(ph>=(p.cap||TUNE.capB+4))break;if(!e.dead&&Math.hypot(e.x-p.x,e.y-p.y)<=p.r+e.r){ph++;SRC_GL=!!p.gl;SRC_TRI=!!p.tri;SRC_PAIR=!!p.pair;dmgE(e,p.dps*dt);SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;if(p.sk.fx&&p.sk.fx.slow){SRC_GL=!!p.gl;e.slowF=Math.min(e.slowF,1-(1-(p.sk.id==='icewall'?p.sk.fx.slow[0]:Math.max(TUNE.slowCap,p.sk.fx.slow[0])))*ccK()*(e.boss?TUNE.bossSlow:1));SRC_GL=false;e.slowT=Math.max(e.slowT,p.sk.st||.3);}}}
   }
   CURT=null;S.pools=S.pools.filter(p=>p.t>0);
   for(const p of S.pend){p.t-=dt;if(p.t<=0){p.done=true;SRC_GL=!!p.gl;SRC_TRI=!!p.tri;SRC_PAIR=!!p.pair;SPLASH_CAP=p.cap||999;CURT=p.src||null;splashAt(p.x,p.y,p.rad,p.dmg,p.sk,p.dm);CURT=null;SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;SPLASH_CAP=999;if(p.big)S.shake=RM?0:.15;}}
@@ -1759,6 +1796,7 @@ function finishRun(win){
   clearRun();
   const L=S.level;
   if(win){for(let i=0;i<3;i++)dropOrb(PADS[0].x,PADS[0].y);S.winBonus=TUNE.winB+S.lives*TUNE.lifeB;S.score+=S.winBonus;}
+  S.cbPts=comboFinal(L);S.score+=S.cbPts;
   S.goldLeft=Math.max(0,Math.floor(S.credits));S.goldBonus=S.goldLeft*TUNE.goldPts;S.score+=S.goldBonus;
   bankJewels();
   S.score=Math.round(S.score);RUN={score:S.score,level:L,win:!!win,kills:S.kills,lives:S.lives,start:S.runStart,saved:false};
@@ -1778,7 +1816,7 @@ function showResult(win){
   }
 }
 function scoreLine(){
-  const play=Math.max(0,RUN.score-(S.goldBonus||0)-(S.winBonus||0)),pts=['Play score '+fmt(play),'combo bonus +'+fmt(S.cbPts||0),'gold bonus +'+fmt(S.goldBonus||0)];
+  const play=Math.max(0,RUN.score-(S.goldBonus||0)-(S.winBonus||0)-(S.cbPts||0)),pts=['Play score '+fmt(play),'combo bonus +'+fmt(S.cbPts||0)+' ('+(S.pkT||0)+' tri, '+(S.pkP||0)+' pair)','gold bonus +'+fmt(S.goldBonus||0)];
   if(S.winBonus)pts.push('clearance bonus +'+fmt(S.winBonus));
   {const n=S.bestStreak||0;pts.push('best flawless streak '+n+(n===1?' level':' levels'));}return pts.join(' · ');
 }
@@ -1788,7 +1826,7 @@ function openResult(win){
   let h='<div class="rbn '+(win?'win':'lose')+'" role="status"><b>'+(win?'VICTORY!':'Mission Failed')+'</b><span>'+(win?'All '+MAXL+' levels cleared':'Run over at level '+RUN.level)+'</span></div>'
     +'<div class="fscore" aria-label="Final score '+fmt(RUN.score)+'"><span class="fsl">Final score</span><b class="mono" id="fsNum">'+fmt(RUN.score)+'</b>'+(best?'<i class="fsb">New best</i>':'')+'<div class="rsub">'+scoreLine()+'</div></div>';
   h+=(win?'<div class="kv"><span>Terminal health left</span><b class="mono">'+S.lives+' of '+S.maxLives+'</b></div><div class="kv"><span>Clearance bonus ('+fmt(TUNE.winB)+' + '+fmt(TUNE.lifeB)+' per health point)</span><b class="mono">'+fmt(S.winBonus||0)+'</b></div>':'')+'<div class="kv"><span>Gold left: '+fmt(S.goldLeft||0)+' ('+TUNE.goldPts+' points per gold)</span><b class="mono">'+fmt(S.goldBonus||0)+'</b></div>'
-    +'<div class="kv"><span>Combo bonus (tri combos score most, and each extra tri scores more)</span><b class="mono">'+fmt(S.cbPts||0)+'</b></div>'
+    +'<div class="kv"><span>Combo bonus: best '+(S.pkT||0)+' tri and '+(S.pkP||0)+' pair at once (each extra tri scores more)</span><b class="mono">'+fmt(S.cbPts||0)+'</b></div>'
     +'<div class="kv"><span>Best run score</span><b class="mono">'+fmt(SAVE.bestRun)+'</b></div>'
     +'<div class="kv"><span>Levels reached</span><b class="mono">'+RUN.level+' of '+MAXL+'</b></div>'
     +'<div class="kv"><span>Threats stopped</span><b class="mono">'+RUN.kills+'</b></div>'
@@ -2088,7 +2126,7 @@ poison:'A slow sting. The damage keeps growing after the first hit.',
 light:'A thin, clean beam. It picks one target and hits it hard.',
 shadow:'The dark place behind every bright thing. It marks its target and waits.',
 thunder:'The loud sound after the flash. It is slow, but it hits very hard.',
-lava:'Hot, melted rock. It moves slowly and burns the ground.',
+lava:'An old wizard in a dark hooded robe. He draws circles of dark magic on the ground, and anything that walks through them is hurt.',
 nova:'A sudden burst of cold. It spreads in all directions at once.',
 meteor:'A rock that falls from space and burns. It lands where it was aimed.',
 magnet:'An invisible force that pulls things together. It does not care what it pulls.',
@@ -2108,7 +2146,7 @@ surge:['Next to the fast spark from the sky: its strikes join and become much st
 steam:['Next to the thing that flows and puts out flames: a hot cloud forms and slows enemies.','Next to the thing that burns: your drops turn into hot steam.'],
 tstorm:['Next to a spark from the sky: the rain carries electricity from enemy to enemy.','Next to the falling rain: your bolts jump more times and slow wet enemies.'],
 heatray:['Next to the thin, hot beam from a machine: the flames jump to 4 enemies that were not touched.','Next to a flame: your beam makes enemies burn, and the burning spreads to 4 more.'],
-magma:['Next to hot, melted rock: the ground cracks, glows and stops enemies for a short time.','Next to the old stone ground: your heat opens a crack that stuns enemies.'],
+magma:['Next to the wizard of dark magic: the ground cracks with dark magic and stops enemies for a short time.','Next to the old stone ground: your magic opens a crack that stuns enemies.'],
 frost:['Next to the cold that holds things still: a freezing wave moves outward and passes through the Storm Shield.','Next to the thing that flows: your cold becomes a wave that goes farther. It also passes through the Storm Shield.'],
 starstorm:['Next to the small lights of the night: each blast makes a shower of sparks.','Next to the slow, loud blast: your sparks fall around every blast.'],
 magstorm:['Next to the invisible force that pulls iron: enemies are pulled into the blast before it lands.','Next to the slow, loud blast: you pull the crowd under it.'],
@@ -2122,14 +2160,14 @@ permafrost:['Next to the cold that holds things still: frozen or slow enemies br
 singularity:['Next to the hard, clear stone: you pull the crowd together, and then it bursts.','Next to the pull toward the ground: a burst hits the crowd that is pulled together.'],
 ironrain:['Next to the rock that falls from space: enemies are pulled under an extra hit.','Next to the force that pulls iron: an extra rock falls where the enemies gather.'],
 plasma:['Next to the thin, hot beam from a machine: your blast becomes hot plasma that burns and slows.','Next to the loud engine: your beam becomes hot plasma that burns and slows.'],
-afterburn:['Next to hot, melted rock: your blast leaves flames on the road.','Next to the loud engine: the road burns behind each blast.'],
+afterburn:['Next to the wizard of dark magic: your blast leaves dark magic on the road.','Next to the loud engine: dark magic stays on the road behind each blast.'],
 frozen:['Next to the sudden burst of cold: each cold burst also stops the enemies around the target.','Next to the captain who commands the waves: your burst also stops the enemies around the target for a moment.'],
 timebloom:['Next to the floating seeds: fog rolls in with your waves, and the clouds grow bigger and hurt faster.','Next to the captain who commands the waves: each hit adds a bigger cloud that hurts faster.'],
 thornvenom:['Next to the slow sting: your thorns carry venom to 5 enemies and slow them.','Next to the green plants: thorns carry your venom to 5 enemies and slow them.'],
 shardblast:['Next to the hard, clear stone: your blast throws 4 sharp shards at nearby enemies.','Next to the loud engine: its blast throws your shards at 4 nearby enemies.'],
 refraction:['Next to the hard, clear stone: your beam bends and splits into 3 more beams.','Next to the thin, hot beam from a machine: you split it into 3 more beams.'],
 deadline:['Next to the captain who commands the waves: each paper goes by sea. The enemy is slowed, and 2 seconds later a bottle lands and hits it again.','Next to the paperwork with a red seal: each paper goes by sea. The enemy is slowed, and 2 seconds later a bottle lands and hits it again.'],
-waxseal:['Next to hot, melted rock: each paper gets a hot wax seal that burns the enemy and drips a small burning pool.','Next to the paperwork with a red seal: you become hot wax that burns each enemy it hits.']
+waxseal:['Next to the wizard of dark magic: each paper carries a curse that burns the enemy and leaves a small pool of dark magic.','Next to the paperwork with a red seal: you curse each paper, so it burns the enemy it hits.']
 };
 /* clue for each member of a triple, in the order of the combination's elements */
 const LIBTRI={
@@ -2137,7 +2175,7 @@ volcanic:['Next to the heavy ground and a spark from the sky, together: each hit
 horizon:['Next to a fast spark and a slow, loud blast, together: each hit makes a small black hole that pulls and stuns. Nothing can stop it.','Next to the pull toward the ground and a slow, loud blast, together: each hit makes a small black hole that pulls and stuns. Nothing can stop it.','Next to the pull toward the ground and a fast spark, together: each hit makes a small black hole that pulls and stuns. Nothing can stop it.'],
 cryobeam:['Next to the cold that holds things still and the thin, hot beam, together: each hit sends a cold shock in a wide circle. It passes through the Storm Shield.','Next to the thing that flows and the thin, hot beam, together: each hit sends a cold shock in a wide circle. It passes through the Storm Shield.','Next to the thing that flows and the cold that holds things still, together: each hit sends a cold shock in a wide circle. It passes through the Storm Shield.'],
 eclipse:['Next to its opposite and the small lights of the night, together: the sky turns dark around the target, and then a bright burst hits.','Next to the brightest beam and the small lights of the night, together: the sky turns dark around the target, and then a bright burst hits.','Next to the brightest beam and its opposite, together: the sky turns dark around the target, and then a bright burst hits.'],
-comet:['Next to the force that pulls iron and hot, melted rock, together: a burning streak pulls the crowd under it and leaves a hot pool.','Next to a rock from space and hot, melted rock, together: a burning streak pulls the crowd under it and leaves a hot pool.','Next to a rock from space and the force that pulls iron, together: a burning streak pulls the crowd under it and leaves a hot pool.'],
+comet:['Next to the force that pulls iron and the wizard of dark magic, together: a dark comet pulls the crowd under it and leaves a pool of dark magic.','Next to a rock from space and the wizard of dark magic, together: a dark comet pulls the crowd under it and leaves a pool of dark magic.','Next to a rock from space and the force that pulls iron, together: a dark comet pulls the crowd under it and leaves a pool of dark magic.'],
 jungle:['Next to the slow sting and the floating seeds, together: a toxic jungle grows. Enemies are held, poisoned and caught in a toxic cloud.','Next to the green plants and the floating seeds, together: a toxic jungle grows. Enemies are held, poisoned and caught in a toxic cloud.','Next to the green plants and the slow sting, together: a toxic jungle grows. Enemies are held, poisoned and caught in a toxic cloud.'],
 frozentime:['Next to the sudden burst of cold and the hard, clear stone, together: an icy wave freezes enemies, and frozen enemies break for big damage.','Next to the captain who commands the waves and the hard, clear stone, together: an icy wave freezes enemies, and frozen enemies break for big damage.','Next to the captain who commands the waves and the sudden burst of cold, together: an icy wave freezes enemies, and frozen enemies break for big damage.'],
 railgun:['Next to the thin, hot beam and the loud engine, together: you shoot an iron bullet through every enemy in a long line.','Next to the force that pulls iron and the loud engine, together: you shoot an iron bullet through every enemy in a long line.','Next to the force that pulls iron and the thin, hot beam, together: you shoot an iron bullet through every enemy in a long line.'],
@@ -2149,13 +2187,14 @@ bricks:'Small plastic blocks left on the floor. They click together into a wall,
 watergun:'A bright toy that squirts a thin stream. One squirt is weak, but wet enemies are easier to hurt.',
 icemelon:'A summer fruit kept in the freezer. It is red inside, with black seeds. When it breaks, cold pieces fly everywhere.',
 soldier:'A trained fighter in a uniform. Calm and quick. Shoots short bursts, and the last shot is the strongest.',
+archer:'A dark elf archer in a black cloak, with eyes that glow white. She moves wherever you send her and shoots several arrows at once, each carrying the element you choose.',
 console:'A handheld game console with a bright screen and two grips. It fires rainbow lasers through a whole line of enemies, and dazzled enemies are easier to hurt.',
 soccer:'A football player in a red and blue striped shirt, number 10. Goes wherever you send him on the airport and kicks the ball at enemies. The ball can take the power of a friend nearby.'
 });
-const NXHINT={fire:'the oldest flame',water:'the thing that flows',earth:'the heavy ground',nature:'the green plants',lightning:'a fast spark from the sky',gravity:'the pull toward the ground',stars:'the small lights of the night',ice:'the cold that holds things still',laser:'the thin, hot beam from a machine',poison:'the slow sting',light:'the brightest beam',shadow:'the dark place',thunder:'the slow, loud blast',lava:'hot, melted rock',nova:'the sudden burst of cold',meteor:'a rock from space',magnet:'the force that pulls iron',jet:'the loud engine',spore:'the floating seeds',crystal:'the hard, clear stone',warp:'the captain who commands the waves',letter:'the paperwork with a red seal',
- bricks:'the pile of colourful toy blocks',watergun:'the toy that squirts a thin stream',icemelon:'the frozen red and green fruit',soldier:'the trained fighter in uniform',soccer:'the runner in the red and blue shirt',console:'the handheld game with the bright screen'};
-const NXSC={bricks:'a low wall of blocks stops and slows enemies',watergun:'wet enemies take more damage',icemelon:'cold pieces fly out and hit again',soldier:'extra bullets hit enemies nearby',soccer:'the ball bounces on to another enemy',console:'rainbow lasers split to more enemies'};
-const NXRC={fire:'enemies start to burn',water:'enemies are slowed',earth:'enemies are stunned for a short time',nature:'roots hold enemies in place',lightning:'sparks jump to 2 more enemies',gravity:'enemies are pulled together',stars:'3 small lights fall around the target',ice:'enemies are held still for a moment',laser:'a hot beam cuts through the line',poison:'enemies are made sick and lose health over time',light:'a bright bolt hits the target again',shadow:'enemies are marked and take more damage',thunder:'a loud blast lands a moment later',lava:'a burning pool stays on the road',nova:'a cold ring slows enemies near the target',meteor:'a small rock falls from the sky',magnet:'enemies are pulled in',jet:'enemies are pushed back',spore:'a slow cloud stays on the road',crystal:'3 sharp shards fly at enemies',warp:'a wave crashes over nearby enemies',letter:'papers fly at enemies and slow them'};
+const NXHINT={fire:'the oldest flame',water:'the thing that flows',earth:'the heavy ground',nature:'the green plants',lightning:'a fast spark from the sky',gravity:'the pull toward the ground',stars:'the small lights of the night',ice:'the cold that holds things still',laser:'the thin, hot beam from a machine',poison:'the slow sting',light:'the brightest beam',shadow:'the dark place',thunder:'the slow, loud blast',lava:'the wizard of dark magic',nova:'the sudden burst of cold',meteor:'a rock from space',magnet:'the force that pulls iron',jet:'the loud engine',spore:'the floating seeds',crystal:'the hard, clear stone',warp:'the captain who commands the waves',letter:'the paperwork with a red seal',
+ bricks:'the pile of colourful toy blocks',watergun:'the toy that squirts a thin stream',icemelon:'the frozen red and green fruit',soldier:'the trained fighter in uniform',soccer:'the runner in the red and blue shirt',console:'the handheld game with the bright screen',archer:'the dark archer with white eyes'};
+const NXSC={bricks:'a low wall of blocks stops and slows enemies',watergun:'wet enemies take more damage',icemelon:'cold pieces fly out and hit again',soldier:'extra bullets hit enemies nearby',soccer:'the ball bounces on to another enemy',console:'rainbow lasers split to more enemies',archer:'dark arrows hit more enemies'};
+const NXRC={fire:'enemies start to burn',water:'enemies are slowed',earth:'enemies are stunned for a short time',nature:'roots hold enemies in place',lightning:'sparks jump to 2 more enemies',gravity:'enemies are pulled together',stars:'3 small lights fall around the target',ice:'enemies are held still for a moment',laser:'a hot beam cuts through the line',poison:'enemies are made sick and lose health over time',light:'a bright bolt hits the target again',shadow:'enemies are marked and take more damage',thunder:'a loud blast lands a moment later',lava:'a pool of dark magic stays on the road',nova:'a cold ring slows enemies near the target',meteor:'a small rock falls from the sky',magnet:'enemies are pulled in',jet:'enemies are pushed back',spore:'a slow cloud stays on the road',crystal:'3 sharp shards fly at enemies',warp:'a wave crashes over nearby enemies',letter:'papers fly at enemies and slow them'};
 const NXCL=id=>NEWS.indexOf(id)>=0?NXSC[id]:NXRC[id];
 const capF=s=>s.charAt(0).toUpperCase()+s.slice(1);
 COMBOS.forEach(d=>{if(!d.nx)return;const a=d.a,b=d.b;
@@ -2200,7 +2239,7 @@ function comboHtml(full){
   return '<div class="zl" style="margin-top:2px">Tri-element</div>'+TRIS.map(d=>row(d,d.e)).join('')
     +'<div class="zl">Pairs</div>'+COMBOS.map(d=>row(d,[d.a,d.b])).join('');
 }
-function kindOf(sk){return {splash:'Splash',nova:'Splash',shower:'Splash',delay:'Splash',single:'Single',chain:'Chain',beam:'Line',pool:'Zone',aura:'Support',heal:'Support',paper:'Multi',squirt:'Rapid',burst:'Burst',kick:'Roaming'}[sk.k]||'';}
+function kindOf(sk){return {splash:'Splash',nova:'Splash',shower:'Splash',delay:'Splash',single:'Single',chain:'Chain',beam:'Line',pool:'Zone',aura:'Support',heal:'Support',paper:'Multi',squirt:'Rapid',burst:'Burst',volley:'Volley',kick:'Roaming'}[sk.k]||'';}
 function towerStat(t,lvl){
   const s=SKM[t.id],o={id:t.id,lvl:lvl};
   if(s.k==='heal')return 'Repairs 2 terminal health every '+(s.every/(1+.2*(slv(t.id)-1)+.3*(lvl-1))).toFixed(1)+' s';
@@ -2209,6 +2248,7 @@ function towerStat(t,lvl){
   if(s.k==='pool')return 'Zone '+(s.dps*dmgM(o)).toFixed(0)+' dmg/s';
   if(s.k==='squirt')return 'Damage '+(s.dmg*dmgM(o)).toFixed(1)+' per jet · 3 jets a second';
   if(s.k==='burst')return 'Damage '+Math.round(s.dmg*dmgM(o))+' × '+(s.cnt+(lvl>=3?1:0)+(lvl>=5?1:0))+' rounds, last one ×2';
+  if(s.k==='volley')return 'Damage '+Math.round(s.dmg*dmgM(o)*(lvl>=MAXT?1.15:1))+' × '+Math.min(7,2+lvl)+' arrows'+(lvl>=MAXT?' (+15% at level 5)':'')+' · '+SKM[archEl(t)].n+' arrows';
   if(s.k==='kick')return 'Damage '+Math.round(s.dmg*dmgM(o))+' · range '+Math.round(s.rng*rngM(o))+' from where he stands · 15% critical hit';
   if(s.k==='paper')return 'Damage '+Math.round(s.dmg*dmgM(o))+' · '+(s.cnt+lvl-1)+' papers';
   return 'Damage '+Math.round(s.dmg*dmgM(o))+' · range '+(s.rng>=999?'whole map':Math.round(s.rng*rngM(o)));
@@ -2229,14 +2269,17 @@ function towerEffects(t){
   if(t.boost>0)o.push({t:'+'+Math.round(t.boost*100)+'% speed from a beacon',pl:1});
   if(S.bc>0)o.push({t:'+100% damage, Battle Cry ('+Math.ceil(S.bc)+' s left)',pl:1});
   if(S.od>0)o.push({t:'+100% speed, Overdrive ('+Math.ceil(S.od)+' s left)',pl:1});
-  if(!o.length)o.push({t:'No special effects',nt:1});
   return o;
 }
 function ballHtml(t){
   const ids=[];S.towers.forEach(u=>{if(u!==t&&!SKM[u.id].util&&SKM[u.id].k!=='kick'&&ids.indexOf(u.id)<0)ids.push(u.id);});
   return '<div class="kitbox"><h4>Ball element</h4><div class="ballrow"><button class="kb'+(!t.ball?' on':'')+'" data-ball="auto">Auto</button>'+ids.map(id=>'<button class="kb'+(t.ball===id?' on':'')+'" data-ball="'+id+'"><i class="ksw" style="background:'+SKM[id].c+'"></i>'+esc(SKM[id].n)+'</button>').join('')+'</div></div>';
 }
-function effectsHtml(t){return towerEffects(t).map(e=>'<div class="'+(e.pl?'pl':e.nt?'nt':'')+'">'+(e.pl&&e.t.charAt(0)!=='+'?'+ ':'')+esc(e.t)+'</div>').join('');}
+function archHtml(t){
+  const cur=archEl(t);
+  return '<div class="kitbox"><h4>Arrow element</h4><div class="ballrow">'+archList().map(id=>'<button class="kb'+(cur===id?' on':'')+'" data-ael="'+id+'"><i class="ksw" style="background:'+SKM[id].c+'"></i>'+esc(SKM[id].n)+'</button>').join('')+'</div></div>';
+}
+function effectsHtml(t,pl){return towerEffects(t).filter(e=>pl===undefined||(!!e.pl)===pl).map(e=>'<div class="'+(e.pl?'pl':e.nt?'nt':'')+'">'+(e.pl&&e.t.charAt(0)!=='+'?'+ ':'')+esc(e.t)+'</div>').join('');}
 function shopHtml(){
   const ids=S.avail.slice().sort((a,b)=>SKM[a].at-SKM[b].at),free=PADS.some((p,i)=>padFree(i));
   return '<h3>Shop</h3><div class="hint">'+(free?'Tap a free pad on the map to build.':'All pads are in use. Sell a tower to free a pad.')+' Gold <b class="mono" id="pCred">'+Math.floor(S.credits)+'</b>.</div><div style="max-height:46vh;overflow-y:auto;margin-top:4px">'
@@ -2244,7 +2287,8 @@ function shopHtml(){
      return '<div class="shi"><img alt="" src="'+cardImg(id)+'"><div><b>'+esc(s.n)+'</b> <span class="mono">'+buildCost(id)+' gold · '+(s.util?'Support':kindOf(s))+'</span><br>'+esc(s.d)+(s.util?'':'<br>Level 5 super: '+esc(SUP[id].n))+'<br><span class="mono">Pair combos: '+pc+' · Tri combos: '+tc+'</span></div></div>';}).join('')
    +'</div><div class="row" style="margin-top:8px"><button class="btn" data-act="deselect">Close</button></div>';
 }
-let PDET=false;
+/* tower details are open by default; the player's choice to close them is remembered */
+let PDET=SAVE.pdet!==false;
 function renderPanel(){
   const p=$('panel');p.classList.remove('mini');
   if(!S){p.innerHTML='';return;}
@@ -2266,19 +2310,21 @@ function renderPanel(){
     if(!t){S.sel=null;return renderPanel();}
     const s=SKM[t.id];
     if(isMob(s)&&S.sel.mini){
-      p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+t.lvl+'/'+MAXT+' · Kills <b id="kCnt">'+(t.kills||0)+'</b></span></h3><div class="hint" style="margin:-2px 0 6px">Tap the map to send him there.</div>'
+      p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+t.lvl+'/'+MAXT+' · Kills <b id="kCnt">'+(t.kills||0)+'</b></span></h3><div class="hint" style="margin:-2px 0 6px">Tap the map to send '+(t.id==='archer'?'her':'him')+' there.</div>'+(t.id==='archer'?archHtml(t):'')
         +'<div class="row">'+(t.lvl<MAXT?'<button class="btn p wide" data-act="upg" id="bUpg">Upgrade · '+upgCost(t)+'</button>':'<button class="btn wide" disabled>Max level</button>')+'<button class="btn" data-act="player">'+(s.k==='kick'?'Player':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>';
       p.classList.add('mini');placePanel();return;
     }
     p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+t.lvl+'/'+MAXT+' · '+TIER[t.lvl].n+'</span></h3>'
       +'<div class="row">'+(t.lvl<MAXT?'<button class="btn p wide" data-act="upg" id="bUpg">Upgrade · '+upgCost(t)+'</button>':'<button class="btn wide" disabled>Max level</button>')
       +'<button class="btn d" data-act="sell">Sell +'+sellVal(t)+'</button><button class="btn" data-act="pdet" aria-expanded="'+PDET+'" aria-controls="pdet">'+(PDET?'Less':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>'
-      +'<div id="pdet" class="pdet"'+(PDET?'':' hidden')+'><div class="hint mono">'+towerStat(t,t.lvl)+(s.cd?' · reload '+s.cd+' s':'')+'</div>'
+      +'<div id="pdet" class="pdet"'+(PDET?'':' hidden')+'><div class="bx bxd"><h5>Details</h5><div class="hint mono">'+towerStat(t,t.lvl)+(s.cd?' · reload '+s.cd+' s':'')+'</div>'
       +(t.lvl<MAXT?'<div class="hint mono" style="margin-top:2px">Next: '+towerStat(t,t.lvl+1)+(t.lvl+1===MAXT?' · grand aura and super skill':'')+'</div>':'')
-      +'<div class="hint" style="margin-top:2px">'+(t.lvl>=MAXT?'Super: <b>'+esc(SUP[t.id].n)+'</b> · in <span id="supIn">'+Math.max(1,TUNE.supHits-(t.sh||0))+'</span> '+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?'pulses':'hits')+(hasMeteor()?' · Armageddon in <span id="armIn">'+Math.max(1,TUNE.armHits-(t.ah||0))+'</span>':' · Armageddon needs a Meteor tower'):'Level 5 super: '+esc(SUP[t.id].n)+', every '+TUNE.supHits+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?' pulses':' hits'))+'</div>'
-      +'<div class="kline">Kills: <b id="kCnt">'+(t.kills||0)+'</b></div><div class="fxl" id="fxl">'+effectsHtml(t)+'</div>'
-      +(isMob(s)?'<div class="hint" style="margin-top:4px;color:#1e4d8c;font-weight:600">Tap anywhere on the map to send him there. He stays until you send him again.</div>'+(t.gx!=null?'<div class="row" style="margin-top:6px"><button class="btn" data-act="homepad">Back to his pad</button></div>':'')+(s.k==='kick'?ballHtml(t)+kitHtml():''):'')
-      +(t.cb?'<div class="hint" style="color:#1d776d;font-weight:600;margin-top:4px">'+(t.cb.def.tri?'Tri combo':'Combo')+': '+esc(t.cb.def.n)+' '+pct(t.cb.def.m)+(t.cb.others.length?' with '+t.cb.others.map(o=>esc(SKM[o.id].n)).join(' and '):'')+'</div><div class="hint">'+esc(t.cb.def.d)+'</div>':'')
+      +'<div class="hint" style="margin-top:2px">'+(t.lvl>=MAXT?'Super: <b>'+esc(SUP[t.id].n)+'</b> · in <span id="supIn">'+Math.max(1,supN(t)-(t.sh||0))+'</span> '+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?'pulses':'hits')+(hasMeteor()?' · Armageddon in <span id="armIn">'+Math.max(1,TUNE.armHits-(t.ah||0))+'</span>':' · Armageddon needs a Meteor tower'):'Level 5 super: '+esc(SUP[t.id].n)+', every '+supN(t)+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?' pulses':' hits'))+'</div>'
+      +'<div class="kline">Kills: <b id="kCnt">'+(t.kills||0)+'</b></div></div>'
+      +'<div class="bx bxs"><h5>Skill</h5><div class="hint">'+esc(s.d)+'</div><div class="fxl" id="fxl">'+(effectsHtml(t,false)||'<div class="nt">No extra effects</div>')+'</div></div>'
+      +'<div class="bx bxb"><h5>Buffs</h5><div class="fxl" id="fxb">'+(effectsHtml(t,true)||'<div class="nt">No buffs right now</div>')+'</div>'      +(t.cb?'<div class="hint cbt">'+(t.cb.def.tri?'Tri combo':'Combo')+': '+esc(t.cb.def.n)+' '+pct(t.cb.def.m)+(t.cb.others.length?' with '+t.cb.others.map(o=>esc(SKM[o.id].n)).join(' and '):'')+'</div><div class="hint">'+esc(t.cb.def.d)+'</div>':'')
++'</div>'
+      +(isMob(s)?'<div class="hint" style="margin-top:4px;color:#1e4d8c;font-weight:600">Tap anywhere on the map to send '+(t.id==='archer'?'her there. She stays until you send her':'him there. He stays until you send him')+' again.</div>'+(t.gx!=null?'<div class="row" style="margin-top:6px"><button class="btn" data-act="homepad">Back to '+(t.id==='archer'?'her':'his')+' pad</button></div>':'')+(s.k==='kick'?ballHtml(t)+kitHtml():'')+(t.id==='archer'?archHtml(t):''):'')
       +'<div class="row" style="margin-top:8px"><button class="btn" data-act="move"'+(S.credits<TUNE.moveCost?' aria-disabled="true"':'')+'>Move ('+fmt(TUNE.moveCost)+')</button><button class="btn" data-act="shop">Shop</button></div></div>';
   }else{
     p.innerHTML='<h3>Tap a pad to build</h3><div class="hint">Towers stay for the whole run. Upgrade them to level 5 for wider splash, a grand aura and super skills.</div><div class="row" style="margin-top:6px"><button class="btn" data-act="shop">Open shop</button></div>'
@@ -2291,8 +2337,8 @@ function refreshPanel(){
   document.querySelectorAll('#panel [data-build]').forEach(b=>{b.disabled=S.credits<buildCost(b.dataset.build);});
   const u=$('bUpg');if(u&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t)u.disabled=S.credits<upgCost(t);}
   const c=$('pCred');if(c)c.textContent=Math.floor(S.credits);
-  if(S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i],kc=$('kCnt');if(t&&kc){kc.textContent=t.kills||0;const fl=$('fxl');if(fl){const h=effectsHtml(t);if(fl._h!==h){fl._h=h;fl.innerHTML=h;}}}}
-  const si=$('supIn');if(si&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){si.textContent=Math.max(1,TUNE.supHits-(t.sh||0));const ai=$('armIn');if(ai)ai.textContent=Math.max(1,TUNE.armHits-(t.ah||0));}}
+  if(S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i],kc=$('kCnt');if(t&&kc){kc.textContent=t.kills||0;[['fxl',false],['fxb',true]].forEach(q=>{const fl=$(q[0]);if(fl){const h=effectsHtml(t,q[1])||'<div class="nt">'+(q[1]?'No buffs right now':'No extra effects')+'</div>';if(fl._h!==h){fl._h=h;fl.innerHTML=h;}}});}}
+  const si=$('supIn');if(si&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){si.textContent=Math.max(1,supN(t)-(t.sh||0));const ai=$('armIn');if(ai)ai.textContent=Math.max(1,TUNE.armHits-(t.ah||0));}}
 }
 function updHud(force){
   if(!S)return;
@@ -2425,6 +2471,7 @@ document.addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   const d=b.dataset;
   if(d.build&&S&&S.sel&&S.sel.type==='pad'){buildTower(S.sel.i,d.build);return;}
+  if(d.ael&&S&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){t.ael=d.ael;sfx(SFX.click);renderPanel();saveRun();}return;}
   if(d.ball&&S&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){t.ball=d.ball==='auto'?null:d.ball;sfx(SFX.click);renderPanel();}return;}
   if(d.kit){SAVE.kit=Object.assign({j:'stripe',n:'10'},SAVE.kit||{},{j:d.kit});kitChange();document.querySelectorAll('[data-kit]').forEach(x=>{const on=x.dataset.kit===d.kit;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on);});sfx(SFX.click);return;}
   if(d.lb){openTop10(undefined,undefined,d.lb);return;}
@@ -2432,13 +2479,13 @@ document.addEventListener('click',e=>{
     case 'skills':auInit();auResume();showScreen('scrSkills');break;
     case 'home':showScreen('scrHome');break;
     case 'top10':openTop10();break;
-    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it gets a crown and a grand aura) or sell it.</li><li>Every kill gives gold. You start with six random elements, always including at least three splash towers. After that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and gains a super skill.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Shadow, Poison) hit the strongest enemy in range much harder. Line elements (Laser, Jet Blast) hit every enemy in a line. The Official Letter (หนังสือราชการ) throws A4 papers at several enemies at once and slows them; at level 5 it stamps a huge red seal that stops everything around it. The beacons boost adjacent towers.</li><li>Level 5 towers release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. The Library lists them. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>The Library on the home screen gives background and clues for every element and the combinations it can join. Each clue names the partner elements; the name of a combination is recorded there once you form it. You can also pick the shirt of the Soccer Player there.</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Soccer Player: tap him, then tap any spot on the map to send him there. He stays where you send him and never moves on his own; he kicks at threats within his range, a little shorter than the Ice Watermelon. If nothing happens for a while he falls asleep; he wakes up by himself when threats come into his range, or you can tap him.</li><li>Flawless streak: every level you clear with no threat reaching the terminal adds ×'+TUNE.stkM.toFixed(2)+' to your score multiplier (shown next to your score, or in the top corner of the map on phones). The multiplier applies to all points from kills and level clears. A single leak resets it to ×1.00.</li><li>Combo bonus: every time you clear a level, each tri combo on the map scores points, and each extra tri scores more than the last (2 tris score 3 times one tri, 3 tris score 6 times). Pair combos add a smaller bonus.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
+    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it gets a crown and a grand aura) or sell it.</li><li>Every kill gives gold. You start with six random elements, always including at least three splash towers. After that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and gains a super skill.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Shadow, Poison) hit the strongest enemy in range much harder. Line elements (Laser, Jet Blast) hit every enemy in a line. The Official Letter (หนังสือราชการ) throws A4 papers at several enemies at once and slows them; at level 5 it stamps a huge red seal that stops everything around it. The beacons boost adjacent towers.</li><li>Level 5 towers release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. The Library lists them. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>The Library on the home screen gives background and clues for every element and the combinations it can join. Each clue names the partner elements; the name of a combination is recorded there once you form it. You can also pick the shirt of the Soccer Player there.</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Soccer Player: tap him, then tap any spot on the map to send him there. He stays where you send him and never moves on his own; he kicks at threats within his range, a little shorter than the Ice Watermelon. If nothing happens for a while he falls asleep; he wakes up by himself when threats come into his range, or you can tap him.</li><li>Flawless streak: every level you clear with no threat reaching the terminal adds ×'+TUNE.stkM.toFixed(2)+' to your score multiplier (shown next to your score, or in the top corner of the map on phones). The multiplier applies to all points from kills and level clears. A single leak resets it to ×1.00.</li><li>Combo bonus: at the end of the run you get a bonus for the most tri combos and pair combos you ever had running at the same time, so it does not matter which map you finish on. Each extra tri scores more than the last (2 tris score 3 times one tri, 3 tris score 6 times), pairs add a smaller bonus, and the bonus grows with the levels you played.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
     case 'closeM':closeModal();break;
     case 'player':if(S&&S.sel&&S.sel.type==='tower'){S.sel.mini=false;PDET=true;renderPanel();}break;
     case 'homepad':if(S&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){orderMove(t,t.x,t.y);t.gx=null;t.gy=null;renderPanel();}}break;
     case 'shop':if(S&&S.started&&!S.over){S.sel={type:'shop'};renderPanel();}break;
     case 'deselect':if(S){S.sel=null;renderPanel();}break;
-    case 'pdet':PDET=!PDET;sfx(SFX.click);renderPanel();break;
+    case 'pdet':PDET=!PDET;SAVE.pdet=PDET;persist();sfx(SFX.click);renderPanel();break;
     case 'hd':setHd(!SAVE.hd);sfx(SFX.click);break;
     case 'upg':if(S&&S.sel&&S.sel.type==='tower')upgradeTower(S.sel.i);break;
     case 'sell':if(S&&S.sel&&S.sel.type==='tower')sellTower(S.sel.i);break;
@@ -2580,9 +2627,19 @@ thunder(tm,f){
   if(Math.sin(tm*6)>.4||f)poly([[1,-8],[-3,-1],[0,-2],[-2,4],[4,-3],[1,-3]],'#fff3b0');
 },
 lava(tm,f){
-  ctx.fillStyle='#4a2f28';ctx.beginPath();ctx.ellipse(0,-1,10,4,0,0,TAU);ctx.fill();
-  const g=ctx.createRadialGradient(0,-1,1,0,-1,8);g.addColorStop(0,'#f7d98a');g.addColorStop(.5,'#e0743f');g.addColorStop(1,'#8a2f1f');ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(0,-1,8,3,0,0,TAU);ctx.fill();
-  for(let i=0;i<3;i++){const k=(tm*1.1+i*.33)%1;ctx.fillStyle='rgba(247,200,120,'+(1-k)+')';ctx.beginPath();ctx.arc(Math.sin(i*3)*4,-2-k*9,1.8-k,0,TAU);ctx.fill();}
+  /* Dark Wizard: hooded robe, glowing eyes, staff with a dark orb */
+  const b=Math.sin(tm*2)*.5;
+  ctx.fillStyle='rgba(26,14,40,.35)';ctx.beginPath();ctx.ellipse(0,0,9,3,0,0,TAU);ctx.fill();
+  poly([[-7,0],[7,0],[3.2,-13+b],[-3.2,-13+b]],'#2c2144','#160f24',.8);
+  ctx.fillStyle='#4a3a70';ctx.fillRect(-.7,-12+b,1.4,12);
+  poly([[-4.2,-11+b],[0,-20+b],[4.2,-11+b]],'#241a38','#160f24',.8);
+  ctx.fillStyle='#0d0816';ctx.beginPath();ctx.ellipse(0,-12.4+b,2.6,2.2,0,0,TAU);ctx.fill();
+  ctx.globalCompositeOperation='lighter';glowC(0,-12.6+b,3.4,'#c9b6ff',.6);ctx.globalCompositeOperation='source-over';
+  ctx.fillStyle='#e9e2ff';ctx.fillRect(-1.6,-12.9+b,1,.7);ctx.fillRect(.6,-12.9+b,1,.7);
+  ctx.strokeStyle='#3a2a20';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(6,0);ctx.lineTo(6.6,-17);ctx.stroke();
+  ctx.globalCompositeOperation='lighter';glowC(6.6,-18.5,6+Math.sin(tm*4),'#8a6fc4',.55);ctx.globalCompositeOperation='source-over';
+  orb(6.6,-18.5,2.4,'#e9e2ff','#6a4fa0','#1c1030');
+  for(let i=0;i<3;i++){const k=(tm*.8+i*.33)%1;ctx.fillStyle='rgba(185,163,230,'+(1-k)*.8+')';ctx.beginPath();ctx.arc(6.6+Math.sin(i*2+tm)*3,-19-k*9,1.1,0,TAU);ctx.fill();}
 },
 nova(tm,f){
   ctx.save();ctx.translate(0,-8);ctx.rotate(tm*.8);ctx.strokeStyle='#bfeef0';ctx.lineWidth=1.6;
@@ -2815,6 +2872,51 @@ function drawTrooperFig(x,y,sc,ph,face,still,lv,shot){
   if(shot>0){ctx.globalCompositeOperation='lighter';glowC(L+3+lv*.6,gy,5+lv,'#ffe18a',.9*Math.min(1,shot/.12));ctx.globalCompositeOperation='source-over';}
   ctx.restore();
 }
+/* the Dark Archer: an original dark elf archer with glowing white eyes; level 5 gets white flame hair and slow dark souls */
+function drawArcherFig(x,y,sc,ph,face,still,lv,shot,tm){
+  tm=tm||0;ctx.save();ctx.translate(x,y);ctx.scale(sc*face,sc);
+  const sw=still?0:Math.sin(ph);ctx.translate(0,still?0:-Math.abs(Math.sin(ph))*1.1);
+  /* cape behind */
+  const cw=Math.sin(tm*3)*1.5;poly([[-3.5,-19],[3,-19],[-1+cw,-6],[-7.5+cw,-4]],'#1d1730','#120e1e',.6);
+  const leg=(sx,s)=>{const fx=sx+s*3.6,fy=-1.4-Math.max(0,-s)*1.3;ctx.lineCap='round';ctx.strokeStyle='#241d36';ctx.lineWidth=2.8;ctx.beginPath();ctx.moveTo(sx,-10);ctx.lineTo(fx,fy-1.4);ctx.stroke();ctx.lineCap='butt';
+    ctx.fillStyle='#0f0c16';ctx.beginPath();ctx.ellipse(fx+.8,fy+.3,2.3,1.2,0,0,TAU);ctx.fill();};
+  leg(-1.8,sw);leg(1.8,-sw);
+  const g=ctx.createLinearGradient(-5,-19,5,-9);g.addColorStop(0,'#3d3160');g.addColorStop(1,'#1f1834');ctx.fillStyle=g;
+  ctx.beginPath();ctx.moveTo(-4.6,-19);ctx.lineTo(4.6,-19);ctx.lineTo(5.4,-9.5);ctx.lineTo(-5.4,-9.5);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#b9c2d4';ctx.fillRect(-5.2,-11,10.4,1.1);ctx.fillStyle='#7a6aa8';ctx.fillRect(-.6,-19,1.2,8);
+  /* long hair behind the head */
+  if(lv<MAXT){ctx.fillStyle='#120f1a';ctx.beginPath();ctx.ellipse(-2.2,-19.5,3.2,6,.25,0,TAU);ctx.fill();}
+  /* head, pointed ears, glowing white eyes */
+  ctx.fillStyle='#5e4f72';ctx.beginPath();ctx.arc(0,-22.4,3.2,0,TAU);ctx.fill();
+  poly([[-2.6,-23.2],[-6.6,-25.6],[-2.8,-21.4]],'#5e4f72');poly([[2.4,-23.4],[5.6,-26.2],[2.9,-21.6]],'#5e4f72');
+  if(lv<MAXT){ctx.fillStyle='#120f1a';ctx.beginPath();ctx.arc(-.4,-23.4,3.4,Math.PI*.95,Math.PI*2.05);ctx.fill();}
+  ctx.globalCompositeOperation='lighter';glowC(1.4,-22.4,3.6,'#ffffff',.55);ctx.globalCompositeOperation='source-over';
+  ctx.fillStyle='#ffffff';ctx.fillRect(.4,-22.9,1.3,.8);ctx.fillRect(2.2,-22.9,1.1,.8);
+  /* level 5: white flame hair standing up */
+  if(lv>=MAXT){ctx.globalCompositeOperation='lighter';glowC(0,-28,9,'#ffffff',.35);ctx.globalCompositeOperation='source-over';
+    for(let i=0;i<7;i++){const a=-1.2+i*.4,fl=Math.sin(tm*12+i*1.7)*1.2,h=6+((i*37)%5)+fl;const bx=Math.sin(a)*2.6,by=-24.4;
+      poly([[bx-1.5,by+.5],[bx+Math.sin(a)*h*.55+fl*.3,by-h],[bx+1.5,by+.5]],i%2?'#ffffff':'#e6ecff');}
+    ctx.fillStyle='rgba(255,255,255,.9)';ctx.beginPath();ctx.arc(-.2,-24.2,3.3,Math.PI,0);ctx.fill();}
+  /* bow arm and bow */
+  ctx.strokeStyle='#5e4f72';ctx.lineWidth=1.8;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(3,-17.5);ctx.lineTo(6.8,-16);ctx.moveTo(-2.5,-17.5);ctx.lineTo(shot>0?-.5:1.5,-16.2);ctx.stroke();ctx.lineCap='butt';
+  ctx.strokeStyle='#1a1424';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(4.5,-16,7.2,-1.15,1.15);ctx.stroke();
+  ctx.strokeStyle='#c9cfdd';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(4.5+7.2*Math.cos(-1.15),-16+7.2*Math.sin(-1.15));ctx.lineTo(shot>0?-.6:1.4,-16);ctx.lineTo(4.5+7.2*Math.cos(1.15),-16+7.2*Math.sin(1.15));ctx.stroke();
+  if(lv>=3){ctx.fillStyle='#c9cfdd';ctx.beginPath();ctx.arc(4.5+7.2*Math.cos(-1.15),-16+7.2*Math.sin(-1.15),.8,0,TAU);ctx.arc(4.5+7.2*Math.cos(1.15),-16+7.2*Math.sin(1.15),.8,0,TAU);ctx.fill();}
+  if(shot>0){ctx.globalCompositeOperation='lighter';glowC(9,-16,4+lv,'#d8d0ff',.8*Math.min(1,shot/.12));ctx.globalCompositeOperation='source-over';}
+  ctx.restore();
+}
+function drawArcher(t,tm){
+  if(t.px==null)return;
+  const lv=t.lvl,sc=.74+.045*lv,x=t.px,y=t.py;
+  ctx.fillStyle='rgba(20,14,34,.32)';ctx.beginPath();ctx.ellipse(x,y+1,8*sc,2.6*sc,0,0,TAU);ctx.fill();
+  if(lv>=MAXT){/* dark souls drifting slowly around her */
+    for(let i=0;i<5;i++){const an=tm*.7+i*TAU/5,px=x+Math.cos(an)*20,py=y-14+Math.sin(an)*9,tx=x+Math.cos(an-.45)*20,ty=y-14+Math.sin(an-.45)*9;
+      ctx.strokeStyle='rgba(40,26,60,.45)';ctx.lineWidth=4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(px,py);ctx.quadraticCurveTo((px+tx)/2,(py+ty)/2+4,tx,ty);ctx.stroke();ctx.lineCap='butt';
+      const g=ctx.createRadialGradient(px,py,.5,px,py,6);g.addColorStop(0,'rgba(30,20,44,.9)');g.addColorStop(1,'rgba(30,20,44,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,6,0,TAU);ctx.fill();
+      ctx.fillStyle='rgba(235,240,255,.85)';ctx.fillRect(px-1.6,py-.8,.9,.9);ctx.fillRect(px+.7,py-.8,.9,.9);}
+  }else if(lv>=3){ctx.globalCompositeOperation='lighter';glowC(x,y-12*sc,14+lv*3,'#5b4a86',.08+.04*lv);ctx.globalCompositeOperation='source-over';}
+  drawArcherFig(x,y,sc,t.rph||0,t.face||1,!t.run,lv,t.shot||0,tm);
+}
 function drawTrooper(t,tm){
   if(t.px==null)return;
   const sk=SKM[t.id],lv=t.lvl,sc=.74+.045*lv,x=t.px,y=t.py;
@@ -2921,6 +3023,13 @@ EMB.console=function(tm,f,col,lv){
   ctx.fillStyle='#e2e8f0';ctx.fillRect(-12.6,-6.6,3.2,.9);ctx.fillRect(-11.45,-7.75,.9,3.2);
   if(f>0){ctx.globalCompositeOperation='lighter';glowC(0,-9,12,'#ffffff',.5*f);ctx.globalCompositeOperation='source-over';}
 };
+EMB.archer=function(tm,f,col,lv){glowC(0,-12,14,col,.15+.3*f);drawArcherFig(0,0,.82,0,1,true,lv||1,0,tm);};
+EMB.archerpad=function(tm,f,col,lv){
+  /* her quiver waits on the pad */
+  ctx.save();ctx.rotate(-.25);ctx.fillStyle='#2a2038';rr(-3,-13,6,12,1.5);ctx.fill();ctx.strokeStyle='#7a6aa8';ctx.lineWidth=.8;ctx.stroke();
+  for(let i=-1;i<=1;i++){ctx.strokeStyle='#c9cfdd';ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(i*1.6,-13);ctx.lineTo(i*1.6,-18);ctx.stroke();poly([[i*1.6-1,-17],[i*1.6,-19.5],[i*1.6+1,-17]],'#ffffff');}
+  ctx.restore();glowC(0,-6,11,col,.1+.25*f);
+};
 EMB.soldierpad=function(tm,f,col,lv){
   /* sandbags left at the post while the soldier is out */
   [[-7,-1],[0,-1.5],[7,-1],[-3.5,-5.5],[3.5,-5.5]].forEach(q=>{ctx.fillStyle='#b9a77a';rr(q[0]-4,q[1]-3,8,4.2,1.8);ctx.fill();ctx.strokeStyle='#7d6c45';ctx.lineWidth=.6;ctx.stroke();});
@@ -2962,7 +3071,7 @@ function haloRing(ph,col,back){
 function drawHero(t,tm,f){
   /* level 5: the element itself, larger, crowned and wrapped in a grand aura */
   const sk=SKM[t.id],col=sk.c,ph=tm+t.x*.013,lt=shade(col,.4);
-  const pr=Math.min(1,(t.sh||0)/TUNE.supHits),pa=Math.min(1,(t.ah||0)/TUNE.armHits);
+  const pr=Math.min(1,(t.sh||0)/supN(t)),pa=Math.min(1,(t.ah||0)/TUNE.armHits);
   ctx.save();ctx.translate(t.x,t.y+4);ctx.scale(1,.4);
   ctx.strokeStyle='rgba(26,46,74,.35)';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,20,0,TAU);ctx.stroke();
   ctx.strokeStyle=pr>=1?'#f1d27a':'#e3b64a';ctx.lineWidth=pr>=1?3.4+Math.sin(tm*8):3;ctx.beginPath();ctx.arc(0,0,20,-Math.PI/2,-Math.PI/2+TAU*pr);ctx.stroke();
@@ -2981,7 +3090,7 @@ function drawHero(t,tm,f){
   ctx.globalCompositeOperation='source-over';
   /* the element, larger and floating */
   ctx.save();ctx.translate(0,-2+Math.sin(ph*2)*1.2);ctx.scale(1.38,1.38);
-  const fn=EMB[sk.k==='kick'?'soccerpad':sk.mob?'soldierpad':t.id];if(fn)fn(ph,f,col,5);
+  const fn=EMB[sk.k==='kick'?'soccerpad':sk.mob?(EMB[t.id+'pad']?t.id+'pad':'soldierpad'):t.id];if(fn)fn(ph,f,col,5);
   ctx.restore();
   /* a crown of three gold-tipped shards */
   for(let i=-1;i<=1;i++){const xx=i*6,yy=-31+Math.abs(i)*2+Math.sin(ph*2.4+i)*1.2,h=i===0?5.5:4;
@@ -3028,7 +3137,7 @@ function drawTower(t,tm){
   else{
     ctx.save();ctx.translate(x,y);ctx.scale(ESC[lv],ESC[lv]);
     if(lv>=2)glowC(0,-7,11+(lv-1)*4,col,.1+.08*lv+.3*f);else if(f)glowC(0,-7,11,col,.3);
-    const fn=EMB[sk.k==='kick'?'soccerpad':sk.mob?'soldierpad':t.id];if(fn)fn(tm+x*.013,f,col,lv);
+    const fn=EMB[sk.k==='kick'?'soccerpad':sk.mob?(EMB[t.id+'pad']?t.id+'pad':'soldierpad'):t.id];if(fn)fn(tm+x*.013,f,col,lv);
     ctx.restore();
     if(lv>=3){ctx.save();ctx.translate(x,y-7);ctx.strokeStyle=hx(lv>=4?'#d9b25a':col,.75);ctx.lineWidth=1.3;ctx.setLineDash([5,5]);ctx.lineDashOffset=-tm*14;
       ctx.beginPath();ctx.ellipse(0,0,17,7,0,0,TAU);ctx.stroke();ctx.setLineDash([]);ctx.restore();}
@@ -3038,7 +3147,7 @@ function drawTower(t,tm){
   }
   if(lv>=4)drawPylons(x,y,col,tm,true);
   ctx.restore();
-  if(sk.k==='kick')drawRunner(t,tm);else if(sk.mob)drawTrooper(t,tm);
+  if(sk.k==='kick')drawRunner(t,tm);else if(t.id==='archer')drawArcher(t,tm);else if(sk.mob)drawTrooper(t,tm);
   if(sk.util){const r=LINK*TUNE.beaconR,k=(tm*.6+x*.01)%1;ctx.strokeStyle=hx(col,.35*(1-k));ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(x,y+2,r*k,r*k*.45,0,0,TAU);ctx.stroke();}
   if(t.cb)chargeFx(t,tm,t.cb.def.c);
 }
@@ -3400,9 +3509,11 @@ function drawIcon(cvs,id){
 function drawPool(p,tm){
   const a=Math.min(1,p.t/.6);ctx.globalAlpha=a;
   if(p.sk.id==='lava'){
-    const g=ctx.createRadialGradient(p.x,p.y,2,p.x,p.y,p.r);g.addColorStop(0,'rgba(247,214,130,.95)');g.addColorStop(.45,'rgba(224,116,63,.92)');g.addColorStop(.85,'rgba(138,47,31,.92)');g.addColorStop(1,'rgba(60,30,24,0)');
+    const g=ctx.createRadialGradient(p.x,p.y,2,p.x,p.y,p.r);g.addColorStop(0,'rgba(201,182,255,.75)');g.addColorStop(.35,'rgba(106,79,160,.8)');g.addColorStop(.8,'rgba(36,22,58,.85)');g.addColorStop(1,'rgba(20,12,32,0)');
     ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,TAU);ctx.fill();
-    for(let i=0;i<4;i++){const k=(tm*.9+i*.25)%1,bx=p.x+Math.cos(i*2.2+p.x)*p.r*.5,by=p.y+Math.sin(i*2.2+p.x)*p.r*.4-k*8;ctx.fillStyle='rgba(255,236,170,'+(1-k)*.9+')';ctx.beginPath();ctx.arc(bx,by,1.6+k,0,TAU);ctx.fill();}
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(tm*.6);ctx.strokeStyle='rgba(201,182,255,.55)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(0,0,p.r*.72,0,TAU);ctx.stroke();
+    for(let i=0;i<5;i++){const a=i*TAU/5,b2=a+TAU*2/5;ctx.moveTo(Math.cos(a)*p.r*.72,Math.sin(a)*p.r*.72);ctx.lineTo(Math.cos(b2)*p.r*.72,Math.sin(b2)*p.r*.72);}ctx.stroke();ctx.restore();
+    for(let i=0;i<4;i++){const k=(tm*.9+i*.25)%1,bx=p.x+Math.cos(i*2.2+p.x)*p.r*.5,by=p.y+Math.sin(i*2.2+p.x)*p.r*.4-k*10;ctx.fillStyle='rgba(185,163,230,'+(1-k)*.8+')';ctx.beginPath();ctx.arc(bx,by,1.4+k,0,TAU);ctx.fill();}
   }else if(p.sk.id==='icewall'){
     /* a row of ice blocks across the taxiway */
     ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang+Math.PI/2);
@@ -3481,6 +3592,10 @@ function shipCrash(h){
     h.L.slice(0,cnt(16)).forEach((e,i)=>{const dl=.03*i;fxRing(e.x,e.y,30,'#6a4f8c',.45,3);S.fx.push({k:'shock',x:e.x,y:e.y,r:30,c:'#2a1838',t:.45,max:.45,n:8,seed:i,dl:dl});});
     S.shake=RM?0:.6;shipBoom();
   }
+}
+function hexSound(){
+  if(!SAVE.sound||!AU.ctx||AU.ctx.state!=='running')return;
+  const t=AU.ctx.currentTime,g=AU.sg;tone(g,'sawtooth',98,46,t,.9,.14);tone(g,'square',49,30,t,.8,.07);noiseB(g,700,120,t,.7,.2,'lowpass');tone(g,'sine',523,262,t+.05,.6,.05);
 }
 function shipSound(){
   if(!SAVE.sound||!AU.ctx||AU.ctx.state!=='running')return;
