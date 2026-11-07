@@ -340,7 +340,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 76">v.76</p>
+    <p class="ver mono" aria-label="Game version 78">v.78</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -2166,8 +2166,8 @@ timebloom:['Next to the floating seeds: fog rolls in with your waves, and the cl
 thornvenom:['Next to the slow sting: your thorns carry venom to 5 enemies and slow them.','Next to the green plants: thorns carry your venom to 5 enemies and slow them.'],
 shardblast:['Next to the hard, clear stone: your blast throws 4 sharp shards at nearby enemies.','Next to the loud engine: its blast throws your shards at 4 nearby enemies.'],
 refraction:['Next to the hard, clear stone: your beam bends and splits into 3 more beams.','Next to the thin, hot beam from a machine: you split it into 3 more beams.'],
-deadline:['Next to the captain who commands the waves: each paper goes by sea. The enemy is slowed, and 2 seconds later a bottle lands and hits it again.','Next to the paperwork with a red seal: each paper goes by sea. The enemy is slowed, and 2 seconds later a bottle lands and hits it again.'],
-waxseal:['Next to the wizard of dark magic: each paper carries a curse that burns the enemy and leaves a small pool of dark magic.','Next to the paperwork with a red seal: you curse each paper, so it burns the enemy it hits.']
+deadline:['Next to the captain who commands the waves: each paper goes by sea. The enemy is slowed, and 2 seconds later a bottle lands and hits it again.','Next to the paperwork with a black seal: each paper goes by sea. The enemy is slowed, and 2 seconds later a bottle lands and hits it again.'],
+waxseal:['Next to the wizard of dark magic: each paper carries a curse that burns the enemy and leaves a small pool of dark magic.','Next to the paperwork with a black seal: you curse each paper, so it burns the enemy it hits.']
 };
 /* clue for each member of a triple, in the order of the combination's elements */
 const LIBTRI={
@@ -2179,7 +2179,7 @@ comet:['Next to the force that pulls iron and the wizard of dark magic, together
 jungle:['Next to the slow sting and the floating seeds, together: a toxic jungle grows. Enemies are held, poisoned and caught in a toxic cloud.','Next to the green plants and the floating seeds, together: a toxic jungle grows. Enemies are held, poisoned and caught in a toxic cloud.','Next to the green plants and the slow sting, together: a toxic jungle grows. Enemies are held, poisoned and caught in a toxic cloud.'],
 frozentime:['Next to the sudden burst of cold and the hard, clear stone, together: an icy wave freezes enemies, and frozen enemies break for big damage.','Next to the captain who commands the waves and the hard, clear stone, together: an icy wave freezes enemies, and frozen enemies break for big damage.','Next to the captain who commands the waves and the sudden burst of cold, together: an icy wave freezes enemies, and frozen enemies break for big damage.'],
 railgun:['Next to the thin, hot beam and the loud engine, together: you shoot an iron bullet through every enemy in a long line.','Next to the force that pulls iron and the loud engine, together: you shoot an iron bullet through every enemy in a long line.','Next to the force that pulls iron and the thin, hot beam, together: you shoot an iron bullet through every enemy in a long line.'],
-bureaucracy:['Next to the captain who commands the waves and the heavy ground, together: everything stops at the port for the paperwork. Enemies are stuck, slowed and covered in papers.','Next to the paperwork with a red seal and the heavy ground, together: everything stops at the port for the paperwork. Enemies are stuck, slowed and covered in papers.','Next to the paperwork with a red seal and the captain who commands the waves, together: everything stops at the port for the paperwork. Enemies are stuck, slowed and covered in papers.']
+bureaucracy:['Next to the captain who commands the waves and the heavy ground, together: everything stops at the port for the paperwork. Enemies are stuck, slowed and covered in papers.','Next to the paperwork with a black seal and the heavy ground, together: everything stops at the port for the paperwork. Enemies are stuck, slowed and covered in papers.','Next to the paperwork with a black seal and the captain who commands the waves, together: everything stops at the port for the paperwork. Enemies are stuck, slowed and covered in papers.']
 };
 /* clues for the five newer elements: short, simple English; partners are never named */
 Object.assign(LIBBG,{
@@ -2191,7 +2191,7 @@ archer:'A dark elf archer in a black cloak, with eyes that glow white. She moves
 console:'A handheld game console with a bright screen and two grips. It fires rainbow lasers through a whole line of enemies, and dazzled enemies are easier to hurt.',
 soccer:'A football player in a red and blue striped shirt, number 10. Goes wherever you send him on the airport and kicks the ball at enemies. The ball can take the power of a friend nearby.'
 });
-const NXHINT={fire:'the oldest flame',water:'the thing that flows',earth:'the heavy ground',nature:'the green plants',lightning:'a fast spark from the sky',gravity:'the pull toward the ground',stars:'the small lights of the night',ice:'the cold that holds things still',laser:'the thin, hot beam from a machine',poison:'the slow sting',light:'the brightest beam',shadow:'the dark place',thunder:'the slow, loud blast',lava:'the wizard of dark magic',nova:'the sudden burst of cold',meteor:'a rock from space',magnet:'the force that pulls iron',jet:'the loud engine',spore:'the floating seeds',crystal:'the hard, clear stone',warp:'the captain who commands the waves',letter:'the paperwork with a red seal',
+const NXHINT={fire:'the oldest flame',water:'the thing that flows',earth:'the heavy ground',nature:'the green plants',lightning:'a fast spark from the sky',gravity:'the pull toward the ground',stars:'the small lights of the night',ice:'the cold that holds things still',laser:'the thin, hot beam from a machine',poison:'the slow sting',light:'the brightest beam',shadow:'the dark place',thunder:'the slow, loud blast',lava:'the wizard of dark magic',nova:'the sudden burst of cold',meteor:'a rock from space',magnet:'the force that pulls iron',jet:'the loud engine',spore:'the floating seeds',crystal:'the hard, clear stone',warp:'the captain who commands the waves',letter:'the paperwork with a black seal',
  bricks:'the pile of colourful toy blocks',watergun:'the toy that squirts a thin stream',icemelon:'the frozen red and green fruit',soldier:'the trained fighter in uniform',soccer:'the runner in the red and blue shirt',console:'the handheld game with the bright screen',archer:'the dark archer with white eyes'};
 const NXSC={bricks:'a low wall of blocks slows enemies by 30% for 1.5 seconds',watergun:'wet enemies take more damage',icemelon:'cold pieces fly out and hit again',soldier:'extra bullets hit enemies nearby',soccer:'the ball bounces on to another enemy',console:'rainbow lasers split to more enemies',archer:'dark arrows hit more enemies'};
 const NXRC={fire:'enemies start to burn',water:'enemies are slowed',earth:'enemies are stunned for a short time',nature:'roots hold enemies in place',lightning:'sparks jump to 2 more enemies',gravity:'enemies are pulled together',stars:'3 small lights fall around the target',ice:'enemies are held still for a moment',laser:'a hot beam cuts through the line',poison:'enemies are made sick and lose health over time',light:'a bright bolt hits the target again',shadow:'enemies are marked and take more damage',thunder:'a loud blast lands a moment later',lava:'a pool of dark magic stays on the road',nova:'a cold ring slows enemies near the target',meteor:'a small rock falls from the sky',magnet:'enemies are pulled in',jet:'enemies are pushed back',spore:'a slow cloud stays on the road',crystal:'3 sharp shards fly at enemies',warp:'a wave crashes over nearby enemies',letter:'papers fly at enemies and slow them'};
@@ -2292,6 +2292,7 @@ let PDET=false;
 function renderPanel(){
   const p=$('panel');p.classList.remove('mini');
   if(!S){p.innerHTML='';return;}
+  if(S.sel&&S.sel.hide){const keep=S.sel;S.sel=null;try{renderPanel();}finally{S.sel=keep;}placePanel();return;}
   if(S.sel&&S.sel.type==='pad'){
     const pp=PADS[S.sel.i];
     const ids=S.avail.slice().sort((a,b)=>SKM[a].at-SKM[b].at);
@@ -2391,8 +2392,8 @@ function fitCanvas(){
 function placePanel(){
   const p=$('panel');if(!p)return;
   const fit=document.body.classList.contains('fit'),roomy=fit&&!document.body.classList.contains('tight')&&(window.innerHeight-$('cv').getBoundingClientRect().bottom)>=300;
-  const sel=fit&&!roomy&&S&&S.sel;
-  p.classList.toggle('sh',!!sel);p.classList.toggle('idle',!(S&&S.sel));
+  const sel=fit&&!roomy&&S&&S.sel&&!S.sel.hide;
+  p.classList.toggle('sh',!!sel);p.classList.toggle('idle',!(S&&S.sel&&!S.sel.hide));
   if(sel){let y=CH/2;if(S.sel.type==='pad'&&PADS[S.sel.i])y=PADS[S.sel.i].y;else if(S.towers[S.sel.i]){const t=S.towers[S.sel.i];y=t.py!=null&&isMob(SKM[t.id])?t.py:t.y;}
     const lower=y>CH*.5;p.classList.toggle('top',lower);p.classList.toggle('bot',!lower);}
   else p.classList.remove('top','bot');
@@ -2413,7 +2414,7 @@ function selectAt(x,y){
   if(!S||S.over||S.paused||!S.started)return;
   if(S.sel&&S.sel.type==='move'){for(let i=0;i<PADS.length;i++){if(padFree(i)&&Math.hypot(PADS[i].x-x,PADS[i].y-y)<=26){moveTower(S.sel.i,i);return;}}}
   for(let i=0;i<S.towers.length;i++){const u=S.towers[i],ru=isMob(SKM[u.id])&&u.px!=null&&Math.hypot(u.px-x,u.py-y-10)<=26;
-    if(Math.hypot(u.x-x,u.y-y)<=26||ru){if(u.nap){u.nap=false;u.idle=0;fxText(u.px,u.py-30,'Awake!','#1d7a4a');}S.sel={type:'tower',i:i,mini:isMob(SKM[u.id])};renderPanel();sfx(SFX.click);return;}}
+    if(Math.hypot(u.x-x,u.y-y)<=26||ru){if(u.nap){u.nap=false;u.idle=0;fxText(u.px,u.py-30,'Awake!','#1d7a4a');}const mob=isMob(SKM[u.id]),same=S.sel&&S.sel.type==='tower'&&S.sel.i===i&&S.sel.mini&&!S.sel.hide;S.sel={type:'tower',i:i,mini:mob,hide:mob&&!same};renderPanel();sfx(SFX.click);return;}}
   for(let i=0;i<PADS.length;i++){if(padFree(i)&&Math.hypot(PADS[i].x-x,PADS[i].y-y)<=26){S.sel={type:'pad',i:i};renderPanel();sfx(SFX.click);return;}}
   if(S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t&&isMob(SKM[t.id])){orderMove(t,x,y);return;}}
   S.sel=null;renderPanel();
@@ -2422,7 +2423,7 @@ function selectAt(x,y){
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault(),{passive:false}));
 document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault();},{passive:false});
 document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
-let HOLD=null;const HOLDMS=550;
+let HOLD=null;const HOLDMS=550,HOLDMOB=2000;
 function holdEnd(){if(HOLD){clearTimeout(HOLD.tm);HOLD=null;}}
 function holdHit(x,y){
   /* the tower under the finger: its pad, or for the Soccer Player also where he is standing */
@@ -2435,13 +2436,20 @@ cv.addEventListener('pointerdown',e=>{
   tutOff();holdEnd();
   const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)*CW/r.width,y=(e.clientY-r.top)*CH/r.height;
   const live=S&&!S.over&&!S.paused&&S.started,h=live&&!(S.sel&&S.sel.type==='move')?holdHit(x,y):null;
-  /* the Soccer Player: a tap selects him, a hold only upgrades him (so a hold never leaves him waiting for a move order) */
-  const kickWait=h&&h.kick&&S.towers[h.i].lvl<MAXT;
-  if(!kickWait)selectAt(x,y);
+  /* a tap on a movable unit only selects it (no menu, so the map stays free); holding it for 2 seconds opens its menu */
+  selectAt(x,y);
+  if(!h)return;
+  const t=S.towers[h.i],mob=isMob(SKM[t.id]);
+  if(mob){
+    HOLD={t:t,mob:true,hx:h.hx,hy:h.hy,kick:false,x:x,y:y,cx:e.clientX,cy:e.clientY,t0:performance.now(),tm:setTimeout(()=>{
+      const k=S.towers.indexOf(t);HOLD=null;if(k<0||!S||S.over||S.paused)return;
+      S.sel={type:'tower',i:k,mini:true,hide:false};renderPanel();sfx(SFX.click);if(navigator.vibrate)try{navigator.vibrate(20);}catch(_){}
+    },HOLDMOB)};
+    return;
+  }
   /* tap and hold a tower to upgrade it without the panel */
-  if(!h||S.towers[h.i].lvl>=MAXT)return;
-  const t=S.towers[h.i];
-  HOLD={t:t,hx:h.hx,hy:h.hy,kick:kickWait,x:x,y:y,cx:e.clientX,cy:e.clientY,t0:performance.now(),tm:setTimeout(()=>{
+  if(t.lvl>=MAXT)return;
+  HOLD={t:t,hx:h.hx,hy:h.hy,kick:false,x:x,y:y,cx:e.clientX,cy:e.clientY,t0:performance.now(),tm:setTimeout(()=>{
     const k=S.towers.indexOf(t);HOLD=null;if(k<0||t.lvl>=MAXT)return;
     if(S.credits<upgCost(t)){sfx(SFX.err);fxText(h.hx,h.hy-34,'Need '+fmt(upgCost(t)),'#c0392b');return;}
     upgradeTower(k);if(navigator.vibrate)try{navigator.vibrate(12);}catch(_){}
@@ -2479,7 +2487,7 @@ document.addEventListener('click',e=>{
     case 'skills':auInit();auResume();showScreen('scrSkills');break;
     case 'home':showScreen('scrHome');break;
     case 'top10':openTop10();break;
-    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it gets a crown and a grand aura) or sell it.</li><li>Every kill gives gold. You start with six random elements, always including at least three splash towers. After that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and gains a super skill.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Shadow, Poison) hit the strongest enemy in range much harder. Line elements (Laser, Jet Blast) hit every enemy in a line. The Official Letter (หนังสือราชการ) throws A4 papers at several enemies at once and slows them; at level 5 it stamps a huge red seal that stops everything around it. The beacons boost adjacent towers.</li><li>Level 5 towers release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. The Library lists them. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>The Library on the home screen gives background and clues for every element and the combinations it can join. Each clue names the partner elements; the name of a combination is recorded there once you form it. You can also pick the shirt of the Soccer Player there.</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Soccer Player: tap him, then tap any spot on the map to send him there. He stays where you send him and never moves on his own; he kicks at threats within his range, a little shorter than the Ice Watermelon. If nothing happens for a while he falls asleep; he wakes up by himself when threats come into his range, or you can tap him.</li><li>Flawless streak: every level you clear with no threat reaching the terminal adds ×'+TUNE.stkM.toFixed(2)+' to your score multiplier (shown next to your score, or in the top corner of the map on phones). The multiplier applies to all points from kills and level clears. A single leak resets it to ×1.00.</li><li>Combo bonus: at the end of the run you get a bonus for the most tri combos and pair combos you ever had running at the same time, so it does not matter which map you finish on. Each extra tri scores more than the last (2 tris score 3 times one tri, 3 tris score 6 times), pairs add a smaller bonus, and the bonus grows with the levels you played.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
+    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it gets a crown and a grand aura) or sell it.</li><li>The Soccer Player, Modern Soldier and Dark Archer move: tap one, then tap the map to send it there. A tap does not open the menu, so the map stays free. Hold one for 2 seconds to open its menu.</li><li>Every kill gives gold. You start with six random elements, always including at least three splash towers. After that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and gains a super skill.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Shadow, Poison) hit the strongest enemy in range much harder. Line elements (Laser, Jet Blast) hit every enemy in a line. The Official Letter (หนังสือราชการ) throws A4 papers at several enemies at once and slows them; at level 5 it stamps a huge black seal that stops everything around it. The beacons boost adjacent towers.</li><li>Level 5 towers release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. The Library lists them. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>The Library on the home screen gives background and clues for every element and the combinations it can join. Each clue names the partner elements; the name of a combination is recorded there once you form it. You can also pick the shirt of the Soccer Player there.</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Soccer Player: tap him, then tap any spot on the map to send him there. He stays where you send him and never moves on his own; he kicks at threats within his range, a little shorter than the Ice Watermelon. If nothing happens for a while he falls asleep; he wakes up by himself when threats come into his range, or you can tap him.</li><li>Flawless streak: every level you clear with no threat reaching the terminal adds ×'+TUNE.stkM.toFixed(2)+' to your score multiplier (shown next to your score, or in the top corner of the map on phones). The multiplier applies to all points from kills and level clears. A single leak resets it to ×1.00.</li><li>Combo bonus: at the end of the run you get a bonus for the most tri combos and pair combos you ever had running at the same time, so it does not matter which map you finish on. Each extra tri scores more than the last (2 tris score 3 times one tri, 3 tris score 6 times), pairs add a smaller bonus, and the bonus grows with the levels you played.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
     case 'closeM':closeModal();break;
     case 'player':if(S&&S.sel&&S.sel.type==='tower'){S.sel.mini=false;PDET=true;renderPanel();}break;
     case 'homepad':if(S&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){orderMove(t,t.x,t.y);t.gx=null;t.gy=null;renderPanel();}}break;
@@ -3843,6 +3851,7 @@ function draw(){
     }
     for(const p of S.pools)drawPool(p,tm);
     for(const t of S.towers)if(t.lvl>=MAXT)drawAura(t,tm);
+    if(HOLD&&HOLD.mob){const el=performance.now()-HOLD.t0;if(el>350){const hx=HOLD.t.px!=null?HOLD.t.px:HOLD.t.x,hy=HOLD.t.py!=null?HOLD.t.py:HOLD.t.y,pr=Math.min(1,el/HOLDMOB);c.save();c.strokeStyle='rgba(26,46,74,.35)';c.lineWidth=5;c.beginPath();c.arc(hx,hy-8,26,0,TAU);c.stroke();c.strokeStyle='#3bbfb0';c.lineWidth=4;c.lineCap='round';c.beginPath();c.arc(hx,hy-8,26,-Math.PI/2,-Math.PI/2+TAU*pr);c.stroke();c.restore();}}
     drawLinks(tm);
     const items=[];
     for(const t of S.towers)items.push({y:t.y+8,t:t});
