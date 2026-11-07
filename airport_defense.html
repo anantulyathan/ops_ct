@@ -339,7 +339,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 55">v.55</p>
+    <p class="ver mono" aria-label="Game version 56">v.56</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -498,7 +498,7 @@ const zoneOf=L=>Math.min(9,Math.floor((L-1)/5));
 /* mobK: normal threats (not bosses) have more health: 1.1 x 1.08 x 1.15 */
 /* mobK10: normal threats from level 10 have 25% more health. armD/armS: on armoured stages (8, 18, 28, 38, 48) splash and area hits do 10%, single shots 150% */
 /* bossK2: bosses have 8% more health, except the CAAT Van */
-const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.1,armD:1.5,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.6985,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
+const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.4,armD:1.95,n8K:1.15,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.6985,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
 /* health and gold per threat stay as they were with 204 threats a level (perRef), so fewer threats means less in total */
 const dens=L=>(12+3.4*L)/TUNE.perRef;
 const eF=L=>1+(Math.max(TUNE.eB,TUNE.eA-(TUNE.eA-TUNE.eB)*(L-1)/(TUNE.eL-1))-1);
@@ -892,7 +892,7 @@ function startLevel(L,snap){
     return;
   }
   $('ovl').innerHTML='<div class="box"><h3>'+(snap?'Continue · ':'')+'Level '+L+' · '+esc(ZONES[zoneOf(L)].n)+'</h3><p>Threats: '+esc(types.join(', '))+'.<br>'+(snap?'Your towers, gold and terminal health are as they were at the start of this level.':'Build towers on the pads, then start. Levels follow one another automatically and your towers stay for the whole run.')+'</p>'
-    +(armLv(L)?'<p style="color:#1e4d8c;font-weight:600">Armoured threats: splash and area hits do only 10% damage. Single shots, chains and beams do 150%.</p>':'')
+    +(armLv(L)?'<p style="color:#1e4d8c;font-weight:600">Armoured threats: splash and area hits do only 40% damage. Single shots, chains and beams do 195%.</p>':'')
     +(L>=31?'<p style="color:#1e4d8c;font-weight:600">Storm Shield: it blocks more each level. Combos push through it; a rare hidden combo cuts straight through.</p>':'')
     +'<button class="btn p" id="bStart" style="width:100%">'+(snap?'Continue':'Start')+'</button></div>';
   $('ovl').classList.add('on');
@@ -937,7 +937,7 @@ function advanceLevel(){
   S.tuneIdx=randTune(S.tuneIdx);if(SAVE.sound&&AU.ctx)musicStart(S.tuneIdx,0);
   if(newZone)banner('Level '+N+' · '+ZONES[zoneOf(N)].n,sub);else banner('Level '+N,sub);
   if(N===31)setTimeout(()=>banner('Storm Shield','Combos push through it'),3400);
-  if(armLv(N)&&!S.botRun)setTimeout(()=>banner('Armoured threats','Splash does 10%. Single shots do 150%.'),N===31?6800:3400);
+  if(armLv(N)&&!S.botRun)setTimeout(()=>banner('Armoured threats','Splash does 40%. Single shots do 195%.'),N===31?6800:3400);
   if(mapNo(N)!==mapNo(L))newAirport(N);
   saveRun();
   updHud(true);renderPanel();
@@ -1620,7 +1620,7 @@ function baseHp(L,ty){const D=Ld(L);return ET[ty].hp*hpMul(D)*dens(D)*TUNE.hpK*e
 function bossHp(L){const z=ZONES[zoneOf(L)];return z.types.reduce((a,t)=>a+baseHp(L,t),0)/z.types.length*TUNE.bossK*(z.boss==='apex'?TUNE.vanK:TUNE.bossK2);}
 const armLv=L=>L%10===8;
 function spawn(s){
-  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=(T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp*TUNE.mobK*(L>=10?TUNE.mobK10:1))*(L>=TUNE.hardL?TUNE.hardK:1);
+  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=(T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp*TUNE.mobK*(L>=10?TUNE.mobK10:1))*(L>=TUNE.hardL?TUNE.hardK:1)*(armLv(L)?1:TUNE.n8K);
   const e={ty:s.ty,n:T.n,hp:hp,max:hp,sp:(T.boss||T.fast?T.sp:(T.sp*.45+TUNE.packSp*.55)*(1+rnd(-TUNE.spV,TUNE.spV)))*(1+.012*(Ld(L)-1)),lo:T.boss?0:rnd(-14,14),r:T.r,c:T.c,sh:T.sh,boss:!!T.boss,d:s.d0||0,x:PP[0].x+(s.d0||0),y:PP[0].y,
     slowF:1,slowT:0,stun:0,burn:null,pz:null,weak:null,rew:T.rew*(1+TUNE.rewL*L)*TUNE.rewK*dn*TUNE.goldK,pts:Math.round(10*(1+.1*L)*(T.boss?20:1)*TUNE.ptsK),ph:Math.random()*6,flash:0,ang:0};
   if(armLv(L))e.arm=1;
