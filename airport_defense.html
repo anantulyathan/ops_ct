@@ -346,7 +346,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 88">v.88</p>
+    <p class="ver mono" aria-label="Game version 89">v.89</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -427,39 +427,39 @@ const SK=[
 {id:'water',n:'Water',c:'#4a90c9',k:'splash',dmg:14,rad:56,cd:1.1,rng:120,cost:60,fx:{slow:[.5,2]},s:['sine',700,260,.18,.2],d:'Splash that slows enemies.'},
 {id:'earth',n:'Earth',c:'#a98a5b',k:'splash',dmg:30,rad:62,cd:1.6,rng:110,cost:80,fx:{stun:.6},s:['sawtooth',120,50,.22,.22],d:'Wide ground splash with a short stun.'},
 {id:'nature',n:'Nature',c:'#4f8a5b',k:'splash',dmg:16,rad:56,cd:1.3,rng:120,cost:80,fx:{slow:[.5,2]},s:['triangle',500,820,.2,.14],d:'Thorn vines that tangle and slow enemies.'},
-{id:'lightning',n:'Lightning',c:'#e8c547',k:'chain',dmg:22,hops:4,jump:70,cd:1.2,rng:130,cost:90,fx:{},s:['square',1200,200,.14,.1],d:'Chain strike that jumps between enemies.'},
-{id:'gravity',n:'Gravity',c:'#8a6fc4',k:'splash',dmg:20,rad:70,cd:2.2,rng:120,cost:100,fx:{pull:.8},s:['sine',300,70,.3,.25],d:'Pulls enemies together.'},
+{id:'lightning',n:'Lightning',c:'#e8c547',k:'chain',dmg:24.2,hops:4,jump:70,cd:1.2,rng:130,cost:90,fx:{},s:['square',1200,200,.14,.1],d:'Chain strike that jumps between enemies.'},
+{id:'gravity',n:'Gravity',c:'#8a6fc4',k:'splash',dmg:23,rad:70,cd:2.2,rng:120,cost:100,fx:{pull:.8},s:['sine',300,70,.3,.25],d:'Pulls enemies together.'},
 {id:'stars',n:'Stars',c:'#c9d4ff',k:'shower',dmg:12,rad:28,cnt:5,spread:55,cd:2.0,rng:140,cost:110,fx:{},s:['triangle',1600,900,.2,.14],d:'Star shower across an area.'},
-{id:'ice',n:'Ice',c:'#8fd6e8',k:'splash',dmg:12,rad:44,cd:1.6,rng:120,cost:90,fx:{stun:.6,slow:[.5,2]},s:['sine',2000,900,.15,.14],d:'Freezes enemies in place briefly (0.6 seconds), then slows them by 50% for 2 seconds.'},
+{id:'ice',n:'Ice',c:'#8fd6e8',k:'splash',dmg:13.8,rad:44,cd:1.6,rng:120,cost:90,fx:{stun:.6,slow:[.5,2]},s:['sine',2000,900,.15,.14],d:'Freezes enemies in place briefly (0.6 seconds), then slows them by 50% for 2 seconds.'},
 {id:'laser',n:'Laser',c:'#d4577a',k:'beam',dmg:26,w:12,cd:1.1,rng:150,cost:90,fx:{},s:['sawtooth',1800,900,.12,.08],d:'A thin, hot beam that cuts through every enemy in a line.'},
-{id:'poison',n:'Poison',c:'#7fb04f',k:'single',dmg:30,cd:.8,rng:130,cost:80,fx:{poison:[6,4]},s:['sine',300,500,.14,.16],d:'A poison dart on one target. The poison stacks.'},
-{id:'light',n:'Light',c:'#fff6dc',k:'single',dmg:95,cd:1.5,rng:150,cost:100,fx:{},s:['sawtooth',900,1800,.22,.08],d:'A beam of light. Heavy damage to one target.'},
-{id:'shadow',n:'Darkness',c:'#4b3a72',k:'single',dmg:60,cd:1.3,rng:130,cost:90,fx:{weak:[1.35,4]},s:['sine',150,80,.3,.22],d:'Fires a bolt of pure darkness and marks the enemy: it takes 35% more damage for 4 seconds. If a marked enemy dies, the darkness leaps to the nearest enemy (up to 3 times), hits it for 60% damage and marks it too.'},
+{id:'poison',n:'Poison',c:'#7fb04f',k:'single',dmg:34.5,cd:.8,rng:130,cost:80,fx:{poison:[6,4]},s:['sine',300,500,.14,.16],d:'A poison dart on one target. The poison stacks.'},
+{id:'light',n:'Light',c:'#fff6dc',k:'single',dmg:118.8,cd:1.5,rng:150,cost:100,fx:{},s:['sawtooth',900,1800,.22,.08],d:'A beam of light. Heavy damage to one target.'},
+{id:'shadow',n:'Darkness',c:'#4b3a72',k:'single',dmg:66,cd:1.3,rng:130,cost:90,fx:{weak:[1.35,4]},s:['sine',150,80,.3,.22],d:'Fires a bolt of pure darkness and marks the enemy: it takes 35% more damage for 4 seconds. If a marked enemy dies, the darkness leaps to the nearest enemy (up to 3 times), hits it for 60% damage and marks it too.'},
 {id:'thunder',n:'Thunder',c:'#4f5fa8',k:'delay',dmg:50,rad:60,del:.8,cd:2.4,rng:140,cost:120,fx:{stun:.8},s:['n',200,60,.4,.28],d:'A delayed big blast. It also stuns in a ring.'},
-{id:'lava',n:'Dark Wizard',c:'#6a4fa0',k:'pool',dps:14,rad:40,dur:4,cd:3,rng:120,cost:110,fx:{},s:['sawtooth',90,60,.35,.18],d:'A dark wizard who casts pools of dark magic on the road. Every enemy inside keeps taking damage. Level 5 super, Hex Blast: dark magic splashes over a group and stuns it for 1 second.'},
-{id:'nova',n:'Frost Nova',c:'#6bc2c9',k:'nova',dmg:10,rad:80,cd:3,rng:80,cost:100,fx:{slow:[.5,1.5]},s:['sine',1500,300,.3,.16],d:'An instant ring that slows every enemy near the tower by 50% for 1.5 seconds.'},
-{id:'meteor',n:'Meteor',c:'#b5683c',k:'delay',dmg:32,rad:60,del:1,cd:5,rng:9999,cost:150,fx:{},s:['n',300,40,.5,.32],d:'Reaches anywhere on the map, but hits for about a quarter of a normal tower.'},
-{id:'magnet',n:'Magnet',c:'#c0566f',k:'splash',dmg:6,rad:60,cd:1.4,rng:120,cost:90,fx:{pull:1},s:['square',200,420,.18,.1],d:'Pulls enemies together with small hits.'},
+{id:'lava',n:'Dark Wizard',c:'#6a4fa0',k:'pool',dps:15.4,rad:40,dur:4,cd:3,rng:120,cost:110,fx:{},s:['sawtooth',90,60,.35,.18],d:'A dark wizard who casts pools of dark magic on the road. Every enemy inside keeps taking damage. Level 5 super, Hex Blast: dark magic splashes over a group and stuns it for 1 second.'},
+{id:'nova',n:'Frost Nova',c:'#6bc2c9',k:'nova',dmg:12.5,rad:80,cd:3,rng:80,cost:100,fx:{slow:[.5,1.5]},s:['sine',1500,300,.3,.16],d:'An instant ring that slows every enemy near the tower by 50% for 1.5 seconds.'},
+{id:'meteor',n:'Meteor',c:'#b5683c',k:'delay',dmg:40,rad:60,del:1,cd:5,rng:9999,cost:150,fx:{},s:['n',300,40,.5,.32],d:'Reaches anywhere on the map, but hits for about a quarter of a normal tower.'},
+{id:'magnet',n:'Magnet',c:'#c0566f',k:'splash',dmg:6.9,rad:60,cd:1.4,rng:120,cost:90,fx:{pull:1},s:['square',200,420,.18,.1],d:'Pulls enemies together with small hits.'},
 {id:'jet',n:'Jet Blast',c:'#7f9cc0',k:'beam',dmg:40,w:24,cd:1.3,rng:135,cost:100,fx:{push:22,pushP:.33},s:['n',900,260,.35,.2],d:'An engine blast that hits every enemy in a line, with a 33% chance to push each one back.'},
 {id:'spore',n:'Poison Clouds',c:'#6fa83a',k:'pool',dps:7,rad:46,dur:5,cd:2.5,rng:120,cost:100,fx:{slow:[.7,1]},ven:[1.5,3],s:['n',500,250,.3,.12],d:'Releases a cloud of poison gas. Enemies inside are slowed by 30% and gain a venom stack every second (up to 5). An enemy that dies inside the cloud bursts into a small new cloud.'},
-{id:'crystal',n:'Crystal',c:'#b57fc4',k:'single',dmg:78,cd:1.1,rng:140,cost:100,fx:{},s:['triangle',1800,1100,.16,.1],d:'A crystal spear. High damage to one target.'},
+{id:'crystal',n:'Crystal',c:'#b57fc4',k:'single',dmg:97.5,cd:1.1,rng:140,cost:100,fx:{},s:['triangle',1800,1100,.16,.1],d:'A crystal spear. High damage to one target.'},
 {id:'warp',n:'Captain Tide',c:'#2f7fa6',k:'splash',dmg:36,rad:64,cd:1.5,rng:125,cost:120,fx:{},s:['n',700,160,.32,.18],d:'A sea captain who sends a crashing wave onto a group of enemies. Level 5 super, Pirate Ship: one big ship hits up to 40 enemies in the biggest group for 1.5 times normal damage.'},
-{id:'letter',n:'Official Letter',th:'หนังสือราชการ',c:'#2b2f36',k:'paper',dmg:22,cnt:3,cd:1.2,rng:140,cost:120,fx:{slow:[.75,1.5]},s:['triangle',900,1300,.08,.06],d:'Throws A4 papers at up to 3 enemies (one more per level). The paperwork slows them down. Level 5 super, Official Seal: a big seal that stuns every enemy around it for 1.5 seconds.'},
-{id:'bricks',n:'Toy Bricks',c:'#e0584f',k:'splash',lob:'brick',dmg:16,rad:50,cd:1.4,rng:120,cost:85,fx:{stun:.35,stunP:.6},s:['square',260,140,.2,.14],d:'Drops a pile of toy bricks that have a 60% chance to stun for a moment and leave a low wall that slows enemies by 30% for 1.5 seconds.'},
+{id:'letter',n:'Official Letter',th:'หนังสือราชการ',c:'#2b2f36',k:'paper',dmg:25.3,cnt:3,cd:1.2,rng:140,cost:120,fx:{slow:[.75,1.5]},s:['triangle',900,1300,.08,.06],d:'Throws A4 papers at up to 3 enemies (one more per level). The paperwork slows them down. Level 5 super, Official Seal: a big seal that stuns every enemy around it for 1.5 seconds.'},
+{id:'bricks',n:'Toy Bricks',c:'#e0584f',k:'splash',lob:'brick',dmg:14.4,rad:50,cd:1.4,rng:120,cost:85,fx:{stun:.35,stunP:.6},s:['square',260,140,.2,.14],d:'Drops a pile of toy bricks that have a 60% chance to stun for a moment and leave a low wall that slows enemies by 30% for 1.5 seconds.'},
 {id:'watergun',n:'Water Gun',c:'#3fa7c4',k:'squirt',dmg:17,cd:.35,rng:130,cost:70,fx:{weak:[1.1,2.5],slow:[.88,.6]},cbK:1,s:['sine',900,500,.08,.06],d:'Very fast jets of water on one enemy. Wet enemies take 10% more damage. At level 5, each jet has a 15% chance to push the enemy back a little.'},
-{id:'icemelon',n:'Ice Watermelon',c:'#e8808a',k:'splash',lob:'melon',dmg:13,rad:56,cd:1.8,rng:125,cost:100,fx:{stun:.8,slow:[.5,2]},s:['sine',1500,600,.16,.14],d:'A frozen watermelon that breaks into cold slices. It freezes enemies, and the slices hit again.'},
-{id:'soldier',n:'Modern Soldier',c:'#6f7f4f',k:'burst',mob:1,dmg:25,cnt:3,cd:1.3,rng:150,cost:100,fx:{},cbK:3,s:['square',500,160,.12,.09],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and fires a burst of three rounds at one enemy in range; the last round hits twice as hard. More rounds at levels 3 and 5,, and a bigger gun at every level. Each round also splits to one more enemy per level above 1, at the same power (4 more at level 5).'},
+{id:'icemelon',n:'Ice Watermelon',c:'#e8808a',k:'splash',lob:'melon',dmg:11.7,rad:56,cd:1.8,rng:125,cost:100,fx:{stun:.8,slow:[.5,2]},s:['sine',1500,600,.16,.14],d:'A frozen watermelon that breaks into cold slices. It freezes enemies, and the slices hit again.'},
+{id:'soldier',n:'Modern Soldier',c:'#6f7f4f',k:'burst',mob:1,dmg:22.5,cnt:3,cd:1.3,rng:150,cost:100,fx:{},cbK:3,s:['square',500,160,.12,.09],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and fires a burst of three rounds at one enemy in range; the last round hits twice as hard. More rounds at levels 3 and 5,, and a bigger gun at every level. Each round also splits to one more enemy per level above 1, at the same power (4 more at level 5).'},
 {id:'console',n:'Game Console',c:'#5a6f8c',k:'beam',dmg:28,w:16,cd:1.2,rng:140,cost:110,fx:{weak:[1.12,2]},s:['square',880,1760,.1,.07],d:'A handheld game console that fires rainbow lasers through every enemy in a line. Dazzled enemies take 12% more damage for 2 seconds.'},
 {id:'soccer',n:'Soccer Player',c:'#3a5fb0',k:'kick',dmg:42,rad:48,cd:1,rng:111,cost:110,fx:{},crit:.15,s:['triangle',300,120,.14,.1],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and kicks a ball at enemies in range (a little shorter than Ice Watermelon). The ball splashes and has a 15% critical hit. Next to another tower, the ball takes its element.'},
-{id:'archer',n:'Dark Archer',c:'#5b4a86',k:'volley',mob:1,dmg:17,cd:1.25,rng:150,cost:110,fx:{},s:['triangle',520,260,.08,.08],d:'A dark elf archer. Tap her, then tap the map to send her anywhere. She shoots 3 arrows at once (one more each level, 7 at level 5, with +15% damage per arrow at level 5). Pick the element of her arrows in her menu.'},
-{id:'power',n:'Power Beacon',c:'#c98a3a',k:'aura',rad:165,boost:0,dmgB:.05,slow:1,cost:120,rng:165,util:1,s:['sawtooth',220,440,.14,.08],d:'Support tower. Nearby towers deal 5% more damage for each beacon level (25% at level 5).'},
-{id:'speed',n:'Speed Beacon',c:'#3bbfb0',k:'aura',rad:165,boost:.05,slow:1,cost:110,rng:165,util:1,s:['triangle',700,1400,.12,.08],d:'Support tower. Nearby towers attack 5% faster for each beacon level (25% at level 5).'}
+{id:'archer',n:'Dark Archer',c:'#5b4a86',k:'volley',mob:1,dmg:19.5,cd:1.25,rng:150,cost:110,fx:{},s:['triangle',520,260,.08,.08],d:'A dark elf archer. Tap her, then tap the map to send her anywhere. She shoots 3 arrows at once (one more each level, 7 at level 5, with +15% damage per arrow at level 5). Pick the element of her arrows in her menu.'},
+{id:'power',n:'Power Beacon',c:'#c98a3a',k:'aura',rad:165,boost:0,dmgB:.05,slow:1,cost:80,rng:165,util:1,s:['sawtooth',220,440,.14,.08],d:'Support tower. Nearby towers deal more damage: 5%, 10%, 15%, then 22% at level 4 and 32% at level 5 (40% at level 6). Next to a Speed Beacon, both auras are 50% stronger. Joins combos with Meteor, Crystal and Thunder.'},
+{id:'speed',n:'Speed Beacon',c:'#3bbfb0',k:'aura',rad:165,boost:.05,slow:1,cost:80,rng:165,util:1,s:['triangle',700,1400,.12,.08],d:'Support tower. Nearby towers attack faster: 5%, 10%, 15%, then 22% at level 4 and 32% at level 5 (40% at level 6). Next to a Power Beacon, both auras are 50% stronger. Joins combos with Water Gun, Modern Soldier and Dark Archer.'}
 ];
 const AT={fire:1,water:1,earth:1,lightning:1,speed:2,power:2,laser:2,ice:2,poison:3,nature:3,light:4,spore:4,magnet:5,shadow:5,crystal:6,lava:6,jet:7,thunder:7,stars:8,nova:8,warp:9,meteor:9,gravity:10,letter:10,watergun:2,bricks:3,icemelon:5,soldier:6,soccer:7,console:8,archer:7};
 SK.forEach(s=>s.at=AT[s.id]||1);SK.sort((a,b)=>a.at-b.at);
 const SKM={};SK.forEach(s=>SKM[s.id]=s);
 const STARTERS=[];/* every element is random from level 1 */
-const MAXLV=5,MAXL=50,MAXT=5,RUNKEY='ad_run_v7';
+const MAXLV=5,MAXL=50,MAXT=5,MAXU=6,OVK=25/18,OVC=14,RUNKEY='ad_run_v7';
 /* upgrading is the better use of gold: level 5 gives 18x damage for 18.5x the build price, plus wider splash and super skills */
 const LVM=[0,1,2.6,5.4,10,18],LVB=[0,1,1.5,2,2.5,3],UPC=[0,1.5,3,5,9.6];
 
@@ -506,7 +506,7 @@ const zoneOf=L=>Math.min(9,Math.floor((L-1)/5));
 /* mobK: normal threats (not bosses) have more health: 1.1 x 1.08 x 1.15 */
 /* mobK10: normal threats from level 10 have 25% more health. armD/armS: on armoured stages (8, 18, 28, 38, 48) splash and area hits do 10%, single shots 150% */
 /* bossK2: bosses have 8% more health, except the CAAT Van */
-const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.4,armD:1.95,n8K:1.15,wkNs:1.3,wkWi:2,wkShip:1.7,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.7225,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,cbTri:600,cbPair:100,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,slowCap:.5,stunCap:1.5,iceSupK:1.5,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.825,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
+const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.4,armD:1.95,n8K:1.15,wkNs:1.3,wkWi:2,wkShip:1.7,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.7225,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,cbTri:600,cbPair:100,wakeFrom:36,wakeN:6,wakeG:2,late:.14,lateK:1.1,late6:1.15,bossSlow:.4,slowCap:.5,stunCap:1.5,iceSupK:1.5,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.825,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
 /* health and gold per threat stay as they were with 204 threats a level (perRef), so fewer threats means less in total */
 const dens=L=>(12+3.4*L)/TUNE.perRef;
 const eF=L=>1+(Math.max(TUNE.eB,TUNE.eA-(TUNE.eA-TUNE.eB)*(L-1)/(TUNE.eL-1))-1);
@@ -840,7 +840,11 @@ document.addEventListener('pointerdown',()=>{
 
 /* ============ GAME STATE ============ */
 let S=null;
-const dmgM=t=>(1+.15*(slv(t.id)-1))*LVM[t.lvl];
+const dmgM=t=>(1+.15*(slv(t.id)-1))*LVM[t.lvl]*(t.ov?OVK:1);
+const canUp=t=>t.lvl<MAXT||!t.ov;
+const lvTxt=t=>t.lvl+(t.ov?1:0);
+/* beacon strength by level: 5, 10, 15, then 22 and 32 percent; the Overclock step makes it 40 */
+const BEV=o=>[0,1,2,3,4.4,6.4][Math.min(o.lvl,MAXT)]+(o.ov?1.6:0);
 const radM=t=>(1+.04*(slv(t.id)-1))*(1+.07*(t.lvl-1));
 const isMob=sk=>sk.k==='kick'||!!sk.mob;
 /* the Dark Archer's arrows carry one element the player picks from the elements of this run */
@@ -849,7 +853,7 @@ function archEl(t){const L=archList();return t.ael&&L.indexOf(t.ael)>=0?t.ael:(L
 const arrowN=t=>Math.min(7,2+t.lvl);
 const rngM=t=>(1+.03*(slv(t.id)-1)+.08*(t.lvl-1))*TUNE.rngK;
 const sellVal=t=>Math.round(t.spent*.6);
-const upgCost=t=>Math.round(SKM[t.id].cost*UPC[t.lvl]*(t.cm||1));
+const upgCost=t=>Math.round(SKM[t.id].cost*(t.lvl>=MAXT?OVC:UPC[t.lvl])*(t.cm||1));
 
 function buildSchedule(L,lead){
   /* three packs of about 100, released one second apart; each pack is a long, wide column so splash cannot catch them all at once */
@@ -878,7 +882,7 @@ function tutOff(){if(!banner.tut)return;banner.tut=false;const b=$('banner');if(
 function saveRun(){
   if(!S||S.over)return;
   try{localStorage.setItem(RUNKEY,JSON.stringify({v:1,level:S.level,runStart:S.runStart,lives:S.lives,gold:Math.floor(S.credits),score:Math.round(S.score),kills:S.kills,stk:S.streak||0,bstk:S.bestStreak||0,
-    avail:S.avail,jwRun:S.jwRun,pkT:S.pkT||0,pkP:S.pkP||0,seed:MAPSEED,ori:ORI,towers:S.towers.map(t=>({pad:t.pad,id:t.id,lvl:t.lvl,spent:t.spent,cm:t.cm||1,k:t.kills||0,bl:t.ball||null,ae:t.ael||null,g:t.gx!=null?[Math.round(t.gx),Math.round(t.gy)]:null})),at:Date.now()}));}catch(e){}
+    avail:S.avail,jwRun:S.jwRun,pkT:S.pkT||0,pkP:S.pkP||0,seed:MAPSEED,ori:ORI,towers:S.towers.map(t=>({pad:t.pad,id:t.id,lvl:t.lvl,ov:t.ov|0,spent:t.spent,cm:t.cm||1,k:t.kills||0,bl:t.ball||null,ae:t.ael||null,g:t.gx!=null?[Math.round(t.gx),Math.round(t.gy)]:null})),at:Date.now()}));}catch(e){}
 }
 function loadRun(){try{const r=JSON.parse(localStorage.getItem(RUNKEY)||'null');return r&&r.v===1&&r.level>=1&&r.level<=MAXL?r:null;}catch(e){return null;}}
 function clearRun(){try{localStorage.removeItem(RUNKEY);}catch(e){}}
@@ -894,7 +898,7 @@ function startLevel(L,snap){
   if(snap){
     S.runStart=snap.runStart||1;S.lives=snap.lives;S.credits=snap.gold;S.score=snap.score;S.kills=snap.kills||0;S.streak=snap.stk|0;S.bestStreak=snap.bstk|0;S.jwRun=snap.jwRun||{};S.pkT=snap.pkT|0;S.pkP=snap.pkP|0;
     S.avail=(snap.avail||STARTERS).filter(id=>SKM[id]);STARTERS.forEach(id=>{if(S.avail.indexOf(id)<0)S.avail.push(id);});
-    (snap.towers||[]).forEach(o=>{if(PADS[o.pad]&&SKM[o.id]&&padFree(o.pad))S.towers.push({pad:o.pad,x:PADS[o.pad].x,y:PADS[o.pad].y,id:o.id,lvl:Math.min(MAXT,Math.max(1,o.lvl|0)),cd:.3,spent:o.spent||SKM[o.id].cost,cm:o.cm||1,boost:0,flash:0,kills:o.k||0,ball:o.bl||null,ael:o.ae||null,gx:o.g?o.g[0]:null,gy:o.g?o.g[1]:null,px:o.g?o.g[0]:null,py:o.g?o.g[1]:null});});
+    (snap.towers||[]).forEach(o=>{if(PADS[o.pad]&&SKM[o.id]&&padFree(o.pad))S.towers.push({pad:o.pad,x:PADS[o.pad].x,y:PADS[o.pad].y,id:o.id,lvl:Math.min(MAXT,Math.max(1,o.lvl|0)),ov:(o.ov&&(o.lvl|0)>=MAXT)?1:0,cd:.3,spent:o.spent||SKM[o.id].cost,cm:o.cm||1,boost:0,flash:0,kills:o.k||0,ball:o.bl||null,ael:o.ae||null,gx:o.g?o.g[0]:null,gy:o.g?o.g[1]:null,px:o.g?o.g[0]:null,py:o.g?o.g[1]:null});});
     S.quiet=true;updCombos();S.quiet=false;
   }
   S.waves=TUNE.waves;
@@ -1196,6 +1200,12 @@ function comboHit(t,tg){
       fxBolt([{x:t.x,y:t.y-10},{x:t.x+ux*L,y:t.y+uy*L}],'#aab8e0',.3,4,'beam');break;}
     case 'bureaucracy':{const L=near(90,cap);hitList(L,.35*b,{stun:.6,slow:[.5,2]},dm);if(!S.botRun)L.slice(0,4).forEach((e,i)=>fxPaper({x:x+rnd(-30,30),y:y-50},e,i));break;}
     case 'comet':{const L=near(100,cap);pullTo(L,.55);S.pend.push({t:.5,del:.5,x:x,y:y,sk:SKM.meteor,dmg:.9*b,rad:60,dm:dm,tri:1,cap:cap,big:true});S.pools.push({x:x,y:y,r:40,dps:.35*b,t:2.5,max:2.5,sk:SKM.lava,tri:1,cap:cap});break;}
+    case 'orbital':S.pend.push({t:.55,del:.55,x:x,y:y,sk:SKM.meteor,dmg:.6*b,rad:50,dm:dm,pair:1,cap:cap,big:true});break;
+    case 'piercing':{if(!tg.dead){dmgE(tg,.7*b);applyFx(tg,{weak:[1.25,3]},dm);}break;}
+    case 'charged':hitList(near(80,cap),.35*b,{stun:.3},dm);break;
+    case 'rapidf':{if((t.ch||0)%3)break;hitList(near(70,cap),.45*b,{weak:[1.1,2],slow:[.7,1]},dm);break;}
+    case 'suppress':near(100,4,tg).forEach(e=>{dmgE(e,.3*b);applyFx(e,{slow:[.7,1]},dm);});break;
+    case 'barrage':near(120,3,tg).forEach(e=>{if(!S.botRun)fxProj({x:t.px==null?t.x:t.px,y:(t.py==null?t.y:t.py)-12},e,'#6a5aa0',.12);dmgE(e,.35*b);});break;
     case 'photo':{hitList(near(60,cap),.12*b,{slow:[.7,1]},dm);fxGlow(x,y,40,'#d9f2a0',.35,.6);break;}
     default:if(d.nx)nxHit(d,t,tg,b,dm,cap,x,y,near);
   }
@@ -1453,6 +1463,17 @@ function nxFx(t,tg,d){
   burst(tg.x,tg.y,d.tri?8:5,d.c,70,.5,2.4,{sh:'s',add:true});
 }
 const pct=m=>'+'+Math.round((m-1)*100)+'%';
+/* beacon combos: lower bonus than normal pairs because the beacon already gives an aura */
+const BCM=1.25;
+COMBOS.push(
+{k:'twin',a:'power',b:'speed',n:'Twin Beacons',m:1,c:'#8fb8a8',d:'Both beacons are 50% stronger.'},
+{k:'orbital',a:'power',b:'meteor',n:'Orbital Strike',m:BCM,c:'#c98a3a',d:'+25% damage. Every meteor is followed by a second, smaller strike. Cuts through the Storm Shield.'},
+{k:'piercing',a:'power',b:'crystal',n:'Piercing Light',m:BCM,c:'#d9b86a',d:'+25% damage. Every shard hits again and weakens the target. Cuts through the Storm Shield.'},
+{k:'charged',a:'power',b:'thunder',n:'Charged Thunder',m:BCM,c:'#e0b24a',d:'+25% damage. The blast also stuns the enemies around it. Cuts through the Storm Shield.'},
+{k:'rapidf',a:'speed',b:'watergun',n:'Rapid Fire',m:BCM,c:'#5fc0b5',d:'+25% damage. Every third jet also soaks and slows the enemies around it. Cuts through the Storm Shield.'},
+{k:'suppress',a:'speed',b:'soldier',n:'Suppression',m:BCM,c:'#7a9a6a',d:'+25% damage. Rounds also hit 4 nearby enemies and slow them. Cuts through the Storm Shield.'},
+{k:'barrage',a:'speed',b:'archer',n:'Barrage',m:BCM,c:'#6a5aa0',d:'+25% damage. Three more arrows hit nearby enemies. Cuts through the Storm Shield.'}
+);
 function comboFor(x,y){for(const c of COMBOS){if((c.a===x&&c.b===y)||(c.a===y&&c.b===x))return c;}return null;}
 const near2=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y)<=LINK;
 function setCb(t,d,others){if(!t.cb||d.m>t.cb.def.m)t.cb={def:d,others:others,other:others[0]};}
@@ -1467,7 +1488,7 @@ function updCombos(){
   const sig=S.towers.map(t=>t.pad+':'+t.id+':'+t.lvl).join(',');
   if(sig===S.cbSig&&S.links)return;S.cbSig=sig;
   S.links=[];
-  for(const t of S.towers)t.cb=null;
+  for(const t of S.towers){t.cb=null;t.tw=0;}
   /* towers link into combos only from level 4 */
   const T=S.towers.filter(t=>!SKM[t.id].util&&t.lvl>=TUNE.cbLvl),n=T.length,lm={};
   const addLink=(a,b,d)=>{const k=Math.min(a.pad,b.pad)+'-'+Math.max(a.pad,b.pad),o=lm[k];if(!o||d.m>o.d.m){lm[k]={a:a,b:b,d:d};}};
@@ -1487,6 +1508,20 @@ function updCombos(){
       const key=[a.pad,b.pad,c.pad].sort((x,y)=>x-y).join('-')+d.k;
       if(!S.seen[key]){S.seen[key]=1;if(!S.quiet)comboForm([a,b,c],d);}
     }
+  }
+  /* beacons: a Power and a Speed Beacon side by side, and each beacon next to a matching tower */
+  const BC=S.towers.filter(t=>SKM[t.id].util&&t.lvl>=TUNE.cbLvl);
+  for(let i=0;i<BC.length;i++)for(let j=i+1;j<BC.length;j++){
+    const a=BC[i],b=BC[j];if(a.id===b.id||!near2(a,b))continue;const d=comboFor(a.id,b.id);if(!d)continue;
+    a.tw=1;b.tw=1;addLink(a,b,d);
+    const key=Math.min(a.pad,b.pad)+'-'+Math.max(a.pad,b.pad)+d.k;
+    if(!S.seen[key]){S.seen[key]=1;if(!S.quiet)comboForm([a,b],d);}
+  }
+  for(const u of BC)for(const t of T){
+    if(!near2(u,t))continue;const d=comboFor(u.id,t.id);if(!d)continue;
+    addLink(u,t,d);setCb(t,d,[u]);
+    const key=Math.min(u.pad,t.pad)+'-'+Math.max(u.pad,t.pad)+d.k;
+    if(!S.seen[key]){S.seen[key]=1;if(!S.quiet)comboForm([u,t],d);}
   }
   /* pure connections */
   const P5=T.filter(t=>t.lvl>=MAXT);
@@ -1523,7 +1558,7 @@ function superBlast(){
 /* best combo a new tower would join on this pad, for the build buttons */
 function comboPreview(pp,id){
   const T=S.towers.filter(t=>!SKM[t.id].util),me={x:pp.x,y:pp.y,id:id};let best=null;
-  for(const u of T){if(near2(u,me)){const d=comboFor(u.id,id);if(d&&(!best||d.m>best.m))best=d;}}
+  for(const u of S.towers){if(near2(u,me)){const d=comboFor(u.id,id);if(d&&(!best||d.m>best.m))best=d;}}
   for(const d of TRIS){if(d.e.indexOf(id)<0)continue;const rest=d.e.filter(x=>x!==id);
     for(const u of T.filter(t=>t.id===rest[0]))for(const v of T.filter(t=>t.id===rest[1])){if(near2(me,u)+near2(u,v)+near2(me,v)>=2&&(!best||d.m>best.m))best=d;}}
   return best;
@@ -1711,7 +1746,7 @@ function updTowers(dt){
   if(S.bc>0)S.bc-=dt;
   if(S.od>0)S.od-=dt;if(S.flashT>0)S.flashT-=dt;if(S.armT>0)S.armT-=dt;
   for(const a of S.towers){const sk=SKM[a.id];if(sk.k!=='aura')continue;
-    const r=sk.util?LINK*TUNE.beaconR:sk.rad*radM(a),b=sk.util?sk.boost*a.lvl:sk.boost*(1+.15*(slv(a.id)-1))*LVB[a.lvl],pw=sk.util?(sk.dmgB||0)*a.lvl:0;
+    const r=sk.util?LINK*TUNE.beaconR:sk.rad*radM(a),b=sk.util?sk.boost*BEV(a)*(a.tw?1.5:1):sk.boost*(1+.15*(slv(a.id)-1))*LVB[a.lvl],pw=sk.util?(sk.dmgB||0)*BEV(a)*(a.tw?1.5:1):0;
     for(const t of S.towers){if(t!==a&&dist(a,t)<=r){t.boost=Math.max(t.boost,b);t.pw=Math.max(t.pw,pw);}}}
   for(const t of S.towers){
     const sk=SKM[t.id];if(t.flash>0)t.flash-=dt;
@@ -1727,7 +1762,8 @@ function updTowers(dt){
   }
 }
 /* levels 36 to 50 climb harder, so the best defences are separated by the terminal health they keep */
-function baseHp(L,ty){const D=Ld(L);return ET[ty].hp*hpMul(D)*dens(D)*TUNE.hpK*eF(D)*(D>35?1+TUNE.late*(D-35):1);}
+const lateMul=L=>(L>=36&&L<=48?TUNE.lateK:1)*(L>=38?TUNE.late6:1);
+function baseHp(L,ty){const D=Ld(L);return ET[ty].hp*hpMul(D)*dens(D)*TUNE.hpK*eF(D)*(D>35?1+TUNE.late*(D-35):1)*lateMul(L);}
 /* a boss has about 18 times the health of an average threat of its level */
 function bossHp(L){const z=ZONES[zoneOf(L)];return z.types.reduce((a,t)=>a+baseHp(L,t),0)/z.types.length*TUNE.bossK*(z.boss==='apex'?TUNE.vanK:TUNE.bossK2);}
 const armLv=L=>L%10===8;
@@ -1808,8 +1844,9 @@ function buildTower(pi,id){
 }
 const onMap=id=>S?S.towers.filter(t=>t.id===id).length:0;
 function upgradeTower(i){
-  const t=S.towers[i];if(!t||t.lvl>=MAXT)return;const c=upgCost(t);
+  const t=S.towers[i];if(!t||!canUp(t))return;const c=upgCost(t);
   if(S.credits<c){sfx(SFX.err);return;}
+  if(t.lvl>=MAXT){S.credits-=c;t.spent+=c;t.ov=1;const col0=SKM[t.id].c;sfx(SFX.up);fxRing(t.x,t.y,30,col0,.45,4);fxRing(t.x,t.y,52,'#e8fbff',.6,4);fxGlow(t.x,t.y-16,70,'#e8fbff',.55,.9);burst(t.x,t.y-10,cnt(18),'#e8fbff',90,.7,2.6,{sh:'s',add:true});fxText(t.x,t.y-44,'LEVEL 6','#0f6f8f');seq([['triangle',659],['triangle',988],['triangle',1319],['triangle',1760,.3]]);renderPanel();updHud(true);return;}
   S.credits-=c;t.spent+=c;t.lvl++;const col=SKM[t.id].c;fxRing(t.x,t.y,28,col,.4);burst(t.x,t.y-10,cnt(6+t.lvl*2),col,70,.6,2.4,{sh:'s',add:true});sfx(SFX.up);
   if(t.lvl===MAXT){t.sc=0;t.sh=0;fxGlow(t.x,t.y-16,60,col,.6,.8);fxRing(t.x,t.y,46,'#e3b64a',.6,4);fxText(t.x,t.y-44,'LEVEL 5','#a87512');seq([['triangle',523],['triangle',784],['triangle',1046],['triangle',1319,.3]]);}
   renderPanel();updHud(true);
@@ -2234,10 +2271,19 @@ COMBOS.forEach(d=>{if(!d.nx)return;const a=d.a,b=d.b;
 });
 TRIS.forEach(d=>{if(!d.nx)return;const E=d.e;LIBTRI[d.k]=E.map((id,i)=>{const o=E.filter((x,j)=>j!==i);return 'Next to '+NXHINT[o[0]]+' and '+NXHINT[o[1]]+', together: '+E.map(NXCL).join('; ')+'.';});});
 const LIBSUP={
-power:'Works next to any tower. It makes each nearby tower stronger. It does not join any combination.',
-speed:'Works next to any tower. It makes each nearby tower faster. It does not join any combination.'
+power:'Works next to any tower. It makes each nearby tower stronger, and it forms a few combinations.',
+speed:'Works next to any tower. It makes each nearby tower faster, and it forms a few combinations.'
 };
 /* the clues now name the partner elements directly; the rest of each clue says what happens */
+Object.assign(LIBPAIR,{
+twin:['Next to the Speed Beacon: both lights shine 50% stronger.','Next to the Power Beacon: both lights shine 50% stronger.'],
+orbital:['Next to the rock that falls from the sky: each fall is followed by a second, smaller strike.','Next to the strong light: your rock falls twice and cuts through the Storm Shield.'],
+piercing:['Next to the sharp stone: each shard hits twice and weakens its target.','Next to the strong light: your shards hit twice and cut through the Storm Shield.'],
+charged:['Next to the loud blast: the blast also stuns everything around it.','Next to the strong light: your blast stuns the crowd and cuts through the Storm Shield.'],
+rapidf:['Next to the fast water jets: every third jet soaks and slows a small crowd.','Next to the fast light: your jets soak a small crowd and cut through the Storm Shield.'],
+suppress:['Next to the soldier: his rounds also hit 4 nearby enemies and slow them.','Next to the fast light: your rounds hit 4 enemies and cut through the Storm Shield.'],
+barrage:['Next to the dark archer: three more arrows fly at nearby enemies.','Next to the fast light: your arrows hit 3 more enemies and cut through the Storm Shield.']
+});
 function directClue(txt,others,tri){
   const j=txt.indexOf(': ');let rest=j>=0?txt.slice(j+2):txt;rest=rest.charAt(0).toUpperCase()+rest.slice(1);
   return 'Next to '+others.map(o=>SKM[o].n).join(' and ')+(tri?', together':'')+': '+rest;
@@ -2272,9 +2318,9 @@ function comboHtml(full){
 }
 function kindOf(sk){return {splash:'Splash',nova:'Splash',shower:'Splash',delay:'Splash',single:'Single',chain:'Chain',beam:'Line',pool:'Zone',aura:'Support',heal:'Support',paper:'Multi',squirt:'Rapid',burst:'Burst',volley:'Volley',kick:'Roaming'}[sk.k]||'';}
 function towerStat(t,lvl){
-  const s=SKM[t.id],o={id:t.id,lvl:lvl};
+  const s=SKM[t.id],ov=lvl>MAXT?1:0;lvl=Math.min(lvl,MAXT);const o={id:t.id,lvl:lvl,ov:ov};
   if(s.k==='heal')return 'Repairs 2 terminal health every '+(s.every/(1+.2*(slv(t.id)-1)+.3*(lvl-1))).toFixed(1)+' s';
-  if(s.util)return 'Adjacent towers: '+(s.dmgB?'damage':'attack speed')+' +'+Math.round((s.dmgB||s.boost)*lvl*100)+'%';
+  if(s.util)return 'Adjacent towers: '+(s.dmgB?'damage':'attack speed')+' +'+Math.round((s.dmgB||s.boost)*BEV(o)*100)+'%';
   if(s.k==='aura')return 'Radius '+Math.round(s.rad*radM(o))+' · attack speed +'+Math.round(s.boost*(1+.15*(slv(t.id)-1))*LVB[lvl]*100)+'% nearby';
   if(s.k==='pool')return 'Zone '+(s.dps*dmgM(o)).toFixed(0)+' dmg/s';
   if(s.k==='squirt')return 'Damage '+(s.dmg*dmgM(o)).toFixed(1)+' per jet · 3 jets a second';
@@ -2294,6 +2340,7 @@ function towerEffects(t){
   if(f.poison)o.push({t:'Poison, stacks up to 5 times'});
   if(f.weak)o.push({t:'Weakens enemies, so they take more damage'});
   if(s.k==='kick'){const P=ballParts(t);o.push({t:'Ball element: '+(t.ball&&P.length?P[0].n:P.length?P.map(p=>p.n).join(' and ')+' (from neighbours)':'plain')});}
+  if(t.tw)o.push({t:'Twin Beacons: aura 50% stronger',pl:1});
   if(t.cb)o.push({t:pct(t.cb.def.m)+' damage, '+t.cb.def.n,pl:1});
   if(t.cb&&t.cb.def.k==='photo'){const sl=Math.max(0,Math.ceil(TUNE.photoSec-(S.phT||0))),kl=Math.max(0,TUNE.photoMin-(S.phK||0));o.push({t:'+1 terminal health in '+(sl>0?Math.floor(sl/60)+':'+String(sl%60).padStart(2,'0'):'0:00')+(kl>0?' and '+kl+' more kills':'')+(S.lives>=S.maxLives?' (terminal is full)':''),pl:1});}
   if(t.pw>0)o.push({t:'+'+Math.round(t.pw*100)+'% damage from a Power beacon',pl:1});
@@ -2343,15 +2390,15 @@ function renderPanel(){
     if(!t){S.sel=null;return renderPanel();}
     const s=SKM[t.id];
     if(isMob(s)&&S.sel.mini){
-      p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+t.lvl+'/'+MAXT+' · Kills <b id="kCnt">'+(t.kills||0)+'</b></span></h3><div class="hint" style="margin:-2px 0 6px">Tap the map to send '+(t.id==='archer'?'her':'him')+' there.</div>'+(t.id==='archer'?archHtml(t):'')
-        +'<div class="row">'+(t.lvl<MAXT?'<button class="btn p wide" data-act="upg" id="bUpg"><span class="ul">Upgrade</span><span class="us">Up</span> · '+upgCost(t)+'</button>'+(t.lvl<MAXT-1?'<button class="btn p pm" data-act="upgmax" id="bUpgM" aria-label="Upgrade as far as your gold allows">Max</button>':''):'<button class="btn wide" disabled>Max level</button>')+'<button class="btn" data-act="player">'+(s.k==='kick'?'Player':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>';
+      p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+lvTxt(t)+'/'+MAXU+' · Kills <b id="kCnt">'+(t.kills||0)+'</b></span></h3><div class="hint" style="margin:-2px 0 6px">Tap the map to send '+(t.id==='archer'?'her':'him')+' there.</div>'+(t.id==='archer'?archHtml(t):'')
+        +'<div class="row">'+(canUp(t)?'<button class="btn p wide" data-act="upg" id="bUpg"><span class="ul">'+(t.lvl>=MAXT?'Overclock':'Upgrade')+'</span><span class="us">'+(t.lvl>=MAXT?'Lv 6':'Up')+'</span> · '+upgCost(t)+'</button>'+(lvTxt(t)<MAXU-1?'<button class="btn p pm" data-act="upgmax" id="bUpgM" aria-label="Upgrade as far as your gold allows">Max</button>':''):'<button class="btn wide" disabled>Max level</button>')+'<button class="btn" data-act="player">'+(s.k==='kick'?'Player':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>';
       p.classList.add('mini');placePanel();return;
     }
-    p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+t.lvl+'/'+MAXT+' · '+TIER[t.lvl].n+'</span></h3>'
-      +'<div class="row">'+(t.lvl<MAXT?'<button class="btn p wide" data-act="upg" id="bUpg"><span class="ul">Upgrade</span><span class="us">Up</span> · '+upgCost(t)+'</button>'+(t.lvl<MAXT-1?'<button class="btn p pm" data-act="upgmax" id="bUpgM" aria-label="Upgrade as far as your gold allows">Max</button>':''):'<button class="btn wide" disabled>Max level</button>')
+    p.innerHTML='<div class="pslim"><h3><i class="gem" style="--c:'+s.c+'"></i><span>'+esc(s.n)+' · Level '+lvTxt(t)+'/'+MAXU+' · '+(t.ov?'Overclock':TIER[t.lvl].n)+'</span></h3>'
+      +'<div class="row">'+(canUp(t)?'<button class="btn p wide" data-act="upg" id="bUpg"><span class="ul">'+(t.lvl>=MAXT?'Overclock':'Upgrade')+'</span><span class="us">'+(t.lvl>=MAXT?'Lv 6':'Up')+'</span> · '+upgCost(t)+'</button>'+(lvTxt(t)<MAXU-1?'<button class="btn p pm" data-act="upgmax" id="bUpgM" aria-label="Upgrade as far as your gold allows">Max</button>':''):'<button class="btn wide" disabled>Max level</button>')
       +'<button class="btn d" data-act="sell">Sell +'+sellVal(t)+'</button><button class="btn" data-act="pdet" aria-expanded="'+pdetOn()+'" aria-controls="pdet">'+(pdetOn()?'Less':'More')+'</button><button class="btn" data-act="deselect" aria-label="Close">✕</button></div></div>'
       +'<div id="pdet" class="pdet"'+(pdetOn()?'':' hidden')+'><div class="bx bxd"><h5>Details</h5><div class="hint mono">'+towerStat(t,t.lvl)+(s.cd?' · reload '+s.cd+' s':'')+'</div>'
-      +(t.lvl<MAXT?'<div class="hint mono" style="margin-top:2px">Next: '+towerStat(t,t.lvl+1)+(t.lvl+1===MAXT?' · grand aura and super skill':'')+'</div>':'')
+      +(canUp(t)?'<div class="hint mono" style="margin-top:2px">Next: '+towerStat(t,lvTxt(t)+1)+(lvTxt(t)+1===MAXT?' · grand aura and super skill':(lvTxt(t)+1===MAXU?' · Overclock':''))+'</div>':'')
       +'<div class="hint" style="margin-top:2px">'+(t.lvl>=MAXT?'Super: <b>'+esc(SUP[t.id].n)+'</b> · in <span id="supIn">'+Math.max(1,supN(t)-(t.sh||0))+'</span> '+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?'pulses':'hits')+(hasMeteor()?' · Armageddon in <span id="armIn">'+Math.max(1,TUNE.armHits-(t.ah||0))+'</span>':' · Armageddon needs a Meteor tower'):'Level 5 super: '+esc(SUP[t.id].n)+', every '+supN(t)+(SKM[t.id].k==='aura'||SKM[t.id].k==='heal'?' pulses':' hits'))+'</div>'
       +'<div class="kline">Kills: <b id="kCnt">'+(t.kills||0)+'</b></div></div>'
       +'<div class="bx bxs"><h5>Skill</h5><div class="hint">'+esc(s.d)+'</div><div class="fxl" id="fxl">'+(effectsHtml(t,false)||'<div class="nt">No extra effects</div>')+'</div></div>'
@@ -2484,9 +2531,9 @@ cv.addEventListener('pointerdown',e=>{
     return;
   }
   /* tap and hold a tower to upgrade it without the panel */
-  if(t.lvl>=MAXT)return;
+  if(!canUp(t))return;
   HOLD={t:t,hx:h.hx,hy:h.hy,kick:false,x:x,y:y,cx:e.clientX,cy:e.clientY,t0:performance.now(),tm:setTimeout(()=>{
-    const k=S.towers.indexOf(t);HOLD=null;if(k<0||t.lvl>=MAXT)return;
+    const k=S.towers.indexOf(t);HOLD=null;if(k<0||!canUp(t))return;
     if(S.credits<upgCost(t)){sfx(SFX.err);fxText(h.hx,h.hy-34,'Need '+fmt(upgCost(t)),'#c0392b');return;}
     upgradeTower(k);if(navigator.vibrate)try{navigator.vibrate(12);}catch(_){}
     /* the finger covers the tower, so say the new level above it (level 5 has its own label) */
@@ -2523,7 +2570,7 @@ document.addEventListener('click',e=>{
     case 'skills':auInit();auResume();showScreen('scrSkills');break;
     case 'home':showScreen('scrHome');break;
     case 'top10':openTop10();break;
-    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it gets a crown and a grand aura) or sell it.</li><li>The Soccer Player, Modern Soldier and Dark Archer move: tap one, then tap the map to send it there. A tap does not open the menu, so the map stays free. Hold one for 1 second to open its menu.</li><li>Every kill gives gold. You start with six random elements, always including at least three splash towers. After that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and gains a super skill.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Darkness, Poison) hit the strongest enemy in range much harder. Line elements (Laser, Jet Blast) hit every enemy in a line. The Official Letter (หนังสือราชการ) throws A4 papers at several enemies at once and slows them; at level 5 it stamps a huge black seal that stops everything around it. The beacons boost adjacent towers.</li><li>Level 5 towers release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. The Library lists them. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>The Library on the home screen gives background and clues for every element and the combinations it can join. Each clue names the partner elements; the name of a combination is recorded there once you form it. You can also pick the shirt of the Soccer Player there.</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Soccer Player: tap him, then tap any spot on the map to send him there. He stays where you send him and never moves on his own; he kicks at threats within his range, a little shorter than the Ice Watermelon. If nothing happens for a while he falls asleep; he wakes up by himself when threats come into his range, or you can tap him.</li><li>Flawless streak: every level you clear with no threat reaching the terminal adds ×'+TUNE.stkM.toFixed(2)+' to your score multiplier (shown next to your score, or in the top corner of the map on phones). The multiplier applies to all points from kills and level clears. A single leak resets it to ×1.00.</li><li>Combo bonus: at the end of the run you get a bonus for the most tri combos and pair combos you ever had running at the same time, so it does not matter which map you finish on. Each extra tri scores more than the last (2 tris score 3 times one tri, 3 tris score 6 times), pairs add a smaller bonus, and the bonus grows with the levels you played.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
+    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it gets a crown and a grand aura; a level 5 tower can then be Overclocked to level 6) or sell it.</li><li>The Soccer Player, Modern Soldier and Dark Archer move: tap one, then tap the map to send it there. A tap does not open the menu, so the map stays free. Hold one for 1 second to open its menu.</li><li>Every kill gives gold. You start with six random elements, always including at least three splash towers. After that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and gains a super skill. Overclock (level 6) deals 25 times the damage of level 1 for 34.1 times the price; late levels have more enemy health to match.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Darkness, Poison) hit the strongest enemy in range much harder. Line elements (Laser, Jet Blast) hit every enemy in a line. The Official Letter (หนังสือราชการ) throws A4 papers at several enemies at once and slows them; at level 5 it stamps a huge black seal that stops everything around it. The beacons boost adjacent towers.</li><li>Level 5 towers release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. The Library lists them. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>The Library on the home screen gives background and clues for every element and the combinations it can join. Each clue names the partner elements; the name of a combination is recorded there once you form it. You can also pick the shirt of the Soccer Player there.</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Soccer Player: tap him, then tap any spot on the map to send him there. He stays where you send him and never moves on his own; he kicks at threats within his range, a little shorter than the Ice Watermelon. If nothing happens for a while he falls asleep; he wakes up by himself when threats come into his range, or you can tap him.</li><li>Flawless streak: every level you clear with no threat reaching the terminal adds ×'+TUNE.stkM.toFixed(2)+' to your score multiplier (shown next to your score, or in the top corner of the map on phones). The multiplier applies to all points from kills and level clears. A single leak resets it to ×1.00.</li><li>Combo bonus: at the end of the run you get a bonus for the most tri combos and pair combos you ever had running at the same time, so it does not matter which map you finish on. Each extra tri scores more than the last (2 tris score 3 times one tri, 3 tris score 6 times), pairs add a smaller bonus, and the bonus grows with the levels you played.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
     case 'closeM':closeModal();break;
     case 'player':if(S&&S.sel&&S.sel.type==='tower'){S.sel.mini=false;PDET=true;renderPanel();}break;
     case 'homepad':if(S&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){orderMove(t,t.x,t.y);t.gx=null;t.gy=null;renderPanel();}}break;
@@ -2532,8 +2579,8 @@ document.addEventListener('click',e=>{
     case 'pdet':PDET=!pdetOn();sfx(SFX.click);renderPanel();break;
     case 'hd':setHd(!SAVE.hd);sfx(SFX.click);break;
     case 'upg':if(S&&S.sel&&S.sel.type==='tower')upgradeTower(S.sel.i);break;
-    case 'upgmax':if(S&&S.sel&&S.sel.type==='tower'){const i=S.sel.i,t=S.towers[i];if(t){const l0=t.lvl;while(t.lvl<MAXT&&S.credits>=upgCost(t))upgradeTower(i);
-      if(t.lvl===l0)sfx(SFX.err);else if(t.lvl<MAXT)toast('Upgraded to level '+t.lvl+'. Level '+(t.lvl+1)+' needs '+fmt(upgCost(t))+' gold.');}}break;
+    case 'upgmax':if(S&&S.sel&&S.sel.type==='tower'){const i=S.sel.i,t=S.towers[i];if(t){const l0=lvTxt(t);while(canUp(t)&&S.credits>=upgCost(t))upgradeTower(i);
+      if(lvTxt(t)===l0)sfx(SFX.err);else if(canUp(t))toast('Upgraded to level '+lvTxt(t)+'. Level '+(lvTxt(t)+1)+' needs '+fmt(upgCost(t))+' gold.');}}break;
     case 'sell':if(S&&S.sel&&S.sel.type==='tower')sellTower(S.sel.i);break;
     case 'move':if(S&&S.sel&&S.sel.type==='tower'){if(S.credits<TUNE.moveCost){toast('Moving a tower costs '+fmt(TUNE.moveCost)+' gold.',true);break;}S.sel={type:'move',i:S.sel.i};renderPanel();}break;
     case 'retry':closeModal();startLevel(1);break;
@@ -3791,10 +3838,11 @@ function drawSeal(R,tm,k){
 function towerMarks(tm){
   const c=ctx;c.save();
   for(const t of S.towers){
-    const lv=t.lvl,ts=TSC[lv],bw=1.6,gap=1.3,bh=4.5,w=lv*bw+(lv-1)*gap,x0=t.x-w/2,y0=t.y+15*ts;
+    const l5=t.lvl,lv=l5+(t.ov?1:0),ts=TSC[l5],bw=1.6,gap=1.3,bh=4.5,w=lv*bw+(lv-1)*gap,x0=t.x-w/2,y0=t.y+15*ts;
     c.fillStyle='rgba(26,46,74,.62)';c.beginPath();c.roundRect?c.roundRect(x0-2.2,y0-1.6,w+4.4,bh+3.2,2.4):c.rect(x0-2.2,y0-1.6,w+4.4,bh+3.2);c.fill();
-    c.fillStyle=lv>=MAXT?'#e3b64a':'#bfeee8';
-    for(let k=0;k<lv;k++)c.fillRect(x0+k*(bw+gap),y0,bw,bh);
+    c.fillStyle=l5>=MAXT?'#e3b64a':'#bfeee8';
+    for(let k=0;k<lv;k++){if(k===5)c.fillStyle='#e8fbff';c.fillRect(x0+k*(bw+gap),y0,bw,bh);}
+    if(t.ov){c.strokeStyle='rgba(232,251,255,.8)';c.lineWidth=1.5;c.beginPath();c.arc(t.x,t.y+2,19*ts,0,TAU);c.stroke();}
   }
   if(HOLD&&S.towers.indexOf(HOLD.t)>=0){const t=HOLD.t,k=Math.min(1,(performance.now()-HOLD.t0)/HOLDMS);
     c.strokeStyle='rgba(227,182,74,.95)';c.lineWidth=3;c.lineCap='round';c.beginPath();c.arc(HOLD.hx,HOLD.hy-4,24*TSC[t.lvl],-Math.PI/2,-Math.PI/2+TAU*k);c.stroke();}
@@ -4070,7 +4118,7 @@ async function init(){
   try{await fetchTop();setConn('ok','Connected');}catch(e){setConn('bad','Offline');}
 }
 init();
-window.RD={doSuper:t=>doSuper(t),renderPanel:()=>renderPanel(),ZONES:ZONES,MAXL:MAXL,Ld:Ld,openTop10:openTop10,get S(){return S;},SK:SK,SKM:SKM,ET:ET,SAVE:()=>SAVE,setSave:o=>{SAVE=Object.assign(SAVE,o);},startLevel:startLevel,step:step,buildTower:buildTower,upgradeTower:upgradeTower,get PADS(){return PADS;},get PLEN(){return PLEN;},get CW(){return CW;},get CH(){return CH;},get ORI(){return ORI;},buildMap:buildMap,newAirport:newAirport,moveTower:moveTower,THEMES:THEMES,mapNo:mapNo,TRIS:TRIS,posAt:posAt,finish:finish,hpMul:hpMul,padFree:padFree,upgCost:upgCost,sellVal:sellVal,dropJewel:dropJewel,spawn:spawn,draw:draw,drawIcon:drawIcon,updCombos:updCombos,TUNE:TUNE,SHIELD:SHIELD,buildCost:buildCost,AU:AU,TUNES:TUNES,playStep:playStep,dropOrb:dropOrb,saveRun:saveRun,loadRun:loadRun,clearRun:clearRun,MAXT:MAXT,UPC:UPC,LVM:LVM,drawTower:(t,tm)=>drawTower(t,tm),withCtx:(c,fn)=>{const o=ctx;ctx=c;try{fn();}finally{ctx=o;}},finishRun:finishRun,advanceLevel:advanceLevel,shieldK:shieldK,COMBOS:COMBOS,LINK:LINK,sizeCanvas:sizeCanvas,fitCanvas:fitCanvas,bossHp:bossHp,baseHp:baseHp};
+window.RD={doSuper:t=>doSuper(t),renderPanel:()=>renderPanel(),ZONES:ZONES,MAXL:MAXL,Ld:Ld,openTop10:openTop10,get S(){return S;},SK:SK,SKM:SKM,ET:ET,SAVE:()=>SAVE,setSave:o=>{SAVE=Object.assign(SAVE,o);},startLevel:startLevel,step:step,buildTower:buildTower,upgradeTower:upgradeTower,get PADS(){return PADS;},get PLEN(){return PLEN;},get CW(){return CW;},get CH(){return CH;},get ORI(){return ORI;},buildMap:buildMap,newAirport:newAirport,moveTower:moveTower,THEMES:THEMES,mapNo:mapNo,TRIS:TRIS,posAt:posAt,finish:finish,hpMul:hpMul,padFree:padFree,upgCost:upgCost,sellVal:sellVal,dropJewel:dropJewel,spawn:spawn,draw:draw,drawIcon:drawIcon,updCombos:updCombos,TUNE:TUNE,SHIELD:SHIELD,buildCost:buildCost,AU:AU,TUNES:TUNES,playStep:playStep,dropOrb:dropOrb,saveRun:saveRun,loadRun:loadRun,clearRun:clearRun,MAXT:MAXT,MAXU:MAXU,canUp:canUp,lvTxt:lvTxt,UPC:UPC,LVM:LVM,drawTower:(t,tm)=>drawTower(t,tm),withCtx:(c,fn)=>{const o=ctx;ctx=c;try{fn();}finally{ctx=o;}},finishRun:finishRun,advanceLevel:advanceLevel,shieldK:shieldK,COMBOS:COMBOS,LINK:LINK,sizeCanvas:sizeCanvas,fitCanvas:fitCanvas,bossHp:bossHp,baseHp:baseHp};
 </script>
 </body>
 </html>
