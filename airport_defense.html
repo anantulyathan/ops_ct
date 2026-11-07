@@ -212,7 +212,10 @@ body.wide.ingame .wrap,body.wide.ingame footer{max-width:none}
   footer{max-width:1120px}
   #scrHome.on{display:grid;grid-template-columns:minmax(300px,400px) 1fr;gap:0 20px;align-items:start}
   #scrHome .hero,#scrHome .row3{grid-column:1}
-  #scrHome>.card:last-child{grid-column:2;grid-row:1/span 3}
+  #scrHome>.card:not(.hero){grid-column:2;grid-row:1/span 2;margin-bottom:0;align-self:stretch}
+  #scrHome .row3{align-self:end}
+  #scrHome .row3{grid-row:2;margin-bottom:0}
+  #scrHome .ver{grid-column:1/-1;grid-row:3}
   .lv{min-height:62px}
   #skList,.cbl{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
   .cbl .zl{grid-column:1/-1}
@@ -342,7 +345,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 82">v.82</p>
+    <p class="ver mono" aria-label="Game version 83">v.83</p>
   </section>
 
   <section id="scrSkills" class="scr">
