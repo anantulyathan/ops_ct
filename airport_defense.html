@@ -339,7 +339,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 62">v.62</p>
+    <p class="ver mono" aria-label="Game version 63">v.63</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -1609,8 +1609,9 @@ warp:{n:'Pirate Ship',f(t,sk,b,dm){
   const A=alive().filter(e=>e.d>=0);if(!A.length)return;let best=A[0],bn=-1;
   for(const e of A){let n=0;for(const o of A)if(Math.hypot(o.x-e.x,o.y-e.y)<=150)n++;if(n>bn){bn=n;best=e;}}
   const L=A.filter(e=>Math.hypot(e.x-best.x,e.y-best.y)<=180).sort((p,q)=>Math.hypot(p.x-best.x,p.y-best.y)-Math.hypot(q.x-best.x,q.y-best.y)).slice(0,40);
-  SHIPHIT=true;hitList(L,b*1.5/TUNE.supK,null,dm);SHIPHIT=false;S.fx.push({k:'ship',x:best.x,y:best.y,t:1.4,max:1.4});
-  fxRing(best.x,best.y,170,'#9fd3e8',.8,5);fxRing(best.x,best.y,110,'#2f7fa6',.6,4);burst(best.x,best.y,cnt(16),'#cfeaf5',130,.7,3,{g:160});S.shake=RM?0:.25;}},
+  if(!S.ships)S.ships=[];S.ships.push({t:.75,L:L,amt:b*1.5/TUNE.supK,dm:dm,src:t,x:best.x,y:best.y});
+  S.fx.push({k:'gloom',t:1.9,max:1.9});S.fx.push({k:'ship',x:best.x,y:best.y,t:1.6,max:1.6});
+  fxRing(best.x,best.y,170,'#3a2a4a',.9,4);}},
 meteor:{n:'Meteor Shower',f(t,sk,b,dm){alive().filter(e=>e.d>=0).slice(0,6).forEach((e,i)=>pendAt(e.x,e.y,sk,b*10,80,dm,.6+i*.2,SRC_GL));}},
 gravity:{n:'Black Hole',f(t,sk,b,dm){const L=inR(t,200);pullTo(L,1);hitList(L,b*6,{stun:.8},dm);fxGlow(t.x,t.y,150,'#3b2f56',.9,.6);impactFx(sk,t.x,t.y,200,0);S.shake=RM?0:.3;}},
 letter:{n:'Official Seal',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.length)return;const c=A.slice().sort((p,q)=>q.hp-p.hp)[0],R=150;
@@ -1639,7 +1640,7 @@ function doSuper(t){
   t.superT=1;S.flashT=.45;S.flashC=sk.c;
   fxGlow(t.x,t.y-20,90,sk.c,.6,.9);fxRing(t.x,t.y,60,'#e3b64a',.6,4);burst(t.x,t.y-24,12,'#f1d27a',90,.7,2.6,{sh:'s',add:true});
   S.fx.push({k:'stxt',x:t.x,y:t.y-50,s:sp.n,c:sk.c,t:1.6,max:1.6});
-  sfx(sk.s,'sup');seq([['triangle',392],['triangle',587],['triangle',784,.3]]);
+  if(t.id==='warp')shipSound();else{sfx(sk.s,'sup');seq([['triangle',392],['triangle',587],['triangle',784,.3]]);}
 }
 function pickTarget(t,range){
   let best=null;
@@ -1712,6 +1713,7 @@ function step(dt){
   CURT=null;S.pools=S.pools.filter(p=>p.t>0);
   for(const p of S.pend){p.t-=dt;if(p.t<=0){p.done=true;SRC_GL=!!p.gl;SRC_TRI=!!p.tri;SRC_PAIR=!!p.pair;SPLASH_CAP=p.cap||999;CURT=p.src||null;splashAt(p.x,p.y,p.rad,p.dmg,p.sk,p.dm);CURT=null;SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;SPLASH_CAP=999;if(p.big)S.shake=RM?0:.15;}}
   S.pend=S.pend.filter(p=>!p.done);
+  if(S.ships&&S.ships.length){for(const h of S.ships){h.t-=dt;if(h.t<=0){h.done=true;shipCrash(h);}}S.ships=S.ships.filter(h=>!h.done);}
   for(const f of S.fx){if(f.dl>0){f.dl-=dt;continue;}f.t-=dt;if(f.k==='p'){f.vy+=f.g*dt;f.x+=f.vx*dt;f.y+=f.vy*dt;f.rot+=f.vr*dt;}else if(f.k==='coin'){f.vy+=340*dt;f.x+=f.vx*dt;f.y+=f.vy*dt;if(f.y>f.fy&&f.vy>0){f.y=f.fy;f.vy*=-.38;f.vx*=.6;}}if(f.k==='gem'||f.k==='txt')f.y-=18*dt;}
   if((S.kf||0)>=6&&!RM)S.shake=Math.max(S.shake,.07);S.kf=0;if(S.chShow>0)S.chShow-=dt;
   S.fx=S.fx.filter(f=>f.t>0);
@@ -3467,16 +3469,61 @@ function towerMarks(tm){
     c.strokeStyle='rgba(227,182,74,.95)';c.lineWidth=3;c.lineCap='round';c.beginPath();c.arc(HOLD.hx,HOLD.hy-4,24*TSC[t.lvl],-Math.PI/2,-Math.PI/2+TAU*k);c.stroke();}
   c.restore();
 }
+/* the ghost ship crashes into the group: up to 40 threats take the hit at once */
+function shipCrash(h){
+  CURT=h.src;SHIPHIT=true;hitList(h.L,h.amt,null,h.dm);SHIPHIT=false;CURT=null;
+  if(!S.botRun){
+    fxGlow(h.x,h.y,190,'#2a1838',.75,.9);
+    fxRing(h.x,h.y,190,'#5b3f7a',.9,7);fxRing(h.x,h.y,130,'#9fd3e8',.7,5);fxRing(h.x,h.y,70,'#e9f6f4',.45,4);
+    S.fx.push({k:'shock',x:h.x,y:h.y,r:180,c:'#1c1424',t:.8,max:.8,n:18,seed:Math.random()*6});
+    S.fx.push({k:'shock',x:h.x,y:h.y,r:120,c:'#3bbfb0',t:.6,max:.6,n:12,seed:Math.random()*6});
+    burst(h.x,h.y,cnt(26),'#cfeaf5',200,.9,3.4,{g:260});burst(h.x,h.y,cnt(14),'#4a2f18',170,.9,3.6,{sh:'b',g:300,vr:10});
+    h.L.slice(0,cnt(16)).forEach((e,i)=>{const dl=.03*i;fxRing(e.x,e.y,30,'#6a4f8c',.45,3);S.fx.push({k:'shock',x:e.x,y:e.y,r:30,c:'#2a1838',t:.45,max:.45,n:8,seed:i,dl:dl});});
+    S.shake=RM?0:.6;shipBoom();
+  }
+}
+function shipSound(){
+  if(!SAVE.sound||!AU.ctx||AU.ctx.state!=='running')return;
+  const c=AU.ctx,t=c.currentTime,g=AU.sg;
+  /* a low, out-of-tune drone, a hollow wind and a ghostly wail */
+  tone(g,'sawtooth',62,41,t,1.7,.16);tone(g,'sawtooth',65.5,43,t,1.7,.13);tone(g,'square',31,24,t,1.6,.08);
+  noiseB(g,500,140,t,1.5,.22,'lowpass');
+  tone(g,'sine',740,370,t+.15,1.1,.06);tone(g,'sine',698,349,t+.25,1.1,.05);
+}
+function shipBoom(){
+  if(!SAVE.sound||!AU.ctx||AU.ctx.state!=='running')return;
+  const t=AU.ctx.currentTime,g=AU.sg;
+  noiseB(g,240,50,t,.9,.4,'lowpass');tone(g,'sawtooth',90,28,t,.8,.22);tone(g,'sine',55,30,t,1,.25);noiseB(g,2200,600,t,.35,.12);
+}
 function drawShip(f,a,tm){
-  /* a generic sailing ship that crosses the group from left to right */
-  const k=1-a,x=f.x-90+180*k,y=f.y+Math.sin(tm*6)*2,al=Math.min(1,a*4,k*6);
+  /* a dark ghost ship with torn sails, glowing ports and lost souls circling it */
+  const k=1-a,x=f.x-110+220*k,y=Math.max(f.y-6,92)+Math.sin(tm*5)*2.5,al=Math.min(1,a*4,k*5),sc=1.35;
   ctx.save();ctx.globalAlpha=al;ctx.translate(x,y);
-  ctx.fillStyle='rgba(26,46,74,.25)';ctx.beginPath();ctx.ellipse(0,10,40,7,0,0,TAU);ctx.fill();
-  ctx.strokeStyle='#cfeaf5';ctx.lineWidth=2;ctx.beginPath();for(let i=-3;i<=3;i++){ctx.moveTo(i*14-7,11);ctx.quadraticCurveTo(i*14,6,i*14+7,11);}ctx.stroke();
-  poly([[-34,-2],[34,-2],[26,9],[-28,9]],'#7a4f2a','#4a2f18',1.2);ctx.fillStyle='#e3b64a';ctx.fillRect(-28,1,54,1.6);
-  ctx.fillStyle='#4a2f18';ctx.fillRect(-1.5,-46,3,44);ctx.fillRect(-19,-34,2.4,32);
-  poly([[1.5,-44],[24,-36],[22,-12],[1.5,-6]],'#f3eee0','#a69f8c',1);poly([[-17,-32],[-2,-28],[-3,-10],[-17,-6]],'#f3eee0','#a69f8c',1);
-  poly([[1.5,-46],[13,-49],[1.5,-52]],'#1a2e4a');
+  /* dark aura behind the ship */
+  let g=ctx.createRadialGradient(0,-14,6,0,-14,95);g.addColorStop(0,'rgba(42,24,56,.55)');g.addColorStop(.6,'rgba(28,20,36,.3)');g.addColorStop(1,'rgba(28,20,36,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,-14,95,0,TAU);ctx.fill();
+  /* lost souls orbiting */
+  for(let i=0;i<7;i++){const an=tm*1.6+i*TAU/7,rx=70+Math.sin(tm*2+i)*8,px=Math.cos(an)*rx,py=-18+Math.sin(an)*30,tx=Math.cos(an-.5)*rx,ty=-18+Math.sin(an-.5)*30;
+    const sg=ctx.createRadialGradient(px,py,1,px,py,13);sg.addColorStop(0,'rgba(190,230,225,.55)');sg.addColorStop(.5,'rgba(90,70,130,.35)');sg.addColorStop(1,'rgba(40,30,60,0)');
+    ctx.fillStyle=sg;ctx.beginPath();ctx.arc(px,py,13,0,TAU);ctx.fill();
+    ctx.strokeStyle='rgba(120,100,160,.35)';ctx.lineWidth=5;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(px,py);ctx.quadraticCurveTo((px+tx)/2,(py+ty)/2+8,tx,ty);ctx.stroke();ctx.lineCap='butt';
+    ctx.fillStyle='rgba(20,12,28,.85)';ctx.beginPath();ctx.arc(px-2.2,py-1,1.3,0,TAU);ctx.arc(px+2.2,py-1,1.3,0,TAU);ctx.fill();}
+  ctx.scale(sc,sc);
+  /* mist and dark water */
+  ctx.fillStyle='rgba(20,14,28,.4)';ctx.beginPath();ctx.ellipse(0,10,46,8,0,0,TAU);ctx.fill();
+  ctx.strokeStyle='rgba(159,211,232,.7)';ctx.lineWidth=1.6;ctx.beginPath();for(let i=-3;i<=3;i++){const o=Math.sin(tm*6+i)*1.5;ctx.moveTo(i*14-7,11+o);ctx.quadraticCurveTo(i*14,5+o,i*14+7,11+o);}ctx.stroke();
+  /* hull */
+  poly([[-36,-3],[36,-3],[28,9],[-30,9]],'#1c1a24','#0e0c14',1.2);poly([[-36,-3],[-44,-9],[-34,-1]],'#1c1a24','#0e0c14',1);
+  ctx.fillStyle='#6e1418';ctx.fillRect(-30,0,58,1.4);
+  for(let i=0;i<5;i++){const px=-22+i*11,fl=.6+.4*Math.sin(tm*9+i*1.7);ctx.globalCompositeOperation='lighter';glowC(px,4.5,5,'#c0392b',.5*fl);ctx.globalCompositeOperation='source-over';
+    ctx.fillStyle='rgba(240,140,90,'+fl+')';ctx.beginPath();ctx.arc(px,4.5,1.4,0,TAU);ctx.fill();}
+  /* masts and torn sails */
+  ctx.fillStyle='#120f18';ctx.fillRect(-1.5,-48,3,46);ctx.fillRect(-20,-36,2.4,34);
+  const wv=Math.sin(tm*4)*1.5;
+  poly([[1.5,-46],[25,-38+wv],[23,-20],[19,-14],[16,-19],[12,-12],[8,-17],[1.5,-8]],'#4a5552','#2a302e',1);
+  poly([[-18,-34],[-2,-30+wv],[-3,-16],[-6,-11],[-9,-15],[-13,-9],[-18,-12]],'#4a5552','#2a302e',1);
+  ctx.fillStyle='rgba(20,14,28,.7)';ctx.beginPath();ctx.arc(12,-30,2.4,0,TAU);ctx.arc(-10,-24,1.8,0,TAU);ctx.fill();
+  poly([[1.5,-48],[15+wv,-51],[11,-53],[15+wv,-55],[1.5,-54]],'#0e0c14');
   ctx.restore();ctx.globalAlpha=1;
 }
 function drawFx(tm){
@@ -3532,6 +3579,7 @@ function drawFx(tm){
       case 'gem':drawGem(f.x,f.y,6.5,f.c,Math.min(1,a*1.5));break;
       case 'stxt':break;
       case 'ship':drawShip(f,a,tm);break;
+      case 'gloom':{const k=1-a,al=Math.min(1,k*5,a*3)*.5;ctx.fillStyle='rgba(18,10,26,'+al+')';ctx.fillRect(0,0,CW,CH);break;}
       case 'arm':{const k=1-a,x=f.x0+(f.x1-f.x0)*k,y=f.y0+(f.y1-f.y0)*k;ctx.globalCompositeOperation='lighter';
         const g=ctx.createLinearGradient(f.x0,f.y0,x,y);g.addColorStop(0,'rgba(240,165,90,0)');g.addColorStop(1,'rgba(247,217,138,.9)');ctx.strokeStyle=g;ctx.lineWidth=3;ctx.lineCap='round';
         ctx.beginPath();ctx.moveTo(x-(f.x1-f.x0)*.25,y-(f.y1-f.y0)*.25);ctx.lineTo(x,y);ctx.stroke();glowC(x,y,8,'#f0a55a',.8);ctx.globalCompositeOperation='source-over';ctx.lineCap='butt';break;}
