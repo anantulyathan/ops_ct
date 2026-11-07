@@ -340,7 +340,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 75">v.75</p>
+    <p class="ver mono" aria-label="Game version 76">v.76</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -2220,12 +2220,12 @@ function libClues(id){
 function renderSkills(){
   const D=SAVE.disc||{};
   const bonds='<div class="card" style="box-shadow:none;background:var(--page);margin:0 0 6px;padding:12px"><h3 style="margin:0 0 4px">Special bonds</h3><p style="margin:0 0 6px;font-size:12px;color:var(--lbl)">Two towers of the same kind, both at level 5, next to each other: they get a small bonus. If every pad on the airport has the same kind of tower, all at level 5, a very strong bonus starts. It hits enemies all over the map.'+(D.pure||D.superpure?' <b>'+(D.pure?'Found: Pure Connection. ':'')+(D.superpure?'Found: Super Duper Pure Connection.':'')+'</b>':'')+'</p></div>';
-  $('skList').innerHTML=bonds+'<div style="margin:0 0 6px">'+kitHtml()+'</div>'+SK.slice().sort((a,b)=>a.at-b.at).map(s=>{
+  $('skList').innerHTML=bonds+SK.slice().sort((a,b)=>a.at-b.at).map(s=>{
     const cl=libClues(s.id);
     const clues=cl.length?(cl.length>10?'<details><summary style="cursor:pointer;font-weight:600;color:#1e4d8c;min-height:44px;display:flex;align-items:center">Show all '+cl.length+' clues</summary>':'')+'<ul class="clues">'+cl.map(c=>'<li class="'+(c.tri?'tri':'pair')+'"><span class="ct">'+(c.tri?'Triple':'Pair')+'</span> '+esc(c.t)+(D[c.k]?' <b class="found">✓ Found: '+esc(c.n)+'</b>':'')+'</li>').join('')+'</ul>'+(cl.length>10?'</details>':''):'<p>'+esc(LIBSUP[s.id]||'')+'</p>';
     return '<div class="sk" style="--c:'+s.c+'"><img class="gm" alt="" src="'+cardImg(s.id)+'"><div><h4>'+esc(s.n)+(s.th?' <span class="th">'+esc(s.th)+'</span>':'')+'<span class="tag">'+(s.util?'Support':kindOf(s))+'</span><span class="tag">'+(s.at===1?'Starter':'Random draw')+'</span></h4>'
       +'<p>'+esc(LIBBG[s.id]||s.d)+'</p><p class="mono" style="margin-top:0">'+esc(s.d)+(s.util?'':' Level 5 super: '+esc(SUP[s.id].n)+'.')+'</p>'
-      +'<div class="cl">Clues</div>'+clues+'</div></div>';
+      +'<div class="cl">Clues</div>'+clues+(s.id==='soccer'?kitHtml():'')+'</div></div>';
   }).join('');kitPrev();
 }
 
