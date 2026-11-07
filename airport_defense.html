@@ -340,7 +340,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 67">v.67</p>
+    <p class="ver mono" aria-label="Game version 68">v.68</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -418,20 +418,20 @@ function toast(msg,err){const d=document.createElement('div');d.className='toast
 /* ============ SKILLS (22) ============ */
 const SK=[
 {id:'fire',n:'Fire',c:'#d9694a',k:'splash',dmg:26,rad:48,cd:1.0,rng:120,cost:70,fx:{burn:[6,3]},s:['n',1400,300,.22,.2],d:'Fire splash that keeps burning.'},
-{id:'water',n:'Water',c:'#4a90c9',k:'splash',dmg:14,rad:56,cd:1.1,rng:120,cost:60,fx:{slow:[.6,2]},s:['sine',700,260,.18,.2],d:'Splash that slows enemies.'},
+{id:'water',n:'Water',c:'#4a90c9',k:'splash',dmg:14,rad:56,cd:1.1,rng:120,cost:60,fx:{slow:[.5,2]},s:['sine',700,260,.18,.2],d:'Splash that slows enemies.'},
 {id:'earth',n:'Earth',c:'#a98a5b',k:'splash',dmg:30,rad:62,cd:1.6,rng:110,cost:80,fx:{stun:.6},s:['sawtooth',120,50,.22,.22],d:'Wide ground splash with a short stun.'},
-{id:'nature',n:'Nature',c:'#4f8a5b',k:'splash',dmg:16,rad:56,cd:1.3,rng:120,cost:80,fx:{slow:[.6,2]},s:['triangle',500,820,.2,.14],d:'Thorn vines that tangle and slow enemies.'},
+{id:'nature',n:'Nature',c:'#4f8a5b',k:'splash',dmg:16,rad:56,cd:1.3,rng:120,cost:80,fx:{slow:[.5,2]},s:['triangle',500,820,.2,.14],d:'Thorn vines that tangle and slow enemies.'},
 {id:'lightning',n:'Lightning',c:'#e8c547',k:'chain',dmg:22,hops:4,jump:70,cd:1.2,rng:130,cost:90,fx:{},s:['square',1200,200,.14,.1],d:'Chain strike that jumps between enemies.'},
 {id:'gravity',n:'Gravity',c:'#8a6fc4',k:'splash',dmg:20,rad:70,cd:2.2,rng:120,cost:100,fx:{pull:.8},s:['sine',300,70,.3,.25],d:'Pulls enemies together.'},
 {id:'stars',n:'Stars',c:'#c9d4ff',k:'shower',dmg:12,rad:28,cnt:5,spread:55,cd:2.0,rng:140,cost:110,fx:{},s:['triangle',1600,900,.2,.14],d:'Star shower across an area.'},
-{id:'ice',n:'Ice',c:'#8fd6e8',k:'splash',dmg:12,rad:44,cd:1.6,rng:120,cost:90,fx:{stun:.6,slow:[.6,1.2]},s:['sine',2000,900,.15,.14],d:'Freezes enemies in place briefly (0.6 seconds), then slows them by 40% for 1.2 seconds.'},
+{id:'ice',n:'Ice',c:'#8fd6e8',k:'splash',dmg:12,rad:44,cd:1.6,rng:120,cost:90,fx:{stun:.6,slow:[.5,2]},s:['sine',2000,900,.15,.14],d:'Freezes enemies in place briefly (0.6 seconds), then slows them by 50% for 2 seconds.'},
 {id:'laser',n:'Laser',c:'#d4577a',k:'beam',dmg:26,w:12,cd:1.1,rng:150,cost:90,fx:{},s:['sawtooth',1800,900,.12,.08],d:'A thin, hot beam that cuts through every enemy in a line.'},
 {id:'poison',n:'Poison',c:'#7fb04f',k:'single',dmg:30,cd:.8,rng:130,cost:80,fx:{poison:[6,4]},s:['sine',300,500,.14,.16],d:'A poison dart on one target. The poison stacks.'},
 {id:'light',n:'Light',c:'#fff6dc',k:'single',dmg:95,cd:1.5,rng:150,cost:100,fx:{},s:['sawtooth',900,1800,.22,.08],d:'A beam of light. Heavy damage to one target.'},
 {id:'shadow',n:'Shadow',c:'#5b4b7a',k:'single',dmg:60,cd:1.3,rng:130,cost:90,fx:{weak:[1.35,4]},s:['sine',150,80,.3,.22],d:'A dark bolt on one target. After that, the target takes extra damage.'},
 {id:'thunder',n:'Thunder',c:'#4f5fa8',k:'delay',dmg:50,rad:60,del:.8,cd:2.4,rng:140,cost:120,fx:{stun:.8},s:['n',200,60,.4,.28],d:'A delayed big blast. It also stuns in a ring.'},
 {id:'lava',n:'Dark Wizard',c:'#6a4fa0',k:'pool',dps:14,rad:40,dur:4,cd:3,rng:120,cost:110,fx:{},s:['sawtooth',90,60,.35,.18],d:'A dark wizard who casts pools of dark magic on the road. Every enemy inside keeps taking damage. Level 5 super, Hex Blast: dark magic splashes over a group and stuns it for 1 second.'},
-{id:'nova',n:'Frost Nova',c:'#6bc2c9',k:'nova',dmg:10,rad:80,cd:3,rng:80,cost:100,fx:{slow:[.6,1.5]},s:['sine',1500,300,.3,.16],d:'An instant ring that slows every enemy near the tower by 40% for 1.5 seconds.'},
+{id:'nova',n:'Frost Nova',c:'#6bc2c9',k:'nova',dmg:10,rad:80,cd:3,rng:80,cost:100,fx:{slow:[.5,1.5]},s:['sine',1500,300,.3,.16],d:'An instant ring that slows every enemy near the tower by 50% for 1.5 seconds.'},
 {id:'meteor',n:'Meteor',c:'#b5683c',k:'delay',dmg:32,rad:60,del:1,cd:5,rng:9999,cost:150,fx:{},s:['n',300,40,.5,.32],d:'Reaches anywhere on the map, but hits for about a quarter of a normal tower.'},
 {id:'magnet',n:'Magnet',c:'#c0566f',k:'splash',dmg:6,rad:60,cd:1.4,rng:120,cost:90,fx:{pull:1},s:['square',200,420,.18,.1],d:'Pulls enemies together with small hits.'},
 {id:'jet',n:'Jet Blast',c:'#7f9cc0',k:'beam',dmg:40,w:24,cd:1.3,rng:135,cost:100,fx:{push:22},s:['n',900,260,.35,.2],d:'An engine blast that hits every enemy in a line and pushes them back.'},
@@ -441,7 +441,7 @@ const SK=[
 {id:'letter',n:'Official Letter',th:'หนังสือราชการ',c:'#b23a3a',k:'paper',dmg:22,cnt:3,cd:1.2,rng:140,cost:120,fx:{slow:[.75,1.5]},s:['triangle',900,1300,.08,.06],d:'Throws A4 papers at up to 3 enemies (one more per level). The paperwork slows them down. Level 5 super, Official Seal: a big seal that stuns every enemy around it for 1.5 seconds.'},
 {id:'bricks',n:'Toy Bricks',c:'#e0584f',k:'splash',lob:'brick',dmg:16,rad:50,cd:1.4,rng:120,cost:85,fx:{stun:.35},s:['square',260,140,.2,.14],d:'Drops a pile of toy bricks that stun for a moment and leave a low wall that slows enemies.'},
 {id:'watergun',n:'Water Gun',c:'#3fa7c4',k:'squirt',dmg:17,cd:.35,rng:130,cost:70,fx:{weak:[1.1,2.5],slow:[.88,.6]},cbK:1,s:['sine',900,500,.08,.06],d:'Very fast jets of water on one enemy. Wet enemies take 10% more damage. At level 5, each jet has a 15% chance to push the enemy back a little.'},
-{id:'icemelon',n:'Ice Watermelon',c:'#e8808a',k:'splash',lob:'melon',dmg:13,rad:56,cd:1.8,rng:125,cost:100,fx:{stun:.8,slow:[.6,2]},s:['sine',1500,600,.16,.14],d:'A frozen watermelon that breaks into cold slices. It freezes enemies, and the slices hit again.'},
+{id:'icemelon',n:'Ice Watermelon',c:'#e8808a',k:'splash',lob:'melon',dmg:13,rad:56,cd:1.8,rng:125,cost:100,fx:{stun:.8,slow:[.5,2]},s:['sine',1500,600,.16,.14],d:'A frozen watermelon that breaks into cold slices. It freezes enemies, and the slices hit again.'},
 {id:'soldier',n:'Modern Soldier',c:'#6f7f4f',k:'burst',mob:1,dmg:25,cnt:3,cd:1.3,rng:150,cost:100,fx:{},cbK:3,s:['square',500,160,.12,.09],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and fires a burst of three rounds at one enemy in range; the last round hits twice as hard. More rounds at levels 3 and 5,, and a bigger gun at every level. Each round also splits to one more enemy per level above 1, at the same power (4 more at level 5).'},
 {id:'console',n:'Game Console',c:'#5a6f8c',k:'beam',dmg:28,w:16,cd:1.2,rng:140,cost:110,fx:{weak:[1.12,2]},s:['square',880,1760,.1,.07],d:'A handheld game console that fires rainbow lasers through every enemy in a line. Dazzled enemies take 12% more damage for 2 seconds.'},
 {id:'soccer',n:'Soccer Player',c:'#3a5fb0',k:'kick',dmg:42,rad:48,cd:1,rng:111,cost:110,fx:{},crit:.15,s:['triangle',300,120,.14,.1],d:'Tap him, then tap the map to send him anywhere. He stays where you send him and kicks a ball at enemies in range (a little shorter than Ice Watermelon). The ball splashes and has a 15% critical hit. Next to another tower, the ball takes its element.'},
@@ -500,7 +500,7 @@ const zoneOf=L=>Math.min(9,Math.floor((L-1)/5));
 /* mobK: normal threats (not bosses) have more health: 1.1 x 1.08 x 1.15 */
 /* mobK10: normal threats from level 10 have 25% more health. armD/armS: on armoured stages (8, 18, 28, 38, 48) splash and area hits do 10%, single shots 150% */
 /* bossK2: bosses have 8% more health, except the CAAT Van */
-const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.4,armD:1.95,n8K:1.15,wkNs:1.3,wkWi:2,wkShip:1.7,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,cbTri:600,cbPair:100,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,slowCap:.6,stunCap:1.5,iceSupK:1.5,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.825,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
+const TUNE={bossK2:1.08,perRef:204,armN:.35,mobK:1.3662,mobK10:1.25,armS:.4,armD:1.95,n8K:1.15,wkNs:1.3,wkWi:2,wkShip:1.7,critC:.2,hardL:15,hardK:1.15,goldPts:3,ptsK:.3,mobHp:0.99,moveCost:500,beaconR:1.2,sdN:8,sdM:1.15,vanK:.85,vanLeak:7,vanLap:.75,vanSp2:.8,spEvery:6,spK:.4,pureM:1.08,rngK:.828,stkM:.04,photoMin:250,photoSec:300,spM:{"lightning":2.586,"gravity":2.8,"poison":2.425,"light":1.507,"shadow":1.766,"lava":1.823,"nova":4.24,"meteor":2.974,"magnet":4.787,"spore":2.4,"crystal":2.01,"nature":1.336,"earth":0.972,"stars":0.745,"jet":0.5,"thunder":0.599,"fire":1.189,"ice":1.426,"water":1.32,"laser":1.695,"letter":1.753,"bricks":1.319,"watergun":1.574,"icemelon":0.963,"soldier":2.484,"soccer":0.77},spB:{"lightning":4.31,"gravity":9.6,"poison":4.715,"light":3.587,"shadow":3.531,"lava":3.647,"nova":10.6,"meteor":7.16,"magnet":11.969,"spore":5.7,"crystal":3.547,"nature":1.458,"earth":0.066,"stars":0.05,"jet":0.034,"thunder":0.04,"fire":0.833,"ice":1.544,"water":1.2,"laser":1.632,"letter":2.022,"bricks":1.319,"watergun":3.442,"icemelon":1.155,"soldier":5.174,"soccer":0.77},cbLvl:4,cbTri:600,cbPair:100,wakeFrom:36,wakeN:6,wakeG:2,late:.14,bossSlow:.4,slowCap:.5,stunCap:1.5,iceSupK:1.5,wiCC:.3,capPair:4,capTri:5,winB:50000,lifeB:40000,pairP:.05,triP:.04,bossK:19.4,armHits:20,armK:4,supHits:10,supK:.5,pulse:1.5,maxT:8,capB:6,capL:2,newEvery:4,gravBy:4,spread:420,spV:.25,eA:2,eB:1,eL:15,c:0,tax:0,rewL:0,packSp:56,perL:150,waves:3,packGap:1,waveGap:0,orbP:.04,superCD:30,hpK:.825,goldK:1,rewK:.45,a:.45,b:.035,lead:3,leadFirst:6,bonusB:60,bonusM:8,lives:50,startB:450,startM:60};
 /* health and gold per threat stay as they were with 204 threats a level (perRef), so fewer threats means less in total */
 const dens=L=>(12+3.4*L)/TUNE.perRef;
 const eF=L=>1+(Math.max(TUNE.eB,TUNE.eA-(TUNE.eA-TUNE.eB)*(L-1)/(TUNE.eL-1))-1);
@@ -1144,14 +1144,14 @@ function comboHit(t,tg){
   t.ch=(t.ch||0)+1;SRC_GL=!!d.gl;SRC_WI=!!d.wi;SRC_TRI=!!d.tri;SRC_PAIR=!d.tri&&!d.gl;
   switch(d.k){
     case 'surge':near(130,6,tg).forEach(e=>dmgE(e,.7*b));break;
-    case 'steam':hitList(near(55,cap),.25*b,{burn:[5,2.5],slow:[.6,1.5]},dm);break;
-    case 'overgrow':hitList(near(65,cap),.25*b,{stun:.35,slow:[.6,1.5]},dm);break;
+    case 'steam':hitList(near(55,cap),.25*b,{burn:[5,2.5],slow:[.5,1.5]},dm);break;
+    case 'overgrow':hitList(near(65,cap),.25*b,{stun:.35,slow:[.5,1.5]},dm);break;
     case 'inferno':hitList(near(70,cap),.3*b,{burn:[10,3]},dm);break;
-    case 'tstorm':near(110,6,tg).forEach(e=>{fxJag({x:x,y:y},e,'#9fd0f0',.2,1.8);dmgE(e,.65*b);applyFx(e,{slow:[.6,1.2]},dm);});break;
+    case 'tstorm':near(110,6,tg).forEach(e=>{fxJag({x:x,y:y},e,'#9fd0f0',.2,1.8);dmgE(e,.65*b);applyFx(e,{slow:[.5,1.2]},dm);});break;
     case 'heatray':near(75,4,tg).forEach(e=>{fxProj({x:x,y:y},e,'#e0743f',.18);dmgE(e,.15*b);applyFx(e,{burn:[8,4]},dm);});break;
     case 'magma':S.pools.push({x:x,y:y,r:38,dps:.6*b,t:1.8,max:1.8,sk:SKM.lava,gl:d.gl,pair:1,cap:cap});hitList(near(45,cap),.15*b,{stun:.3},dm);break;
     case 'frost':hitList(near(60,cap),.1*b,null,dm);break;
-    case 'supernova':hitList(near(70,cap),.3*b,{slow:[.6,2]},dm);break;
+    case 'supernova':hitList(near(70,cap),.3*b,{slow:[.5,2]},dm);break;
     case 'magstorm':{const L=near(95,cap);pullTo(L,.6);hitList(L,.2*b,null,dm);break;}
     case 'prism':near(130,10,tg).forEach(e=>{fxBolt([{x:x,y:y},{x:e.x,y:e.y}],'#e4c9f0',.22,3,'beam');dmgE(e,1.3*b);});break;
     case 'volcanic':S.pend.push({t:.45,del:.45,x:x,y:y,sk:SKM.meteor,dmg:(t.ch%2===0?1.2:.8)*b,rad:55,dm:dm,gl:d.gl,tri:d.tri,pair:!d.tri&&!d.gl,cap:cap,big:true});break;
@@ -1162,11 +1162,11 @@ function comboHit(t,tg){
     case 'twilight':near(130,8,null).forEach(e=>{fxBolt([{x:x,y:y},{x:e.x,y:e.y}],'#a99ac8',.2,2.4,'beam');dmgE(e,1.3*b);applyFx(e,{weak:[1.4,3]},dm);});break;
     case 'nightshade':hitList(near(85,cap),.5*b,{poison:[6,4],weak:[1.2,3]},dm);break;
     case 'blight':S.pools.push({x:x,y:y,r:50,dps:.7*b,t:2.5,max:2.5,sk:SKM.spore,pair:1,cap:cap});applyFx(tg,{poison:[6,4]},dm);break;
-    case 'wildbloom':hitList(near(60,cap),.2*b,{stun:.4,slow:[.6,1.5]},dm);break;
-    case 'permafrost':near(80,cap).forEach(e=>{const fr=e.stun>0||e.slowF<1;dmgE(e,(fr?1.8:.75)*b);applyFx(e,{slow:[.6,1.5]},dm);});break;
+    case 'wildbloom':hitList(near(60,cap),.2*b,{stun:.4,slow:[.5,1.5]},dm);break;
+    case 'permafrost':near(80,cap).forEach(e=>{const fr=e.stun>0||e.slowF<1;dmgE(e,(fr?1.8:.75)*b);applyFx(e,{slow:[.5,1.5]},dm);});break;
     case 'singularity':{const L=near(100,cap);pullTo(L,.5);L.forEach(e=>fxProj({x:x,y:y-20},e,'#b57fc4',.12));hitList(L,.75*b,null,dm);break;}
     case 'ironrain':{const L=near(90,cap);pullTo(L,.5);S.pend.push({t:.4,del:.4,x:x,y:y,sk:SKM.meteor,dmg:1.5*b,rad:62,dm:dm,pair:1,cap:cap,big:true});break;}
-    case 'plasma':hitList(near(60,cap),.15*b,{burn:[6,3],slow:[.6,1.5]},dm);break;
+    case 'plasma':hitList(near(60,cap),.15*b,{burn:[6,3],slow:[.5,1.5]},dm);break;
     case 'afterburn':{const dx=x-t.x,dy=y-t.y;for(let i=1;i<=3;i++)S.pools.push({x:t.x+dx*i/3,y:t.y+dy*i/3,r:24,dps:.1*b,t:1.6,max:1.6,sk:SKM.lava,pair:1,cap:cap});applyFx(tg,{burn:[6,3]},dm);break;}
     case 'eclipse':{const L=near(100,cap);hitList(L,.1*b,{weak:[1.15,2]},dm);L.slice(0,3).forEach((e,i)=>S.pend.push({t:.3+i*.07,del:.3+i*.07,x:e.x,y:e.y,sk:SKM.stars,dmg:.15*b,rad:28,dm:dm,tri:1,cap:cap}));break;}
     case 'frozen':{const L=near(80,cap);hitList(L,.3*b,{stun:.6},dm);fxRing(x,y,70,'#cfe9f2',.4,3);break;}
@@ -1174,14 +1174,14 @@ function comboHit(t,tg){
     case 'thornvenom':hitList(near(70,5),.2*b,{poison:[6,4],slow:[.65,1.5]},dm);break;
     case 'shardblast':near(110,4,tg).forEach(e=>{fxProj({x:x,y:y},e,'#c79ad6',.14);dmgE(e,.6*b);});break;
     case 'refraction':near(130,3,tg).forEach(e=>{fxBolt([{x:x,y:y},{x:e.x,y:e.y}],'#e9a3c6',.18,2.2,'beam');dmgE(e,.8*b);});break;
-    case 'deadline':{if(t.id!=='letter')break;applyFx(tg,{slow:[.6,2]},dm);const fut=posAt(tg.d+tg.sp*tg.slowF*2);S.pend.push({t:2,del:2,x:fut.x,y:fut.y,sk:SKM.letter,dmg:.8*b,rad:36,dm:dm,pair:1,cap:cap});break;}
+    case 'deadline':{if(t.id!=='letter')break;applyFx(tg,{slow:[.5,2]},dm);const fut=posAt(tg.d+tg.sp*tg.slowF*2);S.pend.push({t:2,del:2,x:fut.x,y:fut.y,sk:SKM.letter,dmg:.8*b,rad:36,dm:dm,pair:1,cap:cap});break;}
     case 'waxseal':{applyFx(tg,{burn:[8,3]},dm);S.pools.push({x:x,y:y,r:26,dps:.35*b,t:1.6,max:1.6,sk:SKM.lava,pair:1,cap:cap});break;}
     case 'jungle':{hitList(near(80,cap),.3*b,{stun:.5,poison:[6,4]},dm);S.pools.push({x:x,y:y,r:48,dps:.5*b,t:2,max:2,sk:SKM.spore,tri:1,cap:cap});break;}
     case 'frozentime':near(90,cap).forEach(e=>{const fr=e.stun>0;dmgE(e,(fr?1.6:.5)*b);applyFx(e,{stun:.7},dm);});fxRing(x,y,84,'#e6f4fa',.5,4);break;
     case 'railgun':{const dx=x-t.x,dy=y-t.y,dl=Math.hypot(dx,dy)||1,ux=dx/dl,uy=dy/dl,L=420;
       for(const e of S.enemies){if(e.dead||e.d<0)continue;const px=e.x-t.x,py=e.y-t.y,pr=px*ux+py*uy;if(pr<0||pr>L)continue;if(Math.abs(px*uy-py*ux)<=11+e.r)dmgE(e,.9*b);}
       fxBolt([{x:t.x,y:t.y-10},{x:t.x+ux*L,y:t.y+uy*L}],'#aab8e0',.3,4,'beam');break;}
-    case 'bureaucracy':{const L=near(90,cap);hitList(L,.35*b,{stun:.6,slow:[.6,2]},dm);if(!S.botRun)L.slice(0,4).forEach((e,i)=>fxPaper({x:x+rnd(-30,30),y:y-50},e,i));break;}
+    case 'bureaucracy':{const L=near(90,cap);hitList(L,.35*b,{stun:.6,slow:[.5,2]},dm);if(!S.botRun)L.slice(0,4).forEach((e,i)=>fxPaper({x:x+rnd(-30,30),y:y-50},e,i));break;}
     case 'comet':{const L=near(100,cap);pullTo(L,.55);S.pend.push({t:.5,del:.5,x:x,y:y,sk:SKM.meteor,dmg:.9*b,rad:60,dm:dm,tri:1,cap:cap,big:true});S.pools.push({x:x,y:y,r:40,dps:.35*b,t:2.5,max:2.5,sk:SKM.lava,tri:1,cap:cap});break;}
     case 'photo':{hitList(near(60,cap),.12*b,{slow:[.7,1]},dm);fxGlow(x,y,40,'#d9f2a0',.35,.6);break;}
     default:if(d.nx)nxHit(d,t,tg,b,dm,cap,x,y,near);
@@ -1387,7 +1387,7 @@ COMBOS.push({k:'photo',a:'nature',b:'light',n:'Photosynthesis',m:COMBO_M,c:'#9fc
 /* rainbow for the Game Console lasers */
 const RBW=['#e86a5a','#f0a64a','#f2d45a','#6cc47a','#4fa3d9','#8a6fc4'];
 const ICEWALL={id:'icewall',c:'#8fd6e8',fx:{slow:[.3,1.5]},st:1.5};
-const BRICKWALL={id:'bricks',c:'#e0584f',fx:{slow:[.6,.3]}},MELONSH={id:'icemelon',c:'#e8808a',fx:{slow:[.7,1]}};
+const BRICKWALL={id:'bricks',c:'#e0584f',fx:{slow:[.6,.3]}},MELONSH={id:'icemelon',c:'#e8808a',fx:{slow:[.6,1.5]}};
 /* signature of each new element (c = context of the hit) */
 const NXS={
 bricks:c=>{S.pools.push({x:c.x,y:c.y,r:44,dps:.2*c.b,t:2.2,max:2.2,sk:BRICKWALL,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap});hitList(c.near(50,c.cap),.1*c.b,{stun:.3},c.dm);},
@@ -1401,13 +1401,13 @@ console:c=>c.near(130,3,c.tg).forEach((e,i)=>{fxBolt([{x:c.ox,y:c.oy-10},{x:e.x,
 /* what each older element adds to a combo */
 const NXR={
 fire:c=>hitList(c.near(60,c.cap),.1*c.b,{burn:[8,3]},c.dm),
-water:c=>hitList(c.near(60,c.cap),.08*c.b,{slow:[.6,2]},c.dm),
+water:c=>hitList(c.near(60,c.cap),.08*c.b,{slow:[.5,2]},c.dm),
 earth:c=>hitList(c.near(65,c.cap),.12*c.b,{stun:.5},c.dm),
-nature:c=>hitList(c.near(60,c.cap),.08*c.b,{stun:.3,slow:[.6,1.5]},c.dm),
+nature:c=>hitList(c.near(60,c.cap),.08*c.b,{stun:.3,slow:[.5,1.5]},c.dm),
 lightning:c=>c.near(110,2,c.tg).forEach(e=>{fxJag({x:c.x,y:c.y},e,'#e8c547',.2,2);dmgE(e,.4*c.b);}),
 gravity:c=>{const L=c.near(95,c.cap);pullTo(L,.5);hitList(L,.08*c.b,null,c.dm);},
 stars:c=>{for(let i=0;i<3;i++){const a=rnd(0,TAU),r=rnd(10,45),dl=.12+i*.1;S.pend.push({t:dl,del:dl,x:c.x+Math.cos(a)*r,y:c.y+Math.sin(a)*r,sk:SKM.stars,dmg:.3*c.b,rad:26,dm:c.dm,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap});}},
-ice:c=>hitList(c.near(60,c.cap),.1*c.b,{stun:.6,slow:[.6,2]},c.dm),
+ice:c=>hitList(c.near(60,c.cap),.1*c.b,{stun:.6,slow:[.5,2]},c.dm),
 laser:c=>{const dx=c.x-c.ox,dy=c.y-c.oy,dl=Math.hypot(dx,dy)||1,ux=dx/dl,uy=dy/dl,L=320;
   for(const e of S.enemies){if(e.dead||e.d<0)continue;const px=e.x-c.ox,py=e.y-c.oy,pr=px*ux+py*uy;if(pr<0||pr>L)continue;if(Math.abs(px*uy-py*ux)<=9+e.r)dmgE(e,.5*c.b);}
   fxBolt([{x:c.ox,y:c.oy-10},{x:c.ox+ux*L,y:c.oy+uy*L}],'#d4577a',.2,2.4,'beam');},
@@ -1416,7 +1416,7 @@ light:c=>{if(!c.tg.dead){fxBolt([{x:c.x,y:c.y-120},{x:c.x,y:c.y}],'#fff6dc',.2,4
 shadow:c=>hitList(c.near(70,c.cap),.05*c.b,{weak:[1.2,3]},c.dm),
 thunder:c=>S.pend.push({t:.7,del:.7,x:c.x,y:c.y,sk:SKM.thunder,dmg:.8*c.b,rad:52,dm:c.dm,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap}),
 lava:c=>S.pools.push({x:c.x,y:c.y,r:30,dps:.3*c.b,t:2,max:2,sk:SKM.lava,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap}),
-nova:c=>{hitList(c.near(80,c.cap),.05*c.b,{slow:[.6,2]},c.dm);fxRing(c.x,c.y,80,'#bfeef0',.4,3);},
+nova:c=>{hitList(c.near(80,c.cap),.05*c.b,{slow:[.5,2]},c.dm);fxRing(c.x,c.y,80,'#bfeef0',.4,3);},
 meteor:c=>S.pend.push({t:.55,del:.55,x:c.x,y:c.y,sk:SKM.meteor,dmg:.9*c.b,rad:52,dm:c.dm,pair:!c.d.tri,tri:!!c.d.tri,cap:c.cap,big:true}),
 magnet:c=>{const L=c.near(95,c.cap);pullTo(L,.55);hitList(L,.05*c.b,null,c.dm);},
 jet:c=>{const L=c.near(80,c.cap);pushBack(L,40,true);hitList(L,.1*c.b,null,c.dm);},
@@ -1600,10 +1600,10 @@ function pullTo(L,k){if(L.length<2)return;k*=ccK();let sum=0;L.forEach(e=>sum+=e
 function pushBack(L,dd,force){if(!force)return;dd*=ccK();L.forEach(e=>{if(e.dead)return;e.d=Math.max(0,e.d-dd*(e.boss?.4:1));const p=posAt(e.d);e.x=p.x;e.y=p.y;});}
 function skyHit(e,c){fxJag({x:e.x+rnd(-14,14),y:e.y-260},{x:e.x,y:e.y},c,.35,3.2);}
 function pendAt(x,y,sk,dmg,rad,dm,del,gl){S.pend.push({t:del,del:del,x:x,y:y,sk:sk,dmg:dmg,rad:rad,dm:dm,gl:gl,big:sk.id==='meteor'});}
-const SEALSK={id:'seal',c:'#b3262c',fx:{stun:1.4,slow:[.6,3],weak:[1.25,4]}};
+const SEALSK={id:'seal',c:'#b3262c',fx:{stun:1.4,slow:[.5,3],weak:[1.25,4]}};
 const SUP={
 fire:{n:'Firestorm',f(t,sk,b,dm){const L=inR(t,160);hitList(L,b*5,{burn:[18,4]},dm);impactFx(sk,t.x,t.y,160,0);L.slice(0,8).forEach((e,i)=>impactFx(sk,e.x,e.y,40,i*.05));}},
-water:{n:'Tidal Wave',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{slow:[.6,4]},dm);impactFx(sk,t.x,t.y,170,0);fxRing(t.x,t.y,120,'#cfe7f7',.7,6);}},
+water:{n:'Tidal Wave',f(t,sk,b,dm){const L=inR(t,170);hitList(L,b*3,{slow:[.5,4]},dm);impactFx(sk,t.x,t.y,170,0);fxRing(t.x,t.y,120,'#cfe7f7',.7,6);}},
 earth:{n:'Earthquake',f(t,sk,b,dm){const L=alive();hitList(L,b*2.5,{stun:1.5},dm);L.slice(0,10).forEach((e,i)=>impactFx(sk,e.x,e.y,36,i*.04));S.shake=RM?0:.4;}},
 lightning:{n:'Thunder Storm',f(t,sk,b,dm){const A=alive();for(let i=0;i<12&&A.length;i++){const e=A[(Math.random()*A.length)|0];skyHit(e,'#fff3b0');dmgE(e,b*5);fxGlow(e.x,e.y,22,'#e8c547',.3,.8);}}},
 laser:{n:'Prism Cannon',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.length)return;const tg=A.slice().sort((p,q)=>q.hp-p.hp)[0];
@@ -1635,7 +1635,7 @@ lava:{n:'Hex Blast',f(t,sk,b,dm){
 jet:{n:'Afterburner',f(t,sk,b,dm){const L=inR(t,210);hitList(L,b*4,null,dm);pushBack(L,70,true);for(let i=0;i<3;i++){const e=L[i];if(e)fxBolt([{x:t.x,y:t.y-8},{x:e.x,y:e.y}],'#cfe0f5',.45,9,'beam');}fxGlow(t.x,t.y-8,120,'#8fb2e6',.5,.6);fxRing(t.x,t.y,150,'#cfe0f5',.6,4);}},
 thunder:{n:'Storm Front',f(t,sk,b,dm){inR(t,220).slice(0,6).forEach((e,i)=>pendAt(e.x,e.y,sk,b*6,70,dm,.4+i*.15,SRC_GL));}},
 stars:{n:'Starfall',f(t,sk,b,dm){const L=inR(t,190);for(let i=0;i<25&&L.length;i++){const e=L[(Math.random()*L.length)|0];pendAt(e.x+rnd(-15,15),e.y+rnd(-15,15),sk,b*2,30,dm,.1+i*.06,SRC_GL);}}},
-nova:{n:'Absolute Zero',f(t,sk,b,dm){const L=alive();hitList(L,b*2,{slow:[.6,5]},dm);fxRing(t.x,t.y,240,'#bfeef0',.8,6);impactFx(sk,t.x,t.y,200,0);}},
+nova:{n:'Absolute Zero',f(t,sk,b,dm){const L=alive();hitList(L,b*2,{slow:[.5,5]},dm);fxRing(t.x,t.y,240,'#bfeef0',.8,6);impactFx(sk,t.x,t.y,200,0);}},
 warp:{n:'Pirate Ship',f(t,sk,b,dm){
   /* one big ship sails through the biggest group of threats: up to 40 of them take 1.5x normal damage */
   const A=alive().filter(e=>e.d>=0);if(!A.length)return;let best=A[0],bn=-1;
@@ -1654,8 +1654,8 @@ letter:{n:'Official Seal',f(t,sk,b,dm){const A=alive().filter(e=>e.d>=0);if(!A.l
   if(!S.botRun)fxText(c.x,c.y-30,'STOP!','#b3262c');
   S.flashT=.5;S.flashC='#8a1f1f';sfx(['sawtooth',110,55,.6,.3],'seal');}},
 bricks:{n:'Great Wall',f(t,sk,b,dm){const L=inR(t,190);hitList(L,b*3,{stun:1.5},dm);L.slice(0,6).forEach((e,i)=>{impactFx(sk,e.x,e.y,36,i*.05);S.pools.push({x:e.x,y:e.y,r:44,dps:b*.5,t:5,max:5,sk:BRICKWALL,gl:SRC_GL});});impactFx(sk,t.x,t.y,150,0);S.shake=RM?0:.3;}},
-watergun:{n:'Flood',f(t,sk,b,dm){const L=inR(t,210);hitList(L,b*12,{weak:[1.35,6],slow:[.6,4]},dm);fxRing(t.x,t.y,150,'#cfeaf5',.7,6);fxRing(t.x,t.y,100,'#3fa7c4',.6,4);burst(t.x,t.y,20,'#9fd6ea',130,.8,3,{g:140});}},
-icemelon:{n:'Melon Blizzard',f(t,sk,b,dm){const L=alive();hitList(L,b*3,{stun:1.5,slow:[.6,4]},dm);L.slice(0,12).forEach((e,i)=>impactFx(sk,e.x,e.y,34,i*.04));fxRing(t.x,t.y,240,'#e6f4fa',.8,5);}},
+watergun:{n:'Flood',f(t,sk,b,dm){const L=inR(t,210);hitList(L,b*12,{weak:[1.35,6],slow:[.5,4]},dm);fxRing(t.x,t.y,150,'#cfeaf5',.7,6);fxRing(t.x,t.y,100,'#3fa7c4',.6,4);burst(t.x,t.y,20,'#9fd6ea',130,.8,3,{g:140});}},
+icemelon:{n:'Melon Blizzard',f(t,sk,b,dm){const L=alive();hitList(L,b*3,{stun:1.5,slow:[.5,4]},dm);L.slice(0,12).forEach((e,i)=>impactFx(sk,e.x,e.y,34,i*.04));fxRing(t.x,t.y,240,'#e6f4fa',.8,5);}},
 archer:{n:'Black Rain',f(t,sk,b,dm){
   /* a volley of dark arrows falls across the map, carrying the chosen element */
   const es=SKM[archEl(t)],L=alive().filter(e=>e.d>=0).sort((p,q)=>q.d-p.d).slice(0,24);
@@ -1716,7 +1716,7 @@ const wkLv=L=>L===45||L===50;
 const WICE={water:1,ice:1,nova:1,icemelon:1,watergun:1,warp:1};
 let SHIPHIT=false;
 function spawn(s){
-  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=(T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp*TUNE.mobK*(L>=10?TUNE.mobK10:1))*(L>=TUNE.hardL?TUNE.hardK:1)*(armLv(L)?1:TUNE.n8K);
+  const T=ET[s.ty],L=S.level,dn=T.boss?1:dens(Ld(L));const hp=(T.boss?bossHp(L):baseHp(L,s.ty)*TUNE.mobHp*TUNE.mobK*(L>=10?TUNE.mobK10:1))*(L>=TUNE.hardL?TUNE.hardK:1)*(armLv(L)?1:TUNE.n8K)*(L===49||L===50?1.15:1);
   const e={ty:s.ty,n:T.n,hp:hp,max:hp,sp:(T.boss||T.fast?T.sp:(T.sp*.45+TUNE.packSp*.55)*(1+rnd(-TUNE.spV,TUNE.spV)))*(1+.012*(Ld(L)-1)),lo:T.boss?0:rnd(-14,14),r:T.r,c:T.c,sh:T.sh,boss:!!T.boss,d:s.d0||0,x:PP[0].x+(s.d0||0),y:PP[0].y,
     slowF:1,slowT:0,stun:0,burn:null,pz:null,weak:null,rew:T.rew*(1+TUNE.rewL*L)*TUNE.rewK*dn*TUNE.goldK,pts:Math.round(10*(1+.1*L)*(T.boss?20:1)*TUNE.ptsK),ph:Math.random()*6,flash:0,ang:0};
   if(armLv(L))e.arm=1;
@@ -2288,7 +2288,7 @@ function shopHtml(){
    +'</div><div class="row" style="margin-top:8px"><button class="btn" data-act="deselect">Close</button></div>';
 }
 /* tower details are open by default; the player's choice to close them is remembered */
-let PDET=SAVE.pdet!==false;
+let PDET=false;
 function renderPanel(){
   const p=$('panel');p.classList.remove('mini');
   if(!S){p.innerHTML='';return;}
@@ -2485,7 +2485,7 @@ document.addEventListener('click',e=>{
     case 'homepad':if(S&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){orderMove(t,t.x,t.y);t.gx=null;t.gy=null;renderPanel();}}break;
     case 'shop':if(S&&S.started&&!S.over){S.sel={type:'shop'};renderPanel();}break;
     case 'deselect':if(S){S.sel=null;renderPanel();}break;
-    case 'pdet':PDET=!PDET;SAVE.pdet=PDET;persist();sfx(SFX.click);renderPanel();break;
+    case 'pdet':PDET=!PDET;sfx(SFX.click);renderPanel();break;
     case 'hd':setHd(!SAVE.hd);sfx(SFX.click);break;
     case 'upg':if(S&&S.sel&&S.sel.type==='tower')upgradeTower(S.sel.i);break;
     case 'sell':if(S&&S.sel&&S.sel.type==='tower')sellTower(S.sel.i);break;
