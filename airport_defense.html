@@ -180,6 +180,14 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:360/540;touch-action:ma
 @keyframes sp{to{transform:rotate(360deg)}}
 .empty{text-align:center;color:var(--lbl);padding:18px 8px;font-size:14px}
 .how li{margin:6px 0;font-size:14px}
+.hw{list-style:none;margin:0;padding:0}
+.hw li{display:flex;gap:10px;align-items:center;margin:0 0 10px;font-size:14px;line-height:1.35;color:var(--txt)}
+.hw b{display:block;color:var(--navy);font-size:15px;margin-bottom:1px}
+.hwp{width:96px;height:62px;flex:0 0 96px;border-radius:10px;box-shadow:0 2px 6px rgba(26,46,74,.28)}
+details.more{margin-top:4px;border-top:1px solid var(--bd);padding-top:8px}
+details.more summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600;color:var(--blue);font-size:14px}
+details.more summary:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:6px}
+@media (max-width:340px){.hwp{width:80px;height:52px;flex-basis:80px}}
 #toasts{position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:6px;z-index:80;pointer-events:none}
 .toast{background:var(--navy);color:#fff;padding:9px 14px;border-radius:10px;font-size:13px;box-shadow:var(--sh);max-width:90vw}
 .toast.err{background:var(--err)}
@@ -351,7 +359,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 95">v.95</p>
+    <p class="ver mono" aria-label="Game version 98">v.98</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -1225,6 +1233,24 @@ function comboHit(t,tg){
     case 'photo':{hitList(near(60,cap),.12*b,{slow:[.7,1]},dm);fxGlow(x,y,40,'#d9f2a0',.35,.6);break;}
     default:if(d.nx)nxHit(d,t,tg,b,dm,cap,x,y,near);
   }
+
+  if(d.tri&&t.ch%5===0){
+    const fx2=(r)=>{if(!S.botRun){fxRing(x,y,r,d.c,.55,4);fxGlow(x,y,r*.8,d.c,.45,.6);fxText(x,y-30,'Finisher',d.c);}};
+    switch(d.k){
+      case 'volcanic':for(let i=0;i<3;i++){const a=i*TAU/3+rnd(0,1),r=rnd(26,50),dl=.3+i*.15;S.pend.push({t:dl,del:dl,x:x+Math.cos(a)*r,y:y+Math.sin(a)*r,sk:SKM.meteor,dmg:.6*b,rad:50,dm:dm,gl:d.gl,tri:1,cap:cap,big:true});}break;
+      case 'horizon':{const L=near(140,999);pullTo(L,.8);hitList(L,.4*b,{stun:.8},dm);break;}
+      case 'cryobeam':hitList(near(115,cap+6),.5*b,{stun:1},dm);break;
+      case 'eclipse':hitList(near(140,cap+4),.5*b,{weak:[1.3,4]},dm);break;
+      case 'comet':near(130,2,tg).forEach((e,i)=>S.pend.push({t:.45+i*.15,del:.45+i*.15,x:e.x,y:e.y,sk:SKM.meteor,dmg:.9*b,rad:55,dm:dm,tri:1,cap:cap,big:true}));break;
+      case 'jungle':hitList(near(115,cap+4),.4*b,{stun:.8,poison:[8,5]},dm);break;
+      case 'frozentime':near(125,cap+4).forEach(e=>{const fr=e.stun>0||e.slowF<1;dmgE(e,(fr?2.5:.6)*b);applyFx(e,{stun:.5},dm);});break;
+      case 'railgun':{const dx=x-t.x,dy=y-t.y,dl=Math.hypot(dx,dy)||1,ux=dx/dl,uy=dy/dl,L=420;
+        for(const e of S.enemies){if(e.dead||e.d<0)continue;const px=e.x-t.x,py=e.y-t.y,pr=px*ux+py*uy;if(pr<0||pr>L)continue;if(Math.abs(px*uy-py*ux)<=11+e.r)dmgE(e,1.4*b);}
+        if(!S.botRun)fxBolt([{x:t.x,y:t.y-10},{x:t.x+ux*L,y:t.y+uy*L}],'#ffffff',.35,6,'beam');break;}
+      case 'bureaucracy':hitList(near(115,cap+4),.4*b,{stun:1,weak:[1.25,4]},dm);break;
+    }
+    fx2(100);
+  }
   SRC_GL=false;SRC_TRI=false;SRC_PAIR=false;SRC_WI=false;
 }
 function splashCap(t){return TUNE.capB+TUNE.capL*(t.lvl-1)+(t.cb?(t.cb.def.tri?TUNE.capTri:TUNE.capPair):0);}
@@ -1313,7 +1339,7 @@ function cast0(t,sk,tg,mult){
 /* ----- element combos ----- */
 let HIT1=false;
 let SRC_GL=false,SRC_TRI=false,SRC_PAIR=false,SRC_WI=false,SPLASH_CAP=999;
-const COMBO_M=1.6,COMBO_GL=1.75,TRI_M=1.8,TRI_GL=2;
+const COMBO_M=1.6,COMBO_GL=1.75,TRI_M=2,TRI_GL=2.2;
 const COMBOS=[
 {k:'inferno',a:'meteor',b:'fire',n:'Inferno Strike',m:COMBO_M,c:'#e0743f',d:'Meteor and Fire turn each impact into a firestorm that sets nearby threats burning.'},
 {k:'overgrow',a:'earth',b:'nature',n:'Overgrowth',m:COMBO_M,c:'#5c9a58',d:'Earth and Nature tear up the ground with vines that root and slow nearby threats.'},
@@ -1346,15 +1372,15 @@ const COMBOS=[
 ];
 /* tri-element combos: three different elements on linked pads (a connected row, corner or triangle) */
 const TRIS=[
-{k:'volcanic',e:['fire','earth','lightning'],n:'Volcanic Storm',m:TRI_M,tri:1,c:'#e8853a',d:'+80% damage. Every hit calls a meteor down on the target, a bigger one every 2nd hit.'},
-{k:'horizon',e:['gravity','lightning','thunder'],n:'Event Horizon',m:TRI_GL,tri:1,gl:1,hops:5,c:'#6a4fa8',d:'+100% damage. Hits open a small black hole that pulls and stuns. Ignores the splash cap and cuts through the Storm Shield.'},
-{k:'cryobeam',e:['water','ice','laser'],n:'Cryo Beam',m:TRI_GL,tri:1,gl:1,wi:1,c:'#bfe3ef',d:'+100% damage. Each hit sends an icy shock through a wide ring, and cuts through the Storm Shield.'},
-{k:'eclipse',e:['light','shadow','stars'],n:'Solar Eclipse',m:TRI_M,tri:1,c:'#7a6aa8',d:'+80% damage. The sky darkens around the target, then a starburst hits every marked threat.'},
-{k:'comet',e:['meteor','magnet','lava'],n:'Dark Comet',m:TRI_M,tri:1,c:'#c76a3a',d:'+80% damage. Drags threats under a comet that leaves a pool of dark magic.'},
-{k:'jungle',e:['nature','poison','spore'],n:'Toxic Jungle',m:TRI_M,tri:1,c:'#6a8f3a',d:'+80% damage. A poison jungle grows: threats are held, poisoned and caught in a toxic cloud.'},
-{k:'frozentime',e:['warp','nova','crystal'],n:'Glacier Tide',m:TRI_M,tri:1,c:'#a8d4e6',d:'+80% damage. An icy wave freezes threats, and frozen threats break for big damage.'},
-{k:'railgun',e:['magnet','laser','jet'],n:'Railgun',m:TRI_M,tri:1,c:'#8a9ac8',d:'+80% damage. Magnetic rails fire an iron slug through every threat in a long line.'},
-{k:'bureaucracy',e:['letter','warp','earth'],n:'Port Customs',m:TRI_M,tri:1,c:'#5a7a8a',d:'+80% damage. Everything stops at the port for the paperwork: threats near the target are stunned, slowed and buried in papers.'}
+{k:'volcanic',e:['fire','earth','lightning'],n:'Volcanic Storm',m:TRI_M,tri:1,c:'#e8853a',d:'+100% damage. Every hit calls a meteor down on the target, a bigger one every 2nd hit. Every 5th hit: a rain of 3 more meteors.'},
+{k:'horizon',e:['gravity','lightning','thunder'],n:'Event Horizon',m:TRI_GL,tri:1,gl:1,hops:5,c:'#6a4fa8',d:'+120% damage. Hits open a small black hole that pulls and stuns. Ignores the splash cap and cuts through the Storm Shield. Every 5th hit: the hole collapses, pulling in and stunning everything nearby.'},
+{k:'cryobeam',e:['water','ice','laser'],n:'Cryo Beam',m:TRI_GL,tri:1,gl:1,wi:1,c:'#bfe3ef',d:'+120% damage. Each hit sends an icy shock through a wide ring, and cuts through the Storm Shield. Every 5th hit: a deep freeze stops a wide area.'},
+{k:'eclipse',e:['light','shadow','stars'],n:'Solar Eclipse',m:TRI_M,tri:1,c:'#7a6aa8',d:'+100% damage. The sky darkens around the target, then a starburst hits every marked threat. Every 5th hit: a total eclipse marks everything nearby to take extra damage.'},
+{k:'comet',e:['meteor','magnet','lava'],n:'Dark Comet',m:TRI_M,tri:1,c:'#c76a3a',d:'+100% damage. Drags threats under a comet that leaves a pool of dark magic. Every 5th hit: two more comets fall.'},
+{k:'jungle',e:['nature','poison','spore'],n:'Toxic Jungle',m:TRI_M,tri:1,c:'#6a8f3a',d:'+100% damage. A poison jungle grows: threats are held, poisoned and caught in a toxic cloud. Every 5th hit: the jungle bursts wide, holding and poisoning a larger group.'},
+{k:'frozentime',e:['warp','nova','crystal'],n:'Glacier Tide',m:TRI_M,tri:1,c:'#a8d4e6',d:'+100% damage. An icy wave freezes threats, and frozen threats break for big damage. Every 5th hit: a shatter wave breaks every frozen threat nearby.'},
+{k:'railgun',e:['magnet','laser','jet'],n:'Railgun',m:TRI_M,tri:1,c:'#8a9ac8',d:'+100% damage. Magnetic rails fire an iron slug through every threat in a long line. Every 5th hit: a second, stronger slug follows.'},
+{k:'bureaucracy',e:['letter','warp','earth'],n:'Port Customs',m:TRI_M,tri:1,c:'#5a7a8a',d:'+100% damage. Everything stops at the port for the paperwork: threats near the target are stunned, slowed and buried in papers. Every 5th hit: a customs stamp stuns and weakens a wide area.'}
 ];
 /* ===== combos of the five newer elements: Toy Bricks, Water Gun, Ice Watermelon, Modern Soldier, Soccer Player ===== */
 const NEWS=['bricks','watergun','icemelon','soldier','soccer','console','archer'];
@@ -2515,6 +2541,12 @@ function orderMove(t,x,y){
 /* group of movable units: active only while the selection points at one of them */
 function grpAct(){if(!S||!S.grp||!S.sel||S.sel.type!=='tower')return [];const t=S.towers[S.sel.i];S.grp=S.grp.filter(u=>S.towers.indexOf(u)>=0);return t&&S.grp.indexOf(t)>=0?S.grp:[];}
 function unitTap(t){const k=S.towers.indexOf(t);if(k<0||!S||S.over||S.paused)return;
+  /* tapping a unit that is already selected deselects it (a sleeping one is woken first, as before) */
+  if(!t.nap){const G=grpAct();if(G.indexOf(t)>=0){
+    const R=G.filter(u=>u!==t);S.grp=R;
+    S.sel=R.length?{type:'tower',i:S.towers.indexOf(R[R.length-1]),hide:true}:null;
+    fxRing(t.px!=null?t.px:t.x,t.py!=null?t.py:t.y,24,'#8a939e',.4,3);
+    renderPanel();sfx(SFX.click);return;}}
   if(t.nap){t.nap=false;t.idle=0;fxText(t.px,t.py-30,'Awake!','#1d7a4a');}
   if(grpAct().indexOf(t)<0)S.grp=[t];
   S.sel={type:'tower',i:k,hide:false};renderPanel();sfx(SFX.click);}
@@ -2622,7 +2654,29 @@ document.addEventListener('click',e=>{
     case 'skills':auInit();auResume();showScreen('scrSkills');break;
     case 'home':showScreen('scrHome');break;
     case 'top10':openTop10();break;
-    case 'how':openModal('<h2>How to play</h2><ol class="how"><li>Threats move along the taxiway toward the terminal. Every run has a new random airport map.</li><li>Tap a pad and build a tower. Towers stay for the whole run. Tap a tower to upgrade it (up to level 5, where it gets a crown and a grand aura; a level 5 tower can then be upgraded to level 6) or sell it.</li><li>The Soccer Player, Modern Soldier and Dark Archer move. A tap opens its menu; then tap the map to send it there. Hold a unit for 1 second (or Shift+click) to select it without the menu, and hold more units to move them together; press More to see the menu. The Home button on the map sends every unit back to its pad. The Auto button next to it, when on, upgrades your lowest-level tower whenever you can afford it (random among equals) and waits for gold otherwise; it stays on between games.</li><li>Every kill gives gold. You start with six random elements, always including at least three splash towers. After that, every 4 levels you receive one random new element or beacon for the rest of the run.</li><li>Upgrades: a level 5 tower deals 18 times the damage of level 1 for 20.1 times its price, splashes more targets (6 at level 1, up to 14 at level 5) and gains a super skill. Level 6 deals 25 times the damage of level 1 for 34.1 times the price; late levels have more enemy health to match.</li><li>Splash elements hit groups. Single-target elements (Light, Crystal, Darkness, Poison) hit the strongest enemy in range much harder. Line elements (Laser, Jet Blast) hit every enemy in a line. The Official Letter (หนังสือราชการ) throws A4 papers at several enemies at once and slows them; at level 5 it stamps a huge black seal that stops everything around it. The beacons boost adjacent towers.</li><li>Level 5 towers release their element super skill every 10th hit. While a level 5 Meteor tower stands, every 20th hit also calls down Armageddon across the whole map.</li><li>Hidden combos: some elements work together when they stand on neighbouring pads (above, below, beside or diagonal) and every tower in the group is level 4 or higher; a few work in threes. The Library lists them. When one forms, a link of light appears and the combo is named. Experiment.</li><li>The terminal has 50 health points and they do not come back between levels. Each threat that reaches the terminal costs 1 (a boss costs 10) and then starts the route again from the beginning. At 0 the run ends.</li><li>From level 36, fast Jet Wake runners dart through the packs; strong defences catch them, weaker ones lose terminal health to them.</li><li>A boss arrives every 5 levels, and the last one, the CAAT Van, appears only at level 50. Bosses dodge negative effects (slow, stun, burn, poison, weakening, push and pull): 60% of the time on levels 5 to 25 and 90% on levels 30 to 45, so raw damage matters most against them. The CAAT Van keeps its own rules. It is built to take two runs of the route to bring down most of the time: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level. Combos push through it, and a rare hidden combo cuts straight through.</li><li>The Library on the home screen gives background and clues for every element and the combinations it can join. Each clue names the partner elements; the name of a combination is recorded there once you form it. You can also pick the shirt of the Soccer Player there.</li><li>Your run is saved at the start of each level, so you can leave and continue later.</li><li>Clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' for every terminal health point left, so among players who clear the game, the one who protected the terminal best ranks highest.</li><li>Soccer Player: tap him, then tap any spot on the map to send him there. He stays where you send him and never moves on his own; he kicks at threats within his range, a little shorter than the Ice Watermelon. If nothing happens for a while he falls asleep; he wakes up by himself when threats come into his range, or you can tap him.</li><li>Flawless streak: every level you clear with no threat reaching the terminal adds ×'+TUNE.stkM.toFixed(2)+' to your score multiplier (shown next to your score, or in the top corner of the map on phones). The multiplier applies to all points from kills and level clears. A single leak resets it to ×1.00.</li><li>Combo bonus: at the end of the run you get a bonus for the most tri combos and pair combos you ever had running at the same time, so it does not matter which map you finish on. Each extra tri scores more than the last (2 tris score 3 times one tri, 3 tris score 6 times), pairs add a smaller bonus, and the bonus grows with the levels you played.</li><li>Gold left at the end of the run adds '+TUNE.goldPts+' points per gold to your final score. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li><li>When the run ends, save your score to the Top 10 with your division.</li></ol><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;
+    case 'how':{const hp=(k,t,d)=>'<li><img class="hwp" src="'+howPic(k)+'" alt=""><div><b>'+t+'</b>'+d+'</div></li>';
+      openModal('<h2>How to play</h2><ul class="hw">'
+      +hp('build','Build','Tap a pad to build a tower.')
+      +hp('gold','Earn gold','Every kill pays. Spend it on towers and upgrades.')
+      +hp('upgrade','Upgrade','Tap a tower to upgrade or sell. Level 5 gets a super skill. Level 6 is the max.')
+      +hp('types','Mix elements','Splash hits groups, Single hits the strongest, Line hits all in a row.')
+      +hp('combo','Combos','Put level 4+ towers side by side to unlock hidden combos. Triples hit harder (+100% or more) and fire a finisher every 5th hit.')
+      +hp('units','Move units','Soccer Player, Soldier and Archer move. Hold 1 s to group. Home recalls all. Auto upgrades for you.')
+      +hp('terminal','Protect the terminal','50 health, no refill. A leak costs 1, a boss costs 10. At 0 the run ends.')
+      +hp('boss','Bosses','One every 5 levels. They often dodge slows and stuns. The CAAT Van waits at level 50.')
+      +hp('score','Score','Clear all 50 levels for a bonus. Clean levels build a multiplier. Save your score to the Top 10.')
+      +'</ul><details class="more"><summary>More rules</summary><ul class="how">'
+      +'<li>Every run has a new random airport map. You start with six random elements (at least three splash). Every 4 levels you get one more element or beacon.</li>'
+      +'<li>Level 5: 18 times the damage of level 1, wider splash (6 up to 14 targets) and a super skill every 10th hit. Level 6: 25 times the damage; late levels have more enemy health to match. A level 5 Meteor also calls Armageddon every 20th hit.</li>'
+      +'<li>Single elements: Light, Crystal, Darkness, Poison. Line elements: Laser, Jet Blast. The Official Letter (หนังสือราชการ) slows several enemies; at level 5 it stamps a seal that stops everything around it. Beacons boost adjacent towers.</li>'
+      +'<li>Combos need neighbouring pads (diagonals count) with every tower at level 4 or higher. Pairs add +60% damage and an effect. Triples add +100% (+120% for the three that cut through the Storm Shield) and every 5th hit unleashes a finisher of its own.</li>'
+      +'<li>Moving units: tap one to open its menu, then tap the map. Hold 1 s or Shift+click to select without the menu; More shows the menu. Auto upgrades your lowest-level tower when you can afford it, and stays on between games.</li>'
+      +'<li>Soccer Player: stays where you send him and kicks within his range (a little shorter than the Ice Watermelon). He sleeps when idle and wakes when threats come near, or when you tap him.</li>'
+      +'<li>A threat that reaches the terminal starts the route again. From level 36, fast Jet Wake runners dart through the packs.</li>'
+      +'<li>Bosses dodge slow, stun, burn, poison, weakening, push and pull: 60% of the time on levels 5 to 25, 90% on levels 30 to 45. The CAAT Van keeps its own rules: it costs '+TUNE.vanLeak+' terminal health the first time it gets through, and a second arrival ends the run. From level 31 a Storm Shield grows stronger each level; combos push through it, and a rare hidden combo cuts straight through.</li>'
+      +'<li>Scoring: clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' per terminal health left. Each flawless level adds ×'+TUNE.stkM.toFixed(2)+' to your multiplier; one leak resets it to ×1.00. The combo bonus rewards the most tri and pair combos running at once. Gold left adds '+TUNE.goldPts+' points each. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li>'
+      +'<li>Your run is saved at the start of each level. The Library gives clues for every element and lets you pick the Soccer Player shirt.</li>'
+      +'</ul></details><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;}
     case 'closeM':closeModal();break;
     case 'player':if(S&&S.sel&&S.sel.type==='tower'){S.sel.mini=false;PDET=true;renderPanel();}break;
     case 'homepad':if(S&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){orderMove(t,t.x,t.y);t.gx=null;t.gy=null;renderPanel();}}break;
@@ -3844,6 +3898,70 @@ function drawIcon(cvs,id){
   ctx=old;
 }
 
+/* How to play pictures: small scenes drawn once from the game's own art */
+const HWC={};
+function howPic(k){
+  if(HWC[k])return HWC[k];
+  const W=96,H=62,cv=document.createElement('canvas');cv.width=W*2;cv.height=H*2;
+  const c=cv.getContext('2d'),old=ctx;ctx=c;c.setTransform(2,0,0,2,0,0);
+  try{
+    let g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,'#2a5a96');g.addColorStop(1,'#1a2e4a');c.fillStyle=g;c.fillRect(0,0,W,H);
+    g=c.createRadialGradient(W/2,H*.7,2,W/2,H*.7,W*.6);g.addColorStop(0,'rgba(59,191,176,.28)');g.addColorStop(1,'rgba(59,191,176,0)');c.fillStyle=g;c.fillRect(0,0,W,H);
+    const tw=(id,x,y,lv,sc)=>{c.save();c.translate(x,y);c.scale(sc,sc);drawTower({x:0,y:0,id:id,lvl:lv,flash:0,ov:0,cd:0,boost:0,kills:0},.4);c.restore();};
+    const ic=(id,x,y,sc)=>{const sk=SKM[id];c.save();c.translate(x,y);c.scale(sc,sc);c.fillStyle='rgba(0,0,0,.25)';c.beginPath();c.ellipse(0,1,11,3,0,0,TAU);c.fill();glowC(0,-8,14,sk.c,.3);EMB[id](1.3,0,sk.c,1);c.restore();};
+    const arrow=(x1,x2,y)=>{c.strokeStyle='rgba(255,255,255,.85)';c.fillStyle='rgba(255,255,255,.85)';c.lineWidth=2;c.lineCap='round';c.beginPath();c.moveTo(x1,y);c.lineTo(x2-3,y);c.stroke();c.beginPath();c.moveTo(x2,y);c.lineTo(x2-5,y-4);c.lineTo(x2-5,y+4);c.closePath();c.fill();};
+    const txt=(t,x,y,sz,col)=>{c.fillStyle=col||'#fff';c.font='700 '+sz+'px Inter,sans-serif';c.textAlign='center';c.fillText(t,x,y);};
+    const coin=(x,y,r)=>{const gg=c.createRadialGradient(x-r*.3,y-r*.3,1,x,y,r);gg.addColorStop(0,'#fff3c4');gg.addColorStop(.55,'#e3b64a');gg.addColorStop(1,'#a8761c');c.fillStyle=gg;c.beginPath();c.arc(x,y,r,0,TAU);c.fill();c.strokeStyle='rgba(138,95,20,.7)';c.lineWidth=1;c.stroke();};
+    if(k==='build'){
+      if(!PADSPR)buildPads();
+      c.drawImage(PADSPR.free,10,22,36,36);
+      arrow(48,62,40);tw('fire',78,50,1,.95);
+    }else if(k==='upgrade'){
+      tw('ice',15,42,1,.75);tw('ice',48,42,3,.72);tw('ice',80,46,5,.5);
+      arrow(25,34,30);arrow(58,65,30);
+      txt('1',15,58,9);txt('3',48,58,9);txt('5',80,58,9,'#f1d27a');
+    }else if(k==='types'){
+      ic('fire',16,36,1);ic('light',48,36,1);ic('laser',80,36,1);
+      txt('Splash',16,56,8);txt('Single',48,56,8);txt('Line',80,56,8);
+    }else if(k==='combo'){
+      tw('fire',24,48,4,.66);tw('ice',72,48,4,.66);
+      const lg=c.createLinearGradient(30,0,66,0);lg.addColorStop(0,'rgba(241,210,122,.2)');lg.addColorStop(.5,'rgba(255,246,200,.95)');lg.addColorStop(1,'rgba(241,210,122,.2)');
+      c.strokeStyle=lg;c.lineWidth=3;c.beginPath();c.moveTo(30,30);c.lineTo(66,30);c.stroke();
+      glowC(48,30,10,'#fff3b0',.7);c.fillStyle='#fff';c.beginPath();c.arc(48,30,2.4,0,TAU);c.fill();
+    }else if(k==='units'){
+      ic('soccer',16,40,1);ic('soldier',48,40,1);ic('archer',80,40,1);
+      c.strokeStyle='rgba(255,255,255,.7)';c.lineWidth=1.4;c.setLineDash([3,3]);c.beginPath();c.moveTo(16,10);c.quadraticCurveTo(48,-2,80,10);c.stroke();c.setLineDash([]);
+      c.fillStyle='#f1d27a';c.beginPath();c.arc(80,10,3,0,TAU);c.fill();
+      txt('Tap, then tap the map',48,59,7.5);
+    }else if(k==='gold'){
+      coin(30,44,9);coin(46,48,9);coin(62,44,9);coin(38,32,9);coin(54,34,9);coin(46,22,9);
+    }else if(k==='terminal'){
+      let tg=c.createLinearGradient(0,14,0,32);tg.addColorStop(0,'#46699a');tg.addColorStop(1,'#26416a');c.fillStyle=tg;rr(10,14,76,18,5);c.fill();c.strokeStyle='#15253f';c.lineWidth=1;c.stroke();
+      c.fillStyle='#2a9d8f';c.fillRect(10,32,76,2);
+      txt('TERMINAL',48,26,8,'#f2f6fa');
+      for(let i=0;i<5;i++){const hx0=14+i*12;c.fillStyle='#e0584f';c.beginPath();c.moveTo(hx0,48);c.bezierCurveTo(hx0-8,41,hx0-4,35,hx0,40);c.bezierCurveTo(hx0+4,35,hx0+8,41,hx0,48);c.fill();}
+      txt('50',84,50,10,'#f1d27a');
+    }else if(k==='boss'){
+      const e1={x:0,y:0,r:ET.thead.r,sh:ET.thead.sh,c:ET.thead.c,boss:1,ph:0,hp:1,max:1,flash:0,fast:0};
+      c.save();c.translate(26,28);c.scale(.62,.62);c.strokeStyle='rgba(201,154,46,.85)';c.lineWidth=2.4;c.setLineDash([6,5]);c.beginPath();c.arc(0,0,e1.r+7,0,TAU);c.stroke();c.setLineDash([]);try{SPR[e1.sh](e1,e1.r,.4,1);}catch(x){}c.restore();
+      c.save();c.translate(70,28);c.strokeStyle='rgba(201,154,46,.85)';c.lineWidth=1.5;c.setLineDash([4,3]);c.beginPath();c.arc(0,0,19,0,TAU);c.stroke();c.setLineDash([]);
+      glowC(0,0,22,'#ffffff',.3);
+      let vg=c.createLinearGradient(0,-8,0,8);vg.addColorStop(0,'#ffffff');vg.addColorStop(1,'#d9e0e8');c.fillStyle=vg;c.beginPath();c.moveTo(-15,-7);c.lineTo(6,-7);c.lineTo(15,1);c.lineTo(15,8);c.lineTo(-15,8);c.closePath();c.fill();c.strokeStyle='#a0aec0';c.lineWidth=.8;c.stroke();
+      c.fillStyle='#9ecbe6';c.beginPath();c.moveTo(7,-5.5);c.lineTo(11,0);c.lineTo(5,0);c.lineTo(5,-5.5);c.closePath();c.fill();
+      c.fillStyle='#1e4d8c';c.font='900 7px Inter,Arial,sans-serif';c.textAlign='center';c.fillText('CAAT',-5,3);
+      c.fillStyle='#2d3748';[-9,8].forEach(wx=>{c.beginPath();c.arc(wx,8,2.8,0,TAU);c.fill();});c.restore();
+      txt('Boss',26,58,8);txt('CAAT Van',70,58,8);
+    }else if(k==='score'){
+      let gg=c.createLinearGradient(0,10,0,40);gg.addColorStop(0,'#fff3c4');gg.addColorStop(1,'#d9a93a');c.fillStyle=gg;
+      c.beginPath();c.moveTo(34,10);c.lineTo(62,10);c.quadraticCurveTo(62,30,48,34);c.quadraticCurveTo(34,30,34,10);c.fill();
+      c.strokeStyle='#d9a93a';c.lineWidth=2.2;c.beginPath();c.arc(32,14,6,Math.PI*.5,Math.PI*1.5);c.stroke();c.beginPath();c.arc(64,14,6,-Math.PI*.5,Math.PI*.5);c.stroke();
+      c.fillStyle='#d9a93a';c.fillRect(46,33,4,8);rr(38,41,20,5,2);c.fill();
+      txt('TOP 10',48,57,9,'#f1d27a');
+    }
+  }catch(e){}
+  ctx=old;
+  return HWC[k]=cv.toDataURL('image/png');
+}
 function drawPool(p,tm){
   const a=Math.min(1,p.t/.6);ctx.globalAlpha=a;
   if(p.sk.id==='lava'){
