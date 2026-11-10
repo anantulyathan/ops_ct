@@ -359,7 +359,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 102">v.102</p>
+    <p class="ver mono" aria-label="Game version 103">v.103</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -3626,10 +3626,7 @@ function drawHolyBack(t,tm){
   /* soft cathedral light and the pillar */
   ctx.globalAlpha=.85+.15*pu;ctx.drawImage(holySpr('shaft'),x-75,y-122,150,130);
   ctx.globalAlpha=.7+.3*pu;ctx.drawImage(holySpr('col'),x-28,y-124,56,132);
-  /* feathered wings, beating slowly */
-  const fl=RM?1:.94+.06*Math.sin(T*1.5+t.pad),ro=RM?0:.06*Math.sin(T*1.5+t.pad);
   ctx.globalAlpha=1;
-  for(const sd of [-1,1]){ctx.save();ctx.translate(x+sd*6,y-12);ctx.scale(sd*fl*.62,.62);ctx.rotate(-.16-ro);ctx.drawImage(holySpr('wing'),-14,-76,146,118);ctx.restore();}
   glowC(x,y-12,38,'#4aa0f0',.5*pu);
   ctx.restore();
 }
