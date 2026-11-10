@@ -359,7 +359,7 @@ html,body,*{touch-action:manipulation}
       <button class="btn" data-act="how">How to play</button>
     </div>
     <div class="card"><h2>Stages</h2><div id="lvGrid"></div></div>
-    <p class="ver mono" aria-label="Game version 99">v.99</p>
+    <p class="ver mono" aria-label="Game version 100">v.100</p>
   </section>
 
   <section id="scrSkills" class="scr">
@@ -1903,20 +1903,23 @@ function finish(win){finishRun(win);}
 function finishRun(win){
   if(S.over)return;S.over=true;S.running=false;S.overAt=performance.now();S.resShown=false;S.sel=null;holdEnd();
   try{musicStop();}catch(e){}
-  clearRun();
+  try{clearRun();}catch(e){}
   const L=S.level;
-  if(win){for(let i=0;i<3;i++)dropOrb(PADS[0].x,PADS[0].y);S.winBonus=TUNE.winB+S.lives*TUNE.lifeB;S.score+=S.winBonus;}
-  S.cbPts=comboFinal(L);S.score+=S.cbPts;
+  if(win){try{for(let i=0;i<3;i++)dropOrb(PADS[0].x,PADS[0].y);}catch(e){}S.winBonus=TUNE.winB+S.lives*TUNE.lifeB;S.score+=S.winBonus;}
+  try{S.cbPts=comboFinal(L);}catch(e){S.cbPts=0;}S.score+=S.cbPts;
   S.goldLeft=Math.max(0,Math.floor(S.credits));S.goldBonus=S.goldLeft*TUNE.goldPts;S.score+=S.goldBonus;
-  bankJewels();
-  S.score=Math.round(S.score);RUN={score:S.score,level:L,win:!!win,kills:S.kills,lives:S.lives,start:S.runStart,saved:false};
+  try{bankJewels();}catch(e){}
+  S.score=Math.round(S.score)||0;RUN={score:S.score,level:L,win:!!win,kills:S.kills,lives:S.lives,start:S.runStart,saved:false};
   if(RUN.score>(SAVE.bestRun||0))SAVE.bestRun=RUN.score;
-  SAVE.maxL=Math.max(SAVE.maxL,L);persist();
+  try{SAVE.maxL=Math.max(SAVE.maxL,L);persist();}catch(e){}
   try{if(win)seq([['triangle',523],['triangle',659],['triangle',784],['triangle',1046,.3]]);
   else seq([['sawtooth',392,.25,.2],['sawtooth',330,.25,.2],['sawtooth',262,.4,.2]]);}catch(e){}
   try{renderPanel();}catch(e){}
   setTimeout(()=>showResult(win),RM?0:500);
 }
+/* bring the end screen back if it was closed (backdrop tap, Escape, Top 10 closed) so the run can never get stuck */
+function reopenResult(){if(!S)return;if(!RUN){S=null;showScreen('scrHome');return;}S.resShown=false;showResult(RUN.win);}
+function reopenIfOver(){if(S&&S.over&&RUN&&$('scrGame').classList.contains('on')&&!$('modal').classList.contains('on'))reopenResult();}
 /* the end screen must always appear, even if something above failed */
 function showResult(win){
   if(S&&S.resShown)return;
@@ -1948,6 +1951,7 @@ function openResult(win){
     +'<div class="row"><button class="btn p" data-act="retry">Play again</button><button class="btn" data-act="menu">Menu</button></div>';
   openModal(h);
   $('btnSave').onclick=saveScore;
+  if(RUN.saved){$('btnSave').disabled=true;$('btnSave').textContent='Saved';}
   /* count the final score up (skipped with reduced motion) */
   const el=$('fsNum'),end=RUN.score;if(el&&!RM&&end>0){const t0=performance.now(),D=1100;const tick=()=>{const k=Math.min(1,(performance.now()-t0)/D),e=1-Math.pow(1-k,3);el.textContent=fmt(end*e);if(k<1)requestAnimationFrame(tick);};requestAnimationFrame(tick);}
 }
@@ -2038,8 +2042,10 @@ function showScreen(id){
 }
 function openModal(h){$('sheet').innerHTML=h;$('modal').classList.add('on');const f=$('sheet').querySelector('input,button');}
 function closeModal(){$('modal').classList.remove('on');$('sheet').innerHTML='';}
-$('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeModal();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modal').classList.contains('on'))closeModal();});
+/* the end screen is not closed by a stray tap or Escape; any other sheet closes, and the end screen returns if the run is over */
+function dismissModal(){if($('sheet').querySelector('.rbn'))return;closeModal();reopenIfOver();}
+$('modal').addEventListener('click',e=>{if(e.target===$('modal'))dismissModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modal').classList.contains('on'))dismissModal();});
 
 function renderHome(){
   if($('saverHome'))$('saverHome').innerHTML=hdBtn();
@@ -2697,7 +2703,7 @@ document.addEventListener('click',e=>{
       +'<li>Scoring: clearing all 50 levels adds '+fmt(TUNE.winB)+' points plus '+fmt(TUNE.lifeB)+' per terminal health left. Each flawless level adds ×'+TUNE.stkM.toFixed(2)+' to your multiplier; one leak resets it to ×1.00. The combo bonus rewards the most tri and pair combos running at once. Gold left adds '+TUNE.goldPts+' points each. Moving a tower costs '+fmt(TUNE.moveCost)+' gold.</li>'
       +'<li>Your run is saved at the start of each level. The Library gives clues for every element and lets you pick the Soccer Player shirt.</li>'
       +'</ul></details><button class="btn" data-act="closeM" style="width:100%;margin-top:8px">Close</button>');break;}
-    case 'closeM':closeModal();break;
+    case 'closeM':closeModal();reopenIfOver();break;
     case 'player':if(S&&S.sel&&S.sel.type==='tower'){S.sel.mini=false;PDET=true;renderPanel();}break;
     case 'homepad':if(S&&S.sel&&S.sel.type==='tower'){const t=S.towers[S.sel.i];if(t){orderMove(t,t.x,t.y);t.gx=null;t.gy=null;renderPanel();}}break;
     case 'shop':if(S&&S.started&&!S.over){S.sel={type:'shop'};renderPanel();}break;
@@ -2717,14 +2723,14 @@ document.addEventListener('click',e=>{
     case 'newrun':{const r=loadRun();auInit();auResume();sfx(SFX.click);if(r)openModal('<h2>Start a new run?</h2><p class="hint">Your saved run at level '+r.level+' will be replaced.</p><div class="row" style="margin-top:10px"><button class="btn" data-act="closeM">Cancel</button><button class="btn p" data-act="newrunOk">Start new run</button></div>');else startLevel(1);break;}
     case 'newrunOk':closeModal();clearRun();startLevel(1);break;
     case 'leave':closeModal();if(S){S.running=false;musicStop();}S=null;showScreen('scrHome');break;
-    case 'endrun':closeModal();if(S&&!S.over){S.paused=false;$('ovl').classList.remove('on');lab('bPause','Pause',IC.pause);S.running=true;finishRun(false);}break;
+    case 'endrun':closeModal();if(S&&S.over){reopenResult();break;}if(S&&!S.over){S.paused=false;$('ovl').classList.remove('on');lab('bPause','Pause',IC.pause);S.running=true;finishRun(false);}break;
     case 'menu':closeModal();S=null;showScreen('scrHome');break;
   }
 });
 $('bPause').addEventListener('click',()=>{if(S&&S.running)setPause(!S.paused);});
 $('bSpeed').addEventListener('click',()=>{if(!S)return;S.speed=S.speed===1?2:(S.speed===2?3:1);lab('bSpeed','Speed '+S.speed+'x',S.speed+'x');});
 $('bExit').addEventListener('click',()=>{
-  if(!S)return;if(S.running&&!S.paused)setPause(true);
+  if(!S)return;if(S.over){reopenResult();return;}if(S.running&&!S.paused)setPause(true);
   openModal('<h2>Leave the game?</h2><p class="hint"><b>Save and leave</b>: continue later from the start of this level. <b>End run</b>: see your score now and save it to the Top 10.</p><div class="row" style="margin-top:10px;flex-wrap:wrap"><button class="btn" data-act="closeM">Keep playing</button><button class="btn" data-act="leave">Save and leave</button><button class="btn d" data-act="endrun">End run</button></div>');
 });
 
@@ -3528,6 +3534,38 @@ function auraSpr(kind,col){
   }finally{ctx=old;}
   return AUS[k]=c;
 }
+/* Level 6: a soft blue holy light: ground glow, slow rays and a light column behind the tower, a halo and rising sparks in front */
+function holySpr(kind){
+  const k='h_'+kind+'|'+DPR;let sp=AUS[k];if(sp)return sp;
+  const s=DPR,c=document.createElement('canvas'),W=kind==='rays'?120:44,H=kind==='rays'?120:78;c.width=Math.ceil(W*s);c.height=Math.ceil(H*s);
+  const old=ctx;ctx=c.getContext('2d');ctx.setTransform(s,0,0,s,0,0);
+  try{
+    if(kind==='rays'){ctx.translate(60,60);for(let i=0;i<12;i++){ctx.save();ctx.rotate(i*TAU/12);const g=ctx.createLinearGradient(6,0,58,0);g.addColorStop(0,'rgba(200,230,255,.75)');g.addColorStop(.5,'rgba(90,165,240,.4)');g.addColorStop(1,'rgba(60,140,230,0)');ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(6,-1.5);ctx.lineTo(58,-i%2?4:7);ctx.lineTo(58,i%2?4:7);ctx.lineTo(6,1.5);ctx.closePath();ctx.fill();ctx.restore();}}
+    else{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'rgba(190,226,255,0)');g.addColorStop(.5,'rgba(120,190,255,.38)');g.addColorStop(1,'rgba(70,150,235,.6)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+      ctx.globalCompositeOperation='destination-in';const h=ctx.createLinearGradient(0,0,W,0);h.addColorStop(0,'rgba(0,0,0,0)');h.addColorStop(.5,'rgba(0,0,0,1)');h.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=h;ctx.fillRect(0,0,W,H);}
+  }finally{ctx=old;}
+  return AUS[k]=c;
+}
+function drawHolyBack(t,tm){
+  const x=t.x,y=t.y,pu=.75+.25*Math.sin(tm*2.1+t.pad);
+  ctx.save();
+  ctx.save();ctx.translate(x,y+5);ctx.scale(1,.42);ctx.globalAlpha=.95*pu;ctx.drawImage(auraSpr('g','#3f8fe0'),-46,-46,92,92);ctx.globalAlpha=.9;ctx.rotate(-tm*.5);ctx.drawImage(auraSpr('r','#e8f6ff'),-46,-46,92,92);ctx.restore();
+  ctx.save();ctx.translate(x,y-10);ctx.rotate(tm*.22+t.pad);ctx.globalAlpha=.8+.2*pu;ctx.drawImage(holySpr('rays'),-72,-72,144,144);ctx.restore();
+  ctx.globalAlpha=.7+.3*pu;ctx.drawImage(holySpr('col'),x-22,y-70,44,78);
+  ctx.globalAlpha=1;glowC(x,y-10,36,'#4aa0f0',.55*pu);
+  ctx.restore();
+}
+function drawHolyFront(t,tm){
+  const x=t.x,y=t.y-36,pu=.8+.2*Math.sin(tm*2.6+t.pad);
+  ctx.save();
+  ctx.translate(x,y+Math.sin(tm*1.8+t.pad)*1.5);ctx.scale(1,.34);
+  ctx.strokeStyle='rgba(60,140,230,'+(.5*pu)+')';ctx.lineWidth=8;ctx.beginPath();ctx.arc(0,0,13,0,TAU);ctx.stroke();
+  ctx.strokeStyle='rgba(232,246,255,'+(.95*pu)+')';ctx.lineWidth=2.4;ctx.beginPath();ctx.arc(0,0,13,0,TAU);ctx.stroke();
+  ctx.restore();
+  if(!RM){ctx.save();ctx.globalCompositeOperation='lighter';
+    for(let i=0;i<5;i++){const k=(tm*.35+i*.2+t.pad*.17)%1,a=i*2.4+t.pad,px=x+Math.cos(a)*(16-6*k),py=t.y+4-k*46;glowC(px,py,3.4,'#9fd4ff',Math.round(.75*(1-k)*100)/100);}
+    ctx.restore();}
+}
 function drawAura(t,tm){
   /* a rotating ground circle in the element colour under every level 5 tower */
   const col=SKM[t.id].c,x=t.x,y=t.y+5,ph=tm+t.pad*.7,p=.75+.25*Math.sin(ph*2),al=v=>Math.round(v*100)/100;
@@ -4242,7 +4280,7 @@ function draw(){
       }
     }
     for(const p of S.pools)drawPool(p,tm);
-    for(const t of S.towers)if(t.lvl>=MAXT)drawAura(t,tm);
+    for(const t of S.towers){if(t.lvl>=MAXT)drawAura(t,tm);if(t.ov)drawHolyBack(t,tm);}
     if(HOLD&&HOLD.mob&&!HOLD.mv){const el=performance.now()-HOLD.t0;if(el>350){const hx=HOLD.t.px!=null?HOLD.t.px:HOLD.t.x,hy=HOLD.t.py!=null?HOLD.t.py:HOLD.t.y,pr=Math.min(1,el/HOLDMOB);c.save();c.strokeStyle='rgba(26,46,74,.35)';c.lineWidth=5;c.beginPath();c.arc(hx,hy-8,26,0,TAU);c.stroke();c.strokeStyle='#3bbfb0';c.lineWidth=4;c.lineCap='round';c.beginPath();c.arc(hx,hy-8,26,-Math.PI/2,-Math.PI/2+TAU*pr);c.stroke();c.restore();}}
     drawLinks(tm);
     const items=[];
@@ -4250,6 +4288,7 @@ function draw(){
     for(const e of S.enemies)items.push({y:e.y,e:e});
     items.sort((a,b)=>a.y-b.y);
     for(const it of items){if(it.t)drawTower(it.t,tm);else drawEnemy(it.e,tm);}
+    for(const t of S.towers)if(t.ov)drawHolyFront(t,tm);
     if(BOX&&BOX.drag){const bx=Math.min(BOX.x0,BOX.x1),by=Math.min(BOX.y0,BOX.y1),bw=Math.abs(BOX.x1-BOX.x0),bh=Math.abs(BOX.y1-BOX.y0);
       c.save();c.fillStyle='rgba(59,191,176,.16)';c.fillRect(bx,by,bw,bh);c.strokeStyle='#2a9d8f';c.lineWidth=1.5;c.setLineDash([5,4]);c.strokeRect(bx,by,bw,bh);c.restore();}
     for(const p of S.pend)drawPend(p,tm);
