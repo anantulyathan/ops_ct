@@ -315,6 +315,12 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 
 
 /* language switch */
+.vtag{display:inline-block;margin:7px 0 0;padding:3px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:#dbe7f5;font:500 11.5px 'JetBrains Mono',ui-monospace,monospace;cursor:pointer;white-space:nowrap}
+.vtag:hover{background:rgba(255,255,255,.16)}
+@media (max-width:600px){ .vtag{padding:2px 8px;font-size:10.5px} }
+@media print{ .vtag{display:none!important} }
+.vlist{margin:0;padding:0;list-style:none}.vlist li{padding:10px 0;border-top:1px solid #e2e8f0}.vlist li:first-child{border-top:0}
+.vlist b{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;color:#1a2e4a}.vlist small{color:#4a5568;margin-left:8px}.vlist ul{margin:6px 0 0 18px;padding:0;color:#2d3748;font-size:13.5px;line-height:1.5}
 .rpt{display:inline-flex;align-items:center;gap:6px;flex:none;margin-left:10px;padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.10);color:#fff;font-size:12.5px;font-weight:600;cursor:pointer}
 .rpt svg{width:16px;height:16px}.rpt:hover{background:rgba(255,255,255,.18)}
 @media (max-width:959px){ .rpt{margin-left:auto}.rpt+.langsw{margin-left:8px} }
@@ -730,6 +736,7 @@ body.na{--sec:#8794a5;--sec-2:#5f6b7b;--sec-lt:#b7c0cc;--sec-soft:#eceff3;--sec-
     <div>
       <h1 id="heroTitle">AOC Fee Calculator</h1>
       <p class="thai" id="heroSub">ค่าธรรมเนียมใบรับรองผู้ดำเนินการเดินอากาศ · CT / OPS</p>
+      <button type="button" class="vtag" id="verTag" data-act="ver"></button>
     </div>
     <div class="badge" id="ruleBadge"><i></i><span>Rule set loading…</span></div>
     <button type="button" class="rpt" id="rptBtn" data-act="report"></button>
@@ -1330,6 +1337,21 @@ function acAutoHTML1(t,a){
 
 function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 let uid=0; const nid=()=> 't'+(++uid);
+/* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
+   Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
+const APP_VERSION='1.0', APP_DATE='2026-11-13';
+const APP_LOG=[
+  {v:'1.0',d:'2026-11-13',en:[
+    'Version tag in the header and a version history in Settings.',
+    'Pipeline: expiry countdown, To collect filter, and Thai Lion types set to Asia. "Add all deadlines to calendar" removed.',
+    'Report error button (opens an email to anan.t@caat.or.th).',
+    'Each operator\'s entries are saved on the user\'s own device (Settings > Saved edits).'],
+   th:[
+    'เพิ่มเลขเวอร์ชันที่ส่วนหัวและประวัติเวอร์ชันในหน้าตั้งค่า',
+    'หน้ากำหนดยื่น: เพิ่มการนับถอยหลังวันหมดอายุและตัวกรองรอเรียกเก็บ ตั้งค่าแบบอากาศยานของ Thai Lion เป็น Asia และนำปุ่มเพิ่มกำหนดการทั้งหมดลงปฏิทินออก',
+    'เพิ่มปุ่มแจ้งข้อผิดพลาด (เปิดอีเมลถึง anan.t@caat.or.th)',
+    'ข้อมูลที่กรอกของผู้ดำเนินการแต่ละรายบันทึกไว้ในอุปกรณ์ของผู้ใช้เอง (ตั้งค่า > ข้อมูลที่แก้ไขและบันทึกไว้)']}
+];
 function store(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 function load(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
 
@@ -1589,6 +1611,7 @@ function renderSettings(){
         .map(o=>`<button type="button" class="opt ${b===o[0]?'on':''}" data-act="basis" data-val="${o[0]}"><span class="rd"></span><span><b>${esc(o[1])}${o[3]?`<span class="tag">${L('Default','ค่าเริ่มต้น')}</span>`:''}</b><span class="thai">${esc(o[2])}</span></span></button>`).join('')}
     </div>
     ${b!=='MR2567'?note('warn',L('A non-default basis is active. Every area-expansion result will say so.','กำลังใช้อัตราอ้างอิงที่ไม่ใช่ค่าเริ่มต้น ผลการคำนวณการเพิ่มพื้นที่จะระบุไว้ทุกครั้ง')):''}</div>`;
+  h+=`<div class="card"><h2>${L('Version history','ประวัติเวอร์ชัน')}</h2><p class="sub">${L('Current version','เวอร์ชันปัจจุบัน')}: <b>v${esc(APP_VERSION)}</b> · ${esc(dfmt(APP_DATE))}. ${L('Quote this when you report an error.','โปรดระบุเวอร์ชันนี้เมื่อแจ้งข้อผิดพลาด')}</p><ul class="vlist">${APP_LOG.map(e=>`<li><b>v${esc(e.v)}</b><small>${esc(dfmt(e.d))}</small><ul>${(LANG==='th'?e.th:e.en).map(x=>`<li style="border:0;padding:0">${esc(x)}</li>`).join('')}</ul></li>`).join('')}</ul></div>`;
   h+=`<div class="card"><h2>${L('Rule set','ชุดอัตรา')}</h2><p class="sub">${esc(RULESET.version)} · ${L('rates are fixed in the file and change only by a new version.','อัตรากำหนดไว้ในไฟล์ และเปลี่ยนได้โดยการออกฉบับใหม่เท่านั้น')}</p>
     <table class="tbl"><tr><th>${L('Component','องค์ประกอบ')}</th><th>${L('Source','แหล่งที่มา')}</th></tr>
     <tr><td>${L('Application fee','ค่าธรรมเนียมการยื่นคำขอ')}</td><td class="thai">${esc(L(RULESET.sources.P,'ประกาศ กพท. กำหนดค่าธรรมเนียมฯ พ.ศ. 2561 (ใช้บังคับ 1 ตุลาคม 2561)'))}</td></tr>
@@ -1686,6 +1709,7 @@ function renderHero(){
   document.getElementById('heroSub').textContent=L('ค่าธรรมเนียมใบรับรองผู้ดำเนินการเดินอากาศ · CT / OPS','AOC Fee Calculator · กองรับรองผู้ดำเนินการเดินอากาศ');
   const rb=document.getElementById('rptBtn'); if(rb){ rb.innerHTML=`${ICON.mail}<span>${L('Report error','แจ้งข้อผิดพลาด')}</span>`; rb.title=L('Report an error to anan.t@caat.or.th','แจ้งข้อผิดพลาดไปที่ anan.t@caat.or.th'); rb.setAttribute('aria-label',rb.title); }
   document.getElementById('langSw').innerHTML=`<button type="button" class="${LANG==='en'?'on':''}" data-act="lang" data-val="en">EN</button><button type="button" class="${LANG==='th'?'on':''}" data-act="lang" data-val="th">ไทย</button>`;
+  const vt=document.getElementById('verTag'); if(vt){ vt.textContent='v'+APP_VERSION; vt.title=L('Version '+APP_VERSION+' · '+APP_DATE+'. Click for version history.','เวอร์ชัน '+APP_VERSION+' · '+APP_DATE+' คลิกเพื่อดูประวัติเวอร์ชัน'); }
   const badge=document.getElementById('ruleBadge'); const n=S.tests.length;
   badge.classList.toggle('bad',!S.healthy);
   badge.querySelector('span').textContent=S.healthy?L(`${RULESET.version} · ${n}/${n} checks passed`,`${RULESET.version} · ผ่านการทดสอบ ${n}/${n}`):L('Self-test failed','การทดสอบไม่ผ่าน');
@@ -1912,7 +1936,7 @@ function reportHead(s){
       <div class="rp-title">${L('AOC Fee Estimate','ประมาณการค่าธรรมเนียมใบรับรองผู้ดำเนินการเดินอากาศ')}</div>
       <div class="rp-op">${S.operator?esc(opName(S.operator))+(LANG==='th'&&opName(S.operator)!==S.operator?`<div style="font-size:.72em;font-weight:500;opacity:.75">${esc(S.operator)}</div>`:''):L('Air operator not specified','ไม่ได้ระบุผู้ดำเนินการเดินอากาศ')}</div></div>
       <table class="rp-meta">${OPINFO[S.operator]&&OPINFO[S.operator].aoc?`<tr><td>${L('AOC No.','ใบรับรองเลขที่')}</td><td><b>${esc(OPINFO[S.operator].aoc)}</b></td></tr>`:''}<tr><td>${L('Transaction','ประเภทคำขอ')}</td><td><b>${esc(AOCTX())}</b></td></tr><tr><td>${L('Date','วันที่')}</td><td>${today()}</td></tr>
-      <tr><td>${L('Rule set','ชุดอัตรา')}</td><td>${esc(RULESET.version)}</td></tr><tr><td>${L('Status','สถานะ')}</td><td><span class="rp-st ${stc}">${statusText(s.status)}</span></td></tr></table></div>`;
+      <tr><td>${L('Rule set','ชุดอัตรา')}</td><td>${esc(RULESET.version)}</td></tr><tr><td>${L('App version','เวอร์ชันระบบ')}</td><td>${esc(APP_VERSION)}</td></tr><tr><td>${L('Status','สถานะ')}</td><td><span class="rp-st ${stc}">${statusText(s.status)}</span></td></tr></table></div>`;
 }
 function reportFoot(){
   return `<div class="rp-sign"><div><small>${L('Prepared by (POI)','ผู้จัดทำ (POI)')}</small><span>${L('Name · signature · date','ชื่อ · ลายมือชื่อ · วันที่')}</span></div><div><small>${L('Verified by (FAD)','ผู้ตรวจสอบ (FAD)')}</small><span>${L('Name · signature · date','ชื่อ · ลายมือชื่อ · วันที่')}</span></div></div>
@@ -2292,7 +2316,7 @@ function reportHref(){
   const subject=L('AOC Fee Calculator: error report','แจ้งข้อผิดพลาด AOC Fee Calculator');
   const body=[L('Please describe the error (what you did, what you expected, what you saw):','โปรดระบุข้อผิดพลาด (สิ่งที่ทำ ผลที่คาดหวัง และผลที่ปรากฏ):'),'','','',
     '--- App details ---',
-    `Rule set: ${RULESET.version}`,`Screen: ${S.tab}`,`Operator: ${S.operator?S.operator+(oi.aoc?' ('+oi.aoc+')':''):'-'}`,
+    `App version: ${APP_VERSION}`,`Rule set: ${RULESET.version}`,`Screen: ${S.tab}`,`Operator: ${S.operator?S.operator+(oi.aoc?' ('+oi.aoc+')':''):'-'}`,
     `Transaction: ${S.tx}`,`Total shown: ${total}`,`Self-test: ${S.tests.filter(t=>t.pass).length}/${S.tests.length}`,
     `Language: ${LANG}`,`Date: ${stamp}`,`Device: ${dev}`].join('\r\n');
   return `mailto:${REPORT_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -2389,6 +2413,7 @@ document.addEventListener('click',e=>{
     case 'send': needAck('send',openSend); return;
     case 'pipeF': S.pipeF=v; renderPage(); return;
     case 'report': reportError(); return;
+    case 'ver': S.tab='settings'; renderAll(); window.scrollTo(0,0); return;
     case 'icsOne': icsOne(el.dataset.op); return;
     case 'pipeOpen': { const op=el.dataset.op; if(op!==S.operator) switchOperator(op); S.tab='cert'; renderAll(); window.scrollTo({top:0,behavior:'smooth'}); return; }
     case 'resetOp': { const op=el.dataset.op; if(!confirm(L(`Reset ${opName(op)} to the built-in data? Your saved entries for this operator will be removed.`,`รีเซ็ต ${opName(op)} เป็นข้อมูลในระบบหรือไม่ ข้อมูลที่บันทึกไว้ของผู้ดำเนินการรายนี้จะถูกลบ`))) return;
