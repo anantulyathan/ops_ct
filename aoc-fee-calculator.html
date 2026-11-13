@@ -143,6 +143,13 @@ button,input,select{font-family:inherit;font-size:inherit;color:inherit}
 .type{border-radius:16px;padding:16px;margin-bottom:14px;background:linear-gradient(180deg,#fff,#f8fafd);border:1px solid var(--grey-light);box-shadow:var(--sh-1);position:relative}
 .type.principal{border-color:rgba(42,157,143,.55);box-shadow:0 0 0 3px rgba(42,157,143,.10),var(--sh-2)}
 .type-h{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+/* v1.7 card label: "A/C Type n" bar with the Principal/Additional tag and remove button */
+.type-top{display:flex;align-items:center;gap:10px;margin:-2px 0 10px;padding:0 0 8px;border-bottom:1px solid color-mix(in srgb,var(--sec) 18%,#e6ecf2)}
+.type-lbl{display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;letter-spacing:.02em;color:#fff;white-space:nowrap;
+  background:linear-gradient(135deg,var(--sec) 0%,var(--sec-2) 100%);box-shadow:0 4px 10px -4px color-mix(in srgb,var(--sec) 70%,transparent)}
+.type-top .pslot{margin-left:auto}
+.type-top .icon-btn{flex:none}
+.type.principal .type-lbl{background:linear-gradient(135deg,var(--teal) 0%,#1f7a70 100%)}
 .type-h .num{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff;
   background:linear-gradient(145deg,var(--blue-mid),var(--navy));box-shadow:0 3px 8px rgba(30,77,140,.35)}
 .type-h input{flex:1;min-width:0;border:0;border-bottom:1.5px dashed transparent;background:transparent;font-size:15px;font-weight:600;color:var(--navy);padding:4px 2px}
@@ -1369,8 +1376,9 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='1.6', APP_DATE='2026-11-13';
+const APP_VERSION='1.7', APP_DATE='2026-11-13';
 const APP_LOG=[
+  {v:'1.7',d:'2026-11-13',en:['Step 2: each aircraft card is labelled "A/C Type 1", "A/C Type 2" and so on, instead of a plain number.'],th:['ขั้นตอนที่ 2: แต่ละการ์ดแสดงป้าย "แบบอากาศยานที่ 1", "แบบอากาศยานที่ 2" ตามลำดับ แทนตัวเลขเดี่ยว']},
   {v:'1.6',d:'2026-11-13',en:['Report error opens the Outlook app on iPhone, iPad and Android, with the default mail app as fallback.','Inspection times are read as Thailand time on any device, so daylight-saving changes abroad no longer shift the day count.','CSV export: text that a spreadsheet could read as a formula is made safe.','Pipeline: "1 day ago" instead of "1 days ago".'],
    th:['ปุ่มแจ้งข้อผิดพลาดเปิดแอป Outlook บน iPhone, iPad และ Android หากไม่มีจะเปิดแอปอีเมลของอุปกรณ์แทน','เวลาการตรวจสอบอ่านเป็นเวลาประเทศไทยบนทุกอุปกรณ์ การปรับเวลาออมแสงในต่างประเทศจึงไม่ทำให้จำนวนวันคลาดเคลื่อน','ไฟล์ CSV: ป้องกันข้อความที่โปรแกรมตารางคำนวณอาจอ่านเป็นสูตร','หน้าติดตามการต่ออายุ: แก้ไขคำภาษาอังกฤษ "1 day ago"']},
   {v:'1.5',d:'2026-11-13',en:['Fix: removing a custom operator, or clearing the operator, no longer carries its aircraft over to the next operator opened.'],th:['แก้ไข: การลบผู้ดำเนินการที่เพิ่มเอง หรือการยกเลิกการเลือกผู้ดำเนินการ จะไม่นำแบบอากาศยานไปใช้กับผู้ดำเนินการรายถัดไปที่เปิด']},
@@ -1496,11 +1504,11 @@ function renderCert(){
     const isP = res.total!=null && res.principalIdx===i;
     const wl=weightLabels(t.cat);
     h+=`<div class="type ${isP?'principal':''}" data-tid="${t.id}">
-      <div class="type-h"><span class="num">${i+1}</span>
-        ${acSelectHTML(t)}
+      <div class="type-top"><span class="type-lbl">${L(`A/C Type ${i+1}`,`แบบอากาศยานที่ ${i+1}`)}</span>
         <span class="pslot">${pillHTML(res,i)}</span>
-        ${S.types.length>1?`<button type="button" class="icon-btn" data-act="delType" data-id="${t.id}" aria-label="${esc(L('Remove type','ลบแบบอากาศยาน'))}">${ICON.x}</button>`:''}
+        ${S.types.length>1?`<button type="button" class="icon-btn" data-act="delType" data-id="${t.id}" aria-label="${esc(L(`Remove A/C Type ${i+1}`,`ลบแบบอากาศยานที่ ${i+1}`))}">${ICON.x}</button>`:''}
       </div>
+      <div class="type-h">${acSelectHTML(t)}</div>
       ${t.ac==='OTHER'?`<div class="field" style="margin-top:10px"><input data-bind="name" data-id="${t.id}" value="${esc(t.name)}" placeholder="${esc(L('Type name or ICAO designator','ชื่อแบบหรือรหัส ICAO ของอากาศยาน'))}" aria-label="${esc(L('Type name','ชื่อแบบอากาศยาน'))}"></div>`:''}
       <div class="acslot">${acAutoHTML(t)}</div>
       <div class="lbl">${L('Category','ประเภทอากาศยาน')}</div>${catsHTML(t.cat,'tcat',t.id)}`;
