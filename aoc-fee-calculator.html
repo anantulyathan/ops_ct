@@ -638,6 +638,63 @@ body[data-sec=pipe]{--sec:#3e6a9e;--sec-2:#2b4f7d;--sec-lt:#93b4d9;--sec-soft:#e
   background:linear-gradient(180deg,#fdf1f0,#fbe3e1);border:1.5px solid rgba(192,57,43,.45);box-shadow:0 10px 24px -16px rgba(192,57,43,.7),inset 0 1px 0 #fff}
 .redbox svg{width:22px;height:22px;flex:none;color:#c0392b;margin-top:1px}
 .redbox b{display:block;color:#a8322a;font-size:14.5px;margin-bottom:2px}
+/* ---- v3.1 cosmetic layer ---- */
+.result .total .tv{display:inline-block}
+.result .total .tv.bump{animation:tvBump .5s ease}
+@keyframes tvBump{0%{transform:translateY(0)}35%{transform:translateY(-3px);text-shadow:0 0 18px rgba(59,191,176,.55)}100%{transform:none}}
+.result .bar i{transition:width .65s cubic-bezier(.22,.8,.3,1)}
+.route{--ar:var(--teal);--ar2:var(--blue-mid)}
+.route.ar-DOM{--ar:#c9a227;--ar2:#a8841a}
+.route.ar-ASIA{--ar:#4f8f5f;--ar2:#3c7350}
+.route.ar-INTL,.route.ar-HELI_INTL{--ar:#1e4d8c;--ar2:#1a2e4a}
+.route .stop::before{transition:background .45s ease,box-shadow .45s ease}
+.route .stop.lit::before{background:linear-gradient(90deg,var(--ar),var(--ar2))!important;box-shadow:0 0 8px color-mix(in srgb,var(--ar) 45%,transparent)!important}
+.route .stop.lit .dot{border-color:var(--ar)!important;color:var(--ar)!important}
+.route .stop.on .dot{background:linear-gradient(145deg,color-mix(in srgb,var(--ar) 70%,#fff),var(--ar) 55%,var(--ar2))!important;color:#fff!important;box-shadow:0 6px 14px -4px color-mix(in srgb,var(--ar) 70%,transparent)!important;transition:background .45s ease}
+.route .plane{color:var(--ar)!important;filter:drop-shadow(0 3px 4px color-mix(in srgb,var(--ar) 40%,transparent))!important}
+.route .plane{position:absolute;top:-3px;transform:translateX(-50%);color:var(--teal);z-index:2;transition:left .7s cubic-bezier(.3,.7,.25,1);filter:drop-shadow(0 3px 4px rgba(42,157,143,.35));pointer-events:none}
+.route .plane svg{display:block;transform:rotate(90deg)}
+.route .plane.fly svg{animation:planeBob .7s ease}
+@keyframes planeBob{0%{transform:rotate(90deg) translateX(0)}50%{transform:rotate(90deg) translateX(-4px)}100%{transform:rotate(90deg)}}
+.route .stop.lit::before{background:linear-gradient(90deg,var(--teal),var(--blue-mid));box-shadow:0 0 8px rgba(42,157,143,.35)}
+.route{padding-top:16px}
+.pfee{display:flex;align-items:center;justify-content:flex-end;gap:12px}
+.pfee-t{text-align:right}
+.pring{position:relative;width:46px;height:46px;flex:none;display:grid;place-items:center}
+.pring svg{position:absolute;inset:0;width:46px;height:46px;transform:rotate(-90deg)}
+.pring .rt{fill:none;stroke:#e6ecf2;stroke-width:4}
+.pring .rv{fill:none;stroke-width:4;stroke-linecap:round;animation:ringIn .9s cubic-bezier(.22,.8,.3,1)}
+@keyframes ringIn{from{stroke-dasharray:0 113.1}}
+.pring b{position:relative;font-size:14px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums}
+.pring b.s{font-size:11.5px}.pring b.xs{font-size:9.5px}
+.pring.past b{font-size:16px}
+@media (max-width:720px){ .pfee{justify-content:flex-start} .pfee-t{text-align:left} }
+.rev-chart{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:end;margin:14px 0 4px;padding:12px 12px 6px;border-radius:14px;background:linear-gradient(180deg,#f7fafd,#eef3f9);border:1px solid #e1e8f1}
+.rc-col{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.rc-amt{font-size:12.5px;font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums}
+.rc-col.now .rc-amt{color:var(--teal)}
+.rc-track{height:150px;width:100%;max-width:74px;display:flex;align-items:flex-end}
+.rc-bar{width:100%;min-height:2px;border-radius:10px 10px 4px 4px;overflow:hidden;display:flex;flex-direction:column-reverse;transform-origin:bottom;animation:rcGrow .8s cubic-bezier(.22,.8,.3,1) both;background:#e6ecf2}
+.rc-col.now .rc-bar{box-shadow:0 0 0 2px rgba(42,157,143,.25),0 8px 22px -6px rgba(42,157,143,.55)}
+@keyframes rcGrow{from{transform:scaleY(0)}}
+.rc-seg{border:0;padding:0;margin:0;min-height:3px;cursor:pointer;border-top:1px solid rgba(255,255,255,.55);transition:filter .15s}
+.rc-seg:hover,.rc-seg.sel{filter:brightness(1.18) saturate(1.1)}
+.rc-y{font-size:12px;font-weight:600;color:var(--navy);text-align:center}
+.rc-tip{font-size:12.5px;color:var(--grey-mid);padding:6px 4px 0;min-height:22px}
+.rc-tip.on{color:var(--navy);font-weight:600}
+.rp-ico{position:absolute;right:0;top:12px;width:30px;height:30px;border-radius:8px;opacity:.95}
+.rp{position:relative}
+.rp-h{padding-right:40px}
+.rp-wm{position:fixed;top:42%;left:50%;transform:translate(-50%,-50%) rotate(-28deg);font-size:46px;font-weight:800;letter-spacing:.06em;color:rgba(30,77,140,.065);white-space:nowrap;pointer-events:none;z-index:0}
+.rp-mix{margin:8px 0 2px}
+.rp-mbar{display:flex;height:7px;border-radius:5px;overflow:hidden;background:#e6ecf2}
+.rp-mbar i{display:block;height:100%}
+.rp-mleg{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:4px;font-size:8.5px;color:#4a5568}
+.rp-mleg i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.rp-qr{display:flex;align-items:center;gap:8px;text-align:right}
+.rp-qrsvg{width:46px;height:46px;flex:none}
+@page{ @bottom-right{ content:counter(page) " / " counter(pages); font:8px Inter,sans-serif; color:#718096 } }
+@media (prefers-reduced-motion: reduce){ .rc-bar,.pring .rv,.result .total .tv.bump,.route .plane.fly svg{animation:none!important} .route .plane,.result .bar i{transition:none!important} }
 .rev{margin-bottom:16px}
 .rev-h{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px}
 .rev-h h2{margin-bottom:2px}
@@ -728,6 +785,11 @@ body[data-sec=pipe] #opbar{display:none}
 /* ---------- acknowledgement before any output ---------- */
 .initwarn{margin-top:14px}
 .rp-warn{margin:10px 0 4px;padding:9px 12px;border-radius:8px;border:1.5px solid #c0392b;background:#fdeceb;color:#8e2a20;font-size:12.5px;font-weight:600}
+.resetmsg{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:11px 14px;border-radius:12px;font-size:13px;line-height:1.45;background:#eef2f6;color:#3b4a5c;border:1px solid #d9e1ea}
+.resetmsg.ok{background:#e9f4ee;color:#2f5f40;border-color:#bcd9c7}
+.resetmsg svg{width:18px;height:18px;flex:none;margin-top:1px}
+.btn-danger{background:linear-gradient(135deg,#c0392b,#8e2a20);color:#fff;border:0}
+.btn-danger svg{width:16px;height:16px}
 .ack{z-index:95}
 .ack .sheet-in{max-width:480px;border:1px solid rgba(192,57,43,.35)}
 .ack-top{position:relative;padding:20px 20px 16px;color:#fff;display:flex;gap:14px;align-items:center;
@@ -1411,8 +1473,13 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.0', APP_DATE='2026-11-13';
+const APP_VERSION='3.5', APP_DATE='2026-11-13';
 const APP_LOG=[
+  {v:'3.5',d:'2026-11-13',en:['“Use new data” and “Reload list” now confirm inside the app, so they work reliably on iPhone.'],th:['ปุ่ม “ใช้ข้อมูลในระบบ” และ “โหลดรายการใหม่” ยืนยันภายในระบบแล้ว จึงทำงานได้แน่นอนบน iPhone']},
+  {v:'3.4',d:'2026-11-13',en:['Reset app: confirmation inside the app, reset without reloading, and a message showing what was cleared (or that nothing needed clearing).'],th:['ปุ่มรีเซ็ตระบบ: ยืนยันภายในระบบ รีเซ็ตโดยไม่ต้องโหลดหน้าใหม่ และแสดงข้อความว่าล้างข้อมูลใดไปบ้าง หรือแจ้งว่าไม่มีข้อมูลที่ต้องล้าง']},
+  {v:'3.3',d:'2026-11-13',en:['Area of Operation route takes the colour of the chosen area: Domestic golden-yellow, Asia green, other regions dark blue.','Changes and Inspection start as Not Applicable.','Settings: Saved edits replaced by one Reset app button that clears everything saved on the device.'],th:['เส้นทางพื้นที่ปฏิบัติการเปลี่ยนสีตามพื้นที่ที่เลือก: ภายในประเทศสีเหลืองทอง ภูมิภาคเอเชียสีเขียว ภูมิภาคอื่นสีน้ำเงินเข้ม','หน้าการเปลี่ยนแปลงและการตรวจสอบเริ่มต้นเป็นไม่เกี่ยวข้อง (N/A)','หน้าตั้งค่า: เปลี่ยนส่วนข้อมูลที่แก้ไขเป็นปุ่มรีเซ็ตระบบปุ่มเดียว ซึ่งล้างข้อมูลทั้งหมดที่บันทึกไว้ในอุปกรณ์']},
+  {v:'3.2',d:'2026-11-13',en:['QC fixes: Pipeline countdown rings use the same colour as their row; the animated total carries its final value for screen readers.'],th:['แก้ไขจากการตรวจสอบคุณภาพ: วงแหวนนับถอยหลังในหน้าติดตามการต่ออายุใช้สีเดียวกับแถวของรายการ และยอดรวมแบบเคลื่อนไหวระบุค่าสุดท้ายสำหรับโปรแกรมอ่านหน้าจอ']},
+  {v:'3.1',d:'2026-11-13',en:['Look and feel: animated totals and fee bar, flight-path area picker, Pipeline countdown rings, stacked revenue chart with tap-to-see AOCs, and a finished printed report (icon, fee-mix bar, estimate watermark, page numbers, QR code to the live app).'],th:['ปรับรูปลักษณ์: ยอดรวมและแถบค่าธรรมเนียมแบบเคลื่อนไหว ตัวเลือกพื้นที่ปฏิบัติการแบบเส้นทางบิน วงแหวนนับถอยหลังในหน้าติดตามการต่ออายุ กราฟรายได้แบบแท่งซ้อนที่แตะดูรายการได้ และรายงานฉบับพิมพ์ที่มีไอคอน แถบสัดส่วนค่าธรรมเนียม ลายน้ำประมาณการ เลขหน้า และ QR code ไปยังระบบออนไลน์']},
   {v:'3.0',d:'2026-11-13',en:['Initial issue. Certificate, Changes, Inspection, Summary, Pipeline (renewal deadlines and expected revenue), Settings and Rates, with printed report, CSV, calendar files and error reporting.'],
    th:['ฉบับเริ่มต้น ประกอบด้วยหน้าใบรับรอง การเปลี่ยนแปลง การตรวจสอบ สรุป ติดตามการต่ออายุ (กำหนดยื่นและประมาณการรายได้) ตั้งค่า และอัตรา พร้อมรายงาน CSV ไฟล์ปฏิทิน และการแจ้งข้อผิดพลาด']}
 ];
@@ -1432,7 +1499,7 @@ const S={
   settings:{areaExpansionBasis: BASES.includes(load('aoc.basis')) ? load('aoc.basis') : RULESET.settings.areaExpansionBasis},
   operator:'', addingOp:false, opDraft:'',
   customOps:(()=>{ try{ return JSON.parse(load('aoc.customOps')||'[]').filter(x=>typeof x==='string'); }catch(e){ return []; } })(),
-  changesAdded:[], loadedSig:null, fleetFrom:null, expiryAuto:false, txAuto:false, na:{change:false,insp:false}, opCache:{}, pipeF:'all', staleOps:{}
+  changesAdded:[], loadedSig:null, fleetFrom:null, expiryAuto:false, txAuto:false, na:{change:true,insp:true}, opCache:{}, pipeF:'all', staleOps:{}
 };
 /* Added changes keep their inputs and basis; text is rebuilt in the current language. */
 function CH(){ return S.changesAdded.map(x=>Object.assign({id:x.id,mode:x.mode,title:modeTitle(x.mode)},calcChange(x.mode,x.p,{areaExpansionBasis:x.basis}))); }
@@ -1473,10 +1540,13 @@ function statusPill(st){ const c={CALCULATED:'st-ok',ESTIMATED:'st-est',VERIFICA
 function note(kind,txt){ const ic={warn:ICON.warn,info:ICON.info,err:ICON.warn,ok:ICON.check}[kind]; return `<div class="note n-${kind}">${ic}<div>${esc(txt)}</div></div>`; }
 function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast.h); toast.h=setTimeout(()=>el.classList.remove('show'),2400); }
 function lineHTML(l){ return `<div class="line"><div class="t">${esc(l.label)}</div><div class="a">${fmt(l.amount)}</div><div class="r">${esc(l.basis)}<br><span class="thai">${esc(l.ref)}</span></div></div>`; }
+const PLANE_SVG='<svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M21 15.2v-1.9l-8-5V3.2c0-.8-.6-1.5-1.4-1.5S10.2 2.4 10.2 3.2v5.1l-8 5v1.9l8-2.5v5.2l-2 1.5v1.5L12 20l3.8 1.1v-1.5l-2-1.5v-5.2l7.2 2.3z"/></svg>';
 function routeHTML(cat,val,act,id,key){
   const areas=AREAS_FOR[cat]; const r=RANK[val]||0;
   const sub=a=> LANG==='th' ? AREA_LABEL[a] : AREA_TH[a];
-  return `<div class="route">${areas.map((a,i)=>`<button type="button" class="stop ${RANK[a]<=r?'lit':''} ${a===val?'on':''}" data-act="${act}" data-id="${id||''}" data-key="${key||''}" data-val="${a}"><span class="dot">${i+1}</span><span class="name">${esc(areaL(a))}<br><span class="th thai">${esc(sub(a))}</span></span></button>`).join('')}</div>`;
+  const ix=areas.indexOf(val), to=ix<0?null:((ix+.5)/areas.length*100).toFixed(2);
+  const planeHTML=to!=null?`<span class="plane" style="left:${planeAt[`${act}:${id||''}:${key||''}`]??to}%" aria-hidden="true">${PLANE_SVG}</span>`:'';
+  return `<div class="route ${val?'ar-'+val:''}" ${to!=null?`data-rk="${act}:${id||''}:${key||''}" data-to="${to}"`:''}>${areas.map((a,i)=>`<button type="button" class="stop ${RANK[a]<=r?'lit':''} ${a===val?'on':''}" data-act="${act}" data-id="${id||''}" data-key="${key||''}" data-val="${a}"><span class="dot">${i+1}</span><span class="name">${esc(areaL(a))}<br><span class="th thai">${esc(sub(a))}</span></span></button>`).join('')}${planeHTML}</div>`;
 }
 function seg(options,val,act,id,key,full){ return `<div class="seg ${full?'full':''}">${options.map(o=>`<button type="button" class="${String(o[0])===String(val)?'on':''}" data-act="${act}" data-id="${id||''}" data-key="${key||''}" data-val="${o[0]}">${esc(o[1])}</button>`).join('')}</div>`; }
 const CATNAME=()=>({AEROPLANE:L('Aeroplane','เครื่องบิน'),HELICOPTER:L('Helicopter','เฮลิคอปเตอร์'),BALLOON:L('Balloon','บัลลูน')});
@@ -1723,7 +1793,7 @@ function renderRef(){
 function resultCard(o){
   const {title,sub,total,status,lines,errors,warnings,notes,bar,sumLabel}=o;
   let h=`<div class="result" id="result"><div class="result-top"><div class="k"><span>${esc(title)}</span>${statusPill(status)}</div>
-    <div class="total"><small>฿</small>${total!=null?fmt(total):'—'}</div><div class="cap">${esc(sub||'')}</div>`;
+    <div class="total"><small>฿</small><span class="tv" data-v="${total!=null?total:''}" aria-label="${total!=null?'฿ '+fmt(total):'—'}">${total!=null?fmt(total):'—'}</span></div><div class="cap">${esc(sub||'')}</div>`;
   if(bar&&total){ h+=`<div class="bar">${bar.map(b=>`<i style="width:${b.v/total*100}%;background:${b.c}"></i>`).join('')}</div><div class="legend">${bar.map(b=>`<span><i style="background:${b.c}"></i>${esc(b.k)}</span>`).join('')}</div>`; }
   h+=`</div>`;
   if(lines&&lines.length){ h+=`<div class="lines">${lines.map(lineHTML).join('')}${total!=null?`<div class="line sum"><div class="t">${esc(sumLabel||L('Total','รวม'))}</div><div class="a">${fmt(total)}</div></div>`:''}</div>`; }
@@ -1761,7 +1831,25 @@ function renderSide(){
     o={title:op?L('Total financial commitment','ภาระค่าใช้จ่ายรวม'):L('Estimated payments to CAAT','ยอดชำระให้ กพท. โดยประมาณ'),sub:op?L(`Payments to CAAT ฿ ${fmt(caat)} + operator-provided ฿ ${fmt(op)}`,`ชำระให้ กพท. ฿ ${fmt(caat)} + ผู้ขอจัดหาเอง ฿ ${fmt(op)}`):L('Fees and Section 5/1 expenses','ค่าธรรมเนียมและค่าใช้จ่ายตามมาตรา 5/1'),total:lines.length?total:null,status,lines,errors:I.includeCert&&initWarnText()?[initWarnText()]:[],warnings:ins.warnings,notes,sumLabel:op?L('Total commitment','ภาระค่าใช้จ่ายรวม'):L('Payments to CAAT','ยอดชำระให้ กพท.'),
       bar:total?[{k:L('AOC fees and changes','ค่าธรรมเนียมและการเปลี่ยนแปลง'),v:certTotal||0,c:'#3bbfb0'},{k:L('Inspection & gov. rates','การตรวจสอบและอัตราเหมาจ่าย'),v:caat-(certTotal||0),c:'#6c9bd2'},{k:L('Operator-provided','ผู้ขอจัดหาเอง'),v:op,c:'#9fb3c8'}].filter(b=>b.v>0):null};
   } else { side.innerHTML=''; updateMini(null,''); return; }
-  side.innerHTML=resultCard(o); updateMini(o.total,o.title);
+  side.innerHTML=resultCard(o); updateMini(o.total,o.title); animSide();
+}
+/* Count the total to its new value and slide the fee bar segments (skipped when the device asks for reduced motion). */
+const sideLast={tab:null,v:null,w:null};
+function animSide(){
+  const tv=document.querySelector('#side .tv'), segs=[...document.querySelectorAll('#side .bar i')];
+  const v=tv&&tv.dataset.v!==''?Number(tv.dataset.v):null, w=segs.map(i=>i.style.width);
+  const same=sideLast.tab===S.tab, from=sideLast.v, fromW=sideLast.w;
+  sideLast.tab=S.tab; sideLast.v=v; sideLast.w=w;
+  if(REDUCE_MOTION||!same) return;
+  if(tv && v!=null && from!=null && from!==v){
+    const t0=performance.now(), d=650, ease=x=>1-Math.pow(1-x,3);
+    const step=t=>{ if(!tv.isConnected) return; const k=Math.min(1,(t-t0)/d); tv.textContent=fmt(Math.round(from+(v-from)*ease(k))); if(k<1) requestAnimationFrame(step); else tv.textContent=fmt(v); };
+    requestAnimationFrame(step); tv.classList.remove('bump'); void tv.offsetWidth; tv.classList.add('bump');
+  }
+  if(fromW && fromW.length===segs.length && fromW.join()!==w.join()){
+    segs.forEach((i,k)=>{ i.style.transition='none'; i.style.width=fromW[k]; }); void document.body.offsetWidth;
+    segs.forEach((i,k)=>{ i.style.transition=''; i.style.width=w[k]; });
+  }
 }
 function updateMini(total,title){
   const m=document.getElementById('mini');
@@ -1816,8 +1904,20 @@ function renderBanner(){
   bn.innerHTML = !S.healthy ? `<div class="n-err">${ICON.warn}<span>${L('Self-test failed: calculations are locked. Open Settings to see which check failed.','การทดสอบระบบไม่ผ่าน ระบบระงับการคำนวณ โปรดดูรายการที่ไม่ผ่านในหน้าตั้งค่า')}</span></div>`
     : (S.settings.areaExpansionBasis!=='MR2567' ? `<div class="n-warn">${ICON.warn}<span>${L('Area-expansion results use a non-default basis on this device (Settings).','การคำนวณการเพิ่มพื้นที่ปฏิบัติการในอุปกรณ์นี้ใช้อัตราอ้างอิงที่ไม่ใช่ค่าเริ่มต้น (หน้าตั้งค่า)')}</span></div>` : '');
 }
-function renderAll(){ renderHero(); renderNav(); renderBanner(); renderOpbar(); renderPage(); persistSoon(); }
-function rerenderKeepScroll(){ const y=window.scrollY; renderBanner(); renderPage(); window.scrollTo(0,y); }
+const REDUCE_MOTION=(()=>{ try{ return matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){ return false; } })();
+/* After each render: glide the plane on area pickers from where it was to the new stop. */
+const planeAt={};
+function animRoutes(){
+  document.querySelectorAll('.route[data-rk]').forEach(r=>{
+    const pl=r.querySelector('.plane'); if(!pl) return; const k=r.dataset.rk, to=r.dataset.to;
+    const from=planeAt[k]; planeAt[k]=to;
+    if(REDUCE_MOTION || from==null || from===to){ pl.style.left=to+'%'; return; }
+    pl.style.transition='none'; pl.style.left=from+'%'; void pl.offsetWidth; pl.style.transition=''; pl.style.left=to+'%';
+    pl.classList.remove('fly'); void pl.offsetWidth; pl.classList.add('fly');
+  });
+}
+function renderAll(){ renderHero(); renderNav(); renderBanner(); renderOpbar(); renderPage(); animRoutes(); persistSoon(); }
+function rerenderKeepScroll(){ const y=window.scrollY; renderBanner(); renderPage(); animRoutes(); window.scrollTo(0,y); }
 
 /* ---------- Air operator bar ---------- */
 function renderOpbar(){
@@ -1856,7 +1956,15 @@ function renderOpbar(){
   }
   el.innerHTML=`<div class="opbar"><span class="op-ic">${ICON.org}</span><div><div class="op-l">${L('Air operator','ผู้ดำเนินการเดินอากาศ')}</div><div class="thai" style="font-size:12px;color:var(--grey-soft)">${L('ผู้ดำเนินการเดินอากาศ','Air operator')}</div></div>${inner}${fleetLine}</div>`;
 }
-function confirmReplace(){ try{ return window.confirm(L('Replace the aircraft types you have entered with the Ops Spec list?','แทนที่แบบอากาศยานที่กรอกไว้ด้วยรายการจากข้อกำหนดการปฏิบัติการหรือไม่')); }catch(e){ return true; } }
+/* In-app confirmation (native confirm() can fail silently on iPhone Home Screen apps) */
+function askSheet(title,msg,yes,fn,danger){
+  const el=document.getElementById('ack'); ackNext=fn;
+  el.innerHTML=`<div class="sheet-in"><div class="ack-top"><div class="ai">${ICON.warn}</div><div><h3 id="ackT">${esc(title)}</h3></div></div>
+    <div class="ack-body"><div class="ack-msg">${esc(msg)}</div>
+      <button type="button" class="btn btn-s" data-act="ackNo">${L('Cancel','ยกเลิก')}</button>
+      <button type="button" class="btn btn-ack" data-act="ackYes">${esc(yes)}</button></div></div>`;
+  el.classList.add('on'); const b=el.querySelector('[data-act=ackNo]'); if(b) b.focus();
+}
 function saveOperator(){
   const name=(S.opDraft||'').replace(/\s+/g,' ').trim();
   if(!name){ toast(L('Type the operator name first','กรุณาระบุชื่อผู้ดำเนินการเดินอากาศ')); return; }
@@ -2003,7 +2111,8 @@ function detailedScreen(s){
 /* ---------- Print report ---------- */
 function reportHead(s){
   const stc={CALCULATED:'ok',ESTIMATED:'est',VERIFICATION_REQUIRED:'ver',INCOMPLETE:'inc'}[s.status];
-  return `<div class="rp-band"></div>
+  const ico=(document.querySelector('link[rel="icon"]')||{}).href||'';
+  return `<div class="rp-wm" aria-hidden="true">${L('ESTIMATE – NOT AN INVOICE','ประมาณการ – มิใช่ใบแจ้งหนี้')}</div><div class="rp-band"></div>${ico?`<img class="rp-ico" src="${ico}" alt="">`:''}
     <div class="rp-h"><div><div class="rp-org">${L('Civil Aviation Authority of Thailand · OPS / CT','สำนักงานการบินพลเรือนแห่งประเทศไทย · กองรับรองผู้ดำเนินการเดินอากาศ')}</div>
       <div class="rp-title">${L('AOC Fee Estimate','ประมาณการค่าธรรมเนียมใบรับรองผู้ดำเนินการเดินอากาศ')}</div>
       <div class="rp-op">${S.operator?esc(opName(S.operator))+(LANG==='th'&&opName(S.operator)!==S.operator?`<div style="font-size:.72em;font-weight:500;opacity:.75">${esc(S.operator)}</div>`:''):L('Air operator not specified','ไม่ได้ระบุผู้ดำเนินการเดินอากาศ')}</div></div>
@@ -2011,10 +2120,18 @@ function reportHead(s){
       <tr><td>${L('Rule set','ชุดอัตรา')}</td><td>${esc(RULESET.version)}</td></tr><tr><td>${L('App version','เวอร์ชันระบบ')}</td><td>${esc(APP_VERSION)}</td></tr><tr><td>${L('Status','สถานะ')}</td><td><span class="rp-st ${stc}">${statusText(s.status)}</span></td></tr></table></div>`;
 }
 /* red notice under the report header when a certified operator is shown as First issue */
-function reportHeadWarn(s){ const iw=initWarnText(); return reportHead(s)+(iw?`<div class="rp-warn">⚠ ${esc(iw)}</div>`:''); }
+function reportHeadWarn(s){ const iw=initWarnText(); return reportHead(s)+(iw?`<div class="rp-warn">⚠ ${esc(iw)}</div>`:'')+reportMix(s); }
+/* Fee-mix bar under the report header */
+function reportMix(s){
+  const c=s.cert, parts=[];
+  if(c&&c.total!=null){ parts.push([L('Application','ยื่นคำขอ'),c.P,'#9fb3c8'],[L('Certificate','ใบรับรอง'),c.C,'#2a9d8f'],[L('Additional types','เพิ่มแบบ'),c.sumA,'#2563a8']); }
+  parts.push([L('Changes','การเปลี่ยนแปลง'),s.chg,'#5f8f6f'],[L('Inspection','การตรวจสอบ'),s.ins.E+(s.gov||0),'#6c9bd2']);
+  const P=parts.filter(x=>x[1]>0), tot=P.reduce((a,x)=>a+x[1],0); if(!tot) return '';
+  return `<div class="rp-mix"><div class="rp-mbar">${P.map(x=>`<i style="width:${x[1]/tot*100}%;background:${x[2]}"></i>`).join('')}</div><div class="rp-mleg">${P.map(x=>`<span><i style="background:${x[2]}"></i>${esc(x[0])} ${Math.round(x[1]/tot*100)}%</span>`).join('')}</div></div>`;
+}
 function reportFoot(){
   return `<div class="rp-sign"><div><small>${L('Prepared by (POI)','ผู้จัดทำ (POI)')}</small><span>${L('Name · signature · date','ชื่อ · ลายมือชื่อ · วันที่')}</span></div><div><small>${L('Verified by (FAD)','ผู้ตรวจสอบ (FAD)')}</small><span>${L('Name · signature · date','ชื่อ · ลายมือชื่อ · วันที่')}</span></div></div>
-    <div class="rp-foot"><span>${L('Estimate only, not an invoice. FAD verifies the amounts before an invoice is issued through EMPIC.','เอกสารนี้เป็นการประมาณการเบื้องต้น มิใช่ใบแจ้งหนี้ FAD จะตรวจสอบยอดก่อนออกใบแจ้งหนี้ผ่านระบบ EMPIC')}</span><span>${esc(RULESET.version)}</span></div>`;
+    <div class="rp-foot"><span>${L('Estimate only, not an invoice. FAD verifies the amounts before an invoice is issued through EMPIC.','เอกสารนี้เป็นการประมาณการเบื้องต้น มิใช่ใบแจ้งหนี้ FAD จะตรวจสอบยอดก่อนออกใบแจ้งหนี้ผ่านระบบ EMPIC')}</span><span class="rp-qr"><span>${esc(RULESET.version)} · v${esc(APP_VERSION)}<br>${L('Live app','ระบบออนไลน์')}: anantulyathan.github.io/ops_ct</span><svg class="rp-qrsvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#1a2e4a" d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM10 0h1v1h-1zM14 0h1v1h-1zM18 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM26 0h1v1h-1zM27 0h1v1h-1zM28 0h1v1h-1zM29 0h1v1h-1zM30 0h1v1h-1zM31 0h1v1h-1zM32 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM18 1h1v1h-1zM22 1h1v1h-1zM26 1h1v1h-1zM32 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM12 2h1v1h-1zM13 2h1v1h-1zM17 2h1v1h-1zM18 2h1v1h-1zM21 2h1v1h-1zM23 2h1v1h-1zM26 2h1v1h-1zM28 2h1v1h-1zM29 2h1v1h-1zM30 2h1v1h-1zM32 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM10 3h1v1h-1zM13 3h1v1h-1zM14 3h1v1h-1zM15 3h1v1h-1zM17 3h1v1h-1zM18 3h1v1h-1zM19 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM26 3h1v1h-1zM28 3h1v1h-1zM29 3h1v1h-1zM30 3h1v1h-1zM32 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM9 4h1v1h-1zM14 4h1v1h-1zM18 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM26 4h1v1h-1zM28 4h1v1h-1zM29 4h1v1h-1zM30 4h1v1h-1zM32 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM11 5h1v1h-1zM12 5h1v1h-1zM17 5h1v1h-1zM18 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM26 5h1v1h-1zM32 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM27 6h1v1h-1zM28 6h1v1h-1zM29 6h1v1h-1zM30 6h1v1h-1zM31 6h1v1h-1zM32 6h1v1h-1zM11 7h1v1h-1zM14 7h1v1h-1zM16 7h1v1h-1zM20 7h1v1h-1zM22 7h1v1h-1zM23 7h1v1h-1zM24 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM10 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM15 8h1v1h-1zM16 8h1v1h-1zM19 8h1v1h-1zM20 8h1v1h-1zM23 8h1v1h-1zM27 8h1v1h-1zM30 8h1v1h-1zM32 8h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM4 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM15 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM23 9h1v1h-1zM24 9h1v1h-1zM26 9h1v1h-1zM29 9h1v1h-1zM31 9h1v1h-1zM32 9h1v1h-1zM0 10h1v1h-1zM1 10h1v1h-1zM3 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM11 10h1v1h-1zM13 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM17 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM21 10h1v1h-1zM23 10h1v1h-1zM24 10h1v1h-1zM29 10h1v1h-1zM30 10h1v1h-1zM32 10h1v1h-1zM3 11h1v1h-1zM5 11h1v1h-1zM7 11h1v1h-1zM8 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM12 11h1v1h-1zM15 11h1v1h-1zM18 11h1v1h-1zM22 11h1v1h-1zM23 11h1v1h-1zM24 11h1v1h-1zM25 11h1v1h-1zM26 11h1v1h-1zM27 11h1v1h-1zM28 11h1v1h-1zM29 11h1v1h-1zM31 11h1v1h-1zM32 11h1v1h-1zM2 12h1v1h-1zM3 12h1v1h-1zM5 12h1v1h-1zM6 12h1v1h-1zM7 12h1v1h-1zM9 12h1v1h-1zM11 12h1v1h-1zM12 12h1v1h-1zM13 12h1v1h-1zM14 12h1v1h-1zM15 12h1v1h-1zM19 12h1v1h-1zM22 12h1v1h-1zM24 12h1v1h-1zM26 12h1v1h-1zM27 12h1v1h-1zM2 13h1v1h-1zM4 13h1v1h-1zM5 13h1v1h-1zM8 13h1v1h-1zM9 13h1v1h-1zM13 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM18 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM21 13h1v1h-1zM23 13h1v1h-1zM24 13h1v1h-1zM26 13h1v1h-1zM31 13h1v1h-1zM32 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM15 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM27 14h1v1h-1zM28 14h1v1h-1zM29 14h1v1h-1zM30 14h1v1h-1zM32 14h1v1h-1zM1 15h1v1h-1zM3 15h1v1h-1zM4 15h1v1h-1zM5 15h1v1h-1zM8 15h1v1h-1zM10 15h1v1h-1zM14 15h1v1h-1zM18 15h1v1h-1zM19 15h1v1h-1zM24 15h1v1h-1zM25 15h1v1h-1zM26 15h1v1h-1zM27 15h1v1h-1zM29 15h1v1h-1zM0 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM7 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM13 16h1v1h-1zM14 16h1v1h-1zM16 16h1v1h-1zM19 16h1v1h-1zM20 16h1v1h-1zM24 16h1v1h-1zM26 16h1v1h-1zM27 16h1v1h-1zM31 16h1v1h-1zM4 17h1v1h-1zM8 17h1v1h-1zM10 17h1v1h-1zM11 17h1v1h-1zM12 17h1v1h-1zM13 17h1v1h-1zM14 17h1v1h-1zM15 17h1v1h-1zM16 17h1v1h-1zM19 17h1v1h-1zM20 17h1v1h-1zM21 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM24 17h1v1h-1zM26 17h1v1h-1zM29 17h1v1h-1zM32 17h1v1h-1zM0 18h1v1h-1zM3 18h1v1h-1zM6 18h1v1h-1zM7 18h1v1h-1zM9 18h1v1h-1zM11 18h1v1h-1zM15 18h1v1h-1zM17 18h1v1h-1zM19 18h1v1h-1zM20 18h1v1h-1zM21 18h1v1h-1zM23 18h1v1h-1zM25 18h1v1h-1zM26 18h1v1h-1zM27 18h1v1h-1zM29 18h1v1h-1zM30 18h1v1h-1zM32 18h1v1h-1zM0 19h1v1h-1zM4 19h1v1h-1zM5 19h1v1h-1zM8 19h1v1h-1zM9 19h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM13 19h1v1h-1zM14 19h1v1h-1zM16 19h1v1h-1zM22 19h1v1h-1zM25 19h1v1h-1zM28 19h1v1h-1zM29 19h1v1h-1zM31 19h1v1h-1zM32 19h1v1h-1zM0 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM5 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM9 20h1v1h-1zM12 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM20 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM26 20h1v1h-1zM1 21h1v1h-1zM4 21h1v1h-1zM8 21h1v1h-1zM10 21h1v1h-1zM11 21h1v1h-1zM13 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM19 21h1v1h-1zM20 21h1v1h-1zM21 21h1v1h-1zM23 21h1v1h-1zM26 21h1v1h-1zM27 21h1v1h-1zM32 21h1v1h-1zM0 22h1v1h-1zM1 22h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM6 22h1v1h-1zM7 22h1v1h-1zM12 22h1v1h-1zM14 22h1v1h-1zM15 22h1v1h-1zM16 22h1v1h-1zM17 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM20 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM23 22h1v1h-1zM25 22h1v1h-1zM26 22h1v1h-1zM32 22h1v1h-1zM5 23h1v1h-1zM7 23h1v1h-1zM13 23h1v1h-1zM15 23h1v1h-1zM16 23h1v1h-1zM18 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM23 23h1v1h-1zM25 23h1v1h-1zM29 23h1v1h-1zM32 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM6 24h1v1h-1zM7 24h1v1h-1zM8 24h1v1h-1zM10 24h1v1h-1zM11 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM20 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1zM25 24h1v1h-1zM26 24h1v1h-1zM27 24h1v1h-1zM28 24h1v1h-1zM30 24h1v1h-1zM8 25h1v1h-1zM9 25h1v1h-1zM13 25h1v1h-1zM15 25h1v1h-1zM16 25h1v1h-1zM17 25h1v1h-1zM18 25h1v1h-1zM19 25h1v1h-1zM20 25h1v1h-1zM24 25h1v1h-1zM28 25h1v1h-1zM32 25h1v1h-1zM0 26h1v1h-1zM1 26h1v1h-1zM2 26h1v1h-1zM3 26h1v1h-1zM4 26h1v1h-1zM5 26h1v1h-1zM6 26h1v1h-1zM8 26h1v1h-1zM9 26h1v1h-1zM10 26h1v1h-1zM15 26h1v1h-1zM16 26h1v1h-1zM19 26h1v1h-1zM20 26h1v1h-1zM22 26h1v1h-1zM24 26h1v1h-1zM26 26h1v1h-1zM28 26h1v1h-1zM29 26h1v1h-1zM30 26h1v1h-1zM31 26h1v1h-1zM32 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM10 27h1v1h-1zM11 27h1v1h-1zM12 27h1v1h-1zM14 27h1v1h-1zM18 27h1v1h-1zM20 27h1v1h-1zM22 27h1v1h-1zM23 27h1v1h-1zM24 27h1v1h-1zM28 27h1v1h-1zM29 27h1v1h-1zM31 27h1v1h-1zM32 27h1v1h-1zM0 28h1v1h-1zM2 28h1v1h-1zM3 28h1v1h-1zM4 28h1v1h-1zM6 28h1v1h-1zM9 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM16 28h1v1h-1zM19 28h1v1h-1zM20 28h1v1h-1zM23 28h1v1h-1zM24 28h1v1h-1zM25 28h1v1h-1zM26 28h1v1h-1zM27 28h1v1h-1zM28 28h1v1h-1zM0 29h1v1h-1zM2 29h1v1h-1zM3 29h1v1h-1zM4 29h1v1h-1zM6 29h1v1h-1zM9 29h1v1h-1zM11 29h1v1h-1zM13 29h1v1h-1zM15 29h1v1h-1zM18 29h1v1h-1zM19 29h1v1h-1zM20 29h1v1h-1zM24 29h1v1h-1zM25 29h1v1h-1zM27 29h1v1h-1zM28 29h1v1h-1zM29 29h1v1h-1zM30 29h1v1h-1zM31 29h1v1h-1zM32 29h1v1h-1zM0 30h1v1h-1zM2 30h1v1h-1zM3 30h1v1h-1zM4 30h1v1h-1zM6 30h1v1h-1zM8 30h1v1h-1zM10 30h1v1h-1zM14 30h1v1h-1zM15 30h1v1h-1zM16 30h1v1h-1zM17 30h1v1h-1zM19 30h1v1h-1zM21 30h1v1h-1zM22 30h1v1h-1zM25 30h1v1h-1zM27 30h1v1h-1zM28 30h1v1h-1zM31 30h1v1h-1zM32 30h1v1h-1zM0 31h1v1h-1zM6 31h1v1h-1zM11 31h1v1h-1zM13 31h1v1h-1zM14 31h1v1h-1zM15 31h1v1h-1zM22 31h1v1h-1zM24 31h1v1h-1zM25 31h1v1h-1zM26 31h1v1h-1zM27 31h1v1h-1zM28 31h1v1h-1zM29 31h1v1h-1zM0 32h1v1h-1zM1 32h1v1h-1zM2 32h1v1h-1zM3 32h1v1h-1zM4 32h1v1h-1zM5 32h1v1h-1zM6 32h1v1h-1zM8 32h1v1h-1zM9 32h1v1h-1zM10 32h1v1h-1zM11 32h1v1h-1zM12 32h1v1h-1zM15 32h1v1h-1zM16 32h1v1h-1zM19 32h1v1h-1zM24 32h1v1h-1zM27 32h1v1h-1zM28 32h1v1h-1zM29 32h1v1h-1zM32 32h1v1h-1z"/></svg></span></div>`;
 }
 function reportSimple(s){
   const B=compBlocks(s), tot=B.reduce((a,b)=>a+b.amount,0)||1;
@@ -2099,7 +2216,7 @@ function opTypes(op){ const st=opState(op); return st ? st.types : fleetCards(op
 function opExpiry(op){ const st=opState(op); return (st&&st.expiry) || (OPINFO[op]||{}).until || ''; }
 function hasEdits(){
   if(!S.operator) return false; const i=OPINFO[S.operator]||{};
-  return !typesPristine() || S.changesAdded.length>0 || S.na.change || S.na.insp || S.expiry!==(i.until||'') || S.tx!==(i.app?'initial':'renewal')
+  return !typesPristine() || S.changesAdded.length>0 || S.na.change!==OP_DEF.na.change || S.na.insp!==OP_DEF.na.insp || S.expiry!==(i.until||'') || S.tx!==(i.app?'initial':'renewal')
     || JSON.stringify(S.insp)!==JSON.stringify(OP_DEF.insp);
 }
 function opEdited(op){ return op===S.operator ? hasEdits() : !!S.opCache[op]; }
@@ -2130,6 +2247,14 @@ function dueText(r){
   if(r.dd===0) return L('Apply today','ครบกำหนดยื่นวันนี้');
   return L(`Apply in ${r.dd} day${r.dd>1?'s':''}`,`ยื่นภายใน ${r.dd} วัน`);
 }
+/* Countdown ring: share of the year left before the 150-day deadline, in the same colour as its row (red passed, amber 30 days or less, blue 31–90, green later). */
+function ringHTML(r){
+  if(r.dd==null) return '';
+  const C=113.1, past=r.dd<0, f=past?1:Math.min(r.dd,365)/365, col={expired:'#b23a2e',overdue:'#b23a2e',d30:'#a8741a',d90:'#2f5f9a',later:'#4f7f5f'}[r.band]||'#7a8797';
+  const lab=past?'!':(r.dd>999?'999+':String(r.dd));
+  const tip=past?L(`Deadline passed ${-r.dd} day${-r.dd===1?'':'s'} ago`,`พ้นกำหนดยื่นมาแล้ว ${-r.dd} วัน`):L(`${r.dd} day${r.dd===1?'':'s'} to the application deadline`,`อีก ${r.dd} วันถึงกำหนดยื่นคำขอ`);
+  return `<span class="pring ${past?'past':''}" title="${esc(tip)}" aria-label="${esc(tip)}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" class="rt"/><circle cx="22" cy="22" r="18" class="rv" style="stroke:${col};stroke-dasharray:${(C*f).toFixed(1)} ${C}"/></svg><b class="${lab.length>=4?'xs':lab.length===3?'s':''}" style="color:${col}">${lab}</b></span>`;
+}
 const WHY=()=>({area:L('Needs area','ต้องระบุพื้นที่'),types:L('Needs aircraft types','ต้องระบุแบบอากาศยาน'),verify:L('Mixed AOC: verify','ใบรับรองแบบผสม: ต้องตรวจสอบ'),check:L('Check aircraft details','ตรวจสอบข้อมูลแบบอากาศยาน'),locked:L('Locked','ระงับ')});
 /* Expected renewal revenue: this year and the next three, by the year each AOC expires.
    fy = Thai fiscal year (1 Oct – 30 Sep, named by the year it ends); cal = calendar year. */
@@ -2138,6 +2263,14 @@ function revYearLabel(y,basis){
   if(basis==='fy') return {main:L(`FY ${y}`,`ปีงบประมาณ ${y+543}`),sub:L(`Oct ${y-1} – Sep ${y}`,`ต.ค. ${y-1+543} – ก.ย. ${y+543}`)};
   return {main:LANG==='th'?`พ.ศ. ${y+543}`:String(y),sub:L(`Jan – Dec ${y}`,`ม.ค. – ธ.ค. ${y+543}`)};
 }
+const REV_COL=['#1a2e4a','#1e4d8c','#2a9d8f','#6c9bd2','#5f8f6f','#2563a8','#3bbfb0','#8aa4c4','#476a8f','#9fb3c8'];
+function revChartHTML(Y,basis){
+  const max=Math.max(1,...Y.map(x=>x.sum));
+  return `<div class="rev-chart" role="img" aria-label="${esc(L('Expected renewal revenue by year','ประมาณการรายได้จากการต่ออายุรายปี'))}">${Y.map((x,i)=>{ const lb=revYearLabel(x.y,basis), fees=x.rs.filter(r=>r.fee);
+    return `<div class="rc-col ${i===0?'now':''}"><div class="rc-amt">${x.sum?'฿'+fmtShort(x.sum):'–'}</div><div class="rc-track"><div class="rc-bar" style="height:${x.sum/max*100}%;animation-delay:${i*90}ms">${fees.map((r,k)=>`<button type="button" class="rc-seg" data-act="revTip" data-tip="${esc(`${opName(r.op)} · ${L('expires','หมดอายุ')} ${dfmt(r.exp)} · ฿${fmt(r.fee)}`)}" style="flex:${r.fee} 1 0;background:${REV_COL[k%REV_COL.length]}" aria-label="${esc(opName(r.op))}"></button>`).join('')}</div></div><div class="rc-y">${esc(lb.main)}</div></div>`; }).join('')}</div>
+    <div class="rc-tip" id="rcTip">${L('Tap a bar segment to see the AOC.','แตะส่วนของแท่งกราฟเพื่อดูรายละเอียดใบรับรอง')}</div>`;
+}
+function fmtShort(n){ return n>=1e6 ? (Math.round(n/1e5)/10).toLocaleString('en-US')+'M' : fmt(n); }
 function revenueHTML(rows){
   const basis=S.revBasis||'fy', today=localISO(), y0=revYear(today,basis), years=[y0,y0+1,y0+2,y0+3];
   const live=rows.filter(r=>r.band!=='app'&&r.band!=='nodate'&&r.exp&&r.de>=0);
@@ -2148,10 +2281,10 @@ function revenueHTML(rows){
   let h=`<div class="card rev"><div class="rev-h"><div><h2>${L('Expected renewal revenue','ประมาณการรายได้จากการต่ออายุ')}</h2>
     <p class="sub">${L('This year and the next three, by the year each AOC expires.','ปีนี้และอีกสามปีถัดไป จัดตามปีที่ใบรับรองหมดอายุ')}</p></div>
     ${seg([['fy',L('Fiscal year','ปีงบประมาณ')],['cal',L('Calendar year','ปีปฏิทิน')]],basis,'revBasis','','',false)}</div>
+    ${revChartHTML(Y,basis)}
     <div class="rev-grid">${Y.map((x,i)=>{ const lb=revYearLabel(x.y,basis);
       return `<div class="rev-y ${i===0?'now':''}"><div class="rev-t"><b>${esc(lb.main)}</b><span>${esc(lb.sub)}${i===0?` · ${L('this year','ปีนี้')}`:''}</span></div>
         <div class="rev-a"><i>฿</i>${fmt(x.sum)}</div>
-        <div class="rev-bar"><i style="width:${x.sum/max*100}%"></i></div>
         <div class="rev-n">${L(`${x.rs.length} AOC${x.rs.length===1?'':'s'}`,`${x.rs.length} ฉบับ`)}${x.miss?`<span class="rev-miss">${L(`${x.miss} without an estimate`,`ไม่มีประมาณการ ${x.miss} ฉบับ`)}</span>`:''}</div>
         ${x.rs.length?`<details class="rev-d" ontoggle="this.closest('.rev-y').classList.toggle('open',this.open)"><summary>${L('Show AOCs','แสดงรายการ')}</summary><ul>${x.rs.map(r=>`<li><span>${esc(opName(r.op))}<small>${L('Expires','หมดอายุ')} ${dfmt(r.exp)}</small></span><b>${r.fee!=null?fmt(r.fee):`<em>${esc(WHY()[r.why]||'–')}</em>`}</b></li>`).join('')}</ul></details>`:''}
       </div>`; }).join('')}</div>
@@ -2187,7 +2320,7 @@ function renderPipe(){
         <div class="pmain"><div class="pop">${esc(opName(r.op))}</div>
           <div class="pmeta">${r.i.aoc?`<span class="mono">${esc(r.i.aoc)}</span>`:''}<span class="pchip ${bc}">${esc(dueText(r))}</span>
           <span>${L('Expires','หมดอายุ')} ${dfmt(r.exp)} <b class="pcd">(${esc(cdText(r.de))})</b></span><span>${r.n} ${L(r.n===1?'type':'types','แบบ')}</span>${r.edited?`<span class="pchip b-grey">${L('Your edits','ข้อมูลที่แก้ไข')}</span>`:''}</div></div>
-        <div class="pfee">${r.fee!=null?`<small>${L('Est. renewal fee','ค่าต่ออายุโดยประมาณ')}</small><b><i>฿</i>${fmt(r.fee)}</b>`:`<span class="pneed">${esc(W[r.why]||'')}</span>`}</div>
+        <div class="pfee">${ringHTML(r)}<div class="pfee-t">${r.fee!=null?`<small>${L('Est. renewal fee','ค่าต่ออายุโดยประมาณ')}</small><b><i>฿</i>${fmt(r.fee)}</b>`:`<span class="pneed">${esc(W[r.why]||'')}</span>`}</div></div>
         <div class="pact"><button type="button" class="ib" data-act="icsOne" data-op="${esc(r.op)}" title="${esc(L('Add to calendar','เพิ่มลงปฏิทิน'))}" aria-label="${esc(L('Add to calendar','เพิ่มลงปฏิทิน'))}">${ICON.calAdd}</button>
           <button type="button" class="ib ib-go" data-act="pipeOpen" data-op="${esc(r.op)}" title="${esc(L('Open in calculator','เปิดในหน้าคำนวณ'))}" aria-label="${esc(L('Open in calculator','เปิดในหน้าคำนวณ'))}">${ICON.open}</button></div></div>`;}).join('')}</div>`
     : `<div class="pempty">${L('Nothing in this view.','ไม่มีรายการในมุมมองนี้')}</div>`;
@@ -2243,13 +2376,13 @@ function icsOne(op){ saveIcs(icsEvents(op),'aoc-deadlines-'+op.toLowerCase().rep
 const EDIT_KEY='aoc.opEdits';
 function dataSig(op){ const t=JSON.stringify([FLEET[op]||null,OPINFO[op]||null]); let h=0; for(let k=0;k<t.length;k++){ h=(h*31+t.charCodeAt(k))|0; } return (h>>>0).toString(36); }
 let persistT=null;
-function persistSoon(){ clearTimeout(persistT); persistT=setTimeout(persistNow,400); }
+function persistSoon(){ if(S.resetMsg && S.tab!=='settings'){ S.resetMsg=''; } clearTimeout(persistT); persistT=setTimeout(persistNow,400); }
 /* Saving merges with what is already stored: only operators touched in this tab are written or removed,
    so a second open copy of the app cannot overwrite another copy's edits. */
 const touched=new Set();
 function readStore(){ let d=null; try{ d=JSON.parse(load(EDIT_KEY)||'null'); }catch(e){} return (d&&d.v===1&&d.ops&&typeof d.ops==='object')?d:{v:1,cur:'',ops:{}}; }
 function persistNow(){
-  clearTimeout(persistT);
+  clearTimeout(persistT); if(RESETTING) return;
   try{
     if(S.operator) touched.add(S.operator);
     const d=readStore();
@@ -2273,7 +2406,7 @@ function cleanSnap(op,s){
     changesAdded:Array.isArray(s.changesAdded)?s.changesAdded.filter(x=>x&&typeof x==='object'&&typeof x.mode==='string'&&x.p&&typeof x.p==='object'):[],
     change:(s.change&&typeof s.change==='object')?Object.assign(d.change,s.change):d.change,
     insp:(s.insp&&typeof s.insp==='object'&&Array.isArray(s.insp.acts))?Object.assign(d.insp,s.insp,{gov:Object.assign(d.insp.gov,(s.insp.gov&&typeof s.insp.gov==='object')?s.insp.gov:{})}):d.insp,
-    na:{change:!!(s.na&&s.na.change),insp:!!(s.na&&s.na.insp)},
+    na:{change:(s.na&&typeof s.na.change==='boolean')?s.na.change:d.na.change, insp:(s.na&&typeof s.na.insp==='boolean')?s.na.insp:d.na.insp},
     loadedSig:typeof s.loadedSig==='string'?s.loadedSig:null, fleetFrom:typeof s.fleetFrom==='string'?s.fleetFrom:null};
   if(!(s.insp&&typeof s.insp.showOp==='boolean')) out.insp.showOp=!!((toNum(out.insp.opTravel)||0)+(toNum(out.insp.opHotel)||0));   // older saved edits without the switch
   else out.insp.showOp=s.insp.showOp;
@@ -2292,6 +2425,40 @@ function restoreEdits(){
     else switchOperator(d.cur);
   }
 }
+/* Reset app: count what is saved, confirm in-app, clear every saved key except the language,
+   then rebuild the state in place (no reload) and show what was cleared. */
+let RESETTING=false;
+function resetCounts(){
+  const ops=savedOps().length, custom=S.customOps.length;
+  const sets=[S.settings.areaExpansionBasis!==RULESET.settings.areaExpansionBasis, S.revBasis!=='fy', S.sumMode!=='detailed', !!(load('aoc.mailTo')||'')].filter(Boolean).length;
+  return {ops,custom,sets,cur:!!S.operator,total:ops+custom+sets};
+}
+function confirmReset(){
+  const c=resetCounts(); const el=document.getElementById('ack');
+  const what=c.total?L(`This clears ${c.ops} operator${c.ops===1?'':'s'} with saved edits, ${c.custom} added operator${c.custom===1?'':'s'} and ${c.sets} changed setting${c.sets===1?'':'s'}.`,`จะล้างข้อมูลผู้ดำเนินการที่แก้ไขไว้ ${c.ops} ราย ผู้ดำเนินการที่เพิ่มเอง ${c.custom} ราย และการตั้งค่าที่เปลี่ยน ${c.sets} รายการ`)
+                    :L('Nothing has been saved: the app is already at its default values.','ยังไม่มีข้อมูลที่บันทึกไว้ ระบบอยู่ที่ค่าเริ่มต้นแล้ว');
+  ackNext=()=>resetApp(c);
+  el.innerHTML=`<div class="sheet-in"><div class="ack-top"><div class="ai">${ICON.warn}</div><div><h3 id="ackT">${L('Reset app to default?','รีเซ็ตระบบเป็นค่าเริ่มต้นหรือไม่')}</h3><p>${L('This cannot be undone.','ไม่สามารถย้อนกลับได้')}</p></div></div>
+    <div class="ack-body"><div class="ack-msg">${esc(what)}</div>
+      <button type="button" class="btn btn-s" data-act="ackNo">${L('Cancel','ยกเลิก')}</button>
+      <button type="button" class="btn btn-ack" data-act="ackYes">${c.total?L('Reset app','รีเซ็ตระบบ'):L('Reset anyway','รีเซ็ต')}</button></div></div>`;
+  el.classList.add('on'); const b=el.querySelector('[data-act=ackNo]'); if(b) b.focus();
+}
+function resetApp(c){
+  clearTimeout(persistT);
+  try{ const keep=load('aoc.lang'); Object.keys(localStorage).filter(k=>k.startsWith('aoc.')).forEach(k=>localStorage.removeItem(k)); if(keep) store('aoc.lang',keep); }catch(e){}
+  S.opCache={}; S.staleOps={}; S.customOps=[]; touched.clear();
+  S.settings.areaExpansionBasis=RULESET.settings.areaExpansionBasis; S.revBasis='fy'; S.sumMode='detailed'; S.pipeF='all';
+  S.addingOp=false; S.opDraft=''; S.operator=''; freshOp(''); S.expiry=''; S.expiryAuto=false; S.tx='renewal'; S.txAuto=false;
+  store(EDIT_KEY,JSON.stringify({v:1,cur:'',ops:{}}));
+  const t=new Date(), hm=String(t.getHours()).padStart(2,'0')+':'+String(t.getMinutes()).padStart(2,'0');
+  S.resetMsg=c&&c.total
+    ? L(`Reset complete at ${hm}. Cleared ${c.ops} operator${c.ops===1?'':'s'} with saved edits, ${c.custom} added operator${c.custom===1?'':'s'} and ${c.sets} setting${c.sets===1?'':'s'}. All operators now use the built-in data.`,
+        `รีเซ็ตเรียบร้อยแล้ว เวลา ${hm} น. ล้างข้อมูลผู้ดำเนินการที่แก้ไขไว้ ${c.ops} ราย ผู้ดำเนินการที่เพิ่มเอง ${c.custom} ราย และการตั้งค่า ${c.sets} รายการ ผู้ดำเนินการทุกรายใช้ข้อมูลในระบบแล้ว`)
+    : L(`Checked at ${hm}: nothing to clear. The app was already at its default values.`,`ตรวจสอบเมื่อเวลา ${hm} น.: ไม่มีข้อมูลที่ต้องล้าง ระบบอยู่ที่ค่าเริ่มต้นแล้ว`);
+  S.resetOk=!!(c&&c.total);
+  renderAll(); toast(S.resetOk?L('App reset to default','รีเซ็ตระบบเป็นค่าเริ่มต้นแล้ว'):L('Already at default: nothing to clear','อยู่ที่ค่าเริ่มต้นแล้ว ไม่มีข้อมูลที่ต้องล้าง'));
+}
 function resetOp(op){
   touched.add(op); delete S.opCache[op]; delete S.staleOps[op];
   if(op===S.operator){ freshOp(op); }
@@ -2300,11 +2467,9 @@ function resetOp(op){
 function savedOps(){ const c=Object.keys(S.opCache); if(S.operator && !c.includes(S.operator) && opEdited(S.operator)) c.push(S.operator); return c.sort((a,b)=>opName(a).localeCompare(opName(b))); }
 
 function editsCard(){
-  const ops=savedOps();
-  return `<div class="card"><h2>${L('Saved edits','ข้อมูลที่แก้ไขและบันทึกไว้')}</h2><p class="sub">${L('Your changes to each operator (aircraft types, areas, MTOW, dates, changes and inspection entries) are saved on this device and restored when you reopen the app.','ข้อมูลที่แก้ไขของผู้ดำเนินการแต่ละราย (แบบอากาศยาน พื้นที่ปฏิบัติการ น้ำหนัก วันที่ การเปลี่ยนแปลง และการตรวจสอบ) จะบันทึกไว้ในอุปกรณ์นี้ และเรียกคืนเมื่อเปิดแอปอีกครั้ง')}</p>
-    ${ops.length?`<div class="elist">${ops.map(op=>`<div class="erow"><span>${esc(opName(op))}${S.staleOps[op]?` <span class="pchip b-amber">${L('Built-in data updated','ข้อมูลในระบบมีการปรับปรุง')}</span>`:''}</span><button type="button" class="btn btn-s btn-sm" data-act="resetOp" data-op="${esc(op)}">${L('Reset','รีเซ็ต')}</button></div>`).join('')}</div>
-      <button type="button" class="btn btn-s" data-act="resetAll" style="margin-top:10px">${L('Clear all saved edits','ล้างข้อมูลที่บันทึกไว้ทั้งหมด')}</button>`
-      :`<p class="muted" style="margin:0">${L('No saved edits yet.','ยังไม่มีข้อมูลที่บันทึกไว้')}</p>`}</div>`;
+  return `<div class="card"><h2>${L('Reset app','รีเซ็ตระบบ')}</h2><p class="sub">${L('Clears everything this app has saved on this device: operator entries, aircraft edits, changes, inspections, added operators and settings. Every operator then goes back to the built-in data. Your language choice is kept.','ล้างข้อมูลทั้งหมดที่ระบบบันทึกไว้ในอุปกรณ์นี้ ได้แก่ ข้อมูลผู้ดำเนินการ การแก้ไขแบบอากาศยาน การเปลี่ยนแปลง การตรวจสอบ ผู้ดำเนินการที่เพิ่มเอง และการตั้งค่า แล้วผู้ดำเนินการทุกรายจะกลับไปใช้ข้อมูลในระบบ โดยคงภาษาที่เลือกไว้')}</p>
+    <button type="button" class="btn btn-danger" data-act="resetApp">${ICON.warn} ${L('Reset app to default','รีเซ็ตระบบเป็นค่าเริ่มต้น')}</button>
+    ${S.resetMsg?`<div class="resetmsg ${S.resetOk?'ok':''}">${S.resetOk?ICON.check:ICON.info}<span>${esc(S.resetMsg)}</span></div>`:''}</div>`;
 }
 
 /* ---------- Acknowledgement: shown before every print, send, download, CSV or copy ---------- */
@@ -2547,22 +2712,25 @@ document.addEventListener('click',e=>{
     case 'delChange': S.changesAdded=S.changesAdded.filter(x=>x.id!==id); break;
     case 'goSum': S.tab='sum'; renderAll(); window.scrollTo({top:0,behavior:'smooth'}); return;
     case 'opSave': saveOperator(); return;
-    case 'loadFleet': if(!typesPristine() && !confirmReplace()) return; loadFleet(S.operator); renderOpbar(); break;
+    case 'loadFleet': { const go=()=>{ loadFleet(S.operator); renderOpbar(); rerenderKeepScroll(); persistSoon(); };
+      if(typesPristine()){ go(); return; }
+      askSheet(L('Replace your aircraft types?','แทนที่แบบอากาศยานที่กรอกไว้หรือไม่'),L('The aircraft types you entered for this operator will be replaced with the Ops Spec list.','แบบอากาศยานที่กรอกไว้ของผู้ดำเนินการรายนี้จะถูกแทนที่ด้วยรายการจากข้อกำหนดการปฏิบัติการ'),L('Replace with Ops Spec list','แทนที่ด้วยรายการจากข้อกำหนดการปฏิบัติการ'),go); return; }
     case 'opCancel': S.addingOp=false; S.opDraft=''; renderOpbar(); return;
     case 'opRemove': { const gone=S.operator; delete S.opCache[gone]; touched.add(gone); } S.customOps=S.customOps.filter(o=>o!==S.operator); store('aoc.customOps',JSON.stringify(S.customOps)); S.operator=''; freshOp(''); persistSoon(); toast(L('Removed from list','ลบออกจากรายการแล้ว')); renderOpbar(); if(S.tab==='sum') renderPage(); return;
     case 'print': needAck('print',doPrint); return;
     case 'printNow': doPrint(); return;
     case 'send': needAck('send',openSend); return;
     case 'pipeF': S.pipeF=v; renderPage(); return;
+    case 'revTip': { const t=document.getElementById('rcTip'); if(t){ t.textContent=el.dataset.tip; t.classList.add('on'); } document.querySelectorAll('.rc-seg.sel').forEach(x=>x.classList.remove('sel')); el.classList.add('sel'); return; }
     case 'revBasis': S.revBasis=v==='cal'?'cal':'fy'; store('aoc.revBasis',S.revBasis); renderPage(); return;
     case 'report': reportError(); return;
     case 'ver': S.tab='settings'; renderAll(); window.scrollTo(0,0); return;
     case 'icsOne': icsOne(el.dataset.op); return;
     case 'pipeOpen': { const op=el.dataset.op; if(op!==S.operator) switchOperator(op); S.tab='cert'; renderAll(); window.scrollTo({top:0,behavior:'smooth'}); return; }
-    case 'resetOp': { const op=el.dataset.op; if(!confirm(L(`Reset ${opName(op)} to the built-in data? Your saved entries for this operator will be removed.`,`รีเซ็ต ${opName(op)} เป็นข้อมูลในระบบหรือไม่ ข้อมูลที่บันทึกไว้ของผู้ดำเนินการรายนี้จะถูกลบ`))) return;
-      resetOp(op); renderAll(); toast(L('Reset to built-in data','รีเซ็ตเป็นข้อมูลในระบบแล้ว')); return; }
-    case 'resetAll': if(!confirm(L('Clear all saved edits on this device? This cannot be undone.','ล้างข้อมูลที่บันทึกไว้ทั้งหมดในอุปกรณ์นี้หรือไม่ การดำเนินการนี้ไม่สามารถย้อนกลับได้'))) return;
-      S.opCache={}; S.staleOps={}; touched.clear(); if(S.operator) freshOp(S.operator); store(EDIT_KEY,JSON.stringify({v:1,cur:S.operator||'',ops:{}})); renderAll(); toast(L('All saved edits cleared','ล้างข้อมูลที่บันทึกไว้ทั้งหมดแล้ว')); return;
+    case 'resetOp': { const op=el.dataset.op;
+      askSheet(L(`Use the built-in data for ${opName(op)}?`,`ใช้ข้อมูลในระบบสำหรับ ${opName(op)} หรือไม่`),L('Your saved entries for this operator will be removed and replaced by the built-in data.','ข้อมูลที่บันทึกไว้ของผู้ดำเนินการรายนี้จะถูกลบและแทนที่ด้วยข้อมูลในระบบ'),L('Use built-in data','ใช้ข้อมูลในระบบ'),
+        ()=>{ resetOp(op); renderAll(); toast(L('Built-in data restored for this operator','ใช้ข้อมูลในระบบสำหรับผู้ดำเนินการรายนี้แล้ว')); }); return; }
+    case 'resetApp': confirmReset(); return;
     case 'ackYes': { const f=ackNext; closeAck(); if(f) f(); return; }
     case 'ackNo': closeAck(); return;
     case 'na': S.na[v]=el.dataset.on==='1'; renderAll();
