@@ -621,20 +621,6 @@ body[data-sec=pipe]{--sec:#3e6a9e;--sec-2:#2b4f7d;--sec-lt:#93b4d9;--sec-soft:#e
 .pmeta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:4px;font-size:12px;color:var(--grey-soft)}
 .pmeta .mono{font-size:11.5px;color:var(--grey-mid)}
 .pmeta .pcd{font-weight:600;color:var(--grey-mid)}
-.b-teal{--b:#23867a}
-.ledger .lsum{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 14px}
-.ledger .lfy{flex:1 1 180px;border-radius:14px;padding:10px 14px;background:linear-gradient(180deg,#fff,#eaf6f4);border:1px solid #cfe7e3}
-.ledger .lfy small{display:block;font-size:11.5px;color:var(--grey-soft)}
-.ledger .lfy b{font-size:17px;color:var(--navy);font-variant-numeric:tabular-nums}
-.ledger .lfy span{display:block;font-size:11.5px;color:var(--grey-mid)}
-.ledger .lfy.all{background:linear-gradient(180deg,#fff,#e8eef7);border-color:#cfdbe9}
-.ledger .lwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.ledger .tbl td,.ledger .tbl th{white-space:nowrap}.ledger .tbl td.op{white-space:normal;min-width:160px}
-.ledger h2 svg{width:20px;height:20px;flex:none;color:#23867a}
-.ledger .ltools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.rensheet .sheet-top{background:linear-gradient(140deg,#2a9d8f,#1e4d8c)}
-.rensheet .rlbl{font-size:12.5px;font-weight:600;color:var(--grey-mid);margin-bottom:-6px}
-.rensheet .rinfo{font-size:12.5px;color:var(--grey-mid);background:#f3f7fb;border-radius:12px;padding:10px 12px;line-height:1.5}
 .pchip{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:700;color:var(--b);background:color-mix(in srgb,var(--b) 11%,#fff);border:1px solid color-mix(in srgb,var(--b) 25%,#fff)}
 .pfee{text-align:right;min-width:150px}
 .pfee small{display:block;font-size:11px;color:var(--grey-soft)}
@@ -2017,37 +2003,21 @@ function hasEdits(){
     || JSON.stringify(S.insp)!==JSON.stringify(OP_DEF.insp);
 }
 function opEdited(op){ return op===S.operator ? hasEdits() : !!S.opCache[op]; }
-/* ---------- Renewal record: completed renewals are kept on this device so their fees stay in the totals ---------- */
-const REN_KEY='aoc.renewals';
-const isoOK=d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&!isNaN(Date.parse(d+'T00:00:00Z'));
-function loadRen(){ let d=null; try{ d=JSON.parse(load(REN_KEY)||'null'); }catch(e){}
-  const ok=r=>r&&typeof r.op==='string'&&r.op&&isoOK(r.oldExp)&&isoOK(r.newExp)&&isoOK(r.done)&&typeof r.fee==='number'&&isFinite(r.fee)&&r.fee>=0;
-  return (d&&d.v===1&&Array.isArray(d.recs))?d.recs.filter(ok).map(r=>({id:String(r.id||nid()),op:r.op,aoc:String(r.aoc||''),oldExp:r.oldExp,newExp:r.newExp,done:r.done,fee:r.fee,est:(typeof r.est==='number'&&isFinite(r.est))?r.est:null})):[]; }
-let RENEWALS=loadRen();
-function saveRen(){ store(REN_KEY,JSON.stringify({v:1,recs:RENEWALS})); }
-function renFor(op,exp){ return RENEWALS.find(r=>r.op===op&&r.oldExp===exp)||null; }
-function addYears(iso,n){ const [y,m,d]=iso.split('-').map(Number); const t=new Date(Date.UTC(y+n,m-1,d)); if(t.getUTCMonth()!==m-1) t.setUTCDate(0); return t.toISOString().slice(0,10); }
-/* Current cycle for an operator: once a recorded renewal's old expiry has passed, the next cycle starts from the new expiry. */
-function opCycle(op){ const today=localISO(); let exp=opExpiry(op), rec=null;
-  for(let k=0;k<20&&exp;k++){ const r=renFor(op,exp); if(!r) break; if(r.oldExp<today){ exp=r.newExp; continue; } rec=r; break; }
-  return {exp,rec}; }
-function fyOf(iso){ const y=+iso.slice(0,4), m=+iso.slice(5,7); return m>=10?y+1:y; }
-function fyLabel(fy){ return L(`FY ${fy} (Oct ${fy-1} – Sep ${fy})`,`ปีงบประมาณ ${fy+543}`); }
 function pipeRows(){
   const today=localISO();
   return OPERATORS.concat(S.customOps).map(op=>{
-    const i=OPINFO[op]||{}, cyc=opCycle(op), exp=cyc.exp, rec=cyc.rec, types=opTypes(op).filter(t=>t.ac||t.name);
+    const i=OPINFO[op]||{}, exp=opExpiry(op), types=opTypes(op).filter(t=>t.ac||t.name);
     let fee=null, why='';
     if(!S.healthy) why='locked';
     else if(!types.length) why='types';
     else { const R=calcCertificate(types,'renewal',RULESET); if(R.status==='CALCULATED') fee=R.total; else why=R.status==='VERIFICATION_REQUIRED'?'verify':'area'; }
     const due=exp?addDays(exp,-150):null, dd=due?daysBetween(today,due):null, de=exp?daysBetween(today,exp):null;
-    const band = i.app ? 'app' : !exp ? 'nodate' : rec ? 'done' : de<0 ? 'expired' : dd<0 ? 'overdue' : dd<=30 ? 'd30' : dd<=90 ? 'd90' : 'later';
-    return {op,i,exp,due,dd,de,fee:rec?rec.fee:fee,est:fee,rec,why:rec?'':why,band,n:types.length,edited:opEdited(op)};
+    const band = i.app ? 'app' : !exp ? 'nodate' : de<0 ? 'expired' : dd<0 ? 'overdue' : dd<=30 ? 'd30' : dd<=90 ? 'd90' : 'later';
+    return {op,i,exp,due,dd,de,fee,why,band,n:types.length,edited:opEdited(op)};
   });
 }
 const BAND=()=>({expired:[L('Expired','หมดอายุแล้ว'),'b-red'],overdue:[L('Deadline passed','พ้นกำหนดยื่น'),'b-red'],d30:[L('Due within 30 days','ครบกำหนดภายใน 30 วัน'),'b-amber'],
-  d90:[L('Due within 90 days','ครบกำหนดภายใน 90 วัน'),'b-blue'],later:[L('Later','ภายหลัง'),'b-green'],done:[L('Renewed','ต่ออายุแล้ว'),'b-teal'],app:[L('Application in progress','อยู่ระหว่างยื่นขอ'),'b-grey'],nodate:[L('No expiry date','ไม่มีวันหมดอายุ'),'b-grey']});
+  d90:[L('Due within 90 days','ครบกำหนดภายใน 90 วัน'),'b-blue'],later:[L('Later','ภายหลัง'),'b-green'],app:[L('Application in progress','อยู่ระหว่างยื่นขอ'),'b-grey'],nodate:[L('No expiry date','ไม่มีวันหมดอายุ'),'b-grey']});
 function cdText(de){
   if(de==null) return '';
   if(de<0) return L(`expired ${-de} day${-de>1?'s':''} ago`,`หมดอายุแล้ว ${-de} วัน`);
@@ -2055,7 +2025,6 @@ function cdText(de){
   return L(`${de} day${de>1?'s':''} left`,`อีก ${de} วัน`);
 }
 function dueText(r){
-  if(r.band==='done') return L(`Renewed ${dfmt(r.rec.done)}`,`ต่ออายุแล้ว ${dfmt(r.rec.done)}`);
   if(r.band==='expired') return L(`Expired ${-r.de} days ago`,`หมดอายุมาแล้ว ${-r.de} วัน`);
   if(r.dd<0) return L(`Deadline passed ${-r.dd} days ago`,`พ้นกำหนดยื่นมาแล้ว ${-r.dd} วัน`);
   if(r.dd===0) return L('Apply today','ครบกำหนดยื่นวันนี้');
@@ -2063,13 +2032,10 @@ function dueText(r){
 }
 const WHY=()=>({area:L('Needs area','ต้องระบุพื้นที่'),types:L('Needs aircraft types','ต้องระบุแบบอากาศยาน'),verify:L('Mixed AOC: verify','ใบรับรองแบบผสม: ต้องตรวจสอบ'),locked:L('Locked','ระงับ')});
 function renderPipe(){
-  RENEWALS=loadRen();
   const rows=pipeRows(), hold=rows.filter(r=>r.band!=='app'&&r.band!=='nodate').sort((a,b)=>a.due.localeCompare(b.due)), apps=rows.filter(r=>r.band==='app'||r.band==='nodate');
   const late=hold.filter(r=>r.band==='overdue'||r.band==='expired'), d30=hold.filter(r=>r.band==='d30'), d90=hold.filter(r=>r.band==='d90');
-  const today=localISO(), inYr=d=>{ const n=daysBetween(today,d); return n>=0&&n<=365; };
-  const yrUp=hold.filter(r=>r.band!=='done'&&r.de>=0&&r.de<=365), yrDone=RENEWALS.filter(x=>inYr(x.oldExp));
-  const yr={length:yrUp.length+yrDone.length}, yrFee=yrUp.reduce((a,r)=>a+(r.fee||0),0)+yrDone.reduce((a,x)=>a+x.fee,0), yrMiss=yrUp.filter(r=>r.fee==null).length;
-  const F=S.pipeF, collect=hold.filter(r=>r.band!=='done'&&r.de!=null&&r.de>=0), shown=F==='collect'?collect:F==='late'?late:F==='90'?hold.filter(r=>r.band!=='done'&&r.dd!=null&&r.dd<=90):hold;
+  const yr=hold.filter(r=>r.de>=0&&r.de<=365), yrFee=yr.reduce((a,r)=>a+(r.fee||0),0), yrMiss=yr.filter(r=>r.fee==null).length;
+  const F=S.pipeF, collect=hold.filter(r=>r.de!=null&&r.de>=0), shown=F==='collect'?collect:F==='late'?late:F==='90'?hold.filter(r=>r.dd!=null&&r.dd<=90):hold;
   const B=BAND(), W=WHY();
   let h=`<div class="redbox">${ICON.warn}<div><b>${L('Estimates only','เป็นการประมาณการเท่านั้น')}</b>${L(
       'Fees below are based on this app’s interpretation of the regulations and announcements, and on the Ops Spec and register data loaded in the app. They may be incorrect. Verify with the applicable regulations and recheck with FAD before relying on them.',
@@ -2078,7 +2044,7 @@ function renderPipe(){
     <div class="pk k-red"><small>${L('Deadline passed','พ้นกำหนดยื่น')}</small><b>${late.length}</b><span>${L('operators','ราย')}</span></div>
     <div class="pk k-amber"><small>${L('Due within 30 days','ภายใน 30 วัน')}</small><b>${d30.length}</b><span>${L('operators','ราย')}</span></div>
     <div class="pk k-blue"><small>${L('Due within 90 days','ภายใน 90 วัน')}</small><b>${d90.length}</b><span>${L('operators','ราย')}</span></div>
-    <div class="pk k-sum"><small>${L('Renewals in the next 12 months','การต่ออายุใน 12 เดือนข้างหน้า')}</small><b><i>฿</i>${fmt(yrFee)}</b><span>${L(`${yr.length} AOCs`,`${yr.length} ฉบับ`)}${yrDone.length?L(` · ${yrDone.length} renewed`,` · ต่ออายุแล้ว ${yrDone.length}`):''}${yrMiss?L(` · ${yrMiss} without an estimate`,` · ไม่มีประมาณการ ${yrMiss} ฉบับ`):''}</span></div></div>`;
+    <div class="pk k-sum"><small>${L('Renewals in the next 12 months','การต่ออายุใน 12 เดือนข้างหน้า')}</small><b><i>฿</i>${fmt(yrFee)}</b><span>${L(`${yr.length} AOCs`,`${yr.length} ฉบับ`)}${yrMiss?L(` · ${yrMiss} without an estimate`,` · ไม่มีประมาณการ ${yrMiss} ฉบับ`):''}</span></div></div>`;
   h+=`<div class="ptool">${seg([['all',L('All','ทั้งหมด')],['90',L('Next 90 days','ภายใน 90 วัน')],['late',L('Deadline passed','พ้นกำหนด')],['collect',L('To collect','รอเรียกเก็บ')]],F,'pipeF','','',true)}
     </div>`;
   if(F==='collect'){ const cf=collect.reduce((a,r)=>a+(r.fee||0),0), cm=collect.filter(r=>r.fee==null).length;
@@ -2089,12 +2055,11 @@ function renderPipe(){
         <div class="pdate"><b>${d.getUTCDate()}</b><span>${d.toLocaleDateString(dloc(),{month:'short',timeZone:'UTC'})}</span><small>${LANG==='th'?d.getUTCFullYear()+543:d.getUTCFullYear()}</small></div>
         <div class="pmain"><div class="pop">${esc(opName(r.op))}</div>
           <div class="pmeta">${r.i.aoc?`<span class="mono">${esc(r.i.aoc)}</span>`:''}<span class="pchip ${bc}">${esc(dueText(r))}</span>
-          <span>${L('Expires','หมดอายุ')} ${dfmt(r.exp)} <b class="pcd">(${esc(cdText(r.de))})</b></span>${r.rec?`<span>${L('New expiry','วันหมดอายุใหม่')} ${dfmt(r.rec.newExp)}</span>`:''}<span>${r.n} ${L(r.n===1?'type':'types','แบบ')}</span>${r.edited?`<span class="pchip b-grey">${L('Your edits','ข้อมูลที่แก้ไข')}</span>`:''}</div></div>
-        <div class="pfee">${r.fee!=null?`<small>${r.rec?L('Renewal fee recorded','ค่าต่ออายุที่บันทึก'):L('Est. renewal fee','ค่าต่ออายุโดยประมาณ')}</small><b><i>฿</i>${fmt(r.fee)}</b>`:`<span class="pneed">${esc(W[r.why]||'')}</span>`}</div>
-        <div class="pact">${r.rec?'':`<button type="button" class="ib" data-act="renOpen" data-op="${esc(r.op)}" title="${esc(L('Mark renewal complete','บันทึกว่าต่ออายุแล้ว'))}" aria-label="${esc(L('Mark renewal complete','บันทึกว่าต่ออายุแล้ว'))}">${ICON.check}</button><button type="button" class="ib" data-act="icsOne" data-op="${esc(r.op)}" title="${esc(L('Add to calendar','เพิ่มลงปฏิทิน'))}" aria-label="${esc(L('Add to calendar','เพิ่มลงปฏิทิน'))}">${ICON.calAdd}</button>`}
+          <span>${L('Expires','หมดอายุ')} ${dfmt(r.exp)} <b class="pcd">(${esc(cdText(r.de))})</b></span><span>${r.n} ${L(r.n===1?'type':'types','แบบ')}</span>${r.edited?`<span class="pchip b-grey">${L('Your edits','ข้อมูลที่แก้ไข')}</span>`:''}</div></div>
+        <div class="pfee">${r.fee!=null?`<small>${L('Est. renewal fee','ค่าต่ออายุโดยประมาณ')}</small><b><i>฿</i>${fmt(r.fee)}</b>`:`<span class="pneed">${esc(W[r.why]||'')}</span>`}</div>
+        <div class="pact"><button type="button" class="ib" data-act="icsOne" data-op="${esc(r.op)}" title="${esc(L('Add to calendar','เพิ่มลงปฏิทิน'))}" aria-label="${esc(L('Add to calendar','เพิ่มลงปฏิทิน'))}">${ICON.calAdd}</button>
           <button type="button" class="ib ib-go" data-act="pipeOpen" data-op="${esc(r.op)}" title="${esc(L('Open in calculator','เปิดในหน้าคำนวณ'))}" aria-label="${esc(L('Open in calculator','เปิดในหน้าคำนวณ'))}">${ICON.open}</button></div></div>`;}).join('')}</div>`
     : `<div class="pempty">${L('Nothing in this view.','ไม่มีรายการในมุมมองนี้')}</div>`;
-  h+=ledgerHTML();
   if(apps.length) h+=`<div class="card" style="margin-top:18px"><h2>${L('Applications and AOCs without an expiry date','คำขอที่อยู่ระหว่างดำเนินการ และใบรับรองที่ไม่มีวันหมดอายุ')}</h2><div class="plist">${apps.map(r=>`<div class="prow b-grey slim"><div class="pmain"><div class="pop">${esc(opName(r.op))}</div><div class="pmeta"><span class="pchip b-grey">${esc(B[r.band][0])}</span>${r.n?`<span>${r.n} ${L(r.n===1?'type':'types','แบบ')}</span>`:''}</div></div><div class="pact"><button type="button" class="ib ib-go" data-act="pipeOpen" data-op="${esc(r.op)}" aria-label="${esc(L('Open in calculator','เปิดในหน้าคำนวณ'))}">${ICON.open}</button></div></div>`).join('')}</div></div>`;
   h+=`<p class="pnote">${L('Deadline = expiry minus 150 days. Days are counted from today on this device. Renewal fee = application fee + principal type + additional types; inspection expenses are not included.','กำหนดยื่น = วันหมดอายุลบ 150 วัน นับจำนวนวันจากวันที่ปัจจุบันของอุปกรณ์ ค่าต่ออายุ = ค่าธรรมเนียมการยื่นคำขอ + แบบอากาศยานหลัก + แบบอากาศยานเพิ่มเติม ไม่รวมค่าใช้จ่ายในการตรวจสอบ')}</p>`;
   document.getElementById('page-pipe').innerHTML=h;
@@ -2109,7 +2074,7 @@ function icsFold(line){
   out.push(cur); return out.join('\r\n ');
 }
 function icsEvents(op){
-  const exp=opCycle(op).exp; if(!exp || (OPINFO[op]||{}).app) return [];
+  const exp=opExpiry(op); if(!exp || (OPINFO[op]||{}).app) return [];
   const i=OPINFO[op]||{}, name=opName(op), aoc=i.aoc?` (${i.aoc})`:'', slug=op.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,40), due=addDays(exp,-150);
   return [
     {uid:`aoc-apply-${slug}-${exp}@caat-ops-ct`,date:due,
@@ -2140,65 +2105,6 @@ function saveIcs(evs,name){
   const a=document.createElement('a'); a.href=url; a.download=name+'.ics'; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),4000);
   toast(L(`Calendar file ready: ${evs.length} event${evs.length>1?'s':''}`,`ไฟล์ปฏิทินพร้อมแล้ว ${evs.length} รายการ`));
-}
-function ledgerHTML(){
-  const recs=[...RENEWALS].sort((a,b)=>b.done.localeCompare(a.done)||opName(a.op).localeCompare(opName(b.op)));
-  let h=`<div class="card ledger" style="margin-top:18px"><h2>${ICON.check} ${L('Renewal record','บันทึกการต่ออายุ')}</h2><p class="sub">${L('Completed renewals stay here, with the fee you recorded, after the AOC moves to its next cycle. Saved on this device only.','รายการต่ออายุที่ดำเนินการแล้วจะคงอยู่ในส่วนนี้พร้อมค่าธรรมเนียมที่บันทึกไว้ แม้ใบรับรองจะเข้าสู่รอบถัดไปแล้ว ข้อมูลบันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>`;
-  if(!recs.length) return h+`<div class="pempty">${L('No renewals recorded yet. Tap ✓ on an operator above once its new AOC is issued.','ยังไม่มีการบันทึกการต่ออายุ เมื่อออกใบรับรองฉบับใหม่แล้ว ให้แตะ ✓ ที่รายการผู้ดำเนินการด้านบน')}</div></div>`;
-  const fys={}; recs.forEach(r=>{ const f=fyOf(r.done); (fys[f]=fys[f]||{n:0,t:0}); fys[f].n++; fys[f].t+=r.fee; });
-  const total=recs.reduce((a,r)=>a+r.fee,0);
-  h+=`<div class="lsum">${Object.keys(fys).sort((a,b)=>b-a).map(f=>`<div class="lfy"><small>${esc(fyLabel(+f))}</small><b>฿${fmt(fys[f].t)}</b><span>${L(`${fys[f].n} renewal${fys[f].n>1?'s':''}`,`${fys[f].n} รายการ`)}</span></div>`).join('')}
-    <div class="lfy all"><small>${L('All recorded renewals','รวมทุกรายการที่บันทึก')}</small><b>฿${fmt(total)}</b><span>${L(`${recs.length} renewal${recs.length>1?'s':''}`,`${recs.length} รายการ`)}</span></div></div>`;
-  h+=`<div class="lwrap"><table class="tbl"><thead><tr><th>${L('Air operator','ผู้ดำเนินการเดินอากาศ')}</th><th>${L('AOC No.','เลขที่ใบรับรอง')}</th><th>${L('Completed','วันที่ต่ออายุ')}</th><th>${L('Old expiry','วันหมดอายุเดิม')}</th><th>${L('New expiry','วันหมดอายุใหม่')}</th><th class="n">${L('Fee recorded','ค่าธรรมเนียมที่บันทึก')}</th><th class="n">${L('App estimate','ประมาณการของระบบ')}</th><th></th></tr></thead><tbody>
-    ${recs.map(r=>`<tr><td class="op">${esc(opName(r.op))}</td><td class="mono">${esc(r.aoc||'–')}</td><td>${dfmt(r.done)}</td><td>${dfmt(r.oldExp)}</td><td>${dfmt(r.newExp)}</td><td class="n"><b>${fmt(r.fee)}</b></td><td class="n">${r.est!=null?fmt(r.est):'–'}</td><td><button type="button" class="btn btn-s btn-sm" data-act="renDel" data-id="${esc(r.id)}">${L('Remove','ลบ')}</button></td></tr>`).join('')}</tbody></table></div>
-    <div class="ltools"><button type="button" class="btn btn-s" data-act="renCsv">${ICON.csv} ${L('Export record (CSV)','ส่งออกบันทึก (CSV)')}</button></div></div>`;
-  return h;
-}
-function renOpen(op){
-  const r=pipeRows().find(x=>x.op===op); if(!r||!r.exp){ toast(L('No expiry date for this operator','ไม่มีวันหมดอายุของผู้ดำเนินการรายนี้')); return; }
-  S.ren={op,oldExp:r.exp,est:r.est,done:localISO(),newExp:addYears(r.exp,5),fee:r.est!=null?fmt(r.est):''};
-  renderRen();
-}
-function renderRen(){
-  const j=S.ren, el=document.getElementById('sheet'); if(!j) return;
-  el.innerHTML=`<div class="sheet-in rensheet"><div class="sheet-top"><button type="button" class="x" data-act="renClose" aria-label="${esc(L('Close','ปิด'))}">×</button>
-      <h3>${L('Mark renewal complete','บันทึกว่าต่ออายุแล้ว')}</h3><p>${esc(opName(j.op))}${(OPINFO[j.op]||{}).aoc?' · '+esc(OPINFO[j.op].aoc):''}</p></div>
-    <div class="sheet-body">
-      <div class="rinfo">${L('Current expiry','วันหมดอายุปัจจุบัน')}: <b>${dfmt(j.oldExp)}</b>${j.est!=null?`<br>${L('App estimate','ประมาณการของระบบ')}: <b>฿${fmt(j.est)}</b>`:''}</div>
-      <div class="rlbl">${L('Renewal completed on','วันที่ต่ออายุแล้วเสร็จ')}</div><div class="field"><input type="date" data-bind="renDone" value="${esc(j.done)}" max="${localISO()}"></div>
-      <div class="rlbl">${L('New AOC expiry','วันหมดอายุของใบรับรองฉบับใหม่')}</div><div class="field"><input type="date" data-bind="renNew" value="${esc(j.newExp)}"></div>
-      <div class="rlbl">${L('Renewal fee to record (THB)','ค่าธรรมเนียมการต่ออายุที่บันทึก (บาท)')}</div><div class="field"><em>฿</em><input type="text" inputmode="decimal" data-bind="renFee" value="${esc(j.fee)}"></div>
-      <div class="hint">${L('Defaults: new expiry is five years after the current one, as an AOC is valid for five years (Regulation No.26, clause 11); the fee is the app estimate. Adjust the expiry to the date on the new AOC. Enter the invoiced amount if you have it.','ค่าเริ่มต้น: วันหมดอายุใหม่คือห้าปีนับจากวันหมดอายุเดิม เนื่องจากใบรับรองมีอายุห้าปี (ข้อบังคับ กพท. ฉบับที่ 26 ข้อ 11) และค่าธรรมเนียมเท่ากับประมาณการของระบบ กรุณาปรับวันหมดอายุให้ตรงกับใบรับรองฉบับใหม่ หากทราบยอดตามใบแจ้งหนี้ กรุณาระบุยอดนั้น')}</div>
-      <button type="button" class="btn btn-p" data-act="renSave">${ICON.check} ${L('Save to renewal record','บันทึกการต่ออายุ')}</button>
-      <button type="button" class="btn btn-s" data-act="renClose">${L('Cancel','ยกเลิก')}</button>
-    </div></div>`;
-  el.classList.add('on');
-}
-function closeRen(){ S.ren=null; const el=document.getElementById('sheet'); el.classList.remove('on'); el.innerHTML=''; }
-function renSave(){
-  const j=S.ren; if(!j) return; const fee=toNum(j.fee);
-  if(!isoOK(j.done)){ toast(L('Enter the completion date','กรุณาระบุวันที่ต่ออายุแล้วเสร็จ')); return; }
-  if(j.done>localISO()){ toast(L('Completion date cannot be in the future','วันที่ต่ออายุแล้วเสร็จต้องไม่เป็นวันในอนาคต')); return; }
-  if(!isoOK(j.newExp)||j.newExp<=j.oldExp){ toast(L('New expiry must be after the current expiry','วันหมดอายุใหม่ต้องอยู่หลังวันหมดอายุปัจจุบัน')); return; }
-  if(fee===null||isNaN(fee)||fee<0){ toast(L('Enter the renewal fee as a number','กรุณาระบุค่าธรรมเนียมเป็นตัวเลข')); return; }
-  RENEWALS=loadRen().filter(r=>!(r.op===j.op&&r.oldExp===j.oldExp));
-  RENEWALS.push({id:nid(),op:j.op,aoc:(OPINFO[j.op]||{}).aoc||'',oldExp:j.oldExp,newExp:j.newExp,done:j.done,fee:Math.round(fee*100)/100,est:j.est!=null?j.est:null});
-  saveRen(); closeRen(); renderPage(); toast(L('Saved to the renewal record','บันทึกการต่ออายุแล้ว'));
-}
-function renDel(id){
-  const r=RENEWALS.find(x=>x.id===id); if(!r) return;
-  if(!confirm(L(`Remove the renewal of ${opName(r.op)} (completed ${dfmt(r.done)}) from the record?`,`ลบรายการต่ออายุของ ${opName(r.op)} (วันที่ ${dfmt(r.done)}) ออกจากบันทึกหรือไม่`))) return;
-  RENEWALS=loadRen().filter(x=>x.id!==id); saveRen(); renderPage(); toast(L('Removed from the renewal record','ลบออกจากบันทึกแล้ว'));
-}
-function doRenCSV(){
-  const recs=[...loadRen()].sort((a,b)=>a.done.localeCompare(b.done));
-  const rows=[[L('AOC renewal record','บันทึกการต่ออายุใบรับรองผู้ดำเนินการเดินอากาศ'),RULESET.version,localISO()],[],
-    [L('Fiscal year','ปีงบประมาณ'),L('Air operator','ผู้ดำเนินการเดินอากาศ'),L('AOC No.','เลขที่ใบรับรอง'),L('Completed','วันที่ต่ออายุ'),L('Old expiry','วันหมดอายุเดิม'),L('New expiry','วันหมดอายุใหม่'),L('Fee recorded (THB)','ค่าธรรมเนียมที่บันทึก (บาท)'),L('App estimate (THB)','ประมาณการของระบบ (บาท)')]];
-  recs.forEach(r=>rows.push([LANG==='th'?fyOf(r.done)+543:fyOf(r.done),opName(r.op),r.aoc,r.done,r.oldExp,r.newExp,r.fee,r.est??'']));
-  rows.push([],[L('Total','รวม'),'','','','','',recs.reduce((a,r)=>a+r.fee,0),'']);
-  const csv='\ufeff'+rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');
-  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})); a.download='aoc-renewal-record-'+localISO()+'.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),4000);
-  toast(L('CSV downloaded','ดาวน์โหลดไฟล์ CSV แล้ว'));
 }
 function icsOne(op){ saveIcs(icsEvents(op),'aoc-deadlines-'+op.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,40)); }
 
@@ -2265,13 +2171,12 @@ function editsCard(){
   return `<div class="card"><h2>${L('Saved edits','ข้อมูลที่แก้ไขและบันทึกไว้')}</h2><p class="sub">${L('Your changes to each operator (aircraft types, areas, MTOW, dates, changes and inspection entries) are saved on this device and restored when you reopen the app.','ข้อมูลที่แก้ไขของผู้ดำเนินการแต่ละราย (แบบอากาศยาน พื้นที่ปฏิบัติการ น้ำหนัก วันที่ การเปลี่ยนแปลง และการตรวจสอบ) จะบันทึกไว้ในอุปกรณ์นี้ และเรียกคืนเมื่อเปิดแอปอีกครั้ง')}</p>
     ${ops.length?`<div class="elist">${ops.map(op=>`<div class="erow"><span>${esc(opName(op))}${S.staleOps[op]?` <span class="pchip b-amber">${L('Built-in data updated','ข้อมูลในระบบมีการปรับปรุง')}</span>`:''}</span><button type="button" class="btn btn-s btn-sm" data-act="resetOp" data-op="${esc(op)}">${L('Reset','รีเซ็ต')}</button></div>`).join('')}</div>
       <button type="button" class="btn btn-s" data-act="resetAll" style="margin-top:10px">${L('Clear all saved edits','ล้างข้อมูลที่บันทึกไว้ทั้งหมด')}</button>`
-      :`<p class="muted" style="margin:0">${L('No saved edits yet.','ยังไม่มีข้อมูลที่บันทึกไว้')}</p>`}
-    <p class="muted" style="margin:12px 0 0;font-size:12.5px">${L(`Renewal record: ${RENEWALS.length} entr${RENEWALS.length===1?'y':'ies'}, kept separately. Reset and Clear do not remove it; manage it in the Pipeline tab.`,`บันทึกการต่ออายุ: ${RENEWALS.length} รายการ จัดเก็บแยกต่างหาก การรีเซ็ตหรือล้างข้อมูลจะไม่ลบบันทึกนี้ จัดการได้ที่แท็บกำหนดการต่ออายุ`)}</p></div>`;
+      :`<p class="muted" style="margin:0">${L('No saved edits yet.','ยังไม่มีข้อมูลที่บันทึกไว้')}</p>`}</div>`;
 }
 
 /* ---------- Acknowledgement: shown before every print, send, download, CSV or copy ---------- */
 let ackNext=null;
-const ACK_LABEL=()=>({print:L('Print report','พิมพ์รายงาน'),send:L('Send PDF report','ส่งรายงาน PDF'),csv:L('Export CSV','ส่งออกไฟล์ CSV'),csvRen:L('Export renewal record (CSV)','ส่งออกบันทึกการต่ออายุ (CSV)'),copy:L('Copy summary','คัดลอกสรุป')});
+const ACK_LABEL=()=>({print:L('Print report','พิมพ์รายงาน'),send:L('Send PDF report','ส่งรายงาน PDF'),csv:L('Export CSV','ส่งออกไฟล์ CSV'),copy:L('Copy summary','คัดลอกสรุป')});
 function needAck(kind,fn){
   if(!S.healthy){ toast(L('Calculator locked: self-test failed','ระบบถูกระงับ: การทดสอบไม่ผ่าน')); return; }
   ackNext=fn; const el=document.getElementById('ack');
@@ -2397,7 +2302,7 @@ function doMailDraft(){
   const m=mailText(), to=(S.send&&S.send.to||'').trim();
   location.href=`mailto:${encodeURIComponent(to).replace(/%40/g,'@').replace(/%2C/gi,',')}?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}`;
 }
-document.getElementById('sheet').addEventListener('click',e=>{ if(e.target.id==='sheet'){ if(S.ren) closeRen(); else closeSend(); } });
+document.getElementById('sheet').addEventListener('click',e=>{ if(e.target.id==='sheet') closeSend(); });
 document.addEventListener('keydown',e=>{ if(e.key!=='Escape') return; if(ackNext){ closeAck(); return; } if(S.send) closeSend(); });
 function doCSV(){
   if(!S.healthy){ toast(L('Calculator locked: self-test failed','ระบบถูกระงับ: การทดสอบไม่ผ่าน')); return; }
@@ -2485,11 +2390,6 @@ document.addEventListener('click',e=>{
     case 'pipeF': S.pipeF=v; renderPage(); return;
     case 'report': reportError(); return;
     case 'icsOne': icsOne(el.dataset.op); return;
-    case 'renOpen': renOpen(el.dataset.op); return;
-    case 'renClose': closeRen(); return;
-    case 'renSave': renSave(); return;
-    case 'renDel': renDel(el.dataset.id); return;
-    case 'renCsv': needAck('csvRen',doRenCSV); return;
     case 'pipeOpen': { const op=el.dataset.op; if(op!==S.operator) switchOperator(op); S.tab='cert'; renderAll(); window.scrollTo({top:0,behavior:'smooth'}); return; }
     case 'resetOp': { const op=el.dataset.op; if(!confirm(L(`Reset ${opName(op)} to the built-in data? Your saved entries for this operator will be removed.`,`รีเซ็ต ${opName(op)} เป็นข้อมูลในระบบหรือไม่ ข้อมูลที่บันทึกไว้ของผู้ดำเนินการรายนี้จะถูกลบ`))) return;
       resetOp(op); renderAll(); toast(L('Reset to built-in data','รีเซ็ตเป็นข้อมูลในระบบแล้ว')); return; }
@@ -2523,7 +2423,6 @@ document.addEventListener('input',e=>{
   if(b==='country'){ findA(id).country=val; updateAct(id); return; }
   if(b==='start'||b==='end'){ findA(id)[b]=val; updateAct(id); return; }
   if(b==='opDraft'){ S.opDraft=val; return; }
-  if(b==='renDone'||b==='renNew'||b==='renFee'){ if(S.ren) S.ren[{renDone:'done',renNew:'newExp',renFee:'fee'}[b]]=val; return; }
   if(b==='mailTo'){ if(S.send) S.send.to=val; store('aoc.mailTo',val.trim()); return; }
   if(b==='opTravel'||b==='opHotel'){ S.insp[b]=val; renderSide(); return; }
   if(b==='gnights'){ S.insp.gov.nights=val; renderSide(); return; }
