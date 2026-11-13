@@ -144,6 +144,10 @@ button,input,select{font-family:inherit;font-size:inherit;color:inherit}
 .type.principal{border-color:rgba(42,157,143,.55);box-shadow:0 0 0 3px rgba(42,157,143,.10),var(--sh-2)}
 .type-h{display:flex;align-items:center;gap:10px;margin-bottom:4px}
 /* v1.7 card label: "A/C Type n" bar with the Principal/Additional tag and remove button */
+.tbl tr.subt td{background:color-mix(in srgb,var(--sec) 7%,#f4f7fb);color:var(--blue);border-top:1px solid color-mix(in srgb,var(--sec) 22%,#e6ecf2)}
+.tbl .tno{width:34px;padding-right:0;text-align:center}
+.tnum{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:999px;font-size:12px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--blue-mid),var(--navy))}
+.tnum.p{background:linear-gradient(135deg,var(--teal),#1f7a70)}
 .type-top{display:flex;align-items:center;gap:10px;margin:-2px 0 10px;padding:0 0 8px;border-bottom:1px solid color-mix(in srgb,var(--sec) 18%,#e6ecf2)}
 .type-lbl{display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;letter-spacing:.02em;color:#fff;white-space:nowrap;
   background:linear-gradient(135deg,var(--sec) 0%,var(--sec-2) 100%);box-shadow:0 4px 10px -4px color-mix(in srgb,var(--sec) 70%,transparent)}
@@ -467,6 +471,7 @@ html[lang=th] .eyebrow,html[lang=th] .op-l,html[lang=th] .tag,
 .rp table.t td{padding:5px 7px;border-bottom:1px solid #edf1f5;vertical-align:top}
 .rp table.t td.n,.rp table.t th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .rp table.t td .ref{display:block;color:#718096;font-size:8.5px}
+.rp table.t tr.subt td{font-weight:600;color:#1e4d8c;background:#eef4fa;border-top:1px solid #c9d6e6}
 .rp table.t tr.tot td{font-weight:700;color:#1a2e4a;border-top:1.5px solid #1a2e4a;border-bottom:0;background:#f7f9fc}
 .rp .pr{display:inline-block;font-size:8px;font-weight:700;padding:1px 6px;border-radius:999px;background:#e2f4f1;color:#1f7d72}
 .rp .ad{display:inline-block;font-size:8px;font-weight:700;padding:1px 6px;border-radius:999px;background:#e3ecf7;color:#1e4d8c}
@@ -633,6 +638,33 @@ body[data-sec=pipe]{--sec:#3e6a9e;--sec-2:#2b4f7d;--sec-lt:#93b4d9;--sec-soft:#e
   background:linear-gradient(180deg,#fdf1f0,#fbe3e1);border:1.5px solid rgba(192,57,43,.45);box-shadow:0 10px 24px -16px rgba(192,57,43,.7),inset 0 1px 0 #fff}
 .redbox svg{width:22px;height:22px;flex:none;color:#c0392b;margin-top:1px}
 .redbox b{display:block;color:#a8322a;font-size:14.5px;margin-bottom:2px}
+.rev{margin-bottom:16px}
+.rev-h{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px}
+.rev-h h2{margin-bottom:2px}
+.rev-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
+.rev-y{border-radius:14px;padding:12px 14px;background:linear-gradient(180deg,#fff,#f2f6fb);border:1px solid #dfe7f1;min-width:0}
+.rev-y.now{background:linear-gradient(180deg,#fff,#e9f5f3);border-color:#cde6e1}
+.rev-t b{display:block;font-size:15px;color:var(--navy)}
+.rev-t span{font-size:11.5px;color:var(--grey-soft)}
+.rev-a{font-size:21px;font-weight:700;color:var(--blue);margin-top:6px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.rev-y.now .rev-a{color:var(--teal)}
+.rev-a i{font-style:normal;font-size:.6em;margin-right:2px;opacity:.75}
+.rev-bar{height:6px;border-radius:99px;background:#e6ecf2;margin:8px 0 6px;overflow:hidden}
+.rev-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue-mid),var(--teal))}
+.rev-n{font-size:12px;color:var(--grey-mid)}
+.rev-miss{display:block;color:#a26b12}
+.rev-d{margin-top:8px;font-size:12.5px}
+.rev-d summary{cursor:pointer;color:var(--blue);font-weight:600}
+.rev-d ul{list-style:none;margin:6px 0 0;padding:0}
+.rev-d li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px solid #e9eef4}
+.rev-d li span{min-width:0}
+.rev-d li small{display:block;color:var(--grey-soft)}
+.rev-d li b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.rev-d li em{font-style:normal;color:#a26b12;font-weight:600}
+.rev-tot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 14px;margin-top:12px;padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,var(--navy),var(--blue));color:#fff}
+.rev-tot span{font-size:12.5px;opacity:.9}
+.rev-tot b{font-size:19px;font-variant-numeric:tabular-nums}
+@media (max-width:820px){ .rev-grid{grid-template-columns:repeat(2,minmax(0,1fr))} .rev-y.open{grid-column:1/-1} }
 .pkpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
 .pk{border-radius:16px;padding:14px 16px;position:relative;overflow:hidden;background:linear-gradient(180deg,#fff,var(--k2));border:1px solid color-mix(in srgb,var(--k) 22%,#fff);
   box-shadow:inset 0 1px 0 #fff,0 12px 26px -16px color-mix(in srgb,var(--k) 70%,transparent)}
@@ -1376,8 +1408,11 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='1.7', APP_DATE='2026-11-13';
+const APP_VERSION='2.0', APP_DATE='2026-11-13';
 const APP_LOG=[
+  {v:'2.0',d:'2026-11-13',en:['Pipeline: expected renewal revenue for this year and the next three, by fiscal or calendar year, with the AOCs in each year.'],th:['หน้าติดตามการต่ออายุ: ประมาณการรายได้จากการต่ออายุของปีนี้และอีกสามปีถัดไป แยกตามปีงบประมาณหรือปีปฏิทิน พร้อมรายการใบรับรองในแต่ละปี']},
+  {v:'1.9',d:'2026-11-13',en:['Summary and printed report: subtotal of certificate and additional-type fees shown before the application fee.'],th:['หน้าสรุปและรายงาน: แสดงยอดรวมค่าใบรับรองและค่าเพิ่มแบบอากาศยานก่อนรวมค่าธรรมเนียมการยื่นคำขอ']},
+  {v:'1.8',d:'2026-11-13',en:['Summary: aircraft types are numbered 1, 2, 3… in the same order as A/C Type 1, 2, 3 on the Certificate tab.'],th:['หน้าสรุป: แสดงลำดับแบบอากาศยาน 1, 2, 3… ตรงกับแบบอากาศยานที่ 1, 2, 3 ในหน้าใบรับรอง']},
   {v:'1.7',d:'2026-11-13',en:['Step 2: each aircraft card is labelled "A/C Type 1", "A/C Type 2" and so on, instead of a plain number.'],th:['ขั้นตอนที่ 2: แต่ละการ์ดแสดงป้าย "แบบอากาศยานที่ 1", "แบบอากาศยานที่ 2" ตามลำดับ แทนตัวเลขเดี่ยว']},
   {v:'1.6',d:'2026-11-13',en:['Report error opens the Outlook app on iPhone, iPad and Android, with the default mail app as fallback.','Inspection times are read as Thailand time on any device, so daylight-saving changes abroad no longer shift the day count.','CSV export: text that a spreadsheet could read as a formula is made safe.','Pipeline: "1 day ago" instead of "1 days ago".'],
    th:['ปุ่มแจ้งข้อผิดพลาดเปิดแอป Outlook บน iPhone, iPad และ Android หากไม่มีจะเปิดแอปอีเมลของอุปกรณ์แทน','เวลาการตรวจสอบอ่านเป็นเวลาประเทศไทยบนทุกอุปกรณ์ การปรับเวลาออมแสงในต่างประเทศจึงไม่ทำให้จำนวนวันคลาดเคลื่อน','ไฟล์ CSV: ป้องกันข้อความที่โปรแกรมตารางคำนวณอาจอ่านเป็นสูตร','หน้าติดตามการต่ออายุ: แก้ไขคำภาษาอังกฤษ "1 day ago"']},
@@ -1405,6 +1440,7 @@ const S={
   tab:'cert', healthy:true, tests:[],
   lang: load('aoc.lang')==='th'?'th':'en',
   sumMode: load('aoc.sumMode')==='simple'?'simple':'detailed',
+  revBasis: load('aoc.revBasis')==='cal'?'cal':'fy',
   tx:'renewal',
   types:[{id:nid(),ac:'',name:'',cat:'AEROPLANE',heavy:true,area:'',mtow:'',count:1,showMtow:false,legacyConfirm:null}],
   expiry:'',
@@ -1957,11 +1993,12 @@ function detailedScreen(s){
   if(c.total!=null){
     const pl=c.lines.find(l=>l.kind==='P');
     h+=`<div class="card"><h2>${L('AOC fees','ค่าธรรมเนียมใบรับรอง')} · ${TXL()}</h2><p class="sub">${esc(catL(c.category))} · ${L('principal type pays the 2024 certificate rate','แบบหลักชำระค่าใบรับรองตามอัตรา พ.ศ. 2567')}</p><div class="scroll"><table class="tbl">
-      <tr><th>${L('Aircraft type','แบบอากาศยาน')}</th><th>${L('Weight · area','น้ำหนัก · พื้นที่')}</th><th style="text-align:right">${BAHT()}</th></tr>
-      ${typeRows(c).map(r=>`<tr><td><b>${esc(r.name)}</b>${r.full?` <span class="ref" style="display:inline">${esc(r.full)}</span>`:''} ${r.line&&r.line.kind==='C'?`<span class="chip p">${L('Principal','แบบหลัก')}</span>`:`<span class="chip">${L('Additional','แบบเพิ่มเติม')}</span>`}<div class="ref">${esc(r.cat)}${r.count>1?` · ${r.count} ${L('aircraft','ลำ')}`:''}</div></td>
+      <tr><th class="tno">#</th><th>${L('Aircraft type','แบบอากาศยาน')}</th><th>${L('Weight · area','น้ำหนัก · พื้นที่')}</th><th style="text-align:right">${BAHT()}</th></tr>
+      ${typeRows(c).map(r=>`<tr><td class="tno"><span class="tnum ${r.line&&r.line.kind==='C'?'p':''}">${r.i+1}</span></td><td><b>${esc(r.name)}</b>${r.full?` <span class="ref" style="display:inline">${esc(r.full)}</span>`:''} ${r.line&&r.line.kind==='C'?`<span class="chip p">${L('Principal','แบบหลัก')}</span>`:`<span class="chip">${L('Additional','แบบเพิ่มเติม')}</span>`}<div class="ref">${esc(r.cat)}${r.count>1?` · ${r.count} ${L('aircraft','ลำ')}`:''}</div></td>
         <td>${esc(r.cls)}<div class="ref">${esc(r.area)}</div></td><td class="n">${r.line?fmt(r.line.amount):'–'}</td></tr>`).join('')}
-      <tr><td colspan="2">${L('Application fee','ค่าธรรมเนียมการยื่นคำขอ')} <div class="ref thai">${esc(pl.ref)}</div></td><td class="n">${fmt(pl.amount)}</td></tr>
-      <tr><td colspan="2"><b>${L('Total AOC fees','รวมค่าธรรมเนียม')}</b></td><td class="n"><b>${fmt(c.total)}</b></td></tr></table></div></div>`;
+      <tr class="subt"><td colspan="3"><b>${L(`Certificate and additional types · ${S.types.length} type${S.types.length>1?'s':''}`,`ค่าใบรับรองและค่าเพิ่มแบบอากาศยาน · ${S.types.length} แบบ`)}</b><div class="ref">${L('Before the application fee','ก่อนรวมค่าธรรมเนียมการยื่นคำขอ')}</div></td><td class="n"><b>${fmt(c.certSubtotal)}</b></td></tr>
+      <tr><td colspan="3">${L('Application fee','ค่าธรรมเนียมการยื่นคำขอ')} <div class="ref thai">${esc(pl.ref)}</div></td><td class="n">${fmt(pl.amount)}</td></tr>
+      <tr><td colspan="3"><b>${L('Total AOC fees','รวมค่าธรรมเนียม')}</b></td><td class="n"><b>${fmt(c.total)}</b></td></tr></table></div></div>`;
   }
   if(CHS().length) h+=`<div class="card"><h2>${L('Changes during validity','การเปลี่ยนแปลงระหว่างอายุใบรับรอง')}</h2>${CHS().map(x=>chgRow(x)).join('')}</div>`;
   if(s.ins.acts.length||s.gov||hasOp){
@@ -2018,7 +2055,9 @@ function reportDetailed(s){
     h+=`<div class="rp-s">${sec(L('Aircraft types','แบบอากาศยาน'))}<table class="t"><tr>${TH('#')}${TH(L('Aircraft type','แบบอากาศยาน'))}${TH(L('Category','ประเภท'))}${TH(L('Weight','น้ำหนัก'))}${TH(L('Area of Operation','พื้นที่ปฏิบัติการ'))}${TH(L('Role','บทบาท'))}</tr>
       ${typeRows(c).map(r=>`<tr><td>${r.i+1}</td><td><b>${esc(r.name)}</b>${r.full?`<span class="ref">${esc(r.full)}</span>`:''}</td><td>${esc(r.cat)}</td><td>${esc(r.cls)}</td><td>${esc(r.area)}</td><td>${r.line&&r.line.kind==='C'?`<span class="pr">${L('Principal','แบบหลัก')}</span>`:`<span class="ad">${L('Additional','แบบเพิ่มเติม')}</span>`}</td></tr>`).join('')}</table></div>`;
     h+=`<div class="rp-s">${sec(L('AOC fees · ','ค่าธรรมเนียม · ')+TXL())}<table class="t"><tr>${TH(L('Item','รายการ'))}${TH(L('Basis and reference','หลักเกณฑ์และบทบัญญัติ'))}${NB}</tr>
-      ${c.lines.map(l=>`<tr><td>${esc(l.label)}</td><td>${esc(l.basis)}<span class="ref">${esc(l.ref)}</span></td><td class="n">${fmt(l.amount)}</td></tr>`).join('')}
+      ${c.lines.filter(l=>l.kind!=='P').map(l=>`<tr><td>${esc(l.label)}</td><td>${esc(l.basis)}<span class="ref">${esc(l.ref)}</span></td><td class="n">${fmt(l.amount)}</td></tr>`).join('')}
+      <tr class="subt"><td colspan="2">${L(`Certificate and additional types · ${S.types.length} type${S.types.length>1?'s':''}`,`ค่าใบรับรองและค่าเพิ่มแบบอากาศยาน · ${S.types.length} แบบ`)}</td><td class="n">${fmt(c.certSubtotal)}</td></tr>
+      ${c.lines.filter(l=>l.kind==='P').map(l=>`<tr><td>${esc(l.label)}</td><td>${esc(l.basis)}<span class="ref">${esc(l.ref)}</span></td><td class="n">${fmt(l.amount)}</td></tr>`).join('')}
       <tr class="tot"><td colspan="2">${L('Total AOC fees','รวมค่าธรรมเนียม')}</td><td class="n">${fmt(c.total)}</td></tr></table></div>`;
   }
   if(CHS().length){
@@ -2103,6 +2142,36 @@ function dueText(r){
   return L(`Apply in ${r.dd} day${r.dd>1?'s':''}`,`ยื่นภายใน ${r.dd} วัน`);
 }
 const WHY=()=>({area:L('Needs area','ต้องระบุพื้นที่'),types:L('Needs aircraft types','ต้องระบุแบบอากาศยาน'),verify:L('Mixed AOC: verify','ใบรับรองแบบผสม: ต้องตรวจสอบ'),check:L('Check aircraft details','ตรวจสอบข้อมูลแบบอากาศยาน'),locked:L('Locked','ระงับ')});
+/* Expected renewal revenue: this year and the next three, by the year each AOC expires.
+   fy = Thai fiscal year (1 Oct – 30 Sep, named by the year it ends); cal = calendar year. */
+function revYear(iso,basis){ const y=+iso.slice(0,4), m=+iso.slice(5,7); return basis==='fy' ? (m>=10?y+1:y) : y; }
+function revYearLabel(y,basis){
+  if(basis==='fy') return {main:L(`FY ${y}`,`ปีงบประมาณ ${y+543}`),sub:L(`Oct ${y-1} – Sep ${y}`,`ต.ค. ${y-1+543} – ก.ย. ${y+543}`)};
+  return {main:LANG==='th'?`พ.ศ. ${y+543}`:String(y),sub:L(`Jan – Dec ${y}`,`ม.ค. – ธ.ค. ${y+543}`)};
+}
+function revenueHTML(rows){
+  const basis=S.revBasis||'fy', today=localISO(), y0=revYear(today,basis), years=[y0,y0+1,y0+2,y0+3];
+  const live=rows.filter(r=>r.band!=='app'&&r.band!=='nodate'&&r.exp&&r.de>=0);
+  const Y=years.map(y=>{ const rs=live.filter(r=>revYear(r.exp,basis)===y).sort((a,b)=>a.exp.localeCompare(b.exp));
+    return {y,rs,sum:rs.reduce((a,r)=>a+(r.fee||0),0),miss:rs.filter(r=>r.fee==null).length}; });
+  const max=Math.max(1,...Y.map(x=>x.sum)), all=Y.reduce((a,x)=>a+x.sum,0), allN=Y.reduce((a,x)=>a+x.rs.length,0), allMiss=Y.reduce((a,x)=>a+x.miss,0);
+  const expired=rows.filter(r=>r.band==='expired').length, apps=rows.filter(r=>r.band==='app').length;
+  let h=`<div class="card rev"><div class="rev-h"><div><h2>${L('Expected renewal revenue','ประมาณการรายได้จากการต่ออายุ')}</h2>
+    <p class="sub">${L('This year and the next three, by the year each AOC expires.','ปีนี้และอีกสามปีถัดไป จัดตามปีที่ใบรับรองหมดอายุ')}</p></div>
+    ${seg([['fy',L('Fiscal year','ปีงบประมาณ')],['cal',L('Calendar year','ปีปฏิทิน')]],basis,'revBasis','','',false)}</div>
+    <div class="rev-grid">${Y.map((x,i)=>{ const lb=revYearLabel(x.y,basis);
+      return `<div class="rev-y ${i===0?'now':''}"><div class="rev-t"><b>${esc(lb.main)}</b><span>${esc(lb.sub)}${i===0?` · ${L('this year','ปีนี้')}`:''}</span></div>
+        <div class="rev-a"><i>฿</i>${fmt(x.sum)}</div>
+        <div class="rev-bar"><i style="width:${x.sum/max*100}%"></i></div>
+        <div class="rev-n">${L(`${x.rs.length} AOC${x.rs.length===1?'':'s'}`,`${x.rs.length} ฉบับ`)}${x.miss?`<span class="rev-miss">${L(`${x.miss} without an estimate`,`ไม่มีประมาณการ ${x.miss} ฉบับ`)}</span>`:''}</div>
+        ${x.rs.length?`<details class="rev-d" ontoggle="this.closest('.rev-y').classList.toggle('open',this.open)"><summary>${L('Show AOCs','แสดงรายการ')}</summary><ul>${x.rs.map(r=>`<li><span>${esc(opName(r.op))}<small>${L('Expires','หมดอายุ')} ${dfmt(r.exp)}</small></span><b>${r.fee!=null?fmt(r.fee):`<em>${esc(WHY()[r.why]||'–')}</em>`}</b></li>`).join('')}</ul></details>`:''}
+      </div>`; }).join('')}</div>
+    <div class="rev-tot"><span>${L(`Four-year total · ${allN} AOC${allN===1?'':'s'}`,`รวม 4 ปี · ${allN} ฉบับ`)}${allMiss?L(` · ${allMiss} without an estimate, not in the total`,` · ${allMiss} ฉบับไม่มีประมาณการ จึงไม่รวมในยอดนี้`):''}</span><b>฿ ${fmt(all)}</b></div>
+    <p class="pnote" style="margin:10px 0 0">${L(
+      `Renewal fees at today’s rates (application fee + principal type + additional types); inspection expenses not included. Each AOC is counted once, in the year it expires: the new AOC can be issued at most 45 days earlier, but the application fee is paid when the operator applies, at least 150 days before expiry. AOCs already expired${expired?` (${expired})`:''} and applications in progress${apps?` (${apps})`:''} are not counted. AOCs renewed during the period next expire 5 years later, outside this view.`,
+      `ค่าต่ออายุตามอัตราปัจจุบัน (ค่าธรรมเนียมการยื่นคำขอ + แบบอากาศยานหลัก + แบบอากาศยานเพิ่มเติม) ไม่รวมค่าใช้จ่ายในการตรวจสอบ นับใบรับรองแต่ละฉบับครั้งเดียวในปีที่หมดอายุ โดยใบรับรองฉบับใหม่ออกได้ก่อนวันหมดอายุไม่เกิน 45 วัน แต่ค่าธรรมเนียมการยื่นคำขอชำระเมื่อยื่นคำขอ ซึ่งต้องยื่นก่อนวันหมดอายุไม่น้อยกว่า 150 วัน ไม่นับใบรับรองที่หมดอายุแล้ว${expired?` (${expired} ฉบับ)`:''} และคำขอที่อยู่ระหว่างดำเนินการ${apps?` (${apps} ราย)`:''} ใบรับรองที่ต่ออายุในช่วงนี้จะหมดอายุอีกครั้งในอีก 5 ปี ซึ่งอยู่นอกช่วงที่แสดง`)}</p></div>`;
+  return h;
+}
 function renderPipe(){
   const rows=pipeRows(), hold=rows.filter(r=>r.band!=='app'&&r.band!=='nodate').sort((a,b)=>a.due.localeCompare(b.due)), apps=rows.filter(r=>r.band==='app'||r.band==='nodate');
   const late=hold.filter(r=>r.band==='overdue'||r.band==='expired'), d30=hold.filter(r=>r.band==='d30'), d90=hold.filter(r=>r.band==='d90');
@@ -2117,6 +2186,7 @@ function renderPipe(){
     <div class="pk k-amber"><small>${L('Due within 30 days','ภายใน 30 วัน')}</small><b>${d30.length}</b><span>${L('operators','ราย')}</span></div>
     <div class="pk k-blue"><small>${L('Due within 90 days','ภายใน 90 วัน')}</small><b>${d90.length}</b><span>${L('operators','ราย')}</span></div>
     <div class="pk k-sum"><small>${L('Renewals in the next 12 months','การต่ออายุใน 12 เดือนข้างหน้า')}</small><b><i>฿</i>${fmt(yrFee)}</b><span>${L(`${yr.length} AOCs`,`${yr.length} ฉบับ`)}${yrMiss?L(` · ${yrMiss} without an estimate`,` · ไม่มีประมาณการ ${yrMiss} ฉบับ`):''}</span></div></div>`;
+  h+=revenueHTML(rows);
   h+=`<div class="ptool">${seg([['all',L('All','ทั้งหมด')],['90',L('Next 90 days','ภายใน 90 วัน')],['late',L('Deadline passed','พ้นกำหนด')],['collect',L('To collect','รอเรียกเก็บ')]],F,'pipeF','','',true)}
     </div>`;
   if(F==='collect'){ const cf=collect.reduce((a,r)=>a+(r.fee||0),0), cm=collect.filter(r=>r.fee==null).length;
@@ -2473,6 +2543,7 @@ document.addEventListener('click',e=>{
     case 'printNow': doPrint(); return;
     case 'send': needAck('send',openSend); return;
     case 'pipeF': S.pipeF=v; renderPage(); return;
+    case 'revBasis': S.revBasis=v==='cal'?'cal':'fy'; store('aoc.revBasis',S.revBasis); renderPage(); return;
     case 'report': reportError(); return;
     case 'ver': S.tab='settings'; renderAll(); window.scrollTo(0,0); return;
     case 'icsOne': icsOne(el.dataset.op); return;
