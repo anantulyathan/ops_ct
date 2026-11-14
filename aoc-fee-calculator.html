@@ -710,6 +710,9 @@ body[data-sec=pipe]{--sec:#3e6a9e;--sec-2:#2b4f7d;--sec-lt:#93b4d9;--sec-soft:#e
 .rp-qrsvg{width:46px;height:46px;flex:none}
 @page{ @bottom-right{ content:counter(page) " / " counter(pages); font:8px Inter,sans-serif; color:#718096 } }
 @media (prefers-reduced-motion: reduce){ .rc-bar,.pring .rv,.result .total .tv.bump,.route .plane.fly svg{animation:none!important} .route .plane,.result .bar i{transition:none!important} }
+.tl-left{display:block;font-size:12.5px;font-weight:600;color:var(--teal);margin:2px 0 1px}
+.tl-left.soon{color:#a8741a}
+.tl-left.past{color:#b23a2e}
 .rev{margin-bottom:16px}
 .rev-h{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px}
 .rev-h h2{margin-bottom:2px}
@@ -1489,8 +1492,9 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.7', APP_DATE='2026-11-13';
+const APP_VERSION='3.8', APP_DATE='2026-11-14';
 const APP_LOG=[
+  {v:'3.8',d:'2026-11-14',en:['Renewal timeline: each date shows the days remaining (or how long ago it passed).'],th:['กำหนดเวลาการต่ออายุ: แสดงจำนวนวันที่เหลือของแต่ละวันที่ (หรือจำนวนวันที่ผ่านมาแล้ว)']},
   {v:'3.7',d:'2026-11-13',en:['Report: signature fields removed; Changes and Section 5/1 inspection show a grey “Not Applicable” when marked N/A.'],th:['รายงาน: ตัดช่องลงนามออก และแสดง “ไม่เกี่ยวข้อง (N/A)” สีเทาสำหรับการเปลี่ยนแปลงและค่าใช้จ่ายในการตรวจสอบเมื่อกำหนดเป็นไม่เกี่ยวข้อง']},
   {v:'3.6',d:'2026-11-13',en:['Summary: Preview button shows the report on an A4 page before printing or sending.'],th:['หน้าสรุป: ปุ่มดูตัวอย่างแสดงรายงานบนหน้ากระดาษ A4 ก่อนพิมพ์หรือส่ง']},
   {v:'3.5',d:'2026-11-13',en:['“Use new data” and “Reload list” now confirm inside the app, so they work reliably on iPhone.'],th:['ปุ่ม “ใช้ข้อมูลในระบบ” และ “โหลดรายการใหม่” ยืนยันภายในระบบแล้ว จึงทำงานได้แน่นอนบน iPhone']},
@@ -1640,15 +1644,21 @@ function renderCert(){
   document.getElementById('page-cert').innerHTML=h;
   renderTimeline();
 }
+/* "(n days remaining)" after each timeline date, counted from today on this device */
+function tlLeft(iso){
+  const d=daysBetween(localISO(),iso);
+  const t=d>0?L(`${d} day${d===1?'':'s'} remaining`,`เหลืออีก ${d} วัน`):d===0?L('today','วันนี้'):L(`passed ${-d} day${d===-1?'':'s'} ago`,`ผ่านมาแล้ว ${-d} วัน`);
+  return `<span class="tl-left ${d<0?'past':d<=30?'soon':''}">(${t})</span>`;
+}
 function renderTimeline(){
   const el=document.getElementById('tl'); if(!el) return;
   if(!S.expiry){ el.innerHTML=''; return; }
   const now=localISO(), late=now>addDays(S.expiry,-150), gone=now>S.expiry;
   const lateNote = gone ? note('warn',L('This AOC has already expired. A renewal is no longer possible on these dates; check whether a first issue applies.','ใบรับรองนี้หมดอายุแล้ว ไม่สามารถต่ออายุตามกำหนดเวลานี้ได้ กรุณาตรวจสอบว่าต้องดำเนินการขอออกใบรับรองใหม่หรือไม่'))
     : late ? note('warn',L(`The 150-day application date (${dfmt(addDays(S.expiry,-150))}) has already passed.`,`พ้นกำหนดยื่นคำขอล่วงหน้า 150 วัน (${dfmt(addDays(S.expiry,-150))}) แล้ว`)) : '';
-  el.innerHTML=(S.expiryAuto?`<div class="fleetline muted" style="margin:6px 0">${ICON.info}<span>${L('Expiry prefilled from the AOC register. Edit it if it has changed.','วันหมดอายุดึงจากทะเบียนใบรับรอง แก้ไขได้หากมีการเปลี่ยนแปลง')}</span></div>`:'')+lateNote+`<div class="tl"><div class="hl"><small>${L('Apply no later than','ยื่นคำขอภายใน')}</small><b>${dfmt(addDays(S.expiry,-150))}</b><small>${L('150 days before expiry','ไม่น้อยกว่า 150 วันก่อนหมดอายุ')}</small></div>
-    <div><small>${L('New AOC can be issued from','ออกใบรับรองฉบับใหม่ได้ตั้งแต่')}</small><b>${dfmt(addDays(S.expiry,-45))}</b><small>${L('up to 45 days before expiry','ไม่เกิน 45 วันก่อนหมดอายุ')}</small></div>
-    <div><small>${L('Current AOC expires','ใบรับรองฉบับเดิมหมดอายุ')}</small><b>${dfmt(S.expiry)}</b><small>${L('continuity from old certificate','มีผลต่อเนื่องจากฉบับเดิม')}</small></div></div>`
+  el.innerHTML=(S.expiryAuto?`<div class="fleetline muted" style="margin:6px 0">${ICON.info}<span>${L('Expiry prefilled from the AOC register. Edit it if it has changed.','วันหมดอายุดึงจากทะเบียนใบรับรอง แก้ไขได้หากมีการเปลี่ยนแปลง')}</span></div>`:'')+lateNote+`<div class="tl"><div class="hl"><small>${L('Apply no later than','ยื่นคำขอภายใน')}</small><b>${dfmt(addDays(S.expiry,-150))}</b>${tlLeft(addDays(S.expiry,-150))}<small>${L('150 days before expiry','ไม่น้อยกว่า 150 วันก่อนหมดอายุ')}</small></div>
+    <div><small>${L('New AOC can be issued from','ออกใบรับรองฉบับใหม่ได้ตั้งแต่')}</small><b>${dfmt(addDays(S.expiry,-45))}</b>${tlLeft(addDays(S.expiry,-45))}<small>${L('up to 45 days before expiry','ไม่เกิน 45 วันก่อนหมดอายุ')}</small></div>
+    <div><small>${L('Current AOC expires','ใบรับรองฉบับเดิมหมดอายุ')}</small><b>${dfmt(S.expiry)}</b>${tlLeft(S.expiry)}<small>${L('continuity from old certificate','มีผลต่อเนื่องจากฉบับเดิม')}</small></div></div>`
     +(S.operator?`<button type="button" class="btn btn-s tl-cal" data-act="icsOne" data-op="${esc(S.operator)}">${ICON.calAdd} ${L('Add deadlines to calendar','เพิ่มกำหนดการลงปฏิทิน')}</button>`:'');
 }
 
