@@ -1518,8 +1518,9 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.9', APP_DATE='2026-11-14';
+const APP_VERSION='3.10', APP_DATE='2026-11-14';
 const APP_LOG=[
+  {v:'3.10',d:'2026-11-14',en:['Operator search: opening the list highlights the operator already chosen, so pressing Enter no longer switches to the first one; tapping outside the list closes it on iPad and iPhone.'],th:['ค้นหาผู้ดำเนินการ: เมื่อเปิดรายการ จะไฮไลต์ผู้ดำเนินการที่เลือกอยู่ การกด Enter จึงไม่เปลี่ยนไปยังรายการแรก และการแตะนอกรายการจะปิดรายการบน iPad และ iPhone']},
   {v:'3.9',d:'2026-11-14',en:['Air operator picker is searchable: type part of the English or Thai name, or the AOC number.','Dropdown arrows are drawn inside the box on every platform, and long names no longer push the box wider.'],th:['ค้นหาผู้ดำเนินการเดินอากาศได้ โดยพิมพ์ชื่อภาษาอังกฤษหรือภาษาไทยบางส่วน หรือเลขที่ใบรับรอง','ลูกศรของรายการแบบเลือกอยู่ภายในกรอบบนทุกอุปกรณ์ และชื่อที่ยาวไม่ทำให้กรอบขยายเกินขนาด']},
   {v:'3.8',d:'2026-11-14',en:['Renewal timeline: each date shows the days remaining (or how long ago it passed).'],th:['กำหนดเวลาการต่ออายุ: แสดงจำนวนวันที่เหลือของแต่ละวันที่ (หรือจำนวนวันที่ผ่านมาแล้ว)']},
   {v:'3.7',d:'2026-11-13',en:['Report: signature fields removed; Changes and Section 5/1 inspection show a grey “Not Applicable” when marked N/A.'],th:['รายงาน: ตัดช่องลงนามออก และแสดง “ไม่เกี่ยวข้อง (N/A)” สีเทาสำหรับการเปลี่ยนแปลงและค่าใช้จ่ายในการตรวจสอบเมื่อกำหนดเป็นไม่เกี่ยวข้อง']},
@@ -1985,7 +1986,7 @@ function opcOpen(){
   const pan=document.createElement('div'); pan.className='opc-pan';
   pan.innerHTML=`<div class="opc-search">${ICON.search||''}<input type="search" class="opc-q" placeholder="${esc(L('Search name, Thai name or AOC no.','ค้นหาชื่อ ชื่อภาษาไทย หรือเลขที่ใบรับรอง'))}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${esc(L('Search air operator','ค้นหาผู้ดำเนินการเดินอากาศ'))}"></div><div class="opc-list" role="listbox"></div>`;
   box.appendChild(pan); box.querySelector('.opc-btn').setAttribute('aria-expanded','true'); box.classList.add('open');
-  const q=pan.querySelector('.opc-q'), list=pan.querySelector('.opc-list'), items=opcItems(); let act=0, shown=[];
+  const q=pan.querySelector('.opc-q'), list=pan.querySelector('.opc-list'), items=opcItems(); let act=Math.max(0,items.findIndex(x=>x.v===S.operator)), shown=[];
   const draw=()=>{ const t=q.value.trim().toLowerCase(); const words=t.split(/\s+/).filter(Boolean);
     shown=items.filter(x=>words.every(w=>x.hay.includes(w)));
     act=Math.min(act,Math.max(0,shown.length));
@@ -2005,6 +2006,7 @@ function opcOpen(){
 function opcClose(){ const box=document.querySelector('.opcombo'); if(!box) return; const p=box.querySelector('.opc-pan'); if(p) p.remove(); box.classList.remove('open'); const b=box.querySelector('.opc-btn'); if(b) b.setAttribute('aria-expanded','false'); }
 function opcPick(v){ opcClose(); const sel=document.querySelector('select[data-bind="opsel"]'); if(!sel) return; sel.value=v; sel.dispatchEvent(new Event('change',{bubbles:true})); }
 document.addEventListener('click',e=>{ if(!e.target.closest('.opcombo')) opcClose(); });
+document.addEventListener('touchstart',e=>{ if(!e.target.closest('.opcombo')) opcClose(); },{passive:true});
 function renderOpbar(){
   const el=document.getElementById('opbar');
   if(['settings','ref'].includes(S.tab)){ el.innerHTML=''; return; }
