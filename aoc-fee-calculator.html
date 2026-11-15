@@ -751,6 +751,7 @@ select::-ms-expand{display:none}
 .rev-y{border-radius:14px;padding:12px 14px;background:linear-gradient(180deg,#fff,#f2f6fb);border:1px solid #dfe7f1;min-width:0}
 .rev-y.now{background:linear-gradient(180deg,#fff,#e9f5f3);border-color:#cde6e1}
 .rev-t b{display:block;font-size:15px;color:var(--navy)}
+.rev-t span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rev-t span{font-size:11.5px;color:var(--grey-soft)}
 .rev-a{font-size:21px;font-weight:700;color:var(--blue);margin-top:6px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .rev-y.now .rev-a{color:var(--teal)}
@@ -762,7 +763,8 @@ select::-ms-expand{display:none}
 .rev-d{margin-top:8px;font-size:12.5px}
 .rev-d summary{cursor:pointer;color:var(--blue);font-weight:600}
 .rev-d ul{list-style:none;margin:6px 0 0;padding:0}
-.rev-d li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px solid #e9eef4}
+.rev-d li{display:flex;flex-direction:column;gap:1px;padding:6px 0;border-top:1px solid #e9eef4}
+.rev-d li b{color:var(--blue)}
 .rev-d li span{min-width:0}
 .rev-d li small{display:block;color:var(--grey-soft)}
 .rev-d li b{white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -1633,8 +1635,9 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.19', APP_DATE='2026-11-15';
+const APP_VERSION='3.20', APP_DATE='2026-11-15';
 const APP_LOG=[
+  {v:'3.20',d:'2026-11-15',en:['Expected renewal revenue: one click on Show AOCs opens or closes the lists for every year at once. The part-year dates are shorter, so the year cards line up.'],th:['ส่วนประมาณการรายได้จากการต่ออายุ: คลิกแสดงรายการเพียงครั้งเดียวเพื่อเปิดหรือปิดรายการของทุกปีพร้อมกัน และย่อวันที่ของปีที่ไม่เต็มปีให้สั้นลง เพื่อให้การ์ดรายปีเรียงตรงกัน']},
   {v:'3.19',d:'2026-11-15',en:['The Surveillance Coverage Projection password has changed.'],th:['เปลี่ยนรหัสผ่านของส่วนประมาณการความครอบคลุมงบประมาณการกำกับดูแลแล้ว']},
   {v:'3.18',d:'2026-11-15',en:['Expected renewal revenue uses calendar years only (the Fiscal year option is removed) and covers the next 5 years from today, so every current AOC is counted once. The Surveillance Coverage Projection uses the same total: renewal revenue per 5-year cycle minus the annual budget × 5, with the average per AOC.'],th:['ส่วนประมาณการรายได้จากการต่ออายุใช้ปีปฏิทินเท่านั้น (นำตัวเลือกปีงบประมาณออก) และครอบคลุม 5 ปีข้างหน้านับจากวันนี้ จึงนับใบรับรองที่มีผลอยู่ทุกฉบับครั้งเดียว ส่วนประมาณการความครอบคลุมงบประมาณการกำกับดูแลใช้ยอดเดียวกัน คือรายได้จากการต่ออายุต่อรอบ 5 ปี หักงบประมาณต่อปี × 5 พร้อมค่าเฉลี่ยต่อใบรับรอง']},
   {v:'3.17',d:'2026-11-15',en:['Expected renewal revenue now shows five years (this year and the next four, one full AOC cycle), so its total matches the Surveillance Coverage Projection. The projection no longer has the year-by-year bar chart; it keeps the three figures, the ring chart and the summary.'],th:['ส่วนประมาณการรายได้จากการต่ออายุแสดงข้อมูล 5 ปี (ปีนี้และอีกสี่ปีถัดไป ครบหนึ่งรอบอายุใบรับรอง) ยอดรวมจึงตรงกับส่วนประมาณการความครอบคลุมงบประมาณการกำกับดูแล และนำกราฟแท่งรายปีออกจากส่วนประมาณการดังกล่าว โดยคงตัวเลขสรุปสามรายการ แผนภูมิวงกลม และข้อความสรุปไว้']},
@@ -1664,7 +1667,7 @@ const S={
   tab:'cert', healthy:true, tests:[],
   lang: load('aoc.lang')==='th'?'th':'en',
   sumMode: load('aoc.sumMode')==='simple'?'simple':'detailed',
-  survBudget: load('aoc.survBudget')||'16000000', survOpen:false, survUnlocked:false, survAsk:false, survErr:'',
+  revAll:false, survBudget: load('aoc.survBudget')||'16000000', survOpen:false, survUnlocked:false, survAsk:false, survErr:'',
   tx:'renewal',
   types:[{id:nid(),ac:'',name:'',cat:'AEROPLANE',heavy:true,area:'',mtow:'',count:1,showMtow:false,legacyConfirm:null}],
   expiry:'',
@@ -2494,7 +2497,8 @@ function revWindow(rows){
   const start=localISO(), end=plusYears(start,5), y0=revYear(start), y5=revYear(end);
   const live=rows.filter(r=>r.band!=='app'&&r.band!=='nodate'&&r.exp&&r.de>=0&&r.exp<=end);
   const Y=[]; for(let y=y0;y<=y5;y++){ const rs=live.filter(r=>revYear(r.exp)===y).sort((a,b)=>a.exp.localeCompare(b.exp));
-    const sub = y===y0 ? L(`${dfmt(start)} – 31 Dec ${y}`,`${dfmt(start)} – 31 ธ.ค. ${y+543}`) : y===y5 ? L(`1 Jan – ${dfmt(end)}`,`1 ม.ค. – ${dfmt(end)}`) : revYearLabel(y).sub;
+    const dm=iso=>new Date(iso+'T00:00:00Z').toLocaleDateString(dloc(),{day:'numeric',month:'short',timeZone:'UTC'});
+    const sub = y===y0 ? L(`${dm(start)} – 31 Dec`,`${dm(start)} – 31 ธ.ค.`) : y===y5 ? L(`1 Jan – ${dm(end)}`,`1 ม.ค. – ${dm(end)}`) : revYearLabel(y).sub;
     Y.push({y,rs,sub,n:rs.length,sum:rs.reduce((a,r)=>a+(r.fee||0),0),miss:rs.filter(r=>r.fee==null).length,mix:rs.filter(r=>r.mixed&&r.fee!=null).length}); }
   const sum=k=>Y.reduce((a,x)=>a+x[k],0);
   return {start,end,Y,total:sum('sum'),n:sum('n'),miss:sum('miss'),mix:sum('mix'),
@@ -2589,10 +2593,10 @@ function revenueHTML(rows){
     <p class="sub">${L(`The next 5 years (${dfmt(W.start)} – ${dfmt(W.end)}), by the calendar year each AOC expires. Every current AOC renews once in this period.`,`5 ปีข้างหน้า (${dfmt(W.start)} – ${dfmt(W.end)}) จัดตามปีปฏิทินที่ใบรับรองหมดอายุ ใบรับรองที่มีผลอยู่ทุกฉบับจะต่ออายุหนึ่งครั้งในช่วงนี้`)}</p></div></div>
     ${revChartHTML(Y)}
     <div class="rev-grid">${Y.map((x,i)=>{ const lb=revYearLabel(x.y);
-      return `<div class="rev-y ${i===0?'now':''}"><div class="rev-t"><b>${esc(lb.main)}</b><span>${esc(x.sub)}</span></div>
+      return `<div class="rev-y ${i===0?'now':''} ${S.revAll&&x.rs.length?'open':''}"><div class="rev-t"><b>${esc(lb.main)}</b><span>${esc(x.sub)}</span></div>
         <div class="rev-a"><i>฿</i>${fmt(x.sum)}</div>
         <div class="rev-n">${L(`${x.rs.length} AOC${x.rs.length===1?'':'s'}`,`${x.rs.length} ฉบับ`)}${x.miss?`<span class="rev-miss">${L(`${x.miss} without an estimate`,`ไม่มีประมาณการ ${x.miss} ฉบับ`)}</span>`:''}</div>
-        ${x.rs.length?`<details class="rev-d" ontoggle="this.closest('.rev-y').classList.toggle('open',this.open)"><summary>${L('Show AOCs','แสดงรายการ')}</summary><ul>${x.rs.map(r=>`<li><span>${esc(opName(r.op))}<small>${L('Expires','หมดอายุ')} ${dfmt(r.exp)}</small></span><b>${r.fee!=null?fmt(r.fee):`<em>${esc(WHY()[r.why]||'–')}</em>`}</b></li>`).join('')}</ul></details>`:''}
+        ${x.rs.length?`<details class="rev-d" ${S.revAll?'open':''}><summary data-act="revAll">${S.revAll?L('Hide AOCs','ซ่อนรายการ'):L('Show AOCs','แสดงรายการ')}</summary><ul>${x.rs.map(r=>`<li><span>${esc(opName(r.op))}<small>${L('Expires','หมดอายุ')} ${dfmt(r.exp)}</small></span><b>${r.fee!=null?fmt(r.fee):`<em>${esc(WHY()[r.why]||'–')}</em>`}</b></li>`).join('')}</ul></details>`:''}
       </div>`; }).join('')}</div>
     <div class="rev-tot"><span>${L(`Next 5 years total · ${allN} AOC${allN===1?'':'s'}`,`รวม 5 ปีข้างหน้า · ${allN} ฉบับ`)}${allMiss?L(` · ${allMiss} without an estimate, not in the total`,` · ${allMiss} ฉบับไม่มีประมาณการ จึงไม่รวมในยอดนี้`):''}${allMix?MIXN(allMix):''}</span><b>฿ ${fmt(all)}</b></div>
     <p class="pnote" style="margin:10px 0 0">${L(
@@ -3061,6 +3065,9 @@ document.addEventListener('click',e=>{
     case 'send': needAck('send',openSend); return;
     case 'pipeF': S.pipeF=v; renderPage(); return;
     case 'opcOpen': { const box=document.querySelector('.opcombo'); if(box&&box.querySelector('.opc-pan')) opcClose(); else opcOpen(); return; }
+    case 'revAll': { e.preventDefault(); S.revAll=!S.revAll;
+      document.querySelectorAll('.rev-grid .rev-y').forEach(y=>{ const d=y.querySelector('.rev-d'); if(!d) return; d.open=S.revAll; y.classList.toggle('open',S.revAll); const sm=d.querySelector('summary'); if(sm) sm.textContent=S.revAll?L('Hide AOCs','ซ่อนรายการ'):L('Show AOCs','แสดงรายการ'); });
+      return; }
     case 'svcToggle': if(S.survUnlocked){ S.survOpen=!S.survOpen; svcRender(); } else { S.survAsk=!S.survAsk; S.survErr=''; svcRender(S.survAsk?'svcPw':''); } return;
     case 'svcLock': S.survUnlocked=false; S.survOpen=false; S.survAsk=false; S.survErr=''; svcRender(); return;
     case 'revTip': { const t=document.getElementById('rcTip'); if(t){ t.textContent=el.dataset.tip; t.classList.add('on'); } document.querySelectorAll('.rc-seg.sel').forEach(x=>x.classList.remove('sel')); el.classList.add('sel'); return; }
