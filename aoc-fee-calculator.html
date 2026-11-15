@@ -824,6 +824,20 @@ select::-ms-expand{display:none}
 .svc-lg{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:#5c3a3a}
 .svc-lg i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 .svc-say p{margin:0 0 6px;font-size:13.5px;line-height:1.5;color:#4a2a2a}.svc-say p:first-child{font-weight:600;color:#5c1a1a}
+.be{margin-top:12px;padding:12px 14px;border-radius:14px;background:#fff;border:1px solid #efd3d3;border-left:4px solid #9e2f2f}
+.be-h{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:4px 16px}
+.be-h small{display:block;font-size:12px;color:#8a4a4a;font-weight:600}
+.be-h b{display:block;font-size:20px;color:#5c1a1a;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.be-h b i{font-style:normal;font-size:.6em;margin-right:2px;opacity:.75}.be-h b em{font-style:normal;font-size:.55em;font-weight:600;color:#8f6b6b;margin-left:3px}
+.be-h>span{font-size:11.5px;color:#8f6b6b;flex:1 1 220px;text-align:right}
+.be-g{position:relative;height:12px;border-radius:99px;background:#f3e1e1;margin:22px 0 8px}
+.be-f{height:100%;border-radius:99px;background:linear-gradient(90deg,#7fa88c,#5f8f6f);transition:width .5s ease}
+.be-f.over{background:linear-gradient(90deg,#d07a72,#9e2f2f)}
+.be-m{position:absolute;top:-6px;bottom:-6px;width:0;border-left:2px dashed #5c1a1a}
+.be-m span{position:absolute;bottom:100%;left:0;transform:translateX(-50%);font-size:10.5px;font-weight:700;color:#5c1a1a;white-space:nowrap;margin-bottom:2px}
+.be-m.end span{transform:translateX(-100%);left:-4px}.be-m.start span{transform:none;left:4px}
+.be p{margin:6px 0 0;font-size:13px;color:#4a2a2a}
+@media (max-width:640px){.be-h>span{text-align:left}}
 .svc-note{margin:12px 0 0;font-size:11.5px;line-height:1.5;color:#8f6b6b}
 @media (max-width:640px){.svk-row{grid-template-columns:minmax(0,1fr)}.svc-viz{grid-template-columns:minmax(0,1fr)}.svc-dw{justify-content:center}
   .svc-dw{flex-direction:column;gap:8px}.svc-lg{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:4px 14px}}
@@ -1635,8 +1649,9 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.20', APP_DATE='2026-11-15';
+const APP_VERSION='3.21', APP_DATE='2026-11-15';
 const APP_LOG=[
+  {v:'3.21',d:'2026-11-15',en:['Surveillance Coverage Projection shows the break-even budget: the annual budget at which 5 years of surveillance equals the renewal revenue (revenue ÷ 5), with a bar comparing it with the current budget.'],th:['ส่วนประมาณการความครอบคลุมงบประมาณการกำกับดูแลแสดงงบประมาณ ณ จุดคุ้มทุน คืองบประมาณต่อปีที่ทำให้งบประมาณการกำกับดูแล 5 ปีเท่ากับรายได้จากการต่ออายุ (รายได้ ÷ 5) พร้อมแถบเปรียบเทียบกับงบประมาณปัจจุบัน']},
   {v:'3.20',d:'2026-11-15',en:['Expected renewal revenue: one click on Show AOCs opens or closes the lists for every year at once. The part-year dates are shorter, so the year cards line up.'],th:['ส่วนประมาณการรายได้จากการต่ออายุ: คลิกแสดงรายการเพียงครั้งเดียวเพื่อเปิดหรือปิดรายการของทุกปีพร้อมกัน และย่อวันที่ของปีที่ไม่เต็มปีให้สั้นลง เพื่อให้การ์ดรายปีเรียงตรงกัน']},
   {v:'3.19',d:'2026-11-15',en:['The Surveillance Coverage Projection password has changed.'],th:['เปลี่ยนรหัสผ่านของส่วนประมาณการความครอบคลุมงบประมาณการกำกับดูแลแล้ว']},
   {v:'3.18',d:'2026-11-15',en:['Expected renewal revenue uses calendar years only (the Fiscal year option is removed) and covers the next 5 years from today, so every current AOC is counted once. The Surveillance Coverage Projection uses the same total: renewal revenue per 5-year cycle minus the annual budget × 5, with the average per AOC.'],th:['ส่วนประมาณการรายได้จากการต่ออายุใช้ปีปฏิทินเท่านั้น (นำตัวเลือกปีงบประมาณออก) และครอบคลุม 5 ปีข้างหน้านับจากวันนี้ จึงนับใบรับรองที่มีผลอยู่ทุกฉบับครั้งเดียว ส่วนประมาณการความครอบคลุมงบประมาณการกำกับดูแลใช้ยอดเดียวกัน คือรายได้จากการต่ออายุต่อรอบ 5 ปี หักงบประมาณต่อปี × 5 พร้อมค่าเฉลี่ยต่อใบรับรอง']},
@@ -2530,13 +2545,27 @@ function svcDonut(d,c){
   return `<svg class="svc-donut" viewBox="0 0 120 120" role="img" aria-label="${esc(big+' '+small)}"><circle cx="60" cy="60" r="42" class="trk"/>${segs}
     <text x="60" y="58" class="d1">${esc(big)}</text><text x="60" y="76" class="d2">${esc(small)}</text></svg>`;
 }
+/* Break-even budget: the annual budget at which 5 years of surveillance equals one cycle of renewal revenue */
+function svcBreakEven(d,B,has){
+  if(!(d.total>0)) return '';
+  const be=d.total/5, beR=Math.round(be);
+  let gauge='', line;
+  if(has){
+    const max=Math.max(be,B)*1.08, over=B>be, diff=Math.abs(beR-Math.round(B));
+    gauge=`<div class="be-g" role="img" aria-label="${esc(L(`Budget ฿${fmt(B)} against break-even ฿${fmt(beR)}`,`งบประมาณ ${fmt(B)} บาท เทียบกับจุดคุ้มทุน ${fmt(beR)} บาท`))}"><div class="be-f ${over?'over':''}" style="width:${B/max*100}%"></div><div class="be-m ${be/max>0.7?'end':be/max<0.3?'start':''}" style="left:${be/max*100}%"><span>${L('Break-even','จุดคุ้มทุน')}</span></div></div>`;
+    line = diff===0 ? L('The current budget is exactly at break-even.','งบประมาณปัจจุบันเท่ากับจุดคุ้มทุนพอดี')
+      : over ? L(`The current budget is ฿${fmt(diff)} a year above break-even (${pctTxt(B/be*100)} of it).`,`งบประมาณปัจจุบันสูงกว่าจุดคุ้มทุนปีละ ${fmt(diff)} บาท (ร้อยละ ${pctTxt(B/be*100).replace('%','')} ของจุดคุ้มทุน)`)
+      : L(`The current budget is ${pctTxt(B/be*100)} of break-even: there is room for ฿${fmt(diff)} more a year before fees stop covering it.`,`งบประมาณปัจจุบันคิดเป็นร้อยละ ${pctTxt(B/be*100).replace('%','')} ของจุดคุ้มทุน เพิ่มได้อีกปีละ ${fmt(diff)} บาท ก่อนที่ค่าธรรมเนียมจะไม่เพียงพอ`);
+  } else line=L('Enter a budget above to compare it with break-even.','กรอกงบประมาณด้านบนเพื่อเปรียบเทียบกับจุดคุ้มทุน');
+  return `<div class="be"><div class="be-h"><div><small>${L('Break-even budget','งบประมาณ ณ จุดคุ้มทุน')}</small><b><i>฿</i>${fmt(beR)}<em>${L(' / year','/ปี')}</em></b></div><span>${L(`Revenue ฿${fmt(d.total)} ÷ 5 years: at this budget, revenue = surveillance.`,`รายได้ ${fmt(d.total)} บาท ÷ 5 ปี เมื่องบประมาณเท่านี้ รายได้จะเท่ากับงบประมาณการกำกับดูแล`)}</span></div>${gauge}<p>${esc(line)}</p></div>`;
+}
 function svcOut(){
   const d=svcData(S._svcRows||pipeRows()), B=toNum(S.survBudget), has=B!=null&&!isNaN(B)&&B>0;
   const l0=dfmt(d.start), l4=dfmt(d.end);
   const revTile=`<div class="svk"><small>${L('Renewal revenue per 5-year cycle','รายได้จากการต่ออายุต่อรอบ 5 ปี')}</small><b><i>฿</i>${fmt(d.total)}</b><span>${L(`${d.n} AOC${d.n===1?'':'s'} × one renewal each`,`${d.n} ฉบับ × ต่ออายุฉบับละครั้ง`)}</span></div>`;
   let h='';
   if(!has){
-    h=`<div class="svk-row one">${revTile}</div><div class="svc-empty">${ICON.info}<span>${L('Enter the annual surveillance budget above to see what remains after five years.','กรอกงบประมาณการกำกับดูแลต่อปีด้านบน เพื่อดูยอดคงเหลือเมื่อครบ 5 ปี')}</span></div>`;
+    h=`<div class="svk-row one">${revTile}</div>${svcBreakEven(d,0,false)}<div class="svc-empty">${ICON.info}<span>${L('Enter the annual surveillance budget above to see what remains after five years.','กรอกงบประมาณการกำกับดูแลต่อปีด้านบน เพื่อดูยอดคงเหลือเมื่อครบ 5 ปี')}</span></div>`;
   } else {
     const c=svcCalc(d.total,B), neg=c.rem<0;
     h=`<div class="svk-row">${revTile}
@@ -2546,6 +2575,7 @@ function svcOut(){
     if(d.total>0) say.push(neg?L(`Over five years, renewal fees cover ${pctTxt(c.cover)} of the surveillance budget, leaving a gap of ฿${fmt(-c.rem)}.`,`ในรอบ 5 ปี ค่าธรรมเนียมการต่ออายุครอบคลุมงบประมาณการกำกับดูแลร้อยละ ${pctTxt(c.cover).replace('%','')} โดยยังขาดอีก ${fmt(-c.rem)} บาท`)
                               :L(`Over five years, renewal fees cover the surveillance budget and leave ฿${fmt(c.rem)} (${pctTxt(c.pct)} of the revenue).`,`ในรอบ 5 ปี ค่าธรรมเนียมการต่ออายุครอบคลุมงบประมาณการกำกับดูแล และคงเหลือ ${fmt(c.rem)} บาท (ร้อยละ ${pctTxt(c.pct).replace('%','')} ของรายได้)`));
     say.push(L(`Per AOC: average fee ฿${fmt(Math.round(d.total/Math.max(1,d.n)))} − surveillance ฿${fmt(Math.round(c.surv/Math.max(1,d.n)))} = ฿${fmt(Math.round(c.rem/Math.max(1,d.n)))} per cycle (budget shared equally across ${d.n} AOCs).`,`ต่อใบรับรอง: ค่าธรรมเนียมเฉลี่ย ${fmt(Math.round(d.total/Math.max(1,d.n)))} บาท − งบประมาณการกำกับดูแล ${fmt(Math.round(c.surv/Math.max(1,d.n)))} บาท = ${fmt(Math.round(c.rem/Math.max(1,d.n)))} บาทต่อรอบ (เฉลี่ยงบประมาณเท่ากันทุกฉบับ ${d.n} ฉบับ)`));
+    h+=svcBreakEven(d,B,true);
     h+=`<div class="svc-viz"><div class="svc-dw">${svcDonut(d,c)}<div class="svc-lg">${neg
         ?`<span><i style="background:#d9a3a3"></i>${L('Covered by revenue','ส่วนที่รายได้ครอบคลุม')}</span><span><i style="background:#7a1717"></i>${L('Gap','ส่วนที่ขาด')}</span>`
         :`<span><i style="background:#a83232"></i>${L('Surveillance','การกำกับดูแล')} · ${pctTxt(100-c.pct)}</span><span><i style="background:#5f8f6f"></i>${L('Remaining','คงเหลือ')} · ${pctTxt(c.pct)}</span>`}</div></div>
