@@ -331,6 +331,10 @@ body.pv-open{overflow:hidden}
 .pv-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;padding-top:max(12px,env(safe-area-inset-top));background:linear-gradient(90deg,#1a2e4a,#1e4d8c);color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.25)}
 .pv-t{flex:1;min-width:0}.pv-t b{display:block;font-size:15px}.pv-t span{display:block;font-size:11.5px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pv-bar .btn{flex:none}
+.pv-bar .btn[disabled]{opacity:.65;cursor:progress}
+body.pv-open .ack{z-index:97}
+body.pv-open .toast{z-index:120}
+@media (max-width:440px){.pv-bar{gap:6px;padding-left:12px;padding-right:12px}.pv-bar .btn{padding-left:10px;padding-right:10px}.pv-bar .btn-dl .bl{display:none}}
 .pv-scroll{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:18px 12px 40px}
 .pv-page{width:794px;min-height:1123px;margin:0 auto;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.35);padding:45px 49px 53px;box-sizing:border-box;position:relative;transform:translateZ(0);overflow:hidden;border-radius:2px;color:#1a2e4a}
 .pv-page .rp-wm{position:absolute;top:520px}
@@ -1571,8 +1575,9 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.12', APP_DATE='2026-11-14';
+const APP_VERSION='3.13', APP_DATE='2026-11-15';
 const APP_LOG=[
+  {v:'3.13',d:'2026-11-15',en:['Print preview now has a Download button next to Print. It saves the report as a PDF without leaving the preview.'],th:['หน้าตัวอย่างก่อนพิมพ์มีปุ่มดาวน์โหลดเพิ่มถัดจากปุ่มพิมพ์ ใช้บันทึกรายงานเป็นไฟล์ PDF ได้โดยไม่ต้องออกจากหน้าตัวอย่าง']},
   {v:'3.12',d:'2026-11-14',en:['Mixed AOC fixes: a boundary-weight type in a mixed AOC again needs CAAT confirmation and is left out of the Pipeline totals; the readings now split only by kind (aeroplane, helicopter, balloon), so large and small aeroplanes stay one kind; the Simple view and report list every application fee and main type with the right references; additional-type references cite each section used; Pipeline totals say when they include a mixed-AOC estimate; the Inspection tab no longer says Calculated for an estimated certificate fee; copied text names each application fee; the error-report email includes the reading.'],th:['แก้ไขใบรับรองประเภทผสม: แบบอากาศยานที่มีน้ำหนักอยู่ที่เกณฑ์พอดีในใบรับรองประเภทผสมต้องได้รับการยืนยันจาก กพท. และไม่นับรวมในยอดหน้าต่ออายุ แนวทางคำนวณแบ่งตามประเภทอากาศยาน (เครื่องบิน เฮลิคอปเตอร์ บัลลูน) เท่านั้น เครื่องบินขนาดใหญ่และขนาดเล็กจึงนับเป็นประเภทเดียวกัน มุมมองแบบย่อและรายงานแสดงค่าธรรมเนียมการยื่นคำขอและแบบหลักครบทุกรายการพร้อมอ้างอิงที่ถูกต้อง อ้างอิงค่าเพิ่มแบบอากาศยานระบุทุกข้อที่ใช้ ยอดหน้าต่ออายุระบุเมื่อรวมประมาณการใบรับรองประเภทผสม หน้าค่าใช้จ่ายในการตรวจสอบไม่แสดงว่าคำนวณแล้วเมื่อค่าใบรับรองเป็นประมาณการ ข้อความที่คัดลอกระบุประเภทของค่าธรรมเนียมการยื่นคำขอ และอีเมลแจ้งข้อผิดพลาดระบุแนวทางที่ใช้']},
   {v:'3.11',d:'2026-11-14',en:['Mixed AOCs (for example planes and helicopters, as Siam Land Flying) now get an estimated fee instead of none. Settings has five readings of how a mixed AOC could be charged (A to E); A is the default. Mixed AOCs are marked as estimates and are counted in the Pipeline totals.'],th:['ใบรับรองที่มีอากาศยานต่างประเภท (เช่น เครื่องบินและเฮลิคอปเตอร์ ของสยามแลนด์ ฟลายอิ้ง) แสดงค่าธรรมเนียมโดยประมาณแล้ว แทนที่จะไม่แสดง หน้าตั้งค่ามีแนวทางคำนวณห้าแบบ (A ถึง E) โดย A เป็นค่าเริ่มต้น ใบรับรองประเภทผสมระบุเป็นประมาณการและนับรวมในยอดหน้าต่ออายุ']},
   {v:'3.10',d:'2026-11-14',en:['Operator search: opening the list highlights the operator already chosen, so pressing Enter no longer switches to the first one; tapping outside the list closes it on iPad and iPhone.'],th:['ค้นหาผู้ดำเนินการ: เมื่อเปิดรายการ จะไฮไลต์ผู้ดำเนินการที่เลือกอยู่ การกด Enter จึงไม่เปลี่ยนไปยังรายการแรก และการแตะนอกรายการจะปิดรายการบน iPad และ iPhone']},
@@ -2632,7 +2637,7 @@ function editsCard(){
 
 /* ---------- Acknowledgement: shown before every print, send, download, CSV or copy ---------- */
 let ackNext=null;
-const ACK_LABEL=()=>({print:L('Print report','พิมพ์รายงาน'),send:L('Send PDF report','ส่งรายงาน PDF'),csv:L('Export CSV','ส่งออกไฟล์ CSV'),copy:L('Copy summary','คัดลอกสรุป')});
+const ACK_LABEL=()=>({print:L('Print report','พิมพ์รายงาน'),download:L('Download PDF report','ดาวน์โหลดรายงาน PDF'),send:L('Send PDF report','ส่งรายงาน PDF'),csv:L('Export CSV','ส่งออกไฟล์ CSV'),copy:L('Copy summary','คัดลอกสรุป')});
 function needAck(kind,fn){
   if(!S.healthy){ toast(L('Calculator locked: self-test failed','ระบบถูกระงับ: การทดสอบไม่ผ่าน')); return; }
   ackNext=fn; const el=document.getElementById('ack');
@@ -2668,10 +2673,25 @@ function openPreview(){
   if(!S.healthy){ toast(L('Calculator locked: self-test failed','ระบบถูกระงับ: การทดสอบไม่ผ่าน')); return; }
   let el=document.getElementById('pv'); if(!el){ el=document.createElement('div'); el.id='pv'; el.className='pv'; el.setAttribute('role','dialog'); el.setAttribute('aria-modal','true'); document.body.appendChild(el); }
   el.innerHTML=`<div class="pv-bar"><div class="pv-t"><b>${L('Print preview','ตัวอย่างก่อนพิมพ์')}</b><span>${L(`A4 · ${S.sumMode==='simple'?'simple':'detailed'} view · page breaks may differ slightly when printed`,`A4 · ${S.sumMode==='simple'?'แบบย่อ':'แบบละเอียด'} · ตำแหน่งการแบ่งหน้าอาจต่างเล็กน้อยเมื่อพิมพ์จริง`)}</span></div>
-    <button type="button" class="btn btn-p" data-act="pvPrint">${ICON.print} ${L('Print','พิมพ์')}</button><button type="button" class="btn btn-s" data-act="pvClose">${L('Close','ปิด')}</button></div>
+    <button type="button" class="btn btn-p" data-act="pvPrint">${ICON.print} ${L('Print','พิมพ์')}</button><button type="button" class="btn btn-s btn-dl" data-act="pvDl" aria-label="${esc(L('Download PDF','ดาวน์โหลด PDF'))}">${ICON.dl}<span class="bl"> ${L('Download','ดาวน์โหลด')}</span></button><button type="button" class="btn btn-s" data-act="pvClose">${L('Close','ปิด')}</button></div>
     <div class="pv-scroll"><div class="pv-page">${reportHTML()}</div></div>`;
   el.classList.add('on'); document.body.classList.add('pv-open'); fitPreview();
   const c=el.querySelector('[data-act=pvClose]'); if(c) c.focus();
+}
+/* Download the PDF from inside the preview (same PDF as the Send sheet); the preview stays open */
+let pvBusy=false;
+async function pvDownload(){
+  if(pvBusy) return;
+  if(!S.healthy){ toast(L('Calculator locked: self-test failed','ระบบถูกระงับ: การทดสอบไม่ผ่าน')); return; }
+  const btn=document.querySelector('.pv.on [data-act=pvDl]'), keep=btn?btn.innerHTML:'';
+  pvBusy=true; if(btn){ btn.disabled=true; btn.innerHTML=ICON.dl+'<span> '+L('Preparing…','กำลังจัดทำ…')+'</span>'; }
+  try{
+    const b=await makePdf(), url=URL.createObjectURL(b);
+    const a=document.createElement('a'); a.href=url; a.download=fileStem()+'.pdf'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),30000);
+    toast(L('PDF downloaded','ดาวน์โหลด PDF แล้ว'));
+  }catch(e){ toast(L('Could not create the PDF here. Use Print → Save as PDF.','ไม่สามารถจัดทำไฟล์ PDF ได้ โปรดใช้พิมพ์ แล้วเลือกบันทึกเป็น PDF')); }
+  finally{ pvBusy=false; const b2=document.querySelector('.pv.on [data-act=pvDl]'); if(b2){ b2.disabled=false; b2.innerHTML=keep; } }
 }
 function fitPreview(){ const pg=document.querySelector('.pv.on .pv-page'); if(!pg) return; const s=Math.min(1,(window.innerWidth-24)/794); pg.style.zoom=s; }
 function closePreview(){ const el=document.getElementById('pv'); if(el){ el.classList.remove('on'); el.innerHTML=''; } document.body.classList.remove('pv-open'); }
@@ -2892,6 +2912,7 @@ document.addEventListener('click',e=>{
     case 'print': needAck('print',doPrint); return;
     case 'preview': openPreview(); return;
     case 'pvClose': closePreview(); return;
+    case 'pvDl': needAck('download',pvDownload); return;
     case 'pvPrint': closePreview(); needAck('print',doPrint); return;
     case 'printNow': doPrint(); return;
     case 'send': needAck('send',openSend); return;
