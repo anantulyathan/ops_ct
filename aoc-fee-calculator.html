@@ -1633,8 +1633,9 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.18', APP_DATE='2026-11-15';
+const APP_VERSION='3.19', APP_DATE='2026-11-15';
 const APP_LOG=[
+  {v:'3.19',d:'2026-11-15',en:['The Surveillance Coverage Projection password has changed.'],th:['เปลี่ยนรหัสผ่านของส่วนประมาณการความครอบคลุมงบประมาณการกำกับดูแลแล้ว']},
   {v:'3.18',d:'2026-11-15',en:['Expected renewal revenue uses calendar years only (the Fiscal year option is removed) and covers the next 5 years from today, so every current AOC is counted once. The Surveillance Coverage Projection uses the same total: renewal revenue per 5-year cycle minus the annual budget × 5, with the average per AOC.'],th:['ส่วนประมาณการรายได้จากการต่ออายุใช้ปีปฏิทินเท่านั้น (นำตัวเลือกปีงบประมาณออก) และครอบคลุม 5 ปีข้างหน้านับจากวันนี้ จึงนับใบรับรองที่มีผลอยู่ทุกฉบับครั้งเดียว ส่วนประมาณการความครอบคลุมงบประมาณการกำกับดูแลใช้ยอดเดียวกัน คือรายได้จากการต่ออายุต่อรอบ 5 ปี หักงบประมาณต่อปี × 5 พร้อมค่าเฉลี่ยต่อใบรับรอง']},
   {v:'3.17',d:'2026-11-15',en:['Expected renewal revenue now shows five years (this year and the next four, one full AOC cycle), so its total matches the Surveillance Coverage Projection. The projection no longer has the year-by-year bar chart; it keeps the three figures, the ring chart and the summary.'],th:['ส่วนประมาณการรายได้จากการต่ออายุแสดงข้อมูล 5 ปี (ปีนี้และอีกสี่ปีถัดไป ครบหนึ่งรอบอายุใบรับรอง) ยอดรวมจึงตรงกับส่วนประมาณการความครอบคลุมงบประมาณการกำกับดูแล และนำกราฟแท่งรายปีออกจากส่วนประมาณการดังกล่าว โดยคงตัวเลขสรุปสามรายการ แผนภูมิวงกลม และข้อความสรุปไว้']},
   {v:'3.16',d:'2026-11-15',en:['Surveillance Coverage Projection: hover over (or tap) a year bar to see the air operators paying renewal fees that year, with each fee and the total.'],th:['ส่วนประมาณการความครอบคลุมงบประมาณการกำกับดูแล: วางเมาส์ (หรือแตะ) แท่งกราฟรายปีเพื่อดูรายชื่อผู้ดำเนินการเดินอากาศที่ชำระค่าต่ออายุในปีนั้น พร้อมค่าธรรมเนียมแต่ละรายและยอดรวม']},
@@ -2552,7 +2553,7 @@ function svcOut(){
   return h;
 }
 /* Password gate (client-side only: hides the panel from casual users; the page source is public) */
-const SVC_PW_SHA='187f8c7fbd88d4c699874a298b71da0e408c3291c7181e5e4fbc0652f2f01763', SVC_PW_FNV='926b71dc';
+const SVC_PW_SHA='8a138bf0191c3b434a782eafd4a27869f417966e412c662cf312b02707869dc2', SVC_PW_FNV='7d025d96';
 async function svcPwOk(pw){
   try{ if(window.crypto&&crypto.subtle){ const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pw)); return Array.from(new Uint8Array(d)).map(x=>x.toString(16).padStart(2,'0')).join('')===SVC_PW_SHA; } }catch(e){}
   let h=0x811c9dc5; for(const ch of pw){ h^=ch.charCodeAt(0); h=Math.imul(h,0x01000193)>>>0; } return h.toString(16)===SVC_PW_FNV;
