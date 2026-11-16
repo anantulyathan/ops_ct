@@ -218,8 +218,24 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 .line .a{font-size:14px;font-weight:600;color:var(--navy);text-align:right;font-variant-numeric:tabular-nums}
 .line .r{grid-column:1/-1;font-size:11.5px;color:var(--grey-soft)}
 .line .r .thai{font-size:11.5px}
-.line.sum{border-top:2px solid var(--grey-light);border-bottom:0;margin-top:2px}
-.line.sum .t,.line.sum .a{font-weight:700;color:var(--navy);font-size:14.5px}
+.line.subt{margin:0 -20px;padding:12px 20px;border:0;border-top:1px solid #cfe0f3;border-bottom:1px solid #cfe0f3;border-radius:0;background:linear-gradient(180deg,#eaf2fc,#dce9f8)}.line.subt .t,.line.subt .a{font-weight:600;color:#2a4f82;font-size:14px}.line.subt .ref{font-weight:400;color:#5d7ca6;font-size:11px}
+.lines.cc .line.k-P{margin:0 -20px;padding:12px 20px;border:0;border-bottom:1px solid #cfe0f3;border-radius:0;background:linear-gradient(180deg,#eaf2fc,#dce9f8)}.lines.cc .line.k-P .t,.lines.cc .line.k-P .a{color:#2a4f82}.lines.cc .line.k-P .r{color:#5d7ca6}
+
+/* ---------- Acknowledgement popup (red) ---------- */
+.dsc{position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(48,12,12,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);animation:fade .2s ease}
+.dsc-in{width:100%;max-width:440px;max-height:calc(100vh - 32px);overflow:auto;border-radius:22px;background:#fff;box-shadow:0 24px 60px -12px rgba(60,10,10,.6),0 0 0 1px rgba(143,36,36,.25)}
+.dsc-h{display:flex;gap:12px;align-items:center;padding:16px 18px;color:#fff;background:linear-gradient(135deg,#6e1c1c,#a52f2f)}
+.dsc-h svg{flex:none;width:28px;height:28px}
+.dsc-h b{display:block;font-size:16.5px;line-height:1.25}.dsc-h small{display:block;font-size:12.5px;opacity:.88;margin-top:2px}
+.dsc-b{padding:16px 18px 6px;background:linear-gradient(180deg,#fdf3f3,#fff)}
+.dsc-b p{margin:0 0 12px;font-size:13.5px;line-height:1.5;color:#4a1818}.dsc-b p span{display:block;font-size:12px;color:#8c4a4a;margin-top:2px}
+.dsc-b p.k{font-weight:700;color:#7a1f1f}
+.dsc-f{padding:8px 18px 18px;background:#fff}
+.dsc-btn{width:100%;min-height:50px;border:0;border-radius:14px;cursor:pointer;font:inherit;font-weight:700;font-size:15px;color:#fff;background:linear-gradient(135deg,#7a1f1f,#b03434);box-shadow:0 8px 18px -8px rgba(122,31,31,.7)}
+.dsc-btn:active{transform:translateY(1px)}.dsc-btn small{display:block;font-weight:500;font-size:12px;opacity:.9}
+body.dsc-open{overflow:hidden}
+.line.sum{border:0;margin:0 -20px;padding:14px 20px;border-radius:0;background:linear-gradient(135deg,var(--navy),var(--blue))}
+.line.sum .t,.line.sum .a{font-weight:700;color:#fff;font-size:15.5px}
 .notes{padding:0 20px 16px}
 .note{display:flex;gap:10px;padding:10px 12px;border-radius:12px;font-size:12.5px;margin-top:8px;line-height:1.4}
 .note svg{width:16px;height:16px;flex:none;margin-top:1px}
@@ -409,6 +425,7 @@ html[lang=th] .eyebrow,html[lang=th] .op-l,html[lang=th] .tag,
 .autochip svg{width:16px;height:16px;flex:none;margin-top:2px}
 .autochip>div{flex:1;min-width:200px;display:flex;flex-direction:column;gap:2px}
 .autochip b{color:var(--navy);font-size:13px}
+.afmnote{display:flex;gap:7px;align-items:flex-start;margin:8px 0 0;font-size:11.5px;line-height:1.45;color:var(--grey-soft)}.afmnote svg{flex:none;width:14px;height:14px;margin-top:1px}
 .autochip span{color:#2f6f66}.autochip .mg{color:var(--grey-soft);font-size:11.5px}
 .autochip .btn{padding:7px 11px;font-size:12.5px}
 
@@ -1182,8 +1199,11 @@ function mixedCert(cl,tx,R,flags,errors,warnings,notes){
     `ใบรับรองที่มีอากาศยานต่างประเภทน้ำหนัก (${mix}): เป็นประมาณการโดยเรียกเก็บค่าธรรมเนียมการยื่นคำขอครั้งเดียวตามแบบที่มีอัตราสูงสุด และแบบหลักหนึ่งแบบ กฎหมายที่เกี่ยวข้องมิได้กำหนดว่าใช้ค่าธรรมเนียมการยื่นคำขอประเภทใด ต้องให้ FAD ยืนยัน แนวทางในหน้าตั้งค่าใช้เฉพาะเมื่อใบรับรองมีทั้งเครื่องบิน เฮลิคอปเตอร์ หรือบัลลูน`));
   let status='ESTIMATED';
   if(cl.some(t=>t.boundary)){ status='VERIFICATION_REQUIRED'; notes.push(L('A boundary-weight type uses the 2018 category you confirmed. CAAT confirmation is still required.','แบบอากาศยานที่มีน้ำหนักอยู่ที่เกณฑ์พอดีใช้ประเภทตามประกาศ กพท. พ.ศ. 2561 ที่ผู้ใช้ยืนยัน ทั้งนี้ ยังต้องได้รับการยืนยันจาก กพท.')); }
-  if(certSubtotal>R.STATUTORY_MAX_AOC) warnings.push(L(`Certificate and additional-type fees total ${fmt(certSubtotal)}, above the THB 20,000,000 statutory maximum per certificate (พ.ร.บ. ฉบับที่ 14 มาตรา 64). No reduction applied: verify with FAD.`,
-    `ค่าใบรับรองรวมค่าเพิ่มแบบอากาศยานเท่ากับ ${fmt(certSubtotal)} บาท สูงกว่าอัตราขั้นสูง 20,000,000 บาทต่อฉบับ ตามพระราชบัญญัติการเดินอากาศ (ฉบับที่ 14) พ.ศ. 2562 มาตรา 64 ระบบมิได้ลดให้ กรุณาตรวจสอบกับ FAD`));
+  /* (28/1) of the fee schedule to the Air Navigation Act (inserted by พ.ร.บ. ฉบับที่ 14 พ.ศ. 2562 มาตรา 64) caps the AOC certificate fee
+     at 20,000,000 per certificate. It applies to the main certificate fee (กฎกระทรวง ฉบับที่ 3 พ.ศ. 2567 ข้อ 5). The application and
+     additional-type fees are set by the 2561 CAAT Announcement, so they are not counted against it. */
+  if(C>R.STATUTORY_MAX_AOC) warnings.push(L(`Main certificate fee ${fmt(C)} is above the THB 20,000,000 maximum per certificate (fee schedule item (28/1), พ.ร.บ. การเดินอากาศ (ฉบับที่ 14) พ.ศ. 2562 มาตรา 64). No reduction applied: verify with FAD.`,
+    `ค่าใบรับรองหลัก ${fmt(C)} บาท สูงกว่าอัตราขั้นสูง 20,000,000 บาทต่อฉบับ ตามอัตราค่าธรรมเนียม (๒๘/๑) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งเพิ่มโดยพระราชบัญญัติการเดินอากาศ (ฉบับที่ ๑๔) พ.ศ. ๒๕๖๒ มาตรา ๖๔ ระบบมิได้ปรับลดยอด กรุณาตรวจสอบกับ FAD`));
   return {status,flags,errors,warnings,notes,lines,P,C,sumA,certSubtotal,total,principalIdx:mainT.idx,principalIdxs:Cs.map(l=>l.typeIdx),mixedBasis:multi?kk:null,category:mainT.legacy,principalArea:mainT.area,principalMr:mainT.mr};
 }
 function calcCertificate(types, tx, R){
@@ -1233,8 +1253,11 @@ function calcCertificate(types, tx, R){
   ];
   let status='CALCULATED';
   if(cl.some(t=>t.boundary)){ status='VERIFICATION_REQUIRED'; notes.push(L('A boundary-weight type uses the 2018 category you confirmed. CAAT confirmation is still required.','แบบอากาศยานที่มีน้ำหนักอยู่ที่เกณฑ์พอดีใช้ประเภทตามประกาศ กพท. พ.ศ. 2561 ที่ผู้ใช้ยืนยัน ทั้งนี้ ยังต้องได้รับการยืนยันจาก กพท.')); }
-  if(certSubtotal>R.STATUTORY_MAX_AOC) warnings.push(L(`Certificate and additional-type fees total ${fmt(certSubtotal)}, above the THB 20,000,000 statutory maximum per certificate (พ.ร.บ. ฉบับที่ 14 มาตรา 64). No reduction applied: verify with FAD.`,
-    `ค่าใบรับรองรวมค่าเพิ่มแบบอากาศยานเท่ากับ ${fmt(certSubtotal)} บาท สูงกว่าอัตราขั้นสูง 20,000,000 บาทต่อฉบับ ตามพระราชบัญญัติการเดินอากาศ (ฉบับที่ 14) พ.ศ. 2562 มาตรา 64 ระบบมิได้ปรับลดยอด กรุณาตรวจสอบกับ FAD`));
+  /* (28/1) of the fee schedule to the Air Navigation Act (inserted by พ.ร.บ. ฉบับที่ 14 พ.ศ. 2562 มาตรา 64) caps the AOC certificate fee
+     at 20,000,000 per certificate. It applies to the main certificate fee (กฎกระทรวง ฉบับที่ 3 พ.ศ. 2567 ข้อ 5). The application and
+     additional-type fees are set by the 2561 CAAT Announcement, so they are not counted against it. */
+  if(principal.C>R.STATUTORY_MAX_AOC) warnings.push(L(`Main certificate fee ${fmt(principal.C)} is above the THB 20,000,000 maximum per certificate (fee schedule item (28/1), พ.ร.บ. การเดินอากาศ (ฉบับที่ 14) พ.ศ. 2562 มาตรา 64). No reduction applied: verify with FAD.`,
+    `ค่าใบรับรองหลัก ${fmt(principal.C)} บาท สูงกว่าอัตราขั้นสูง 20,000,000 บาทต่อฉบับ ตามอัตราค่าธรรมเนียม (๒๘/๑) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งเพิ่มโดยพระราชบัญญัติการเดินอากาศ (ฉบับที่ ๑๔) พ.ศ. ๒๕๖๒ มาตรา ๖๔ ระบบมิได้ปรับลดยอด กรุณาตรวจสอบกับ FAD`));
   if(cl.some(t=>t.cat!=='BALLOON' && t.legacy===t.mr) && types.length>1 && new Set(cl.map(t=>t.area)).size===1)
     notes.push(L('All types share one Area of Operation. Item 3) is applied to the second and later types, as in the Email 2 methodology.','แบบอากาศยานทุกแบบอยู่ในพื้นที่ปฏิบัติการเดียวกัน ระบบใช้อัตราตามข้อ 3) กับแบบที่สองเป็นต้นไป ตามแนวทางในอีเมลฉบับที่ 2'));
   return {status,flags,errors,warnings,notes,lines,P,C:principal.C,sumA,certSubtotal,total,principalIdx:principal.idx,principalIdxs:[principal.idx],category:cat,principalArea:principal.area,principalMr:principal.mr};
@@ -1366,7 +1389,7 @@ function runTests(R){
   const six=[['B777',351534,'INTL'],['A350',280000,'INTL'],['B787',254011,'INTL'],['A330',233000,'ASIA'],['A320',93500,'ASIA'],['B737',64636,'INTL']]
     .map(x=>({name:x[0],cat:'AEROPLANE',mtow:String(x[1]),area:x[2]}));
   const r10=calcCertificate(six,'renewal',R);
-  add('TC-10','Renewal six types (Email 2)',[22105000,true],[r10.total,r10.warnings.length>0]);
+  add('TC-10','Renewal six types (Email 2)',[22105000,21865000],[r10.total,r10.certSubtotal]);
   add('TC-11','Renewal A2 DOM',1352500,tot(n([A('DOM',false)]),'renewal'));
   add('TC-12','Renewal H2 INTL',1507000,tot(n([H('HELI_INTL',false)]),'renewal'));
   add('TC-13','Initial H1 DOM',2600000,tot(n([H('DOM',true)]),'initial'));
@@ -1391,7 +1414,9 @@ function runTests(R){
   add('VT-06','MTOW ≤ 0 rejected','INCOMPLETE',calcCertificate([{name:'x',cat:'AEROPLANE',mtow:'0',area:'DOM'}],'renewal',R).status);
   add('VT-07','Helicopter + Asia rejected','INCOMPLETE',calcCertificate([{name:'x',cat:'HELICOPTER',heavy:true,area:'ASIA'}],'renewal',R).status);
   add('VT-08','Balloon + area rejected','INCOMPLETE',calcCertificate([{name:'x',cat:'BALLOON',area:'DOM'}],'renewal',R).status);
-  add('VT-09','> 20M warns, no reduction',[22105000,1],[r10.total,r10.warnings.length]);
+  add('VT-09','20M cap: main certificate only, so 21.9M of certificate + additional types does not warn',[22105000,0],[r10.total,r10.warnings.filter(w=>w.includes('20,000,000')).length]);
+  { const Rl=Object.assign({},R,{STATUTORY_MAX_AOC:5000000}); const rl=calcCertificate(six,'renewal',Rl);
+    add('VT-09b','Cap check fires on the main certificate fee, with no reduction',[22105000,1],[rl.total,rl.warnings.filter(w=>w.includes('20,000,000')).length]); }
   const b57=classify({cat:'AEROPLANE',mtow:'5700'}), b31=classify({cat:'HELICOPTER',mtow:'3192'});
   add('VT-10','MTOW 5,700 kg',['A2','AMBIGUOUS'],[b57.mr,b57.legacy]);
   add('VT-11','MTOW 3,192 kg',['H2','AMBIGUOUS'],[b31.mr,b31.legacy]);
@@ -1538,7 +1563,7 @@ const FLEET={
  'Advance Aviation Jet Company Limited':[{m:['GALX'],src:'GULFSTREAM GULFSTREAM 200',area:'INTL'},{m:['G280'],src:'GULFSTREAM G280',area:'INTL'}],
  'AIR AMB Company Limited':[{m:['PC12'],src:'PC12',area:'ASIA'}],
  'Air Inter Transport Company Limited':[{m:['B738'],src:'B738 (AOC register; not in the Ops Spec sheet)',area:'ASIA'}],
- 'Bangkok Airways Public Company Limited':[{m:['AT72'],src:'ATR72-212A',area:'ASIA'},{m:['A319','A320'],src:'AIRBUS A319-100 Series, A320-200 Series',area:'ASIA'}],
+ 'Bangkok Airways Public Company Limited':[{m:['A319','A320'],src:'AIRBUS A319-100 Series, A320-200 Series',mtow:78000,mref:2,area:'ASIA'},{m:['AT72'],src:'ATR72-212A',mtow:23000,mref:1,area:'ASIA'}],
  'Bangkok Helicopter Services Company Limited':[{m:['EC45','BK117D2'],src:'AIRBUS HELICOPTER MBB BK117-C2, MBB BK117-D2',area:'HELI_INTL'}],
  'BBN Airlines (Thailand) Company Limited':[{m:['A320'],src:'AIRBUS A320-200 Series',area:'INTL'}],
  'K-Mile Air Company Limited':[{m:['B734','B738'],src:'BOEING 737-400, BOEING 737-800',area:'ASIA'},{m:['B763'],src:'BOEING 767-300',area:'ASIA'}],
@@ -1613,7 +1638,7 @@ function cardFromGroup(g){
   const a=g.m.length?acById(g.m[0]):null;
   return {id:nid(), ac:a?a.id:'OTHER', models:g.m.slice(), name:g.name||g.m.join(' / '),
     cat:g.cat||(a?acCat(a):'AEROPLANE'), heavy:g.heavy!=null?g.heavy:(a?acHeavy(a):true),
-    area:g.area||'', mtow:g.mtow?String(g.mtow):'', showMtow:!!g.mtow, count:1, legacyConfirm:null, src:g.src||'', chk:!!g.chk};
+    area:g.area||'', mtow:g.mtow?String(g.mtow):'', showMtow:!!g.mtow, count:1, legacyConfirm:null, src:g.src||'', chk:!!g.chk, mref:g.mref||0};
 }
 const typesSig=()=>JSON.stringify(S.types.map(t=>[t.ac,t.name,t.cat,t.heavy,t.area,t.mtow,t.showMtow,t.legacyConfirm,(t.models||[]).join()]));
 function typesPristine(){ return (S.types.length===1 && !S.types[0].ac && !(S.types[0].name||'').trim()) || (S.loadedSig && typesSig()===S.loadedSig); }
@@ -1643,7 +1668,7 @@ function acSelectHTML(t){
 }
 function srcHTML(t){
   if(!t.src) return '';
-  return `<div class="autochip src">${ICON.info}<div><b>${L('From the Ops Spec list','จากรายการข้อกำหนดการปฏิบัติการ')}</b><span>${esc(t.src)}</span>${t.chk?`<span class="mg">${L('Not fully visible in the sheet: confirm the series, MTOW and area.','ข้อมูลในตารางแสดงไม่ครบ กรุณายืนยันรุ่น น้ำหนักวิ่งขึ้นสูงสุด และพื้นที่ปฏิบัติการ')}</span>`:''}</div></div>`;
+  return `<div class="autochip src">${ICON.info}<div><b>${L('From the Ops Spec list','จากรายการข้อกำหนดการปฏิบัติการ')}</b><span>${esc(t.src)}</span>${t.mref?`<span class="mg">${t.mref===2?L('Reference MTOW for the group is the higher of the two types (A320). Preliminary only: confirm each aircraft in its AFM.','น้ำหนักวิ่งขึ้นสูงสุดอ้างอิงของกลุ่มใช้ค่าที่สูงกว่าของสองแบบ (A320) เป็นค่าเบื้องต้นเท่านั้น กรุณายืนยันตาม AFM ของแต่ละลำ'):L('Preliminary reference MTOW. Confirm in the AFM of the aircraft.','น้ำหนักวิ่งขึ้นสูงสุดอ้างอิงเบื้องต้น กรุณายืนยันตาม AFM ของอากาศยานแต่ละลำ')}</span>`:''}${t.chk?`<span class="mg">${L('Not fully visible in the sheet: confirm the series, MTOW and area.','ข้อมูลในตารางแสดงไม่ครบ กรุณายืนยันรุ่น น้ำหนักวิ่งขึ้นสูงสุด และพื้นที่ปฏิบัติการ')}</span>`:''}</div></div>`;
 }
 function acAutoHTML(t){
   let pre=srcHTML(t);
@@ -1669,8 +1694,19 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.24', APP_DATE='2026-11-16';
+const APP_VERSION='3.35', APP_DATE='2026-11-16';
 const APP_LOG=[
+  {v:'3.35',d:'2026-11-16',en:['20 million cap: now checked against the main certificate fee only, as item (28/1) of the fee schedule to the Air Navigation Act caps the certificate fee per certificate. The application and additional-type fees come from the 2561 CAAT Announcement and are not counted. Thai Airways (฿22,105,000) no longer shows the warning.'],th:['อัตราขั้นสูง 20 ล้านบาท: ตรวจสอบเฉพาะค่าใบรับรองหลัก ตามอัตราค่าธรรมเนียม (๒๘/๑) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งกำหนดค่าใบรับรองต่อฉบับ ค่าธรรมเนียมการยื่นคำขอและค่าเพิ่มแบบอากาศยานกำหนดตามประกาศ กพท. พ.ศ. 2561 จึงไม่นำมารวม การบินไทย (22,105,000 บาท) จึงไม่แสดงคำเตือนอีกต่อไป']},
+  {v:'3.34',d:'2026-11-16',en:['Bangkok Airways: the A319/A320 group is now listed first, so it is the principal type and the ATR 72 is the additional type. The fee is unchanged.'],th:['การบินกรุงเทพ: จัดกลุ่ม A319/A320 ไว้เป็นลำดับแรก จึงเป็นแบบหลัก และ ATR 72 เป็นแบบเพิ่มเติม ค่าธรรมเนียมไม่เปลี่ยนแปลง']},
+  {v:'3.33',d:'2026-11-16',en:['Certificate fee panel: the application fee, certificate fees subtotal and total are now flat colour bands across the panel (light blue, light blue, dark navy), not rounded cards. Main certificate and additional types stay plain.'],th:['แผงค่าธรรมเนียมใบรับรอง: ค่าธรรมเนียมการยื่นคำขอ ยอดรวมค่าใบรับรอง และรวมค่าธรรมเนียม แสดงเป็นแถบสีเต็มความกว้าง (ฟ้าอ่อน ฟ้าอ่อน น้ำเงินเข้ม) ไม่ใช่การ์ดมุมมน ส่วนค่าใบรับรองหลักและค่าเพิ่มแบบอากาศยานยังคงเป็นข้อความปกติ']},
+  {v:'3.32',d:'2026-11-16',en:['Certificate fee panel: the Certificate fees subtotal is back in light blue and the Total AOC fees in dark navy. The other fee lines stay plain text.'],th:['แผงค่าธรรมเนียมใบรับรอง: ยอดรวมค่าใบรับรองกลับมาเป็นสีฟ้าอ่อน และรวมค่าธรรมเนียมเป็นสีน้ำเงินเข้ม ส่วนรายการอื่นยังคงเป็นข้อความปกติ']},
+  {v:'3.31',d:'2026-11-16',en:['Certificate fee panel: removed the card and box styling; the fee lines from the application fee to the total are plain text segments again. The subtotal is in blue text and the total in bold navy.'],th:['แผงค่าธรรมเนียมใบรับรอง: ยกเลิกรูปแบบการ์ดและกล่อง รายการตั้งแต่ค่าธรรมเนียมการยื่นคำขอถึงรวมค่าธรรมเนียมแสดงเป็นข้อความปกติ ยอดรวมค่าใบรับรองเป็นตัวอักษรสีน้ำเงิน และรวมค่าธรรมเนียมเป็นตัวหนาสีน้ำเงินเข้ม']},
+  {v:'3.30',d:'2026-11-16',en:['Certificate fee panel: the application fee takes the same light blue as the subtotal; the main certificate and additional types are white cards.'],th:['แผงค่าธรรมเนียมใบรับรอง: ค่าธรรมเนียมการยื่นคำขอใช้สีฟ้าอ่อนเดียวกับยอดรวมค่าใบรับรอง ส่วนค่าใบรับรองหลักและค่าเพิ่มแบบอากาศยานแสดงเป็นการ์ดสีขาว']},
+  {v:'3.29',d:'2026-11-16',en:['Fee panel: the Certificate fees subtotal now sits in a light blue box so it stands out from the fee lines.'],th:['แผงค่าธรรมเนียม: ยอดรวมค่าใบรับรองแสดงในกล่องสีฟ้าอ่อนเพื่อให้เด่นชัดกว่ารายการค่าธรรมเนียม']},
+  {v:'3.28',d:'2026-11-16',en:['Acknowledgement popup: Thai button now reads รับทราบ.'],th:['กล่องข้อความรับทราบ: ปุ่มภาษาไทยแสดงคำว่า รับทราบ']},
+  {v:'3.27',d:'2026-11-16',en:['Fee panel: the Certificate fees subtotal is now lighter and the Total AOC fees darker, so the total stands out.','New red acknowledgement popup on opening the app: results are interpretation-based and may be incorrect; cross-checking with FAD is required.'],th:['แผงค่าธรรมเนียม: ยอดรวมค่าใบรับรองแสดงสีอ่อนลง และรวมค่าธรรมเนียมแสดงสีเข้มขึ้นเพื่อให้เห็นยอดรวมเด่นชัด','เพิ่มกล่องข้อความสีแดงให้รับทราบเมื่อเปิดแอป ผลการคำนวณอาศัยการตีความและอาจคลาดเคลื่อน ต้องตรวจสอบยืนยันกับ FAD']},
+  {v:'3.26',d:'2026-11-16',en:['Certificate page: the fee panel now shows a Certificate fees subtotal (main certificate plus additional types) just before the total.'],th:['หน้าค่าใบรับรอง: แผงค่าธรรมเนียมแสดงยอดรวมค่าใบรับรอง (ค่าใบรับรองหลักและค่าเพิ่มแบบอากาศยาน) ก่อนยอดรวมค่าธรรมเนียม']},
+  {v:'3.25',d:'2026-11-16',en:['Bangkok Airways: the ATR 72 now carries a reference MTOW of 23,000 kg and the A319/A320 group 78,000 kg (the higher of the two). These are preliminary figures; the fee is unchanged.','Every operator: a remark under the weight field, and a footnote on the results and print views, say that weights are reference figures and the official assessment uses the MTOW in the approved AFM.'],th:['การบินกรุงเทพ: แบบ ATR 72 กำหนดน้ำหนักวิ่งขึ้นสูงสุดอ้างอิง 23,000 กก. และกลุ่ม A319/A320 78,000 กก. (ค่าที่สูงกว่าของสองแบบ) เป็นค่าเบื้องต้น ค่าธรรมเนียมไม่เปลี่ยนแปลง','ทุกผู้ดำเนินการเดินอากาศ: เพิ่มหมายเหตุใต้ช่องน้ำหนัก และหมายเหตุท้ายหน้าผลลัพธ์และหน้าพิมพ์ ว่าน้ำหนักเป็นค่าอ้างอิง การประเมินอย่างเป็นทางการใช้น้ำหนักวิ่งขึ้นสูงสุดตาม AFM ที่ได้รับอนุมัติ']},
   {v:'3.24',d:'2026-11-16',en:['Surveillance budget: added − 5M and + 5M buttons on the outer sides of the − 1M and + 1M buttons.'],th:['งบประมาณการกำกับดูแล: เพิ่มปุ่ม − 5M และ + 5M ไว้ด้านนอกของปุ่ม − 1M และ + 1M']},
   {v:'3.23',d:'2026-11-16',en:['Tapping a button quickly (for example the − and + 1M budget buttons) no longer zooms the page on iPhone and iPad. Pinch-zoom still works.'],th:['การแตะปุ่มติดกันอย่างรวดเร็ว (เช่น ปุ่ม − และ + 1M ของงบประมาณ) จะไม่ซูมหน้าจอบน iPhone และ iPad อีกต่อไป ยังคงใช้สองนิ้วถ่างเพื่อซูมได้']},
   {v:'3.22',d:'2026-11-15',en:['Surveillance Coverage Projection: − and + buttons next to the budget change it by 1 million baht per tap.'],th:['ส่วนประมาณการความครอบคลุมงบประมาณการกำกับดูแล: เพิ่มปุ่ม − และ + ถัดจากช่องงบประมาณ เพื่อปรับลดหรือเพิ่มครั้งละ 1 ล้านบาท']},
@@ -1754,7 +1790,7 @@ function statusText(st){ return {CALCULATED:L('Calculated','คำนวณแ�
 function statusPill(st){ const c={CALCULATED:'st-ok',ESTIMATED:'st-est',VERIFICATION_REQUIRED:'st-ver',INCOMPLETE:'st-inc'}[st]||'st-inc'; return `<span class="status ${c}">${statusText(st)}</span>`; }
 function note(kind,txt){ const ic={warn:ICON.warn,info:ICON.info,err:ICON.warn,ok:ICON.check}[kind]; return `<div class="note n-${kind}">${ic}<div>${esc(txt)}</div></div>`; }
 function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast.h); toast.h=setTimeout(()=>el.classList.remove('show'),2400); }
-function lineHTML(l){ return `<div class="line"><div class="t">${esc(l.label)}</div><div class="a">${fmt(l.amount)}</div><div class="r">${esc(l.basis)}<br><span class="thai">${esc(l.ref)}</span></div></div>`; }
+function lineHTML(l){ return `<div class="line k-${esc(l.kind||'')}"><div class="t">${esc(l.label)}</div><div class="a">${fmt(l.amount)}</div><div class="r">${esc(l.basis)}<br><span class="thai">${esc(l.ref)}</span></div></div>`; }
 const PLANE_SVG='<svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M21 15.2v-1.9l-8-5V3.2c0-.8-.6-1.5-1.4-1.5S10.2 2.4 10.2 3.2v5.1l-8 5v1.9l8-2.5v5.2l-2 1.5v1.5L12 20l3.8 1.1v-1.5l-2-1.5v-5.2l7.2 2.3z"/></svg>';
 function routeHTML(cat,val,act,id,key){
   const areas=AREAS_FOR[cat]; const r=RANK[val]||0;
@@ -1823,6 +1859,7 @@ function renderCert(){
           ? `<div class="field"><input inputmode="decimal" data-bind="mtow" data-id="${t.id}" value="${esc(t.mtow)}" placeholder="${esc(L('e.g. 78000','เช่น 78000'))}"><em>${L('kg','กก.')}</em></div>
              <button type="button" class="more" data-act="hideMtow" data-id="${t.id}">${L('Use weight class instead','เลือกช่วงน้ำหนักแทน')}</button>`
           : `${seg([[false,wl[0]],[true,wl[1]]],t.heavy,'theavy',t.id,'',true)}<button type="button" class="more" data-act="showMtow" data-id="${t.id}">${L('Enter or correct the exact MTOW','ระบุหรือแก้ไขน้ำหนักวิ่งขึ้นสูงสุด')}</button>`}`;
+      h+=`<div class="afmnote">${ICON.info}<span>${afmNote()}</span></div>`;
       h+=`<div class="bslot">${boundaryHTML(t)}</div>`;
       h+=`<div class="lbl">${L('Area of Operation','พื้นที่ปฏิบัติการ')} <small>${L('as approved in the Ops Specs','ตามข้อกำหนดการปฏิบัติการที่ได้รับอนุมัติ')}</small></div>${routeHTML(t.cat,t.area,'tarea',t.id)}`;
     }
@@ -2009,7 +2046,7 @@ function renderRef(){
     [L('Government: vehicle per day (≤ 5 / 6–10 staff)','หน่วยงานของรัฐ: ค่ายานพาหนะต่อวัน (ไม่เกิน 5 / 6–10 คน)'),'2,500 / 3,100','ภาคผนวก จ'],
     [L('Amendment of certificate details','การแก้ไขเปลี่ยนแปลงรายละเอียดในใบรับรอง'),'1,000','ประกาศ 2561 ข้อ 3(17)'],
     [L('Replacement certificate','ใบแทนใบรับรอง'),'1,000','กฎกระทรวง 2554 ข้อ 2(29); ประกาศ 2561 ข้อ 3(18)'],
-    [L('Statutory maximum per AOC','อัตราขั้นสูงต่อใบรับรอง'),'20,000,000','พ.ร.บ. (ฉบับที่ 14) 2562 มาตรา 64']];
+    [L('Statutory maximum per AOC (main certificate fee)','อัตราขั้นสูงต่อใบรับรอง (ค่าใบรับรองหลัก)'),'20,000,000','อัตราค่าธรรมเนียม (28/1) ท้าย พ.ร.บ. การเดินอากาศ; พ.ร.บ. (ฉบับที่ 14) 2562 มาตรา 64']];
   h+=`<div class="card"><h2>${L('Inspection and administrative','การตรวจสอบและค่าธรรมเนียมอื่น')}</h2><div class="scroll"><table class="tbl"><tr><th>${L('Item','รายการ')}</th><th style="text-align:right">${BAHT()}</th><th>${REF}</th></tr>
     ${rows.map(r=>`<tr><td>${esc(r[0])}</td><td class="n">${r[1]}</td><td class="ref thai">${esc(r[2])}</td></tr>`).join('')}</table></div></div>`;
   document.getElementById('page-ref').innerHTML=h;
@@ -2017,12 +2054,12 @@ function renderRef(){
 
 /* ---------- Result panel ---------- */
 function resultCard(o){
-  const {title,sub,total,status,lines,errors,warnings,notes,bar,sumLabel}=o;
+  const {title,sub,total,status,lines,errors,warnings,notes,bar,sumLabel,subtotal}=o;
   let h=`<div class="result" id="result"><div class="result-top"><div class="k"><span>${esc(title)}</span>${statusPill(status)}</div>
     <div class="total"><small>฿</small><span class="tv" data-v="${total!=null?total:''}" aria-label="${total!=null?'฿ '+fmt(total):'—'}">${total!=null?fmt(total):'—'}</span></div><div class="cap">${esc(sub||'')}</div>`;
   if(bar&&total){ h+=`<div class="bar">${bar.map(b=>`<i style="width:${b.v/total*100}%;background:${b.c}"></i>`).join('')}</div><div class="legend">${bar.map(b=>`<span><i style="background:${b.c}"></i>${esc(b.k)}</span>`).join('')}</div>`; }
   h+=`</div>`;
-  if(lines&&lines.length){ h+=`<div class="lines">${lines.map(lineHTML).join('')}${total!=null?`<div class="line sum"><div class="t">${esc(sumLabel||L('Total','รวม'))}</div><div class="a">${fmt(total)}</div></div>`:''}</div>`; }
+  if(lines&&lines.length){ h+=`<div class="lines${o.cert?' cc':''}">${lines.map(lineHTML).join('')}${(total!=null&&subtotal!=null)?`<div class="line subt"><div class="t">${L('Certificate fees subtotal','รวมค่าใบรับรอง')}<div class="ref">${L('Main certificate + additional types, before the application fee','ค่าใบรับรองหลักและค่าเพิ่มแบบอากาศยาน ก่อนรวมค่าธรรมเนียมการยื่นคำขอ')}</div></div><div class="a">${fmt(subtotal)}</div></div>`:''}${total!=null?`<div class="line sum"><div class="t">${esc(sumLabel||L('Total','รวม'))}</div><div class="a">${fmt(total)}</div></div>`:''}</div>`; }
   else if(!(errors&&errors.length)&&!(notes&&notes.length)) h+=`<div class="empty">${L('Make your selections to see the breakdown.','เลือกข้อมูลเพื่อแสดงรายละเอียดการคำนวณ')}</div>`;
   h+=`<div class="notes">${(errors||[]).map(e=>note('err',e)).join('')}${(warnings||[]).map(e=>note('warn',e)).join('')}${(notes||[]).map(e=>note('info',e)).join('')}</div>`;
   if(total!=null) h+= S.tab==='change'
@@ -2036,7 +2073,7 @@ function renderSide(){
   if(!S.healthy){ side.innerHTML=resultCard({title:L('Calculator locked','ระบบถูกระงับ'),total:null,status:'INCOMPLETE',errors:[L('The built-in self-test failed. Calculations are disabled until the rule set is corrected. See Settings.','การทดสอบระบบไม่ผ่าน ระบบระงับการคำนวณจนกว่าจะแก้ไขชุดอัตรา โปรดดูหน้าตั้งค่า')]}); updateMini(null,L('Locked','ระงับ')); return; }
   if(S.tab==='cert'){
     const r=calcCertificate(S.types,S.tx);
-    o={title:L(`${TXL()} · AOC fees`,`ค่าธรรมเนียม · ${TXL()}`),sub:L('Excludes Section 5/1 inspection expenses','ไม่รวมค่าใช้จ่ายในการตรวจสอบตามมาตรา 5/1'),total:r.total??null,status:r.status,lines:r.lines,errors:[initWarnText()].filter(Boolean).concat(r.errors||[]),warnings:r.warnings,notes:r.notes,sumLabel:L('Total AOC fees','รวมค่าธรรมเนียม'),
+    o={cert:true,title:L(`${TXL()} · AOC fees`,`ค่าธรรมเนียม · ${TXL()}`),sub:L('Excludes Section 5/1 inspection expenses','ไม่รวมค่าใช้จ่ายในการตรวจสอบตามมาตรา 5/1'),total:r.total??null,subtotal:r.certSubtotal??null,status:r.status,lines:r.lines,errors:[initWarnText()].filter(Boolean).concat(r.errors||[]),warnings:r.warnings,notes:r.notes,sumLabel:L('Total AOC fees','รวมค่าธรรมเนียม'),
       bar:r.total?[{k:L('Application','ยื่นคำขอ'),v:r.P,c:'#9fb3c8'},{k:L('Certificate','ใบรับรอง'),v:r.C,c:'#3bbfb0'},{k:L('Additional types','เพิ่มแบบ'),v:r.sumA,c:'#6c9bd2'}].filter(b=>b.v>0):null};
   } else if(S.tab==='change'){
     const r=calcChange(S.change.mode,S.change,S.settings);
@@ -2267,6 +2304,7 @@ function buildSummary(){
   if(ins.acts.length) points.push(L('Inspection expenses are payable within 7 days of CAAT’s notice (ระเบียบ 5/1 ข้อ 10).','ผู้ขอต้องชำระค่าใช้จ่ายในการตรวจสอบภายใน 7 วันนับแต่วันที่ได้รับแจ้งจาก กพท. (ระเบียบ 5/1 ข้อ 10)'));
   return {cert,ins,fees,chg,gov,caat,commit,status,points:[...new Set(points)]};
 }
+const afmNote=()=>L('Weights are reference figures only. For the official fee assessment, use the maximum take-off weight stated in the approved Aircraft Flight Manual (AFM) of each aircraft.','น้ำหนักที่แสดงเป็นค่าอ้างอิงเท่านั้น การประเมินค่าธรรมเนียมอย่างเป็นทางการให้ใช้น้ำหนักวิ่งขึ้นสูงสุดตามที่ระบุไว้ในคู่มือประกอบการบิน (AFM) ที่ได้รับอนุมัติของอากาศยานแต่ละลำ');
 function typeRows(c){
   return S.types.map((t,i)=>{
     const l=(c.lines||[]).find(x=>x.typeIdx===i);
@@ -2356,7 +2394,8 @@ function detailedScreen(s){
       ${typeRows(c).map(r=>`<tr><td class="tno"><span class="tnum ${r.line&&r.line.kind==='C'?'p':''}">${r.i+1}</span></td><td><b>${esc(r.name)}</b>${r.full?` <span class="ref" style="display:inline">${esc(r.full)}</span>`:''} ${r.line&&r.line.kind==='C'?`<span class="chip p">${L('Principal','แบบหลัก')}</span>`:`<span class="chip">${L('Additional','แบบเพิ่มเติม')}</span>`}<div class="ref">${esc(r.cat)}${r.count>1?` · ${r.count} ${L('aircraft','ลำ')}`:''}</div></td>
         <td>${esc(r.cls)}<div class="ref">${esc(r.area)}</div></td><td class="n">${r.line?fmt(r.line.amount):'–'}</td></tr>`).join('')}
       <tr class="subt"><td colspan="3"><b>${L(`Certificate and additional types · ${S.types.length} type${S.types.length>1?'s':''}`,`ค่าใบรับรองและค่าเพิ่มแบบอากาศยาน · ${S.types.length} แบบ`)}</b><div class="ref">${L('Before the application fee','ก่อนรวมค่าธรรมเนียมการยื่นคำขอ')}</div></td><td class="n"><b>${fmt(c.certSubtotal)}</b></td></tr>
-      <tr><td colspan="3"><b>${L('Total AOC fees','รวมค่าธรรมเนียม')}</b></td><td class="n"><b>${fmt(c.total)}</b></td></tr></table></div></div>`;
+      <tr><td colspan="3"><b>${L('Total AOC fees','รวมค่าธรรมเนียม')}</b></td><td class="n"><b>${fmt(c.total)}</b></td></tr>
+      <tr><td colspan="4"><div class="ref">${afmNote()}</div></td></tr></table></div></div>`;
   }
   if(CHS().length) h+=`<div class="card"><h2>${L('Changes during validity','การเปลี่ยนแปลงระหว่างอายุใบรับรอง')}</h2>${CHS().map(x=>chgRow(x)).join('')}</div>`;
   if(s.ins.acts.length||s.gov||hasOp){
@@ -2426,7 +2465,7 @@ function reportDetailed(s){
   let h=`<div class="rp" lang="${LANG}">${reportHeadWarn(s)}<div class="rp-kpis ${kp.length>4?'many':''}">${kp.map(x=>`<div class="rp-kpi ${x[2]?'main':''}"><small>${esc(x[0])}</small><b>฿ ${fmt(x[1])}</b></div>`).join('')}</div>`;
   if(c.total!=null){
     h+=`<div class="rp-s">${sec(L('Aircraft types','แบบอากาศยาน'))}<table class="t"><tr>${TH('#')}${TH(L('Aircraft type','แบบอากาศยาน'))}${TH(L('Category','ประเภท'))}${TH(L('Weight','น้ำหนัก'))}${TH(L('Area of Operation','พื้นที่ปฏิบัติการ'))}${TH(L('Role','บทบาท'))}</tr>
-      ${typeRows(c).map(r=>`<tr><td>${r.i+1}</td><td><b>${esc(r.name)}</b>${r.full?`<span class="ref">${esc(r.full)}</span>`:''}</td><td>${esc(r.cat)}</td><td>${esc(r.cls)}</td><td>${esc(r.area)}</td><td>${r.line&&r.line.kind==='C'?`<span class="pr">${L('Principal','แบบหลัก')}</span>`:`<span class="ad">${L('Additional','แบบเพิ่มเติม')}</span>`}</td></tr>`).join('')}</table></div>`;
+      ${typeRows(c).map(r=>`<tr><td>${r.i+1}</td><td><b>${esc(r.name)}</b>${r.full?`<span class="ref">${esc(r.full)}</span>`:''}</td><td>${esc(r.cat)}</td><td>${esc(r.cls)}</td><td>${esc(r.area)}</td><td>${r.line&&r.line.kind==='C'?`<span class="pr">${L('Principal','แบบหลัก')}</span>`:`<span class="ad">${L('Additional','แบบเพิ่มเติม')}</span>`}</td></tr>`).join('')}</table><p class="ref" style="display:block;margin:4px 0 0;font-size:8.5px;color:#718096">${afmNote()}</p></div>`;
     h+=`<div class="rp-s">${sec(L('AOC fees · ','ค่าธรรมเนียม · ')+TXL())}<table class="t"><tr>${TH(L('Item','รายการ'))}${TH(L('Basis and reference','หลักเกณฑ์และบทบัญญัติ'))}${NB}</tr>
       ${c.lines.filter(l=>l.kind==='P').map(l=>`<tr><td>${esc(l.label)}</td><td>${esc(l.basis)}<span class="ref">${esc(l.ref)}</span></td><td class="n">${fmt(l.amount)}</td></tr>`).join('')}
       ${c.lines.filter(l=>l.kind!=='P').map(l=>`<tr><td>${esc(l.label)}</td><td>${esc(l.basis)}<span class="ref">${esc(l.ref)}</span></td><td class="n">${fmt(l.amount)}</td></tr>`).join('')}
@@ -3197,6 +3236,22 @@ function updateAct(id){ const a=findA(id); const el=document.getElementById('cal
 document.getElementById('mini').addEventListener('click',()=>{ const r=document.getElementById('side'); if(r) r.scrollIntoView({behavior:'smooth',block:'start'}); });
 
 /* ---------- Init: render first, then self-test (tests run in English, then the chosen language is restored) ---------- */
+
+/* ---------- Acknowledgement popup: shown every time the app opens ---------- */
+function dscShow(){
+  if(document.getElementById('dsc')) return;
+  const d=document.createElement('div'); d.className='dsc'; d.id='dsc'; d.setAttribute('role','alertdialog'); d.setAttribute('aria-modal','true'); d.setAttribute('aria-labelledby','dscT');
+  d.innerHTML=`<div class="dsc-in"><div class="dsc-h">${ICON.warn}<div><b id="dscT">Please acknowledge before use<small>โปรดรับทราบก่อนใช้งาน</small></b></div></div>
+    <div class="dsc-b">
+      <p>These calculations are based on an interpretation of the fee rules and may be incorrect.<span>ผลการคำนวณอาศัยการตีความข้อกำหนดด้านค่าธรรมเนียม และอาจคลาดเคลื่อนได้</span></p>
+      <p class="k">Cross-checking with FAD is required before any fee is invoiced or advised.<span>ต้องตรวจสอบยืนยันกับ FAD ก่อนเรียกเก็บหรือแจ้งค่าธรรมเนียมทุกครั้ง</span></p>
+    </div>
+    <div class="dsc-f"><button type="button" class="dsc-btn" id="dscOk">I acknowledge<small>รับทราบ</small></button></div></div>`;
+  document.body.appendChild(d); document.body.classList.add('dsc-open');
+  const ok=document.getElementById('dscOk'); ok.addEventListener('click',()=>{ d.remove(); document.body.classList.remove('dsc-open'); });
+  d.addEventListener('keydown',e=>{ if(e.key==='Tab'){ e.preventDefault(); ok.focus(); } });
+  ok.focus();
+}
 function init(){
   setMixedBasis(S.settings.mixedBasis);
   setLang('en'); S.tests=runTests(); setLang(S.lang);
@@ -3222,6 +3277,7 @@ function init(){
   document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') persistNow(); });
   window.addEventListener('pagehide',persistNow);
   renderAll();
+  dscShow();
 }
 init();
 </script>
