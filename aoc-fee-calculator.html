@@ -90,6 +90,10 @@ button,input,select{font-family:inherit;font-size:inherit;color:inherit}
 .card.lift{transition:transform .2s,box-shadow .2s}
 .card h2{margin:0 0 4px;font-size:16px;font-weight:600;color:var(--navy);letter-spacing:-.01em}
 .card .sub{margin:0 0 16px;color:var(--grey-soft);font-size:13px}
+.sgrp{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:26px 4px 12px;padding-bottom:8px;border-bottom:1.5px solid var(--blue-soft)}
+.sgrp:first-child{margin-top:4px}
+.sgrp h3{margin:0;font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--navy)}
+.sgrp small{color:var(--grey-soft);font-size:12.5px}
 .eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:6px}
 .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .lbl{font-size:12px;font-weight:600;color:var(--grey-mid);margin:14px 0 8px;display:flex;align-items:center;gap:6px}
@@ -1263,11 +1267,26 @@ function calcCertificate(types, tx, R){
   return {status,flags,errors,warnings,notes,lines,P,C:principal.C,sumA,certSubtotal,total,principalIdx:principal.idx,principalIdxs:[principal.idx],category:cat,principalArea:principal.area,principalMr:principal.mr};
 }
 
+/* Remaining validity: whole months and days from one date to another, then the part-month rule.
+   A month is counted from the start date's day of month (31 Jan + 1 month = 28/29 Feb). */
+const PART_RULES=['up','down','nearest','exact'];
+function partRuleShort(r){ return {up:L('rounded up','ปัดขึ้น'),down:L('rounded down','ปัดลง'),nearest:L('nearest month','ปัดตามหลักทั่วไป'),exact:L('exact','คิดตามจริง'),manual:L('entered manually','กรอกเอง')}[r]||''; }
+function addMonthsISO(iso,n){ const [y,m,d]=iso.split('-').map(Number); const t=new Date(Date.UTC(y,m-1+n,1)); const last=new Date(Date.UTC(t.getUTCFullYear(),t.getUTCMonth()+1,0)).getUTCDate(); t.setUTCDate(Math.min(d,last)); return t.toISOString().slice(0,10); }
+function dayDiffISO(a,b){ return Math.round((Date.parse(b+'T00:00:00Z')-Date.parse(a+'T00:00:00Z'))/864e5); }
+function remMonths(from,to,rule){
+  const ok=x=>/^\d{4}-\d{2}-\d{2}$/.test(x||''); if(!ok(from)||!ok(to)) return null;
+  if(to<=from) return {full:0,days:0,len:30,value:0,expired:to<from};
+  let n=0; while(addMonthsISO(from,n+1)<=to) n++;
+  const base=addMonthsISO(from,n), days=dayDiffISO(base,to), len=dayDiffISO(base,addMonthsISO(from,n+1));
+  const value = rule==='down' ? n : rule==='nearest' ? n+(days*2>=len?1:0) : rule==='exact' ? Math.round((n+days/len)*100)/100 : n+(days>0?1:0);
+  return {full:n,days,len,value,expired:false};
+}
 /* Mid-validity changes (Report section 6). */
 function calcChange(mode, p, settings, R){
   R=R||RULESET; settings=settings||R.settings;
   const errors=[], warnings=[], notes=[], lines=[];
-  const months=L('months','เดือน');
+  const asOf=(p.Mrule&&p.Mrule!=='manual'&&/^\d{4}-\d{2}-\d{2}$/.test(p.asOf||''))?new Date(p.asOf+'T00:00:00Z').toLocaleDateString(LANG==='th'?'th-TH':'en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}):'';
+  const months=L('months','เดือน')+(partRuleShort(p.Mrule)?` (${partRuleShort(p.Mrule)}${asOf?L(`, from ${asOf}`,` นับจาก ${asOf}`):''})`:'');
   const prorate=(rate)=>{
     const M=toNum(p.M), T=toNum(p.T);
     if(M===null||T===null||isNaN(M)||isNaN(T)) { errors.push(L('Enter remaining and total months.','กรุณาระบุจำนวนเดือนคงเหลือและจำนวนเดือนทั้งหมด')); return null; }
@@ -1451,9 +1470,17 @@ function runTests(R){
   add('CH-01','Expansion A1 ASIA→INTL, 24/60, 2024 basis',600000,calcChange('expand',{cat:'AEROPLANE',heavy:true,from:'ASIA',to:'INTL',M:24,T:60},{areaExpansionBasis:'MR2567'},R).total);
   add('CH-02','Same, 2018 initial basis',640000,calcChange('expand',{cat:'AEROPLANE',heavy:true,from:'ASIA',to:'INTL',M:24,T:60},{areaExpansionBasis:'2018_INITIAL'},R).total);
   add('CH-03','Same, 2018 renewal basis',560000,calcChange('expand',{cat:'AEROPLANE',heavy:true,from:'ASIA',to:'INTL',M:24,T:60},{areaExpansionBasis:'2018_RENEWAL'},R).total);
+  // remaining validity from the AOC expiry date
+  add('CH-04','19 Nov 2026 → 26 Feb 2027, round up',4,remMonths('2026-11-19','2027-02-26','up').value);
+  add('CH-05','Same, round down',3,remMonths('2026-11-19','2027-02-26','down').value);
+  add('CH-06','Same, nearest month (7 of 28 days)',3,remMonths('2026-11-19','2027-02-26','nearest').value);
+  add('CH-07','Same, exact (3 + 7/28)',3.25,remMonths('2026-11-19','2027-02-26','exact').value);
+  add('CH-08','31 Jan → 28 Feb = 1 whole month',1,remMonths('2026-01-31','2026-02-28','up').value);
+  add('CH-09','Expired AOC = 0 months',0,remMonths('2026-11-19','2026-11-01','up').value);
+  add('CH-10','From 1 Dec 2026 → 26 Feb 2027, round up',3,remMonths('2026-12-01','2027-02-26','up').value);
   return out;
 }
-if(typeof module!=='undefined') module.exports={RULESET,setLang,L,setMixedBasis,calcCertificate,calcChange,calcActivity,calcGov,classify,overnightDays,addDays,runTests};
+if(typeof module!=='undefined') module.exports={RULESET,setLang,L,setMixedBasis,calcCertificate,calcChange,calcActivity,calcGov,classify,overnightDays,addDays,remMonths,runTests};
 </script>
 
 <!-- ================= UI ================= -->
@@ -1694,8 +1721,10 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.35', APP_DATE='2026-11-16';
+const APP_VERSION='3.37', APP_DATE='2026-11-19';
 const APP_LOG=[
+  {v:'3.37',d:'2026-11-19',en:['Changes: new Count from date above Remaining validity, for example the change approval date. Remaining validity is counted from that date to the AOC expiry; blank means today, and Use today clears it. Prorated results show the date used.'],th:['การเปลี่ยนแปลง: เพิ่มช่องนับตั้งแต่วันที่ เหนืออายุใบรับรองคงเหลือ เช่น วันที่อนุมัติการเปลี่ยนแปลง ระบบจะนับอายุคงเหลือตั้งแต่วันที่ดังกล่าวถึงวันหมดอายุของใบรับรอง หากไม่ระบุจะใช้วันนี้ และปุ่มใช้วันนี้จะล้างค่าที่ระบุ ผลการคำนวณตามสัดส่วนระบุวันที่ที่ใช้']},
+  {v:'3.36',d:'2026-11-19',en:['Changes: Remaining validity is now filled from the selected AOC\'s expiry date (today to expiry) every time an AOC is selected or its expiry date changes, instead of a fixed 24 months. A note under the field shows the months and days left. A typed value is kept for that operator, with a Use AOC expiry button to switch back.','Settings: new part-month rule under Changes: round up (default, highest fee for CAAT), round down, nearest month or exact. Prorated results show the rule used.','Settings are grouped under headings: General, Certificate, Changes, and Data and app information.'],th:['การเปลี่ยนแปลง: อายุใบรับรองคงเหลือคำนวณจากวันหมดอายุของใบรับรองที่เลือก (วันนี้ถึงวันหมดอายุ) ทุกครั้งที่เลือกใบรับรองหรือแก้ไขวันหมดอายุ แทนค่าคงที่ 24 เดือน และแสดงจำนวนเดือนและวันคงเหลือใต้ช่อง หากกรอกเอง ระบบจะคงค่าที่กรอกสำหรับผู้ดำเนินการรายนั้น และมีปุ่มใช้ตามวันหมดอายุเพื่อกลับไปคำนวณอัตโนมัติ','ตั้งค่า: เพิ่มวิธีนับเศษเดือนในหมวดการเปลี่ยนแปลง ได้แก่ ปัดขึ้น (ค่าเริ่มต้น ค่าธรรมเนียมสูงสุด) ปัดลง ปัดตามหลักทั่วไป และคิดตามจริง ผลการคำนวณตามสัดส่วนระบุวิธีที่ใช้','จัดกลุ่มหน้าตั้งค่าเป็นหมวด: ทั่วไป ค่าใบรับรอง การเปลี่ยนแปลง และข้อมูลและรายละเอียดระบบ']},
   {v:'3.35',d:'2026-11-16',en:['20 million cap: now checked against the main certificate fee only, as item (28/1) of the fee schedule to the Air Navigation Act caps the certificate fee per certificate. The application and additional-type fees come from the 2561 CAAT Announcement and are not counted. Thai Airways (฿22,105,000) no longer shows the warning.'],th:['อัตราขั้นสูง 20 ล้านบาท: ตรวจสอบเฉพาะค่าใบรับรองหลัก ตามอัตราค่าธรรมเนียม (๒๘/๑) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งกำหนดค่าใบรับรองต่อฉบับ ค่าธรรมเนียมการยื่นคำขอและค่าเพิ่มแบบอากาศยานกำหนดตามประกาศ กพท. พ.ศ. 2561 จึงไม่นำมารวม การบินไทย (22,105,000 บาท) จึงไม่แสดงคำเตือนอีกต่อไป']},
   {v:'3.34',d:'2026-11-16',en:['Bangkok Airways: the A319/A320 group is now listed first, so it is the principal type and the ATR 72 is the additional type. The fee is unchanged.'],th:['การบินกรุงเทพ: จัดกลุ่ม A319/A320 ไว้เป็นลำดับแรก จึงเป็นแบบหลัก และ ATR 72 เป็นแบบเพิ่มเติม ค่าธรรมเนียมไม่เปลี่ยนแปลง']},
   {v:'3.33',d:'2026-11-16',en:['Certificate fee panel: the application fee, certificate fees subtotal and total are now flat colour bands across the panel (light blue, light blue, dark navy), not rounded cards. Main certificate and additional types stay plain.'],th:['แผงค่าธรรมเนียมใบรับรอง: ค่าธรรมเนียมการยื่นคำขอ ยอดรวมค่าใบรับรอง และรวมค่าธรรมเนียม แสดงเป็นแถบสีเต็มความกว้าง (ฟ้าอ่อน ฟ้าอ่อน น้ำเงินเข้ม) ไม่ใช่การ์ดมุมมน ส่วนค่าใบรับรองหลักและค่าเพิ่มแบบอากาศยานยังคงเป็นข้อความปกติ']},
@@ -1745,9 +1774,9 @@ const S={
   tx:'renewal',
   types:[{id:nid(),ac:'',name:'',cat:'AEROPLANE',heavy:true,area:'',mtow:'',count:1,showMtow:false,legacyConfirm:null}],
   expiry:'',
-  change:{mode:'newTypeArea',cat:'AEROPLANE',heavy:true,area:'ASIA',from:'DOM',to:'ASIA',col:'initial',prorate:false,M:24,T:60,occasions:1,reason:'reg'},
+  change:{mode:'newTypeArea',cat:'AEROPLANE',heavy:true,area:'ASIA',from:'DOM',to:'ASIA',col:'initial',prorate:false,M:24,T:60,Mauto:true,Mrule:'',asOf:'',occasions:1,reason:'reg'},
   insp:{applicant:'COM',includeCert:true,acts:[],showOp:false,opTravel:'',opHotel:'',gov:{nights:'',flights:'',vehicleDays:''}},
-  settings:{areaExpansionBasis: BASES.includes(load('aoc.basis')) ? load('aoc.basis') : RULESET.settings.areaExpansionBasis, mixedBasis: MIXED_BASES.includes(load('aoc.mixbasis')) ? load('aoc.mixbasis') : 'A'},
+  settings:{areaExpansionBasis: BASES.includes(load('aoc.basis')) ? load('aoc.basis') : RULESET.settings.areaExpansionBasis, mixedBasis: MIXED_BASES.includes(load('aoc.mixbasis')) ? load('aoc.mixbasis') : 'A', partMonth: PART_RULES.includes(load('aoc.partmonth')) ? load('aoc.partmonth') : 'up'},
   operator:'', addingOp:false, opDraft:'',
   customOps:(()=>{ try{ return JSON.parse(load('aoc.customOps')||'[]').filter(x=>typeof x==='string'); }catch(e){ return []; } })(),
   changesAdded:[], loadedSig:null, fleetFrom:null, expiryAuto:false, txAuto:false, na:{change:true,insp:true}, opCache:{}, pipeF:'all', staleOps:{}
@@ -1893,6 +1922,31 @@ function renderTimeline(){
     +(S.operator?`<button type="button" class="btn btn-s tl-cal" data-act="icsOne" data-op="${esc(S.operator)}">${ICON.calAdd} ${L('Add deadlines to calendar','เพิ่มกำหนดการลงปฏิทิน')}</button>`:'');
 }
 
+/* ---------- Remaining validity: filled from the selected AOC's expiry date ----------
+   Counted from today to the expiry date with the part-month rule in Settings › Changes (default: round up).
+   It follows every AOC switch and expiry edit until the user types or drags a value; "Use AOC expiry" resumes it. */
+const asOfISO=()=>/^\d{4}-\d{2}-\d{2}$/.test(S.change.asOf||'')?S.change.asOf:localISO();
+function autoMonths(){ const T=toNum(S.change.T)||60; const r=remMonths(asOfISO(),S.expiry,S.settings.partMonth); return r?Object.assign(r,{use:Math.min(T,r.value),capped:r.value>T}):null; }
+function syncMonths(){ const c=S.change; if(c.Mauto===false) return; const a=autoMonths(); if(a){ c.M=a.use; c.Mrule=S.settings.partMonth; } else c.Mrule=''; }
+function monthsLeftText(a){ return a.expired?L('the AOC has expired','ใบรับรองหมดอายุแล้ว'):L(`${a.full} month${a.full===1?'':'s'} ${a.days} day${a.days===1?'':'s'} left`,`คงเหลือ ${a.full} เดือน ${a.days} วัน`); }
+function mHintHTML(){
+  const c=S.change;
+  if(!S.expiry) return `${ICON.info}<span>${L('No expiry date for this AOC. Enter the months left yourself, or set the expiry date on the Certificate page.','ไม่มีวันหมดอายุของใบรับรองนี้ กรุณาระบุจำนวนเดือนคงเหลือเอง หรือกำหนดวันหมดอายุที่หน้าค่าใบรับรอง')}</span>`;
+  const a=autoMonths(); if(!a) return '';
+  const rule=partRuleShort(S.settings.partMonth);
+  const fromTxt=S.change.asOf?L(`From ${dfmt(S.change.asOf)}`,`ตั้งแต่ ${dfmt(S.change.asOf)}`):L('Today','วันนี้');
+  const src=L(`${fromTxt} to AOC expiry ${dfmt(S.expiry)}: ${monthsLeftText(a)} = ${fmt(a.use)} month${a.use===1?'':'s'} (${rule})`,`${fromTxt}ถึงวันหมดอายุ ${dfmt(S.expiry)}: ${monthsLeftText(a)} = ${fmt(a.use)} เดือน (${rule})`)
+    +(a.capped?L(`, capped at the total validity`,` ไม่เกินอายุใบรับรองทั้งหมด`):'');
+  if(c.Mauto!==false) return `${ICON.info}<span>${esc(src)}. ${L('Counting rule: Settings › Changes.','วิธีนับเศษเดือน: ตั้งค่า › การเปลี่ยนแปลง')}</span>`;
+  const same=toNum(c.M)===a.use;
+  return `${same?ICON.info:ICON.warn}<span>${L('Entered manually.','กรอกเอง')} ${esc(src)}.</span>${same?'':`<button type="button" class="btn btn-s" data-act="cMauto">${L(`Use AOC expiry (${fmt(a.use)})`,`ใช้ตามวันหมดอายุ (${fmt(a.use)})`)}</button>`}`;
+}
+function refreshMonthsUI(skipText){
+  const c=S.change, T=toNum(c.T)||60, m=toNum(c.M)||0;
+  const r=document.querySelector('[data-bind="cM"]'); if(r){ if(T>0) r.max=T; r.value=m; r.style.setProperty('--p',Math.min(100,Math.max(0,m/T*100))+'%'); }
+  const t=document.querySelector('[data-bind="cMtxt"]'); if(t&&!skipText) t.value=c.M;
+  const h=document.getElementById('mHint'); if(h){ h.innerHTML=mHintHTML(); h.className='fleetline '+(c.Mauto===false&&S.expiry&&autoMonths()&&toNum(c.M)!==autoMonths().use?'':'muted'); }
+}
 /* ---------- Changes page ---------- */
 const MODES=()=>[
   ['newTypeArea',L('New type + new area','เพิ่มแบบอากาศยานและพื้นที่ใหม่'),L('Item 4), prorated','ข้อ 4) คิดตามสัดส่วน')],
@@ -1905,9 +1959,13 @@ const MODES=()=>[
 const modeTitle=m=>MODES().find(x=>x[0]===m)[1];
 function monthsHTML(){
   const c=S.change; const T=toNum(c.T)||60; const pct=Math.min(100,Math.max(0,(toNum(c.M)||0)/T*100));
-  return `<div class="lbl">${L('Remaining validity','อายุใบรับรองคงเหลือ')} <small>${L('months left on the AOC, you decide how part months are counted','จำนวนเดือนคงเหลือ ผู้ใช้กำหนดวิธีนับเศษเดือน')}</small></div>
+  const a=autoMonths(), off=c.Mauto===false&&S.expiry&&a&&toNum(c.M)!==a.use;
+  const asOfH=`<div class="lbl">${L('Count from','นับตั้งแต่วันที่')} <small>${L('for example the change approval date; leave blank for today','เช่น วันที่อนุมัติการเปลี่ยนแปลง หากไม่ระบุจะใช้วันนี้')}</small></div>
+    <div class="row" style="gap:10px;align-items:center"><div class="field" style="max-width:240px"><em>${L('As of','ณ วันที่')}</em><input type="date" data-bind="cAsOf" value="${esc(c.asOf||'')}"></div>${c.asOf?`<button type="button" class="btn btn-s" data-act="cAsOfToday">${L('Use today','ใช้วันนี้')}</button>`:''}</div>`;
+  return asOfH+`<div class="lbl">${L('Remaining validity','อายุใบรับรองคงเหลือ')} <small>${L('months left on the AOC, from the date above to its expiry date','จำนวนเดือนคงเหลือ ตั้งแต่วันที่ข้างต้นถึงวันหมดอายุของใบรับรอง')}</small></div>
     <div class="row" style="gap:14px"><input type="range" min="0" max="${esc(T)}" step="1" value="${esc(toNum(c.M)||0)}" data-bind="cM" style="--p:${pct}%;flex:1;min-width:160px">
     <div class="field" style="width:130px"><input inputmode="decimal" data-bind="cMtxt" value="${esc(c.M)}"><em>/ ${esc(c.T)}</em></div></div>
+    <div class="fleetline ${off?'':'muted'}" id="mHint" style="margin:10px 0 4px">${mHintHTML()}</div>
     <div class="lbl">${L('Total validity','อายุใบรับรองทั้งหมด')}</div><div class="field" style="max-width:240px"><input inputmode="numeric" data-bind="cT" value="${esc(c.T)}"><em>${L('months · ข้อ 11: 5 years','เดือน · ข้อ 11: 5 ปี')}</em></div>`;
 }
 function renderChange(){
@@ -1995,9 +2053,24 @@ function actCalcText(r){
 function renderSettings(){
   const b=S.settings.areaExpansionBasis;
   const pass=S.tests.filter(t=>t.pass).length;
-  let h=`<div class="card"><div class="eyebrow">${L('Settings','ตั้งค่า')}</div><h2>${L('Language','ภาษา')}</h2><p class="sub">${L('Applies to the app and to printed reports. Saved on this device.','ใช้กับทั้งระบบและรายงานที่พิมพ์ บันทึกไว้ในอุปกรณ์นี้')}</p>${seg([['en','English'],['th','ภาษาไทย']],S.lang,'lang','','',true)}</div>`;
-  h+=editsCard();
+  const grp=(t,d)=>`<div class="sgrp"><h3>${t}</h3><small>${d}</small></div>`;
+  let h=grp(L('General','ทั่วไป'),L('Language and error reporting','ภาษาและการแจ้งข้อผิดพลาด'));
+  h+=`<div class="card"><div class="eyebrow">${L('Settings','ตั้งค่า')}</div><h2>${L('Language','ภาษา')}</h2><p class="sub">${L('Applies to the app and to printed reports. Saved on this device.','ใช้กับทั้งระบบและรายงานที่พิมพ์ บันทึกไว้ในอุปกรณ์นี้')}</p>${seg([['en','English'],['th','ภาษาไทย']],S.lang,'lang','','',true)}</div>`;
   h+=`<div class="card"><h2>${L('Report an error','แจ้งข้อผิดพลาด')}</h2><p class="sub">${L('Opens a new email to anan.t@caat.or.th in your mail app, with the rule set, screen, operator and total filled in. Add a short description and send.','เปิดอีเมลฉบับใหม่ถึง anan.t@caat.or.th ในแอปอีเมล พร้อมระบุชุดอัตรา หน้าจอ ผู้ดำเนินการเดินอากาศ และยอดรวมให้โดยอัตโนมัติ กรุณาเพิ่มรายละเอียดโดยย่อแล้วส่ง')}</p><button type="button" class="btn btn-s" data-act="report">${ICON.mail} ${L('Report error','แจ้งข้อผิดพลาด')}</button></div>`;
+  h+=grp(L('Certificate','ค่าใบรับรอง'),L('Certificate fee page and Pipeline','หน้าค่าใบรับรองและหน้าติดตามการต่ออายุ'));
+  { const mb=S.settings.mixedBasis;
+    h+=`<div class="card"><h2>${L('Mixed-AOC fee reading','แนวทางคำนวณใบรับรองประเภทผสม')}</h2><p class="sub">${L('Used when one AOC lists more than one kind of aircraft (aeroplanes, helicopters, balloons). Large and small aircraft of the same kind count as one kind. The instruments do not say how this is charged, so every result is an estimate until FAD confirms. Saved on this device only.','ใช้เมื่อใบรับรองฉบับเดียวมีอากาศยานมากกว่าหนึ่งประเภท (เครื่องบิน เฮลิคอปเตอร์ บัลลูน) อากาศยานขนาดใหญ่และขนาดเล็กประเภทเดียวกันนับเป็นประเภทเดียว กฎหมายที่เกี่ยวข้องมิได้กำหนดวิธีเรียกเก็บ ผลการคำนวณทั้งหมดจึงเป็นประมาณการจนกว่า FAD จะยืนยัน บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>
+      <div class="opts">${mixedOpts().map(o=>`<button type="button" class="opt ${mb===o.k?'on':''}" data-act="mixbasis" data-val="${o.k}"><span class="rd"></span><span><b>${o.k} · ${esc(o.t)}${o.def?`<span class="tag">${L('Default','ค่าเริ่มต้น')}</span>`:''}</b><span class="thai">${esc(o.d)}</span></span></button>`).join('')}</div>
+      ${mb!=='A'?note('warn',L('A non-default reading is active. Mixed-AOC totals use it and say so.','กำลังใช้แนวทางที่ไม่ใช่ค่าเริ่มต้น ยอดรวมของใบรับรองประเภทผสมใช้แนวทางนี้และระบุไว้ทุกครั้ง')):''}</div>`; }
+  h+=grp(L('Changes','การเปลี่ยนแปลง'),L('Changes during AOC validity','การเปลี่ยนแปลงระหว่างอายุใบรับรอง'));
+  { const pm=S.settings.partMonth, ex=remMonths('2026-11-19','2027-02-26','exact');
+    const opts=[['up',L('Round up','ปัดขึ้น'),L('Any part month counts as a full month. Highest fee for CAAT. Example: 3 months 7 days = 4 months.','นับเศษของเดือนเป็นหนึ่งเดือนเต็ม ค่าธรรมเนียมสูงสุด ตัวอย่าง: 3 เดือน 7 วัน = 4 เดือน'),true],
+      ['down',L('Round down','ปัดลง'),L('Part months are not counted. Lowest fee. Example: 3 months 7 days = 3 months.','ไม่นับเศษของเดือน ค่าธรรมเนียมต่ำสุด ตัวอย่าง: 3 เดือน 7 วัน = 3 เดือน'),false],
+      ['nearest',L('Nearest month','ปัดตามหลักทั่วไป'),L('Half a month or more counts as a full month; less is not counted. Example: 3 months 7 days = 3 months.','เศษตั้งแต่ครึ่งเดือนขึ้นไปนับเป็นหนึ่งเดือน น้อยกว่าครึ่งเดือนไม่นับ ตัวอย่าง: 3 เดือน 7 วัน = 3 เดือน'),false],
+      ['exact',L('Exact (months and days)','คิดตามจริง (เดือนและวัน)'),L(`The part month is counted as a fraction of that month. Example: 3 months 7 days, in a 28-day month = ${fmt(ex.value)} months.`,`คิดเศษของเดือนเป็นสัดส่วนของเดือนนั้น ตัวอย่าง: 3 เดือน 7 วัน ในเดือนที่มี 28 วัน = ${fmt(ex.value)} เดือน`),false]];
+    h+=`<div class="card"><h2>${L('Remaining validity: part months','อายุใบรับรองคงเหลือ: การนับเศษเดือน')}</h2><p class="sub">${L('Used for prorated changes (new type and area, new type prorated, area expansion, balloon type). When an AOC is selected, Remaining validity is filled from the Count from date (today if blank) to its expiry date with this rule. A number typed on the Changes page overrides it for that operator. Saved on this device only.','ใช้กับการคำนวณตามสัดส่วน (เพิ่มแบบอากาศยานและพื้นที่ เพิ่มแบบอากาศยานแบบคิดตามสัดส่วน เพิ่มพื้นที่ปฏิบัติการ และเพิ่มแบบบัลลูน) เมื่อเลือกใบรับรอง ระบบจะคำนวณอายุใบรับรองคงเหลือตั้งแต่วันที่ที่ระบุในช่องนับตั้งแต่วันที่ (หากไม่ระบุจะใช้วันนี้) ถึงวันหมดอายุตามวิธีนี้ หากกรอกจำนวนเดือนเองที่หน้าการเปลี่ยนแปลง จะใช้ค่าที่กรอกสำหรับผู้ดำเนินการรายนั้น บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>
+      <div class="opts">${opts.map(o=>`<button type="button" class="opt ${pm===o[0]?'on':''}" data-act="partmonth" data-val="${o[0]}"><span class="rd"></span><span><b>${esc(o[1])}${o[3]?`<span class="tag">${L('Default','ค่าเริ่มต้น')}</span>`:''}</b><span class="thai">${esc(o[2])}</span></span></button>`).join('')}</div>
+      ${pm!=='up'?note('warn',L('A non-default rule is active. Prorated fees will be lower than with round up, and each result shows the rule used.','กำลังใช้วิธีที่ไม่ใช่ค่าเริ่มต้น ค่าธรรมเนียมตามสัดส่วนจะต่ำกว่าการปัดขึ้น และผลการคำนวณจะระบุวิธีที่ใช้ทุกครั้ง')):''}</div>`; }
   h+=`<div class="card"><h2>${L('Area-expansion reference rates','อัตราอ้างอิงสำหรับการเพิ่มพื้นที่ปฏิบัติการ')}</h2><p class="sub">${L('Item 5) of the 2018 Announcement points to certificate fees that the 2024 Regulation replaced. Choose the rates used for the difference. Saved on this device only.','ข้อ 5) ของประกาศ กพท. พ.ศ. 2561 อ้างอิงค่าใบรับรองซึ่งถูกแทนที่โดยกฎกระทรวง พ.ศ. 2567 เลือกอัตราที่ใช้คำนวณส่วนต่าง บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>
     <div class="opts">
       ${[['MR2567',L('2024 Ministerial Regulation','กฎกระทรวง (ฉบับที่ 3) พ.ศ. 2567'),L('กฎกระทรวง (ฉบับที่ 3) 2567 · current certificate rates','อัตราค่าใบรับรองปัจจุบัน'),true],
@@ -2006,10 +2079,8 @@ function renderSettings(){
         .map(o=>`<button type="button" class="opt ${b===o[0]?'on':''}" data-act="basis" data-val="${o[0]}"><span class="rd"></span><span><b>${esc(o[1])}${o[3]?`<span class="tag">${L('Default','ค่าเริ่มต้น')}</span>`:''}</b><span class="thai">${esc(o[2])}</span></span></button>`).join('')}
     </div>
     ${b!=='MR2567'?note('warn',L('A non-default basis is active. Every area-expansion result will say so.','กำลังใช้อัตราอ้างอิงที่ไม่ใช่ค่าเริ่มต้น ผลการคำนวณการเพิ่มพื้นที่จะระบุไว้ทุกครั้ง')):''}</div>`;
-  { const mb=S.settings.mixedBasis;
-    h+=`<div class="card"><h2>${L('Mixed-AOC fee reading','แนวทางคำนวณใบรับรองประเภทผสม')}</h2><p class="sub">${L('Used when one AOC lists more than one kind of aircraft (aeroplanes, helicopters, balloons). Large and small aircraft of the same kind count as one kind. The instruments do not say how this is charged, so every result is an estimate until FAD confirms. Saved on this device only.','ใช้เมื่อใบรับรองฉบับเดียวมีอากาศยานมากกว่าหนึ่งประเภท (เครื่องบิน เฮลิคอปเตอร์ บัลลูน) อากาศยานขนาดใหญ่และขนาดเล็กประเภทเดียวกันนับเป็นประเภทเดียว กฎหมายที่เกี่ยวข้องมิได้กำหนดวิธีเรียกเก็บ ผลการคำนวณทั้งหมดจึงเป็นประมาณการจนกว่า FAD จะยืนยัน บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>
-      <div class="opts">${mixedOpts().map(o=>`<button type="button" class="opt ${mb===o.k?'on':''}" data-act="mixbasis" data-val="${o.k}"><span class="rd"></span><span><b>${o.k} · ${esc(o.t)}${o.def?`<span class="tag">${L('Default','ค่าเริ่มต้น')}</span>`:''}</b><span class="thai">${esc(o.d)}</span></span></button>`).join('')}</div>
-      ${mb!=='A'?note('warn',L('A non-default reading is active. Mixed-AOC totals use it and say so.','กำลังใช้แนวทางที่ไม่ใช่ค่าเริ่มต้น ยอดรวมของใบรับรองประเภทผสมใช้แนวทางนี้และระบุไว้ทุกครั้ง')):''}</div>`; }
+  h+=grp(L('Data and app information','ข้อมูลและรายละเอียดระบบ'),L('Saved data, version, rule set and self-test','ข้อมูลที่บันทึก เวอร์ชัน ชุดอัตรา และการทดสอบระบบ'));
+  h+=editsCard();
   h+=`<div class="card"><h2>${L('Version history','ประวัติเวอร์ชัน')}</h2><p class="sub">${L('Current version','เวอร์ชันปัจจุบัน')}: <b>v${esc(APP_VERSION)}</b> · ${esc(dfmt(APP_DATE))}. ${L('Quote this when you report an error.','โปรดระบุเวอร์ชันนี้เมื่อแจ้งข้อผิดพลาด')}</p><ul class="vlist">${APP_LOG.map(e=>`<li><b>v${esc(e.v)}</b><small>${esc(dfmt(e.d))}</small><ul>${(LANG==='th'?e.th:e.en).map(x=>`<li style="border:0;padding:0">${esc(x)}</li>`).join('')}</ul></li>`).join('')}</ul></div>`;
   h+=`<div class="card"><h2>${L('Rule set','ชุดอัตรา')}</h2><p class="sub">${esc(RULESET.version)} · ${L('rates are fixed in the file and change only by a new version.','อัตรากำหนดไว้ในไฟล์ และเปลี่ยนได้โดยการออกฉบับใหม่เท่านั้น')}</p>
     <table class="tbl"><tr><th>${L('Component','องค์ประกอบ')}</th><th>${L('Source','แหล่งที่มา')}</th></tr>
@@ -2069,6 +2140,7 @@ function resultCard(o){
   return h;
 }
 function renderSide(){
+  syncMonths();
   const side=document.getElementById('side'); let o;
   if(!S.healthy){ side.innerHTML=resultCard({title:L('Calculator locked','ระบบถูกระงับ'),total:null,status:'INCOMPLETE',errors:[L('The built-in self-test failed. Calculations are disabled until the rule set is corrected. See Settings.','การทดสอบระบบไม่ผ่าน ระบบระงับการคำนวณจนกว่าจะแก้ไขชุดอัตรา โปรดดูหน้าตั้งค่า')]}); updateMini(null,L('Locked','ระงับ')); return; }
   if(S.tab==='cert'){
@@ -2157,6 +2229,7 @@ function renderSecHead(){
       : d[2]}</p></div>${sw}</div>`;
 }
 function renderPage(){
+  syncMonths();
   document.body.dataset.sec=S.tab; const isNA=!!S.na[S.tab]; document.body.classList.toggle('na',isNA); document.getElementById('shell').classList.toggle('na',isNA); renderSecHead();
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id==='page-'+S.tab));
   document.getElementById('shell').classList.toggle('full',['settings','ref','sum','pipe'].includes(S.tab));
@@ -2832,7 +2905,7 @@ function restoreEdits(){
 let RESETTING=false;
 function resetCounts(){
   const ops=savedOps().length, custom=S.customOps.length;
-  const sets=[S.settings.areaExpansionBasis!==RULESET.settings.areaExpansionBasis, S.settings.mixedBasis!=='A', S.sumMode!=='detailed', !!(load('aoc.mailTo')||''), (load('aoc.survBudget')!=null&&toNum(load('aoc.survBudget'))!==16000000)].filter(Boolean).length;
+  const sets=[S.settings.areaExpansionBasis!==RULESET.settings.areaExpansionBasis, S.settings.mixedBasis!=='A', S.settings.partMonth!=='up', S.sumMode!=='detailed', !!(load('aoc.mailTo')||''), (load('aoc.survBudget')!=null&&toNum(load('aoc.survBudget'))!==16000000)].filter(Boolean).length;
   return {ops,custom,sets,cur:!!S.operator,total:ops+custom+sets};
 }
 function confirmReset(){
@@ -2850,7 +2923,7 @@ function resetApp(c){
   clearTimeout(persistT);
   try{ const keep=load('aoc.lang'); Object.keys(localStorage).filter(k=>k.startsWith('aoc.')).forEach(k=>localStorage.removeItem(k)); if(keep) store('aoc.lang',keep); }catch(e){}
   S.opCache={}; S.staleOps={}; S.customOps=[]; touched.clear();
-  S.settings.areaExpansionBasis=RULESET.settings.areaExpansionBasis; S.settings.mixedBasis='A'; setMixedBasis('A'); S.sumMode='detailed'; S.pipeF='all'; S.survBudget='16000000'; S.survOpen=false; S.survUnlocked=false; S.survAsk=false; S.survErr='';
+  S.settings.areaExpansionBasis=RULESET.settings.areaExpansionBasis; S.settings.mixedBasis='A'; setMixedBasis('A'); S.settings.partMonth='up'; S.sumMode='detailed'; S.pipeF='all'; S.survBudget='16000000'; S.survOpen=false; S.survUnlocked=false; S.survAsk=false; S.survErr='';
   S.addingOp=false; S.opDraft=''; S.operator=''; freshOp(''); S.expiry=''; S.expiryAuto=false; S.tx='renewal'; S.txAuto=false;
   store(EDIT_KEY,JSON.stringify({v:1,cur:'',ops:{}}));
   const t=new Date(), hm=String(t.getHours()).padStart(2,'0')+':'+String(t.getMinutes()).padStart(2,'0');
@@ -3038,7 +3111,7 @@ function reportHref(){
   const body=[L('Please describe the error (what you did, what you expected, what you saw):','โปรดระบุข้อผิดพลาด (สิ่งที่ทำ ผลที่คาดหวัง และผลที่ปรากฏ):'),'','','',
     '--- App details ---',
     `App version: ${APP_VERSION}`,`Rule set: ${RULESET.version}`,`Screen: ${S.tab}`,`Operator: ${S.operator?S.operator+(oi.aoc?' ('+oi.aoc+')':''):'-'}`,
-    `Transaction: ${S.tx}`,`Total shown: ${total}`,`Self-test: ${S.tests.filter(t=>t.pass).length}/${S.tests.length}`,`Mixed-AOC reading: ${S.settings.mixedBasis}`,
+    `Transaction: ${S.tx}`,`Total shown: ${total}`,`Self-test: ${S.tests.filter(t=>t.pass).length}/${S.tests.length}`,`Mixed-AOC reading: ${S.settings.mixedBasis}`,`Part-month rule: ${S.settings.partMonth}`,
     `Language: ${LANG}`,`Date: ${stamp}`,`Device: ${dev}`].join('\r\n');
   return `mailto:${REPORT_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
@@ -3137,6 +3210,9 @@ document.addEventListener('click',e=>{
     case 'apers': a.persons=Math.max(0,a.persons+Number(el.dataset.val)); break;
     case 'aexcl': a.excluded=Math.max(0,a.excluded+Number(el.dataset.val)); break;
     case 'mixbasis': S.settings.mixedBasis=MIXED_BASES.includes(v)?v:'A'; setMixedBasis(S.settings.mixedBasis); store('aoc.mixbasis',S.settings.mixedBasis); toast(L('Mixed-AOC reading saved on this device','บันทึกแนวทางคำนวณใบรับรองประเภทผสมในอุปกรณ์นี้แล้ว')); break;
+    case 'cAsOfToday': c.asOf=''; syncMonths(); break;
+    case 'cMauto': c.Mauto=true; syncMonths(); toast(L('Remaining validity follows the AOC expiry again','อายุใบรับรองคงเหลือคำนวณตามวันหมดอายุอีกครั้ง')); break;
+    case 'partmonth': S.settings.partMonth=PART_RULES.includes(v)?v:'up'; store('aoc.partmonth',S.settings.partMonth); syncMonths(); toast(L('Part-month rule saved on this device','บันทึกวิธีนับเศษเดือนในอุปกรณ์นี้แล้ว')); break;
     case 'basis': S.settings.areaExpansionBasis=v; store('aoc.basis',v); toast(L('Area-expansion basis saved on this device','บันทึกอัตราอ้างอิงในอุปกรณ์นี้แล้ว')); break;
     case 'addChange': { const r=calcChange(c.mode,c,S.settings); if(r.status==='INCOMPLETE'){ toast(L('Complete the change details first','กรุณากรอกรายละเอียดให้ครบก่อน')); return; }
       S.changesAdded.push({id:nid(),mode:c.mode,p:JSON.parse(JSON.stringify(c)),basis:S.settings.areaExpansionBasis}); toast(L('Added to Summary','เพิ่มในหน้าสรุปแล้ว')); break; }
@@ -3195,10 +3271,11 @@ document.addEventListener('input',e=>{
   const id=el.dataset.id, val=el.value, c=S.change;
   if(b==='name'){ findT(id).name=val; renderSide(); return; }
   if(b==='mtow'){ const t=findT(id); t.mtow=val; if(!classify(t).boundary) t.legacyConfirm=null; refreshTypeCards(); renderSide(); return; }
-  if(b==='expiry'){ S.expiry=val; S.expiryAuto=false; renderTimeline(); return; }
-  if(b==='cM'){ c.M=Number(val); const t=document.querySelector('[data-bind="cMtxt"]'); if(t) t.value=val; el.style.setProperty('--p',(c.M/(toNum(c.T)||60)*100)+'%'); renderSide(); return; }
-  if(b==='cMtxt'){ c.M=val; const r=document.querySelector('[data-bind="cM"]'); const n=toNum(val); if(r&&n!=null&&!isNaN(n)){ r.value=n; r.style.setProperty('--p',(n/(toNum(c.T)||60)*100)+'%'); } renderSide(); return; }
-  if(b==='cT'){ c.T=val; const r=document.querySelector('[data-bind="cM"]'); const T=toNum(val); if(r&&T>0){ r.max=T; r.style.setProperty('--p',Math.min(100,(toNum(c.M)||0)/T*100)+'%'); } const em=document.querySelector('[data-bind="cMtxt"]'); if(em&&em.nextElementSibling&&T>0) em.nextElementSibling.textContent='/ '+T; renderSide(); return; }
+  if(b==='expiry'){ S.expiry=val; S.expiryAuto=false; syncMonths(); renderTimeline(); return; }
+  if(b==='cM'){ c.Mauto=false; c.Mrule='manual'; c.M=Number(val); refreshMonthsUI(); renderSide(); return; }
+  if(b==='cMtxt'){ c.Mauto=false; c.Mrule='manual'; c.M=val; refreshMonthsUI(true); renderSide(); return; }
+  if(b==='cAsOf'){ c.asOf=val; syncMonths(); refreshMonthsUI(); renderSide(); return; }
+  if(b==='cT'){ c.T=val; syncMonths(); refreshMonthsUI(); const em=document.querySelector('[data-bind="cMtxt"]'); const T=toNum(val); if(em&&em.nextElementSibling&&T>0) em.nextElementSibling.textContent='/ '+T; renderSide(); return; }
   if(b==='country'){ findA(id).country=val; updateAct(id); return; }
   if(b==='start'||b==='end'){ findA(id)[b]=val; updateAct(id); return; }
   if(b==='opDraft'){ S.opDraft=val; return; }
