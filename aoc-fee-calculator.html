@@ -1359,7 +1359,7 @@ body.has-brand #page-sum .card{border-top:3px solid color-mix(in srgb,var(--o2) 
 .tlx-sky{position:absolute;inset:0;pointer-events:none}
 .tlx-sky i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.6}
 .tlx-sky i:nth-child(1){left:62%;top:18%}.tlx-sky i:nth-child(2){left:80%;top:62%}.tlx-sky i:nth-child(3){left:91%;top:24%}.tlx-sky i:nth-child(4){left:72%;top:84%}
-.tlx-sky b{position:absolute;right:-30px;top:14px;color:rgba(255,255,255,.22);display:grid}.tlx-sky b svg{width:30px;height:30px;transform:rotate(90deg)}
+.tlx-sky b{position:absolute;left:-40px;top:14px;color:rgba(255,255,255,.22);display:grid}.tlx-sky b svg{width:30px;height:30px;transform:rotate(90deg)}
 .tlx-b{padding:16px 18px 18px}
 .tlx-f{max-width:300px}
 .tlx-cd{display:flex;align-items:center;gap:14px;margin:12px 0 4px;padding:12px 14px;border-radius:16px;border:1px solid #cfe9e4;background:linear-gradient(135deg,#e6f6f3,#fff)}
@@ -1406,7 +1406,7 @@ body.has-brand #page-sum .card{border-top:3px solid color-mix(in srgb,var(--o2) 
 @keyframes tlxPop{from{transform:scale(0)}}
 @keyframes tlxDrop{from{opacity:0;transform:translateY(-8px)}}
 @keyframes tlxRing{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(1.9)}}
-@keyframes tlxCross{from{transform:translateX(0)}to{transform:translateX(-520px)}}
+@keyframes tlxCross{from{left:-40px}to{left:calc(100% + 10px)}}
 
 /* Industry: view menu, icon view, boarding pass */
 .vw{display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:11px;background:#eef2f7;border:1px solid #dde5ee}
@@ -1462,6 +1462,20 @@ html[lang=th] .vw small{letter-spacing:0}
 @keyframes prBob{0%,100%{transform:rotate(90deg) translateX(0)}50%{transform:rotate(90deg) translateX(-1.6px)}}
 @keyframes prPing{0%,100%{color:var(--navy)}50%{color:var(--rc)}}
 @media print{ .globe .gtw,.globe .gfs{display:none} }
+
+/* v3.64 */
+.fin.mix{filter:drop-shadow(0 2px 3px rgba(10,25,45,.18))}
+.sgrp.sub{margin:14px 2px 6px;padding-left:10px;border-left:3px solid var(--sec,#2a9d8f)}
+.sgrp.sub h3{font-size:13.5px}
+.card.fold{position:relative}
+.card.fold .fold-t{cursor:pointer;padding-right:40px;user-select:none}
+.fold-b{position:absolute;top:12px;right:12px;z-index:2;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;border:1px solid #d5dfea;background:#fff;color:#1a2e4a;cursor:pointer}
+.fold-b svg{width:18px;height:18px;transition:transform .25s}
+.card.fold.closed .fold-b svg{transform:rotate(-90deg)}
+.card.fold.closed>*:not(h2):not(.sub):not(.rev-h):not(.fold-b){display:none}
+.card.fold.closed .rev-h>*:not(:first-child){display:none}
+.card.fold.closed .sub{margin-bottom:0}
+.pr-m .pr-n{-webkit-line-clamp:3;white-space:normal;text-overflow:clip}
 </style>
 </head>
 <body data-sec="cert">
@@ -2230,8 +2244,20 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.63', APP_DATE='2026-11-20';
+const APP_VERSION='3.64', APP_DATE='2026-11-21';
 const APP_LOG=[
+  {v:'3.64',d:'2026-11-21',en:[
+    'Certificate: the plane in the renewal timeline header now flies forward, left to right.',
+    'Settings: Balloons, Certificate and Changes settings sit together under one password (the Surveillance Coverage Projection password). One unlock opens all three.',
+    'Mixed AOCs with aeroplanes and helicopters show a small tail fin and a small helicopter together wherever the operator icon appears.',
+    'Industry: Industry profile and Expected renewal revenue can be folded. Industry profile is open by default; Expected renewal revenue is closed by default.',
+    'Boarding passes: the decorative barcodes are removed. Each pass shows the operator name once, in full.'],
+   th:[
+    'ใบรับรอง: เครื่องบินในแถบหัวของกำหนดเวลาการต่ออายุบินไปข้างหน้าจากซ้ายไปขวา',
+    'ตั้งค่า: การตั้งค่าบัลลูน ค่าใบรับรอง และการเปลี่ยนแปลง อยู่ภายใต้รหัสผ่านเดียวกัน (รหัสผ่านของการประมาณการความครอบคลุมงบประมาณการตรวจติดตาม) ปลดล็อกครั้งเดียวเปิดได้ทั้งสามส่วน',
+    'ใบรับรองประเภทผสมที่มีทั้งเครื่องบินและเฮลิคอปเตอร์ แสดงไอคอนแพนหางและเฮลิคอปเตอร์ขนาดย่อร่วมกันในทุกจุดที่แสดงไอคอนผู้ดำเนินการ',
+    'อุตสาหกรรม: ส่วนข้อมูลภาพรวมอุตสาหกรรมและประมาณการรายได้จากการต่ออายุย่อและขยายได้ ข้อมูลภาพรวมอุตสาหกรรมเปิดไว้เป็นค่าเริ่มต้น ประมาณการรายได้จากการต่ออายุปิดไว้เป็นค่าเริ่มต้น',
+    'บัตรโดยสาร: นำบาร์โค้ดตกแต่งออก และแสดงชื่อผู้ดำเนินการเพียงครั้งเดียวเป็นชื่อเต็ม']},
   {v:'3.63',d:'2026-11-20',en:[
     'Globes: the Other regions (International) globe now shows 21 destinations spread across every continent. White arcs rise from Bangkok to each one, drawing in turn with a travelling light and a pulse on arrival. The helicopter International globe animates its arcs the same way. Reduced-motion shows the arcs still.'],
    th:[
@@ -2512,7 +2538,7 @@ function applySky(){ if(document.body) document.body.dataset.sky=skyNow(); }
 setInterval(applySky,10*60*1000);
 function boardingPassHTML(s){
   const oi=OPINFO[S.operator]||{}, exp=S.expiry, ren=S.tx==='renewal', hasOp=s.ins.op>0;
-  const nm=S.operator?opName(S.operator).replace(/\s+(Public\s+)?Company\s+Limited$|\s+Limited$|\s+Joint Stock Company Limited$/i,'').replace(/^บริษัท\s+|\s+จำกัด(\s*\(มหาชน\))?$/g,''):L('No air operator selected','ยังไม่ได้เลือกผู้ดำเนินการเดินอากาศ');
+  const nm=S.operator?opName(S.operator):L('No air operator selected','ยังไม่ได้เลือกผู้ดำเนินการเดินอากาศ');
   const ab=ren&&exp&&!s.cert.excluded?addDays(exp,-150):null;
   const de=ab?Math.round((new Date(ab+'T00:00:00Z')-new Date(localISO()+'T00:00:00Z'))/864e5):null;
   const dl=de==null?'':de<0?L(`${-de} day${-de>1?'s':''} overdue`,`เลยกำหนด ${-de} วัน`):de===0?L('due today','ครบกำหนดวันนี้'):L(`${de} day${de>1?'s':''} left`,`อีก ${de} วัน`);
@@ -2523,7 +2549,7 @@ function boardingPassHTML(s){
     <div class="bp-grid"><div>${L('AOC','ใบรับรอง')}<b>${esc(oi.aoc||'—')}</b></div><div>${L('Expiry','หมดอายุ')}<b class="flap">${exp?esc(dfmt(exp)):'—'}</b></div>
       ${ab?`<div>${L('Apply by','กำหนดยื่น')}<b class="flap">${esc(dfmt(ab))}</b><i class="bp-dl ${de<0?'past':de<=30?'soon':''}">${esc(dl)}</i></div><div>${L('New AOC from','ออกใบรับรองใหม่ได้ตั้งแต่')}<b class="flap">${esc(dfmt(addDays(exp,-45)))}</b></div>`:''}</div>
     <div class="bp-st">${statusPill(s.status)}</div>${S.sumMode==='simple'?'':mixHTML(s)}</div>
-    <div class="bp-stub"><div><small>${hasOp?L('Total','รวม'):L('To CAAT','ชำระ กพท.')}</small><b>${rollHTML('฿'+fmt(amt))}</b>${hasOp?`<small class="bp-sub">${L('To CAAT','ชำระ กพท.')} ฿${fmt(s.caat)}</small>`:''}</div><div class="bp-bars"></div></div></div>`;
+    <div class="bp-stub"><div><small>${hasOp?L('Total','รวม'):L('To CAAT','ชำระ กพท.')}</small><b>${rollHTML('฿'+fmt(amt))}</b>${hasOp?`<small class="bp-sub">${L('To CAAT','ชำระ กพท.')} ฿${fmt(s.caat)}</small>`:''}</div></div></div>`;
 }
 /* v3.54 operator brand colours, used as a sub-theme. Sources: airhex.com logo palettes (Thai Airways, Bangkok Airways, Nok Air,
    Thai AirAsia, Thai Lion Air, Thai VietJet); VietJet livery yellow; SFS Aviation HS-SFJ German-colours scheme. Thai AirAsia X uses the AirAsia red.
@@ -2554,8 +2580,24 @@ function heliSVG(op,w){
     R='#3a4a5c', G='#8a96a3';
   return `<svg class="fin heli" viewBox="0 18 60 52" width="${Math.round(w*1.25)}" height="${Math.round(w*70/60)}" aria-hidden="true" focusable="false"><defs><linearGradient id="${i}b" gradientUnits="userSpaceOnUse" x1="3" y1="60" x2="56" y2="31"><stop offset="0" stop-color="${B.g[0]}"/><stop offset=".55" stop-color="${B.g[1]}"/><stop offset="1" stop-color="${B.g[2]}"/></linearGradient><linearGradient id="${i}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient><clipPath id="${i}c"><path d="${BODY}"/></clipPath></defs><g class="hb"><rect x="21.5" y="30" width="3" height="7" fill="#5b6b7c"/><g clip-path="url(#${i}c)"><rect width="60" height="70" fill="url(#${i}b)"/><rect x="0" y="30" width="60" height="28" fill="url(#${i}s)"/></g><path d="${BODY}" fill="none" stroke="rgba(10,25,45,.25)" stroke-width=".8"/><path d="M5.5 48 Q6.5 40 15 39 L17 39 L17 48 Z" fill="#dff1f5" opacity=".85"/><g class="tr"><rect x="52.3" y="30.5" width="1.4" height="11" rx=".7" fill="${R}"/><rect x="52.3" y="30.5" width="1.4" height="11" rx=".7" fill="${R}" transform="rotate(90 53 36)"/></g><rect class="mr" x="1" y="28.7" width="44" height="2.6" rx="1.3" fill="${R}"/><rect class="mr mr2" x="1" y="28.7" width="44" height="2.6" rx="1.3" fill="${R}" opacity=".75"/><rect x="12" y="57" width="2" height="6" fill="${G}"/><rect x="30" y="57" width="2" height="6" fill="${G}"/><rect x="4" y="63" width="35" height="2.6" rx="1.3" fill="${G}"/></g></svg>`;
 }
+const _mixMemo={};
+function isMixKindOp(op){
+  if(!op) return false; if(op in _mixMemo) return _mixMemo[op];
+  const f=FLEET[op]; if(!f||!f.length) return _mixMemo[op]=false;
+  const k=new Set(f.map(g=>{ const a=g.m&&g.m.length?acById(g.m[0]):null; return g.cat||(a?acCat(a):'AEROPLANE'); }));
+  return _mixMemo[op]=k.has('HELICOPTER')&&k.has('AEROPLANE');
+}
+const svgAt=(s,x,y,w,hh)=>s.replace(/^<svg class="fin( heli)?" viewBox="([^"]+)" width="\d+" height="\d+"/,(m,he,vb)=>`<svg${he?' class="heli"':''} viewBox="${vb}" x="${x}" y="${y}" width="${w}" height="${hh}"`);
+function mixSVG(op,w){
+  const f=svgAt(finOnlySVG(op,w),0,6,44,51.3), c=svgAt(heliSVG(op,w),36,28,48,41.6);
+  return `<svg class="fin mix" viewBox="0 0 84 70" width="${Math.round(w*1.4)}" height="${Math.round(w*70/60)}" aria-hidden="true" focusable="false">${f}${c}</svg>`;
+}
 function finSVG(op,w){
   if(isHeliOp(op)) return heliSVG(op,w);
+  if(isMixKindOp(op)) return mixSVG(op,w);
+  return finOnlySVG(op,w);
+}
+function finOnlySVG(op,w){
   const B=brandOf(op), i='fn'+(++finN), P='M4 66 H42 L56 9 Q56.5 3 51 4.5 L34 11 Z', y=f=>(66-f*62).toFixed(1);
   const bands=B.b.map(x=>`<rect x="0" y="${y(x[2])}" width="60" height="${((x[2]-x[1])*62+(x[1]===0?4:0)).toFixed(1)}" fill="${x[0]}"/>`).join('');
   return `<svg class="fin" viewBox="0 0 60 70" width="${w}" height="${Math.round(w*70/60)}" aria-hidden="true" focusable="false"><defs><linearGradient id="${i}b" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="${B.g[0]}"/><stop offset=".55" stop-color="${B.g[1]}"/><stop offset="1" stop-color="${B.g[2]}"/></linearGradient><linearGradient id="${i}s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".32"/><stop offset=".35" stop-color="#000" stop-opacity="0"/><stop offset=".7" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><clipPath id="${i}c"><path d="${P}"/></clipPath></defs><g clip-path="url(#${i}c)"><rect width="60" height="70" fill="url(#${i}b)"/>${bands}<rect width="60" height="70" fill="url(#${i}s)"/><path d="M34 11 L51 4.5 L50 8 L36 14 Z" fill="#fff" opacity=".25"/></g><path d="${P}" fill="none" stroke="rgba(10,25,45,.25)" stroke-width=".8"/><rect x="2" y="65" width="42" height="3" rx="1" fill="#8a96a3"/></svg>`;
@@ -2928,7 +2970,7 @@ function actCalcText(r){
 /* ---------- Settings & reference ---------- */
 /* v3.62: the Certificate and Changes settings use the same password as the Surveillance Coverage Projection. Unlocked for this session only. */
 function setLockHTML(k){
-  const ask=S.setAsk===k, nm=k==='cert'?L('Certificate settings','การตั้งค่าค่าใบรับรอง'):L('Changes settings','การตั้งค่าการเปลี่ยนแปลง');
+  const ask=S.setAsk===k, nm=L('Balloons, Certificate and Changes settings','การตั้งค่าบัลลูน ค่าใบรับรอง และการเปลี่ยนแปลง');
   return `<div class="svc setlock ${ask?'open':''}"><button type="button" class="svc-h" data-act="setAsk" data-val="${k}" aria-expanded="${ask}"><span class="svc-ic">${LOCK_SVG}</span><span class="svc-tt"><b>${esc(nm)}</b><small>${L('Password required','ต้องใช้รหัสผ่าน')}</small></span><span class="svc-chev" aria-hidden="true"></span></button>
     ${ask?`<form class="svc-pw ${S.setErr?'bad':''}" data-setpw autocomplete="off"><label class="lbl" for="setPw">${L('Enter the password to open these settings','กรอกรหัสผ่านเพื่อเปิดการตั้งค่านี้')}</label>
       <div class="svc-pwr"><div class="field svc-in"><b>${LOCK_SVG}</b><input id="setPw" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${esc(L('Password','รหัสผ่าน'))}"></div><button type="submit" class="btn svc-go">${L('Unlock','ปลดล็อก')}</button></div>
@@ -2947,17 +2989,17 @@ function renderSettings(){
   const grp=(t,d)=>`<div class="sgrp"><h3>${t}</h3><small>${d}</small></div>`;
   let h=grp(L('General','ทั่วไป'),L('Language and error reporting','ภาษาและการแจ้งข้อผิดพลาด'));
   h+=`<div class="card"><div class="eyebrow">${L('Settings','ตั้งค่า')}</div><h2>${L('Language','ภาษา')}</h2><p class="sub">${L('Applies to the app and to printed reports. Saved on this device.','ใช้กับทั้งระบบและรายงานที่พิมพ์ บันทึกไว้ในอุปกรณ์นี้')}</p>${seg([['en','English'],['th','ภาษาไทย']],S.lang,'lang','','',true)}</div>`;
-  h+=`<div class="card"><h2>${L('Balloons','บัลลูน')}</h2><p class="sub">${L('When off, everything about balloons is greyed out and cannot be selected: the Balloon category, the Add a balloon type change and the balloon rates. Saved on this device.','เมื่อปิด ตัวเลือกเกี่ยวกับบัลลูนทั้งหมดจะเป็นสีเทาและเลือกไม่ได้ ได้แก่ ประเภทบัลลูน การเพิ่มแบบบัลลูน และอัตราสำหรับบัลลูน บันทึกไว้ในอุปกรณ์นี้')}</p>${seg([[true,L('On','เปิด')],[false,L('Off','ปิด')]],S.settings.balloons,'balloons','','',true)}</div>`;
   h+=`<div class="card"><h2>${L('Report an error','แจ้งข้อผิดพลาด')}</h2><p class="sub">${L('Opens a new email to anan.t@caat.or.th in your mail app, with the rule set, screen, operator and total filled in. Add a short description and send.','เปิดอีเมลฉบับใหม่ถึง anan.t@caat.or.th ในแอปอีเมล พร้อมระบุชุดอัตรา หน้าจอ ผู้ดำเนินการเดินอากาศ และยอดรวมให้โดยอัตโนมัติ กรุณาเพิ่มรายละเอียดโดยย่อแล้วส่ง')}</p><button type="button" class="btn btn-s" data-act="report">${ICON.mail} ${L('Report error','แจ้งข้อผิดพลาด')}</button></div>`;
-  h+=grp(L('Certificate','ค่าใบรับรอง'),L('Certificate fee page and Industry','หน้าค่าใบรับรองและหน้าอุตสาหกรรม'));
+  h+=grp(L('Protected settings','การตั้งค่าที่ต้องใช้รหัสผ่าน'),L('Balloons, Certificate and Changes · one password','บัลลูน ค่าใบรับรอง และการเปลี่ยนแปลง · รหัสผ่านเดียว'));
   const k1=h.length; h+=setUnHTML();
+  h+=`<div class="sgrp sub"><h3>${L('Balloons','บัลลูน')}</h3></div>`;
+  h+=`<div class="card"><h2>${L('Balloons','บัลลูน')}</h2><p class="sub">${L('When off, everything about balloons is greyed out and cannot be selected: the Balloon category, the Add a balloon type change and the balloon rates. Saved on this device.','เมื่อปิด ตัวเลือกเกี่ยวกับบัลลูนทั้งหมดจะเป็นสีเทาและเลือกไม่ได้ ได้แก่ ประเภทบัลลูน การเพิ่มแบบบัลลูน และอัตราสำหรับบัลลูน บันทึกไว้ในอุปกรณ์นี้')}</p>${seg([[true,L('On','เปิด')],[false,L('Off','ปิด')]],S.settings.balloons,'balloons','','',true)}</div>`;
+  h+=`<div class="sgrp sub"><h3>${L('Certificate','ค่าใบรับรอง')}</h3><small>${L('Certificate fee page and Industry','หน้าค่าใบรับรองและหน้าอุตสาหกรรม')}</small></div>`;
   { const mb=S.settings.mixedBasis;
     h+=`<div class="card"><h2>${L('Mixed-AOC fee reading','แนวทางคำนวณใบรับรองประเภทผสม')}</h2><p class="sub">${L('Used when one AOC lists more than one kind of aircraft (aeroplanes, helicopters, balloons). Large and small aircraft of the same kind count as one kind. The instruments do not say how this is charged, so every result is an estimate until FAD confirms. Saved on this device only.','ใช้เมื่อใบรับรองฉบับเดียวมีอากาศยานมากกว่าหนึ่งประเภท (เครื่องบิน เฮลิคอปเตอร์ บัลลูน) อากาศยานขนาดใหญ่และขนาดเล็กประเภทเดียวกันนับเป็นประเภทเดียว กฎหมายที่เกี่ยวข้องมิได้กำหนดวิธีเรียกเก็บ ผลการคำนวณทั้งหมดจึงเป็นประมาณการจนกว่า FAD จะยืนยัน บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>
       <div class="opts">${mixedOpts().map(o=>`<button type="button" class="opt ${mb===o.k?'on':''}" data-act="mixbasis" data-val="${o.k}"><span class="rd"></span><span><b>${o.k} · ${esc(o.t)}${o.def?`<span class="tag">${L('Default','ค่าเริ่มต้น')}</span>`:''}</b><span class="thai">${esc(o.d)}</span></span></button>`).join('')}</div>
       ${mb!=='A'?note('warn',L('A non-default reading is active. Mixed-AOC totals use it and say so.','กำลังใช้แนวทางที่ไม่ใช่ค่าเริ่มต้น ยอดรวมของใบรับรองประเภทผสมใช้แนวทางนี้และระบุไว้ทุกครั้ง')):''}</div>`; }
-  if(!S.setUnlocked) h=h.slice(0,k1)+setLockHTML('cert');
-  h+=grp(L('Changes','การเปลี่ยนแปลง'),L('Changes during AOC validity','การเปลี่ยนแปลงระหว่างอายุใบรับรอง'));
-  const k2=h.length; h+=setUnHTML();
+  h+=`<div class="sgrp sub"><h3>${L('Changes','การเปลี่ยนแปลง')}</h3><small>${L('Changes during AOC validity','การเปลี่ยนแปลงระหว่างอายุใบรับรอง')}</small></div>`;
   { const pm=S.settings.partMonth, ex=remMonths('2026-11-19','2027-02-26','exact');
     const opts=[['up',L('Round up','ปัดขึ้น'),L('Any part month counts as a full month. Highest fee for CAAT. Example: 3 months 7 days = 4 months.','นับเศษของเดือนเป็นหนึ่งเดือนเต็ม ค่าธรรมเนียมสูงสุด ตัวอย่าง: 3 เดือน 7 วัน = 4 เดือน'),true],
       ['down',L('Round down','ปัดลง'),L('Part months are not counted. Lowest fee. Example: 3 months 7 days = 3 months.','ไม่นับเศษของเดือน ค่าธรรมเนียมต่ำสุด ตัวอย่าง: 3 เดือน 7 วัน = 3 เดือน'),false],
@@ -2983,7 +3025,7 @@ function renderSettings(){
     ${b!=='MR2567'?note('warn',L('A non-default basis is active. Every area-expansion result will say so.','กำลังใช้อัตราอ้างอิงที่ไม่ใช่ค่าเริ่มต้น ผลการคำนวณการเพิ่มพื้นที่จะระบุไว้ทุกครั้ง')):''}</div>`;
   const swB=(act,on,k,t,d)=>`<button type="button" class="opt ${on?'on':''}" data-act="${act}" data-val="${k}" role="switch" aria-checked="${on}"><span class="sw ${on?'on':''}" aria-hidden="true"><i></i></span><span><b>${esc(t)}<span class="tag ${on?'':'off'}">${on?L('On','เปิด'):L('Off','ปิด')}</span></b><span class="thai">${esc(d)}</span></span></button>`;
   { const I=S.settings.sumInc, sw=(k,t,d)=>swB('suminc',I[k],k,t,d);
-    if(!S.setUnlocked) h=h.slice(0,k2)+setLockHTML('chg');
+    if(!S.setUnlocked) h=h.slice(0,k1)+setLockHTML('all');
   h+=grp(L('Summary report','รายงานสรุป'),L('What the Summary page, printed report, PDF and shared summary include','สิ่งที่รวมในหน้าสรุป รายงานที่พิมพ์ ไฟล์ PDF และสรุปที่ส่งต่อ'));
     h+=`<div class="card"><h2>${L('Sections in the summary','ส่วนที่รวมในรายงานสรุป')}</h2><p class="sub">${L('All on by default. A section turned off is left out of the totals as well. Changes and Inspection can also be marked N/A for one operator on their own pages. Saved on this device only.','ค่าเริ่มต้นเปิดทั้งหมด ส่วนที่ปิดจะไม่นับรวมในยอดรวมด้วย หน้าการเปลี่ยนแปลงและหน้าการตรวจสอบยังสามารถระบุว่าไม่เกี่ยวข้อง (N/A) เป็นรายผู้ดำเนินการได้ บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>
       <div class="opts">${sw('initial',L('First issue (initial) certificate fees','ค่าธรรมเนียมใบรับรองการออกครั้งแรก'),L('Used when the Certificate page is set to First issue.','ใช้เมื่อหน้าค่าใบรับรองตั้งเป็นการออกครั้งแรก'))}
@@ -3845,6 +3887,11 @@ const shortOp=op=>opName(op).replace(/\s+(Public\s+)?Company\s+Limited$|\s+Joint
 const indAllLbl=open=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${open?'M7 14l5-5 5 5M7 20l5-5 5 5':'M7 4l5 5 5-5M7 10l5 5 5-5'}"/></svg>${open?L('Collapse all','ย่อทั้งหมด'):L('Expand all','ขยายทั้งหมด')}`;
 function indAllSync(){ const b=document.querySelector('.pl-all'); if(!b) return; if(b) return; const rows=[...document.querySelectorAll('.prow2')]; b.innerHTML=indAllLbl(rows.length>0&&rows.every(r=>r.classList.contains('open'))); }
 const CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+function foldCard(k,html){
+  S.fold=S.fold||{ip:true,rev:false}; const op=!!S.fold[k];
+  return html.replace(/^<div class="card ([^"]*)">/,(m,c)=>`<div class="card ${c} fold ${op?'':'closed'}"><button type="button" class="fold-b" data-act="fold" data-val="${k}" aria-expanded="${op}" aria-label="${esc(op?L('Collapse','ย่อ'):L('Expand','ขยาย'))}">${CHEV}</button>`)
+    .replace('<h2>',`<h2 class="fold-t" data-act="fold" data-val="${k}">`);
+}
 function renderPipe(){
   S.indOpen=S.indOpen||{};
   const all=pipeRows(), rows=all.filter(kindOk), V=IV(), hold=rows.filter(r=>r.band!=='app'&&r.band!=='nodate').sort((a,b)=>a.due.localeCompare(b.due)), apps=rows.filter(r=>r.band==='app'||r.band==='nodate');
@@ -3862,8 +3909,8 @@ function renderPipe(){
     <div class="pk k-blue"><small>${L('Due within 90 days','ภายใน 90 วัน')}</small><b>${d90.length}</b><span>${L('operators','ราย')}</span></div>
     <div class="pk k-sum"><small>${L('Renewals in the next 12 months','การต่ออายุใน 12 เดือนข้างหน้า')}</small><b><i>฿</i>${fmt(yrFee)}</b><span>${L(`${yr.length} AOCs`,`${yr.length} ฉบับ`)}${yrMiss?L(` · ${yrMiss} without an estimate`,` · ไม่มีประมาณการ ${yrMiss} ฉบับ`):''}${yrMix?MIXN(yrMix):''}</span></div></div>`;
   h+=`<div class="ind-acts"><button type="button" class="btn btn-p" data-act="send">${ICON.send} ${L('Send PDF','ส่งรายงาน PDF')}</button><button type="button" class="btn btn-s" data-act="preview">${ICON.eye} ${L('Preview','ดูตัวอย่าง')}</button><button type="button" class="btn btn-s" data-act="print">${ICON.print} ${L('Print','พิมพ์')}</button></div>`;
-  h+=indProfileHTML(indData());
-  h+=revenueHTML(rows);
+  h+=foldCard('ip',indProfileHTML(indData()));
+  h+=foldCard('rev',revenueHTML(rows));
   h+=`<div class="ptool">${seg([['all',L('All','ทั้งหมด')],['90',L('Next 90 days','ภายใน 90 วัน')],['late',L('Deadline passed','พ้นกำหนด')],['collect',L('To collect','รอเรียกเก็บ')]],F,'pipeF','','',true)}
     </div>`;
   if(F==='collect'){ const cf=collect.reduce((a,r)=>a+(r.fee||0),0), cm=collect.filter(r=>r.fee==null).length, cmx=collect.filter(r=>r.mixed&&r.fee!=null).length;
@@ -3879,18 +3926,18 @@ function renderPipe(){
       const chips=(r.edited?`<span class="pchip b-grey">${L('Your edits','ข้อมูลที่แก้ไข')}</span>`:'')+(r.mixed?`<span class="pchip b-amber">${L('Mixed AOC: estimate'+RM(', FAD to confirm'),'ใบรับรองประเภทผสม: ประมาณการ'+RM(' รอ FAD ยืนยัน'))}</span>`:'');
       return `<div class="prow2 ${bc} ${open?'open':''}" style="--stub:${STUB[bc]||'#1a2e4a'}">
         <button type="button" class="pr-hd" data-act="indTog" data-op="${esc(r.op)}" aria-expanded="${open}"><span class="pr-bar"></span>${finSVG(r.op,18)}
-          <span class="pr-m"><span class="pr-l1"><b class="pr-n">${esc(shortOp(r.op))}</b>${r.fee!=null?`<b class="pr-fee">฿${fmt(r.fee)}</b>`:`<span class="pr-fee pneed">${esc(W[r.why]||'')}</span>`}</span><em>${esc(st)}</em>
+          <span class="pr-m"><span class="pr-l1"><b class="pr-n">${esc(opName(r.op))}</b>${r.fee!=null?`<b class="pr-fee">฿${fmt(r.fee)}</b>`:`<span class="pr-fee pneed">${esc(W[r.why]||'')}</span>`}</span><em>${esc(st)}</em>
             <span class="pr-meta"><span><small>${L('AOC No.','ใบรับรองเลขที่')}</small>${esc(r.i.aoc||'—')}</span><span><small>${L('Apply by','กำหนดยื่น')}</small><i class="due">${esc(dfmt(r.due))}</i></span><span><small>${L('Expires','หมดอายุ')}</small>${esc(dfmt(r.exp))}</span></span></span>
           <span class="pr-chev">${CHEV}</span></button>
         <div class="pr-ps"><div><div class="pr-slot"></div><div class="pr-bp">
           <div class="pr-main"><div class="pr-k">${L('CAAT · AOC renewal','กพท. · การต่ออายุใบรับรอง')}</div>
             <div class="pr-rt ${rt}" style="--p:${pg.toFixed(3)}"><b>BKK</b><i><span class="pr-pl">${PLANE_SVG}</span></i><em>${esc(L('RENEWAL','ต่ออายุ'))}</em></div>
-            <div class="pr-op">${finSVG(r.op,20)}<span>${esc(opName(r.op))}</span></div>${chips?`<div class="pr-chips">${chips}</div>`:''}
+            ${chips?`<div class="pr-chips">${chips}</div>`:''}
             <div class="pr-g"><div>${L('AOC','ใบรับรอง')}<b>${esc(r.i.aoc||'—')}</b></div><div>${L('Aircraft types','แบบอากาศยาน')}<b>${r.n}</b></div>
               <div>${L('Apply by','กำหนดยื่น')}<b class="due">${esc(dfmt(r.due))}</b></div><div>${L('Expires','หมดอายุ')}<b>${esc(dfmt(r.exp))}</b><i>${esc(cdText(r.de))}</i></div>
               <div>${L('New AOC from','ออกใบรับรองใหม่ได้ตั้งแต่')}<b>${esc(dfmt(addDays(r.exp,-45)))}</b></div></div></div>
           <div class="pr-stub"><div><small>${L('Est. renewal fee','ค่าต่ออายุโดยประมาณ')}</small>${r.fee!=null?`<b>฿${fmt(r.fee)}</b>`:`<span class="pr-nf">${esc(W[r.why]||'')}</span>`}</div><div class="pr-st">${esc(st)}</div>
-            <div class="pr-btns"><button type="button" class="ib2" data-act="icsOne" data-op="${esc(r.op)}">${ICON.calAdd}${L('Calendar','ปฏิทิน')}</button><button type="button" class="ib2 go" data-act="pipeOpen" data-op="${esc(r.op)}">${L('Open','เปิด')}${CHEV.replace('M6 9l6 6 6-6','M9 6l6 6-6 6')}</button></div><div class="pr-bc"></div></div>
+            <div class="pr-btns"><button type="button" class="ib2" data-act="icsOne" data-op="${esc(r.op)}">${ICON.calAdd}${L('Calendar','ปฏิทิน')}</button><button type="button" class="ib2 go" data-act="pipeOpen" data-op="${esc(r.op)}">${L('Open','เปิด')}${CHEV.replace('M6 9l6 6 6-6','M9 6l6 6-6 6')}</button></div></div>
         </div></div></div></div>`; };
   S._indRow={};
   if(!shown.length) h+=`<div class="pempty">${L('Nothing in this view.','ไม่มีรายการในมุมมองนี้')}</div>`;
@@ -4299,6 +4346,7 @@ document.addEventListener('click',e=>{
       setTimeout(()=>{ const b=d.getBoundingClientRect(); if(b.bottom>innerHeight-80) d.scrollIntoView({block:'center',behavior:MOTION()?'smooth':'auto'}); },MOTION()?700:0); return; }
     case 'balloons': S.settings.balloons=v===true; store('aoc.balloons',S.settings.balloons?'1':'0'); if(!S.settings.balloons&&c.mode==='balloon'){ c.mode='newTypeArea'; syncArea(); }
       toast(S.settings.balloons?L('Balloons turned on','เปิดบัลลูนแล้ว'):L('Balloons turned off and greyed out','ปิดบัลลูนแล้ว ตัวเลือกบัลลูนเป็นสีเทา')); break;
+    case 'fold': S.fold=S.fold||{ip:true,rev:false}; S.fold[v]=!S.fold[v]; rerenderKeepScroll(); return;
     case 'setAsk': S.setAsk=S.setAsk===v?'':v; S.setErr=''; rerenderKeepScroll(); { const i=document.getElementById('setPw'); if(i) i.focus(); } return;
     case 'setLock': S.setUnlocked=false; S.setAsk=''; S.setErr=''; toast(L('Settings locked','ล็อกการตั้งค่าแล้ว')); break;
     case 'tx': if(v==='initial' && S.tx!=='initial' && certifiedInfo(S.operator)){ confirmInitial(()=>{ S.tx='initial'; S.txAuto=false; persistSoon(); rerenderKeepScroll(); }); return; }
