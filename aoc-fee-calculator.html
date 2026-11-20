@@ -1476,6 +1476,76 @@ html[lang=th] .vw small{letter-spacing:0}
 .card.fold.closed .rev-h>*:not(:first-child){display:none}
 .card.fold.closed .sub{margin-bottom:0}
 .pr-m .pr-n{-webkit-line-clamp:3;white-space:normal;text-overflow:clip}
+
+/* ===== v3.66 look and feel ===== */
+/* 1 frosted glass */
+.nav-in{background:linear-gradient(180deg,rgba(255,255,255,.66),rgba(244,248,252,.58))!important;-webkit-backdrop-filter:blur(20px) saturate(1.7);backdrop-filter:blur(20px) saturate(1.7);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 10px 30px -10px rgba(26,46,74,.28)!important}
+.mini{-webkit-backdrop-filter:blur(16px) saturate(1.5);backdrop-filter:blur(16px) saturate(1.5);background:linear-gradient(135deg,rgba(20,38,61,.82),rgba(30,77,140,.80))!important;border:1px solid rgba(255,255,255,.14)}
+.tglass{display:none}
+@media (max-width:959px){
+  .tglass{display:flex;position:fixed;left:0;right:0;top:0;z-index:58;align-items:center;gap:10px;justify-content:space-between;padding:calc(8px + env(safe-area-inset-top)) 16px 9px;
+    background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(244,248,252,.6));-webkit-backdrop-filter:blur(20px) saturate(1.7);backdrop-filter:blur(20px) saturate(1.7);
+    border-bottom:1px solid rgba(26,46,74,.08);box-shadow:0 8px 20px -14px rgba(26,46,74,.45);transform:translateY(-110%);opacity:0;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s;pointer-events:none}
+  .tglass.on{transform:none;opacity:1}
+  .tglass b{font-size:15px;color:var(--navy);white-space:nowrap}
+  .tglass span{display:flex;align-items:center;gap:6px;min-width:0;font-size:12px;font-weight:600;color:var(--grey-mid);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tglass span .fin{flex:none;filter:none}
+}
+/* 7 gliding pill + icon moves */
+.nav-in{position:relative}
+.nav-pill{position:absolute;z-index:0;border-radius:11px;pointer-events:none;transition:left .45s cubic-bezier(.3,1.25,.5,1),top .45s cubic-bezier(.3,1.25,.5,1),width .45s cubic-bezier(.3,1.25,.5,1);
+  background:linear-gradient(140deg,color-mix(in srgb,var(--c) 70%,#fff) -10%,var(--c) 45%,var(--c2) 100%);box-shadow:0 8px 18px -6px color-mix(in srgb,var(--c) 70%,transparent),inset 0 1px 0 rgba(255,255,255,.28),inset 0 -2px 4px rgba(0,0,0,.12)}
+@media (max-width:959px){.nav-pill{border-radius:12px}}
+.nav-pill[data-val=cert]{--c:#2563a8;--c2:#1e4d8c}.nav-pill[data-val=change]{--c:#2a9d8f;--c2:#1f7d72}.nav-pill[data-val=insp]{--c:#5f8f6f;--c2:#46725a}
+.nav-pill[data-val=sum]{--c:#4c6fb3;--c2:#30508f}.nav-pill[data-val=settings]{--c:#5c6f86;--c2:#425369}.nav-pill[data-val=ref]{--c:#3a86a8;--c2:#2a6683}.nav-pill[data-val=pipe]{--c:#3e6a9e;--c2:#2b4f7d}
+.nav-in.pl button{position:relative;z-index:1}
+.nav-in.pl button.on{background:transparent!important;box-shadow:none!important}
+@media (prefers-reduced-motion:no-preference){
+  .nav button.pop svg{animation:nIco .6s cubic-bezier(.3,1.5,.5,1)}
+  .nav button.pop[data-val=change] svg{animation-name:nIcoX}
+  .nav button.pop[data-val=insp] svg{animation-name:nIcoUp}
+  .nav button.pop[data-val=settings] svg{animation-name:nIcoSpin;animation-duration:.8s}
+  .nav button.pop[data-val=pipe] svg{animation-name:nIcoFlip}
+  .nav button.pop[data-val=ref] svg{animation-name:nIcoFlip}
+}
+@keyframes nIco{0%{transform:scale(.6) rotate(-12deg)}100%{transform:none}}
+@keyframes nIcoX{0%{transform:translateX(-6px)}50%{transform:translateX(4px)}100%{transform:none}}
+@keyframes nIcoUp{0%{transform:translateY(6px) scale(.8)}60%{transform:translateY(-3px)}100%{transform:none}}
+@keyframes nIcoSpin{0%{transform:rotate(-120deg)}100%{transform:none}}
+@keyframes nIcoFlip{0%{transform:perspective(60px) rotateX(90deg)}100%{transform:none}}
+/* 8 change chip */
+.dchip{display:inline-block;vertical-align:middle;margin-left:10px;font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:999px;font-variant-numeric:tabular-nums;white-space:nowrap;animation:dcIn .5s cubic-bezier(.3,1.5,.5,1) both,dcOut .5s ease 3.6s forwards}
+.dchip.up{background:#f3dedb;color:#8f2a22}.dchip.dn{background:#dcebdf;color:#2e6a45}
+.mini .mv .dchip{font-size:11px;padding:2px 7px;margin-left:6px}
+.mini .mv .dchip.up{background:rgba(243,222,219,.92)}.mini .mv .dchip.dn{background:rgba(220,235,223,.92)}
+@keyframes dcIn{from{opacity:0;transform:translateY(6px) scale(.8)}}
+@keyframes dcOut{to{opacity:0;transform:translateY(-4px)}}
+/* 10 refined controls */
+.opt .sw{transition:background .3s}
+.opt .sw i{transition:transform .45s cubic-bezier(.34,1.7,.5,1),width .2s,left .2s!important}
+.opt:active .sw i{width:21px}
+.opt:active .sw.on i{left:0!important}
+.seg.th{position:relative}
+.seg-th{position:absolute;z-index:0;border-radius:10px;pointer-events:none;background:linear-gradient(180deg,#fff,#f8fafc);box-shadow:0 1px 2px rgba(26,46,74,.12),0 3px 8px rgba(26,46,74,.10);transition:left .4s cubic-bezier(.3,1.25,.5,1),top .4s cubic-bezier(.3,1.25,.5,1),width .4s cubic-bezier(.3,1.25,.5,1),height .3s}
+.seg.th button{position:relative;z-index:1}
+.seg.th button.on{background:transparent!important;box-shadow:none!important}
+.btn{border-radius:var(--r-ctl)}
+.btn:active{transform:translateY(2px) scale(.99)}
+.btn-p{box-shadow:0 3px 0 color-mix(in srgb,var(--sec-2,#1e4d8c) 75%,#000),0 8px 14px -6px color-mix(in srgb,var(--sec,#2563a8) 60%,transparent),inset 0 1px 0 rgba(255,255,255,.22)!important}
+.btn-p:active{box-shadow:0 1px 0 color-mix(in srgb,var(--sec-2,#1e4d8c) 75%,#000),0 3px 6px -4px rgba(10,25,45,.5)!important}
+.btn-s:active{box-shadow:inset 0 2px 4px rgba(26,46,74,.18),inset 0 0 0 1px var(--grey-light)!important}
+/* 2 night mode */
+html.night{color-scheme:dark;background:#0d1828}
+html.night body{background:radial-gradient(1000px 600px at 105% -8%,rgba(42,157,143,.12),transparent 62%),radial-gradient(900px 520px at -12% 18%,rgba(37,99,168,.14),transparent 60%),linear-gradient(180deg,#0d1828,#101c2d 50%,#0d1828)!important;background-attachment:fixed!important}
+html.night #shell,html.night #banner{filter:invert(.9) hue-rotate(180deg) saturate(.9)}
+html.night #shell :is(canvas,img,video,.bpass,.pr-bp,.globe,.tlx-hd,svg.fin,.amap,.fwall svg,.btn-p):not(:is(.bpass,.pr-bp,.globe,.tlx-hd,.btn-p) *){filter:saturate(1.11) hue-rotate(180deg) invert(1) contrast(1.25)}
+html.night #shell *{text-shadow:none}
+html.night .nav-in{background:linear-gradient(180deg,rgba(20,34,54,.66),rgba(14,26,42,.6))!important;border-color:rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 10px 30px -10px rgba(0,0,0,.6)!important}
+html.night .nav button{color:#a9bbd1}
+html.night .nav button:hover{background:rgba(255,255,255,.06)}
+html.night .tglass{background:linear-gradient(180deg,rgba(20,34,54,.72),rgba(14,26,42,.62));border-bottom-color:rgba(255,255,255,.06)}
+html.night .tglass b{color:#e6eef8}html.night .tglass span{color:#a9bbd1}
+@media print{html.night #shell,html.night #banner,html.night #shell *{filter:none!important}html.night body{background:#fff!important}}
 </style>
 </head>
 <body data-sec="cert">
@@ -1496,6 +1566,7 @@ html[lang=th] .vw small{letter-spacing:0}
 </header>
 
 <nav class="nav"><div class="nav-in" id="nav"></div></nav>
+<div class="tglass" id="tglass" aria-hidden="true"></div>
 <div class="banner" id="banner"></div>
 <div class="opwrap" id="opbar"></div>
 
@@ -2118,7 +2189,7 @@ const FLEET={
    {m:['A350'],src:'AIRBUS A350-900 Series',mtow:280000,area:'INTL'},
    {m:['B787'],src:'BOEING 787-8 Series, 787-9 Series',mtow:254011,area:'INTL'},
    {m:['B734','B738'],src:'BOEING 737-400 Series, 737-800 Series',mtow:64636,area:'INTL'},
-   {m:[],name:'A330-XXX',cat:'AEROPLANE',heavy:true,src:'AIRBUS A330 (series cut off in the sheet)',mtow:233000,area:'ASIA',chk:true},
+   {m:['A333'],src:'AIRBUS A330 (series cut off in the sheet; set to A330-300)',mtow:233000,area:'ASIA'},
    {m:['A320'],src:'AIRBUS A320 (listed in the AOC register; MTOW and area from Email 2)',mtow:93500,area:'ASIA'}],
  'Thai Aviation Services Limited':[{m:['S76C'],src:'SIKORSKY S76C',area:'HELI_INTL'},{m:['S76D'],src:'SIKORSKY S76D',area:'HELI_INTL'},{m:['A139'],src:'LEONARDO AW139',area:'HELI_INTL'}],
  'Thai Lion Mentari Company Limited':[{m:['B738','B739'],src:'BOEING 737-800 Series, 737-900 Series',area:'ASIA'},{m:['B38M','B39M'],src:'BOEING 737-8, 737-9 Series',area:'ASIA'}],
@@ -2244,8 +2315,14 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.65', APP_DATE='2026-11-21';
+const APP_VERSION='3.67', APP_DATE='2026-11-21';
 const APP_LOG=[
+  {v:'3.67',d:'2026-11-21',en:['Thai Airways: the A330 now loads as A330-300 (A333) by default instead of asking for a manual selection. Same area (Asia) and the same fee.'],
+   th:['การบินไทย: แบบ A330 โหลดเป็น A330-300 (A333) โดยอัตโนมัติ แทนการให้เลือกเอง พื้นที่ปฏิบัติการ (เอเชีย) และค่าธรรมเนียมเท่าเดิม']},
+  {v:'3.66',d:'2026-11-21',en:[
+    'Look and feel: frosted glass menu bars, with a slim glass title bar on the phone once you scroll past the header. Night mode (Settings > General: Light, Night or Auto, which turns on from 19:00 to 06:00); boarding passes, globes and tail fins keep their colours. The selected tab is a pill that glides between tabs, and each tab icon makes a small move. When a total changes, a chip shows the amount up or down. Switches spring, segmented buttons have a sliding thumb, and buttons press in.'],
+   th:[
+    'รูปลักษณ์: แถบเมนูแบบกระจกฝ้า และบนโทรศัพท์มีแถบชื่อหน้าแบบกระจกเมื่อเลื่อนผ่านส่วนหัว โหมดกลางคืน (ตั้งค่า > ทั่วไป: สว่าง กลางคืน หรืออัตโนมัติ ซึ่งเปิดระหว่าง 19.00–06.00 น.) โดยบัตรโดยสาร ลูกโลก และแพนหางคงสีเดิม แท็บที่เลือกเป็นแถบเลื่อนไปมาระหว่างแท็บ และไอคอนแต่ละแท็บมีการเคลื่อนไหวเล็กน้อย เมื่อยอดรวมเปลี่ยน จะแสดงป้ายจำนวนที่เพิ่มขึ้นหรือลดลง สวิตช์มีการเด้ง ปุ่มแบ่งส่วนมีตัวเลื่อน และปุ่มมีลักษณะกดลง']},
   {v:'3.65',d:'2026-11-21',en:[
     'Globes: Domestic and Asia now have animated white flight arcs too (10 domestic airports; 13 Asian cities). Other regions is trimmed from 21 to 17 destinations. Short routes bow upward so they read as arcs when zoomed in. Helicopter globes: Domestic shows 6 typical helicopter routes (Hua Hin, U-Tapao, Gulf of Thailand offshore, Songkhla, Phuket, Chiang Mai); International keeps its 5 neighbouring-country routes. All routes are illustrative.'],
    th:[
@@ -2540,7 +2617,9 @@ function areaMapSVG(cat,val){
     <circle class="hub" cx="40" cy="46" r="4.2"/></svg>`;
 }
 function skyNow(){ const h=new Date().getHours(); return h>=5&&h<9?'dawn':h>=9&&h<16?'day':h>=16&&h<19?'dusk':'night'; }
-function applySky(){ if(document.body) document.body.dataset.sky=skyNow(); }
+function themeNow(){ const t=load('aoc.theme')||'light', hr=new Date().getHours(); return t==='night'||(t==='auto'&&(hr>=19||hr<6)); }
+function applyTheme(){ const n=themeNow(); document.documentElement.classList.toggle('night',n); const m=document.querySelector('meta[name=theme-color]'); if(m) m.setAttribute('content',n?'#0d1828':'#1a2e4a'); }
+function applySky(){ if(document.body) document.body.dataset.sky=skyNow(); applyTheme(); }
 setInterval(applySky,10*60*1000);
 function boardingPassHTML(s){
   const oi=OPINFO[S.operator]||{}, exp=S.expiry, ren=S.tx==='renewal', hasOp=s.ins.op>0;
@@ -2995,6 +3074,7 @@ function renderSettings(){
   const grp=(t,d)=>`<div class="sgrp"><h3>${t}</h3><small>${d}</small></div>`;
   let h=grp(L('General','ทั่วไป'),L('Language and error reporting','ภาษาและการแจ้งข้อผิดพลาด'));
   h+=`<div class="card"><div class="eyebrow">${L('Settings','ตั้งค่า')}</div><h2>${L('Language','ภาษา')}</h2><p class="sub">${L('Applies to the app and to printed reports. Saved on this device.','ใช้กับทั้งระบบและรายงานที่พิมพ์ บันทึกไว้ในอุปกรณ์นี้')}</p>${seg([['en','English'],['th','ภาษาไทย']],S.lang,'lang','','',true)}</div>`;
+  h+=`<div class="card"><h2>${L('Appearance','รูปลักษณ์')}</h2><p class="sub">${L('Night mode darkens the app. Auto turns it on from 19:00 to 06:00. Boarding passes, globes and tail fins keep their colours. Printed reports and PDFs are not affected. Saved on this device.','โหมดกลางคืนปรับหน้าจอเป็นโทนมืด อัตโนมัติจะเปิดระหว่าง 19.00–06.00 น. บัตรโดยสาร ลูกโลก และแพนหางคงสีเดิม ไม่มีผลต่อรายงานที่พิมพ์และไฟล์ PDF บันทึกไว้ในอุปกรณ์นี้')}</p>${seg([['light',L('Light','สว่าง')],['night',L('Night','กลางคืน')],['auto',L('Auto','อัตโนมัติ')]],load('aoc.theme')||'light','theme','','',true)}</div>`;
   h+=`<div class="card"><h2>${L('Report an error','แจ้งข้อผิดพลาด')}</h2><p class="sub">${L('Opens a new email to anan.t@caat.or.th in your mail app, with the rule set, screen, operator and total filled in. Add a short description and send.','เปิดอีเมลฉบับใหม่ถึง anan.t@caat.or.th ในแอปอีเมล พร้อมระบุชุดอัตรา หน้าจอ ผู้ดำเนินการเดินอากาศ และยอดรวมให้โดยอัตโนมัติ กรุณาเพิ่มรายละเอียดโดยย่อแล้วส่ง')}</p><button type="button" class="btn btn-s" data-act="report">${ICON.mail} ${L('Report error','แจ้งข้อผิดพลาด')}</button></div>`;
   h+=grp(L('Protected settings','การตั้งค่าที่ต้องใช้รหัสผ่าน'),L('Balloons, Certificate and Changes · one password','บัลลูน ค่าใบรับรอง และการเปลี่ยนแปลง · รหัสผ่านเดียว'));
   const k1=h.length; h+=setUnHTML();
@@ -3148,6 +3228,7 @@ function animSide(){
   sideLast.tab=S.tab; sideLast.v=v; sideLast.w=w;
   if(REDUCE_MOTION||!same) return;
   if(tv && v!=null && from!=null && from!==v){
+    dChip(tv.parentNode,v-from);
     tv.innerHTML=rollHTML(fmt(v)); rollGo(tv); tv.classList.remove('bump'); void tv.offsetWidth; tv.classList.add('bump');
   }
   if(fromW && fromW.length===segs.length && fromW.join()!==w.join()){
@@ -3155,11 +3236,14 @@ function animSide(){
     segs.forEach((i,k)=>{ i.style.transition=''; i.style.width=w[k]; });
   }
 }
+function dChip(host,d){ if(!host||!d) return; const c=document.createElement('span'); c.className='dchip '+(d>0?'up':'dn'); c.textContent=(d>0?'▲ ':'▼ ')+'฿'+fmt(Math.abs(d)); host.appendChild(c); setTimeout(()=>c.remove(),4200); }
+const miniLast={tab:null,v:null};
 function updateMini(total,title){
-  const m=document.getElementById('mini');
+  const m=document.getElementById('mini'); const mf=miniLast.v, ms=miniLast.tab===S.tab; miniLast.tab=S.tab; miniLast.v=total;
   if(!['cert','change','insp'].includes(S.tab)){ m.classList.add('hide'); return; }
   m.classList.remove('hide');
   m.innerHTML=`<div><small>${esc(title)}</small>${L('Tap for breakdown','แตะเพื่อดูรายละเอียด')}</div><div class="mv">${total!=null?'฿ '+fmt(total):'—'}</div>`;
+  if(ms&&mf!=null&&total!=null&&mf!==total&&!REDUCE_MOTION) dChip(m.querySelector('.mv'),total-mf);
 }
 
 /* ---------- Render / nav ---------- */
@@ -3175,7 +3259,18 @@ function renderHero(){
   badge.classList.toggle('bad',!S.healthy); badge.style.display=S.healthy?'none':'';
   badge.querySelector('span').textContent=S.healthy?L(`${RULESET.version} · ${n}/${n} checks passed`,`${RULESET.version} · ผ่านการทดสอบ ${n}/${n}`):L('Self-test failed','การทดสอบไม่ผ่าน');
 }
-function renderNav(){ document.getElementById('nav').innerHTML=TABS().map(t=>`<button type="button" class="${S.tab===t[0]?'on':''} ${S.na[t[0]]?'is-na':''} ${t[0]==='sum'&&S.pulseSum?'pulse':''}" data-act="tab" data-val="${t[0]}">${t[2]}<span>${t[1]}</span>${S.na[t[0]]?'<i class="nab">N/A</i>':''}</button>`).join(''); }
+let navTab=null;
+function renderNav(){ const nv=document.getElementById('nav'), old=nv.querySelector('button.on'), r0=old?{l:old.offsetLeft,t:old.offsetTop,w:old.offsetWidth,h:old.offsetHeight}:null, moved=navTab!==null&&navTab!==S.tab, keep=nv.querySelector('.nav-pill'); navTab=S.tab; nv.innerHTML=TABS().map(t=>`<button type="button" class="${S.tab===t[0]?'on':''} ${S.na[t[0]]?'is-na':''} ${t[0]==='sum'&&S.pulseSum?'pulse':''}" data-act="tab" data-val="${t[0]}">${t[2]}<span>${t[1]}</span>${S.na[t[0]]?'<i class="nab">N/A</i>':''}</button>`).join(''); if(keep) nv.prepend(keep); navPill(moved?r0:null); }
+function navPill(r0){
+  const nv=document.getElementById('nav'), b=nv.querySelector('button.on'); if(!b) return;
+  let p=nv.querySelector('.nav-pill'); if(!p){ p=document.createElement('span'); p.className='nav-pill'; p.setAttribute('aria-hidden','true'); nv.prepend(p); }
+  nv.classList.add('pl'); p.dataset.val=b.dataset.val;
+  const put=r=>{ p.style.left=r.l+'px'; p.style.top=r.t+'px'; p.style.width=r.w+'px'; p.style.height=r.h+'px'; };
+  const r1={l:b.offsetLeft,t:b.offsetTop,w:b.offsetWidth,h:b.offsetHeight};
+  if(r0&&!REDUCE_MOTION){ p.style.transition='none'; put(r0); void p.offsetWidth; p.style.transition=''; put(r1); b.classList.add('pop'); }
+  else put(r1);
+}
+window.addEventListener('resize',()=>navPill(null));
 const SECHEAD=()=>({
   cert:[L('Section 1','ส่วนที่ 1'),L('Certificate fees','ค่าธรรมเนียมใบรับรอง'),L('Application fee, principal aircraft type and additional types','ค่าธรรมเนียมการยื่นคำขอ แบบอากาศยานหลัก และแบบอากาศยานเพิ่มเติม')],
   change:[L('Section 2','ส่วนที่ 2'),L('Changes during validity','การเปลี่ยนแปลงระหว่างอายุใบรับรอง'),L('New types, area expansion, amendments and replacement certificates','การเพิ่มแบบอากาศยาน การขยายพื้นที่ปฏิบัติการ การแก้ไข และการออกใบแทน')],
@@ -3222,8 +3317,25 @@ function animRoutes(){
   });
   try{ mountGlobes(); }catch(e){}
 }
-function renderAll(){ renderHero(); renderNav(); renderBanner(); renderOpbar(); renderPage(); animRoutes(); persistSoon(); }
-function rerenderKeepScroll(){ const y=window.scrollY; renderBanner(); renderPage(); animRoutes(); window.scrollTo(0,y); }
+function tglassSet(){ const g=document.getElementById('tglass'), hd=document.querySelector('.hero'); if(!g||!hd) return; const on=window.scrollY>hd.offsetHeight-20; g.classList.toggle('on',on); }
+function tglassFill(){ const g=document.getElementById('tglass'); if(!g) return; const sh=SECHEAD()[S.tab]||['','',''];
+  g.innerHTML=`<b>${esc(sh[1])}</b>${S.operator&&['cert','change','insp','sum'].includes(S.tab)?`<span>${finSVG(S.operator,14)}${esc(shortOp(S.operator))}</span>`:''}`; tglassSet(); }
+window.addEventListener('scroll',tglassSet,{passive:true});
+const segMem={};
+function segGlide(){
+  document.querySelectorAll('.seg').forEach(s=>{
+    const on=s.querySelector('button.on'), b0=s.querySelector('button[data-act]'); if(!on||!b0) return;
+    const k=[b0.dataset.act,b0.dataset.id||'',b0.dataset.key||'',s.querySelectorAll('button').length].join('|');
+    let th=s.querySelector('.seg-th'); if(!th){ th=document.createElement('i'); th.className='seg-th'; th.setAttribute('aria-hidden','true'); s.prepend(th); }
+    s.classList.add('th');
+    const r1={l:on.offsetLeft,t:on.offsetTop,w:on.offsetWidth,h:on.offsetHeight}, r0=segMem[k];
+    const put=r=>{ th.style.left=r.l+'px'; th.style.top=r.t+'px'; th.style.width=r.w+'px'; th.style.height=r.h+'px'; };
+    if(r0&&(r0.l!==r1.l||r0.t!==r1.t)&&!REDUCE_MOTION){ th.style.transition='none'; put(r0); void th.offsetWidth; th.style.transition=''; put(r1); } else put(r1);
+    segMem[k]=r1;
+  });
+}
+function renderAll(){ renderHero(); renderNav(); tglassFill(); renderBanner(); renderOpbar(); renderPage(); animRoutes(); segGlide(); persistSoon(); }
+function rerenderKeepScroll(){ const y=window.scrollY; renderBanner(); renderPage(); animRoutes(); segGlide(); window.scrollTo(0,y); }
 
 /* ---------- Air operator bar ---------- */
 /* Operator search panel */
@@ -4352,6 +4464,7 @@ document.addEventListener('click',e=>{
       setTimeout(()=>{ const b=d.getBoundingClientRect(); if(b.bottom>innerHeight-80) d.scrollIntoView({block:'center',behavior:MOTION()?'smooth':'auto'}); },MOTION()?700:0); return; }
     case 'balloons': S.settings.balloons=v===true; store('aoc.balloons',S.settings.balloons?'1':'0'); if(!S.settings.balloons&&c.mode==='balloon'){ c.mode='newTypeArea'; syncArea(); }
       toast(S.settings.balloons?L('Balloons turned on','เปิดบัลลูนแล้ว'):L('Balloons turned off and greyed out','ปิดบัลลูนแล้ว ตัวเลือกบัลลูนเป็นสีเทา')); break;
+    case 'theme': store('aoc.theme',String(v)); applyTheme(); rerenderKeepScroll(); return;
     case 'fold': S.fold=S.fold||{ip:true,rev:false}; S.fold[v]=!S.fold[v]; rerenderKeepScroll(); return;
     case 'setAsk': S.setAsk=S.setAsk===v?'':v; S.setErr=''; rerenderKeepScroll(); { const i=document.getElementById('setPw'); if(i) i.focus(); } return;
     case 'setLock': S.setUnlocked=false; S.setAsk=''; S.setErr=''; toast(L('Settings locked','ล็อกการตั้งค่าแล้ว')); break;
