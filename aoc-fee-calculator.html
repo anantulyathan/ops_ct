@@ -2244,8 +2244,12 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.64', APP_DATE='2026-11-21';
+const APP_VERSION='3.65', APP_DATE='2026-11-21';
 const APP_LOG=[
+  {v:'3.65',d:'2026-11-21',en:[
+    'Globes: Domestic and Asia now have animated white flight arcs too (10 domestic airports; 13 Asian cities). Other regions is trimmed from 21 to 17 destinations. Short routes bow upward so they read as arcs when zoomed in. Helicopter globes: Domestic shows 6 typical helicopter routes (Hua Hin, U-Tapao, Gulf of Thailand offshore, Songkhla, Phuket, Chiang Mai); International keeps its 5 neighbouring-country routes. All routes are illustrative.'],
+   th:[
+    'ลูกโลก: พื้นที่ภายในประเทศและเอเชียแสดงเส้นโค้งเส้นทางบินสีขาวพร้อมภาพเคลื่อนไหวเช่นเดียวกัน (ท่าอากาศยานภายในประเทศ 10 แห่ง เมืองในเอเชีย 13 แห่ง) ภูมิภาคอื่นลดจาก 21 เหลือ 17 จุดหมาย เส้นทางระยะสั้นโค้งขึ้นเพื่อให้เห็นเป็นเส้นโค้งเมื่อขยายภาพ ลูกโลกเฮลิคอปเตอร์: ภายในประเทศแสดงเส้นทางเฮลิคอปเตอร์ทั่วไป 6 เส้นทาง (หัวหิน อู่ตะเภา แท่นขุดเจาะอ่าวไทย สงขลา ภูเก็ต เชียงใหม่) ต่างประเทศคงเส้นทางไปยังประเทศเพื่อนบ้าน 5 เส้นทาง เส้นทางทั้งหมดเพื่อประกอบภาพเท่านั้น']},
   {v:'3.64',d:'2026-11-21',en:[
     'Certificate: the plane in the renewal timeline header now flies forward, left to right.',
     'Settings: Balloons, Certificate and Changes settings sit together under one password (the Surveillance Coverage Projection password). One unlock opens all three.',
@@ -2409,8 +2413,9 @@ function rollGo(root){ if(!root) return; const ds=[...root.querySelectorAll('.rd
 /* v3.56 3D globe for the Area of Operation picker (replaces the flat arc map). Shading is illustrative; the approved area is the one in the Ops Specs. */
 let GEO=null; const GST={}; const GSPIN=new Set(); let gLoop=0;
 const BKK=[100.75,13.69];
-const GROUTES={INTL:[[139.78,35.55],[126.45,37.46],[116.6,40.08],[77.1,28.56],[151.18,-33.94],[174.79,-37.0],[55.36,25.25],[28.75,41.26],[31.41,30.12],[36.93,-1.32],[28.24,-26.13],[-0.45,51.47],[2.55,49.0],[8.57,50.03],[37.41,55.97],[-73.78,40.64],[-122.38,37.62],[-123.18,49.19],[-99.07,19.44],[-46.47,-23.43],[-70.79,-33.39]],HELI_INTL:[[101.71,2.74],[103.99,1.36],[96.13,16.9],[104.84,11.55],[102.56,17.99]]};
-const GVIEW={DOM:[[-100.5,-13.5],3.1],ASIA:[[-98,-24],1.45],INTL:[[-80,-12],.92],HELI_INTL:[[-101,-12],1.95],'':[[-100,-15],1.05]};
+const GROUTES={DOM:[[98.96,18.77],[99.88,20.0],[102.79,17.39],[102.78,16.47],[104.87,15.25],[102.32,12.27],[100.06,9.55],[98.31,8.11],[98.99,8.1],[100.39,6.93]],HELI_DOM:[[99.95,12.64],[101.0,12.68],[101.3,9.1],[100.6,7.19],[98.31,8.11],[98.96,18.77]],ASIA:[[140.39,35.77],[126.45,37.46],[116.6,40.08],[121.8,31.14],[113.92,22.31],[121.23,25.08],[121.02,14.51],[105.81,21.22],[103.99,1.36],[106.66,-6.13],[77.1,28.56],[72.87,19.09],[79.88,7.18]],INTL:[[139.78,35.55],[126.45,37.46],[77.1,28.56],[151.18,-33.94],[174.79,-37.0],[55.36,25.25],[31.41,30.12],[36.93,-1.32],[28.24,-26.13],[-0.45,51.47],[2.55,49.0],[37.41,55.97],[-73.78,40.64],[-122.38,37.62],[-99.07,19.44],[-46.47,-23.43],[-70.79,-33.39]],HELI_INTL:[[101.71,2.74],[103.99,1.36],[96.13,16.9],[104.84,11.55],[102.56,17.99]]};
+const gRT=(cat,v)=>GROUTES[cat==='HELICOPTER'&&v==='DOM'?'HELI_DOM':v];
+const GVIEW={DOM:[[-100.8,-13.2],5.2],ASIA:[[-98,-24],1.45],INTL:[[-80,-12],.92],HELI_INTL:[[-101,-12],1.95],'':[[-100,-15],1.05]};
 function geoData(){
   if(GEO) return GEO; if(!window.d3||!d3.geoOrthographic||!window.topojson) return null;
   try{ const w=JSON.parse(document.getElementById('geoData').textContent), f=topojson.feature(w,w.objects.countries).features, asia=new Set();
@@ -2452,20 +2457,21 @@ function globeDraw(g,now){
   gr=x.createRadialGradient(cx-R*.35,cy-R*.4,0,cx-R*.35,cy-R*.4,R*.9); gr.addColorStop(0,'rgba(255,255,255,.2)'); gr.addColorStop(1,'rgba(255,255,255,0)'); x.fillStyle=gr; x.beginPath(); x.arc(cx,cy,R,0,7); x.fill();
   gr=x.createRadialGradient(cx+R*.3,cy+R*.35,R*.3,cx,cy,R*1.02); gr.addColorStop(0,'rgba(5,15,30,0)'); gr.addColorStop(1,'rgba(5,15,30,.55)'); x.fillStyle=gr; x.beginPath(); x.arc(cx,cy,R,0,7); x.fill();
   const dpr=g.dpr, front=p=>d3.geoDistance(p,ctr)<1.55;
-  const RT=GROUTES[v]; if(RT&&lit>0){ const mo=g.mot, T=(now||0)/1000, N=RT.length, CYC=7.5, HP=Math.PI/2, P=Math.PI;
+  const RT=gRT(g.cat,v); if(RT&&lit>0){ const mo=g.mot, T=(now||0)/1000, N=RT.length, CYC=7.5, HP=Math.PI/2, P=Math.PI;
     const line=(pts,a,w)=>{ x.strokeStyle=`rgba(255,255,255,${a})`; x.lineWidth=w; x.lineCap='round'; x.beginPath(); let pen=false; for(const q of pts){ if(!q){ pen=false; continue; } if(pen) x.lineTo(q[0],q[1]); else { x.moveTo(q[0],q[1]); pen=true; } } x.stroke(); };
     RT.forEach((d,i)=>{
       const ip=d3.geoInterpolate(BKK,d), H=.06+.2*Math.min(1,d3.geoDistance(BKK,d)/2.6);
-      const at=t=>{ const p=ip(t); if(d3.geoDistance(p,ctr)>=HP) return null; const q=proj(p), l=1+H*Math.sin(P*t); return [cx+(q[0]-cx)*l, cy+(q[1]-cy)*l]; };
+      const gd=d3.geoDistance(BKK,d), A0=proj(BKK), A1=proj(d), cl=Math.hypot(A1[0]-A0[0],A1[1]-A0[1])||1; let nx=-(A1[1]-A0[1])/cl, ny=(A1[0]-A0[0])/cl; if(ny>0){ nx=-nx; ny=-ny; } const bw=gd<.6?.22*cl:0;
+      const at=t=>{ const p=ip(t); if(d3.geoDistance(p,ctr)>=HP) return null; const q=proj(p), s=Math.sin(P*t), l=1+H*s; return [cx+(q[0]-cx)*l+nx*bw*s, cy+(q[1]-cy)*l+ny*bw*s]; };
       const ph=mo?((T/CYC+i/N)%1):1, gp=mo?Math.min(1,ph/.4):1, fade=mo?(ph<.82?1:Math.max(.25,1-(ph-.82)/.18*.75)):1;
       const arc=t1=>{ const a=[]; for(let t=0;t<=t1+1e-6;t+=.025) a.push(at(Math.min(t,t1))); return a; };
       line(arc(1),.2*lit,1*dpr);
       x.setLineDash([]);
-      line(arc(gp),.2*lit*fade,4.5*dpr); line(arc(gp),.92*lit*fade,1.7*dpr);
-      if(mo&&gp<1){ const q=at(gp); if(q){ x.beginPath(); x.arc(q[0],q[1],5*dpr,0,7); x.fillStyle=`rgba(255,255,255,${.25*lit})`; x.fill(); x.beginPath(); x.arc(q[0],q[1],2.6*dpr,0,7); x.fillStyle='#fff'; x.fill(); } }
+      const sm=gd<.6?.72:1; line(arc(gp),.2*lit*fade,4.5*sm*dpr); line(arc(gp),.92*lit*fade,1.7*sm*dpr);
+      if(mo&&gp<1){ const q=at(gp); if(q){ x.beginPath(); x.arc(q[0],q[1],5*sm*dpr,0,7); x.fillStyle=`rgba(255,255,255,${.25*lit})`; x.fill(); x.beginPath(); x.arc(q[0],q[1],2.6*sm*dpr,0,7); x.fillStyle='#fff'; x.fill(); } }
       if(front(d)){ const e=proj(d), arr=gp>=1;
-        if(mo&&arr&&ph<.7){ const pr=(ph-.4)/.3; x.beginPath(); x.arc(e[0],e[1],(3+11*pr)*dpr,0,7); x.strokeStyle=`rgba(255,255,255,${.75*(1-pr)*lit})`; x.lineWidth=1.4*dpr; x.stroke(); }
-        x.beginPath(); x.arc(e[0],e[1],(arr?3.2:2.4)*dpr,0,7); x.fillStyle=arr?'#7ff0de':'rgba(95,224,207,.55)'; x.fill(); }
+        if(mo&&arr&&ph<.7){ const pr=(ph-.4)/.3; x.beginPath(); x.arc(e[0],e[1],(3+11*pr)*sm*dpr,0,7); x.strokeStyle=`rgba(255,255,255,${.75*(1-pr)*lit})`; x.lineWidth=1.4*dpr; x.stroke(); }
+        x.beginPath(); x.arc(e[0],e[1],(arr?3.2:2.4)*sm*dpr,0,7); x.fillStyle=arr?'#7ff0de':'rgba(95,224,207,.55)'; x.fill(); }
     }); }
   if(front(BKK)){ const b=proj(BKK);
     if(g.spin||g.anim||g.mot){ const pr=((now||0)%1600)/1600; x.beginPath(); x.arc(b[0],b[1],(4+12*pr)*dpr,0,7); x.strokeStyle=`rgba(255,255,255,${.8*(1-pr)})`; x.lineWidth=1.5*dpr; x.stroke(); }
@@ -2485,7 +2491,7 @@ function mountGlobes(){
     if(el._g) return; const cv=el.querySelector('canvas'), w=cv.clientWidth, h=cv.clientHeight; if(!w||!h) return;
     const dpr=Math.min(2,window.devicePixelRatio||1); cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr);
     const k=el.dataset.gk, val=el.dataset.val, cat=el.dataset.cat, T=GVIEW[val]||GVIEW[''], prev=GST[k], mot=MOTION();
-    const g={el,cv,ctx:cv.getContext('2d'),dpr,k,cat,val,rot:T[0].slice(),sc:T[1],lit:val?1:0,spin:mot&&(val==='INTL'||val==='HELI_INTL'),still:val==='HELI_INTL',mot,vis:true,anim:false,drag:false};
+    const g={el,cv,ctx:cv.getContext('2d'),dpr,k,cat,val,rot:T[0].slice(),sc:T[1],lit:val?1:0,spin:mot&&!!gRT(cat,val),still:val!=='INTL',mot,vis:true,anim:false,drag:false};
     el._g=g; if(gIO) gIO.observe(el);
     if(el.dataset.from!=null){ gMorph(g,el.dataset.from,val,mot); return; }
     const done=()=>{ g.anim=false; GST[k]={rot:g.rot.slice(),sc:g.sc,val}; if(g.spin){ GSPIN.add(g); if(!gLoop) gLoop=requestAnimationFrame(gTick); } else globeDraw(g,performance.now()); };
