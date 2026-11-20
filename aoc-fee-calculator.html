@@ -1281,6 +1281,20 @@ function remMonths(from,to,rule){
   const value = rule==='down' ? n : rule==='nearest' ? n+(days*2>=len?1:0) : rule==='exact' ? Math.round((n+days/len)*100)/100 : n+(days>0?1:0);
   return {full:n,days,len,value,expired:false};
 }
+/* Area expansion fee basis (item 5). Item 5 names only item 2 rates; whether an additional type's expansion
+   should use the item 3 difference instead is not settled. Options in Settings › Changes:
+   literal = item 2 difference for every type (default, highest fee); structure = the increase in the AOC's
+   certificate fees (item 2 + item 3) when this one type moves to the new area; both = literal total, other amount shown. */
+const EXPAND_MODES=['literal','structure','both'];
+function expandStructure(p,R){
+  const ts=p.certTypes, i=toNum(p.expIdx);
+  if(!Array.isArray(ts)||!(i>=0)||!ts[i]) return null;
+  const col=p.col==='renewal'?'renewal':'initial';
+  const at=(area)=>ts.map((t,k)=>k===i?Object.assign({},t,{area}):t);
+  const b=calcCertificate(at(p.from),col,R), a=calcCertificate(at(p.to),col,R);
+  if(b.status==='INCOMPLETE'||a.status==='INCOMPLETE') return {error:true};
+  return {before:b.certSubtotal,after:a.certSubtotal,diff:a.certSubtotal-b.certSubtotal,col};
+}
 /* Mid-validity changes (Report section 6). */
 function calcChange(mode, p, settings, R){
   R=R||RULESET; settings=settings||R.settings;
@@ -1322,11 +1336,24 @@ function calcChange(mode, p, settings, R){
     else { const col=basis==='2018_INITIAL'?'initial':'renewal'; cFrom=R.C2018[cat][p.from][col]; cTo=R.C2018[cat][p.to][col]; basisLabel=L(`2018 Announcement ${col} rates (superseded figures)`,`อัตรา${colL(col)}ตามประกาศ กพท. พ.ศ. 2561 (อัตราเดิมที่ถูกแทนที่)`); }
     const diff=cTo-cFrom;
     const r=prorate(diff); if(!r) return inc();
-    lines.push({label:`${L('Area expansion','การเพิ่มพื้นที่ปฏิบัติการ')} · ${areaL(p.from)} → ${areaL(p.to)}`,basis:`(${fmt(cTo)} − ${fmt(cFrom)}) × ${fmt(r.M)} / ${fmt(r.T)} ${months} · ${basisLabel}`,
+    const em=EXPAND_MODES.includes(settings.expandMode)?settings.expandMode:'literal';
+    const tn=p.expName?` · ${p.expName}`:'';
+    const st=em!=='literal'?expandStructure(p,R):null;
+    const colT=c=>c==='renewal'?L('renewal','การต่ออายุ'):L('initial','การออกครั้งแรก');
+    const stLine=()=>{ const rs=prorate(st.diff); return rs?{label:`${L('Area expansion','การเพิ่มพื้นที่ปฏิบัติการ')}${tn} · ${areaL(p.from)} → ${areaL(p.to)}`,basis:`${L('Certificate fees after','ค่าใบรับรองหลังเปลี่ยน')} ${fmt(st.after)} − ${L('before','ก่อนเปลี่ยน')} ${fmt(st.before)} = ${fmt(st.diff)} × ${fmt(rs.M)} / ${fmt(rs.T)} ${months} · ${L(`item 3 ${colT(st.col)} column`,`ข้อ 3) อัตรา${colT(st.col)}`)}`,
+      ref:`ประกาศ กพท. 2561 ข้อ 3(1)(${SEC[cat]})2) 3) 5) · ${L('fee increase on the certificate','ส่วนต่างค่าใบรับรอง')}`,amount:rs.value}:null; };
+    if(em==='structure'&&st&&!st.error){
+      const sl=stLine(); if(!sl) return inc(); lines.push(sl);
+      warnings.push(L('Option 2 (charge what actually goes up) is selected in Settings. Item 5 names only item 2 rates.','เลือกตัวเลือกที่ 2 (คิดเฉพาะส่วนที่เพิ่มขึ้นจริง) ในหน้าตั้งค่า ข้อ 5) อ้างอิงเฉพาะอัตราตามข้อ 2)'));
+      if(settings.areaExpansionBasis&&settings.areaExpansionBasis!=='MR2567') notes.push(L('Option 2 uses the 2024 Ministerial Regulation main-fee rates, as on the Certificate page.','ตัวเลือกที่ 2 ใช้อัตราค่าใบรับรองตามกฎกระทรวง (ฉบับที่ 3) พ.ศ. 2567 เช่นเดียวกับหน้าค่าใบรับรอง'));
+    } else {
+    if(em!=='literal'&&(!st||st.error)) notes.push(L('The other fee basis needs an aircraft type from the Certificate page, so the rule word for word is used.','ตัวเลือกอื่นต้องเลือกแบบอากาศยานจากหน้าค่าใบรับรอง จึงใช้การคิดตามตัวอักษรของข้อ 5)'));
+    lines.push({label:`${L('Area expansion','การเพิ่มพื้นที่ปฏิบัติการ')}${tn} · ${areaL(p.from)} → ${areaL(p.to)}`,basis:`(${fmt(cTo)} − ${fmt(cFrom)}) × ${fmt(r.M)} / ${fmt(r.T)} ${months} · ${basisLabel}`,
       ref:`ประกาศ กพท. 2561 ข้อ 3(1)(${SEC[cat]})5)`+(basis==='MR2567'?`${L(' · rates from ',' ใช้อัตราตาม ')}กฎกระทรวง (ฉบับที่ 3) 2567 (28/1)(${SEC[cat]})`:''),amount:r.value});
+    if(em==='both'&&st&&!st.error){ const sl=stLine(); if(sl) notes.push(L(`Option 2 (charge what actually goes up): ฿${fmt(sl.amount)} = ${sl.basis}. FAD to choose which amount applies.`,`ตัวเลือกที่ 2 (คิดเฉพาะส่วนที่เพิ่มขึ้นจริง): ${fmt(sl.amount)} บาท = ${sl.basis} ให้ FAD พิจารณาว่าจะใช้จำนวนใด`)); }
+    }
     if(basis!=='MR2567') warnings.push(L('A non-default reference basis is selected in Settings.','มีการเลือกอัตราอ้างอิงที่ไม่ใช่ค่าเริ่มต้นในหน้าตั้งค่า'));
-    notes.push(L('Item 5) refers to the item 2) certificate fees, which the 2024 Regulation replaced. Reference basis to be confirmed by LEG/FAD. One expansion is charged per AOC, not per type.',
-      'ข้อ 5) อ้างอิงค่าใบรับรองตามข้อ 2) ซึ่งถูกแทนที่โดยกฎกระทรวง (ฉบับที่ 3) พ.ศ. 2567 อัตราอ้างอิงต้องได้รับการยืนยันจาก LEG/FAD และเรียกเก็บหนึ่งครั้งต่อใบรับรอง มิใช่ต่อแบบอากาศยาน'));
+    notes.push(L('Item 5) refers to the item 2) certificate fees, which the 2024 Regulation replaced. Reference basis to be confirmed by LEG/FAD. Item 5) is applied to the aircraft type being expanded; whether an additional type should use the item 2) or item 3) difference is also to be confirmed.','ข้อ 5) อ้างอิงค่าใบรับรองตามข้อ 2) ซึ่งถูกแทนที่โดยกฎกระทรวง (ฉบับที่ 3) พ.ศ. 2567 อัตราอ้างอิงต้องได้รับการยืนยันจาก LEG/FAD การคิดค่าธรรมเนียมตามข้อ 5) ใช้กับแบบอากาศยานที่ขอเพิ่มพื้นที่ และกรณีแบบอากาศยานเพิ่มเติมจะใช้ส่วนต่างตามข้อ 2) หรือข้อ 3) ต้องได้รับการยืนยันเช่นกัน'));
   } else if(mode==='balloon'){
     const rate=R.A.B1.NA[p.col];
     const r=prorate(rate); if(!r) return inc();
@@ -1478,6 +1505,13 @@ function runTests(R){
   add('CH-08','31 Jan → 28 Feb = 1 whole month',1,remMonths('2026-01-31','2026-02-28','up').value);
   add('CH-09','Expired AOC = 0 months',0,remMonths('2026-11-19','2026-11-01','up').value);
   add('CH-10','From 1 Dec 2026 → 26 Feb 2027, round up',3,remMonths('2026-12-01','2027-02-26','up').value);
+  { const th=[{name:'B777',cat:'AEROPLANE',mtow:'351534',area:'INTL'},{name:'A320',cat:'AEROPLANE',mtow:'93500',area:'ASIA'}];
+    const ex=(m,col)=>calcChange('expand',{cat:'AEROPLANE',heavy:true,from:'ASIA',to:'INTL',M:6,T:60,col,certTypes:th,expIdx:1},{areaExpansionBasis:'MR2567',expandMode:m},R).total;
+    const bk=[{name:'ATR72',cat:'AEROPLANE',mtow:'23000',area:'ASIA'},{name:'A320',cat:'AEROPLANE',mtow:'78000',area:'ASIA'}];
+    add('CH-11','Thai A320 Asia → Other, rule word for word',150000,ex('literal','renewal'));
+    add('CH-12','Thai A320 Asia → Other, what goes up (renewal col.)',110000,ex('structure','renewal'));
+    add('CH-13','Thai A320 Asia → Other, what goes up (initial col.)',120000,ex('structure','initial'));
+    add('CH-14','Bangkok ATR72 Asia → Other, what goes up = main fee',150000,calcChange('expand',{cat:'AEROPLANE',heavy:true,from:'ASIA',to:'INTL',M:6,T:60,col:'renewal',certTypes:bk,expIdx:0},{areaExpansionBasis:'MR2567',expandMode:'structure'},R).total); }
   return out;
 }
 if(typeof module!=='undefined') module.exports={RULESET,setLang,L,setMixedBasis,calcCertificate,calcChange,calcActivity,calcGov,classify,overnightDays,addDays,remMonths,runTests};
@@ -1721,8 +1755,9 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.38', APP_DATE='2026-11-20';
+const APP_VERSION='3.39', APP_DATE='2026-11-20';
 const APP_LOG=[
+  {v:'3.39',d:'2026-11-20',en:['Changes › Expand the area: choose the aircraft type being expanded, from the types on the Certificate page (or Other). The current area, category and weight class come from that type, so an AOC with types in different areas (for example Thai Airways A320 in Asia) can now be calculated.','Settings › Changes: new Area expansion fee basis: 1 rule word for word (default, item 2 difference), 2 charge what actually goes up (main fee or extra-type fee), 3 show both amounts for FAD.','Removed the note that one expansion is charged per AOC, which item 5 does not say.'],th:['การเปลี่ยนแปลง › เพิ่มพื้นที่ปฏิบัติการ: เลือกแบบอากาศยานที่ขอเพิ่มพื้นที่จากแบบในหน้าค่าใบรับรอง (หรืออื่น ๆ) พื้นที่ปัจจุบัน ประเภท และช่วงน้ำหนักใช้ตามแบบที่เลือก ใบรับรองที่มีแบบอากาศยานต่างพื้นที่กัน (เช่น A320 ของการบินไทยในภูมิภาคเอเชีย) จึงคำนวณได้แล้ว','ตั้งค่า › การเปลี่ยนแปลง: เพิ่มหลักการคิดค่าเพิ่มพื้นที่ปฏิบัติการ 1 คิดตามตัวอักษร (ค่าเริ่มต้น ส่วนต่างตามข้อ 2) 2 คิดเฉพาะส่วนที่เพิ่มขึ้นจริง 3 แสดงทั้งสองจำนวนให้ FAD พิจารณา','ลบหมายเหตุว่าคิดการเพิ่มพื้นที่ครั้งเดียวต่อใบรับรอง ซึ่งข้อ 5) มิได้กำหนดไว้']},
   {v:'3.38',d:'2026-11-20',en:['Changes: Current area now comes from the selected AOC, as the widest area of its aircraft types on the Certificate page (for example K-Mile Air: Asia), instead of always Domestic. Category and weight class follow the AOC too, the expanded area starts at the next wider area, and New type, same area starts at the current area. They follow any edit to the types until a value is picked on the Changes page, with a button to switch back. An AOC already at the widest area shows a note.'],th:['การเปลี่ยนแปลง: พื้นที่ปัจจุบันใช้ตามใบรับรองที่เลือก โดยใช้พื้นที่กว้างที่สุดของแบบอากาศยานในหน้าค่าใบรับรอง (เช่น เค-ไมล์ แอร์: ภูมิภาคเอเชีย) แทนการตั้งเป็นภายในประเทศทุกครั้ง ประเภทและช่วงน้ำหนักใช้ตามใบรับรองเช่นกัน พื้นที่ที่ขอเพิ่มเริ่มที่พื้นที่ถัดไป และการเพิ่มแบบอากาศยานพื้นที่เดิมเริ่มที่พื้นที่ปัจจุบัน ค่าดังกล่าวเปลี่ยนตามการแก้ไขแบบอากาศยานจนกว่าจะเลือกเองในหน้าการเปลี่ยนแปลง และมีปุ่มกลับไปใช้ค่าตามใบรับรอง ใบรับรองที่ครอบคลุมพื้นที่กว้างที่สุดแล้วจะแสดงหมายเหตุ']},
   {v:'3.37',d:'2026-11-19',en:['Changes: new Count from date above Remaining validity, for example the change approval date. Remaining validity is counted from that date to the AOC expiry; blank means today, and Use today clears it. Prorated results show the date used.'],th:['การเปลี่ยนแปลง: เพิ่มช่องนับตั้งแต่วันที่ เหนืออายุใบรับรองคงเหลือ เช่น วันที่อนุมัติการเปลี่ยนแปลง ระบบจะนับอายุคงเหลือตั้งแต่วันที่ดังกล่าวถึงวันหมดอายุของใบรับรอง หากไม่ระบุจะใช้วันนี้ และปุ่มใช้วันนี้จะล้างค่าที่ระบุ ผลการคำนวณตามสัดส่วนระบุวันที่ที่ใช้']},
   {v:'3.36',d:'2026-11-19',en:['Changes: Remaining validity is now filled from the selected AOC\'s expiry date (today to expiry) every time an AOC is selected or its expiry date changes, instead of a fixed 24 months. A note under the field shows the months and days left. A typed value is kept for that operator, with a Use AOC expiry button to switch back.','Settings: new part-month rule under Changes: round up (default, highest fee for CAAT), round down, nearest month or exact. Prorated results show the rule used.','Settings are grouped under headings: General, Certificate, Changes, and Data and app information.'],th:['การเปลี่ยนแปลง: อายุใบรับรองคงเหลือคำนวณจากวันหมดอายุของใบรับรองที่เลือก (วันนี้ถึงวันหมดอายุ) ทุกครั้งที่เลือกใบรับรองหรือแก้ไขวันหมดอายุ แทนค่าคงที่ 24 เดือน และแสดงจำนวนเดือนและวันคงเหลือใต้ช่อง หากกรอกเอง ระบบจะคงค่าที่กรอกสำหรับผู้ดำเนินการรายนั้น และมีปุ่มใช้ตามวันหมดอายุเพื่อกลับไปคำนวณอัตโนมัติ','ตั้งค่า: เพิ่มวิธีนับเศษเดือนในหมวดการเปลี่ยนแปลง ได้แก่ ปัดขึ้น (ค่าเริ่มต้น ค่าธรรมเนียมสูงสุด) ปัดลง ปัดตามหลักทั่วไป และคิดตามจริง ผลการคำนวณตามสัดส่วนระบุวิธีที่ใช้','จัดกลุ่มหน้าตั้งค่าเป็นหมวด: ทั่วไป ค่าใบรับรอง การเปลี่ยนแปลง และข้อมูลและรายละเอียดระบบ']},
@@ -1775,15 +1810,15 @@ const S={
   tx:'renewal',
   types:[{id:nid(),ac:'',name:'',cat:'AEROPLANE',heavy:true,area:'',mtow:'',count:1,showMtow:false,legacyConfirm:null}],
   expiry:'',
-  change:{mode:'newTypeArea',cat:'AEROPLANE',heavy:true,area:'ASIA',from:'DOM',to:'ASIA',col:'initial',prorate:false,M:24,T:60,Mauto:true,Mrule:'',asOf:'',catAuto:true,fromAuto:true,areaAuto:true,occasions:1,reason:'reg'},
+  change:{mode:'newTypeArea',cat:'AEROPLANE',heavy:true,area:'ASIA',from:'DOM',to:'ASIA',col:'initial',prorate:false,M:24,T:60,Mauto:true,Mrule:'',asOf:'',catAuto:true,fromAuto:true,areaAuto:true,typeId:'',expIdx:-1,expName:'',certTypes:null,occasions:1,reason:'reg'},
   insp:{applicant:'COM',includeCert:true,acts:[],showOp:false,opTravel:'',opHotel:'',gov:{nights:'',flights:'',vehicleDays:''}},
-  settings:{areaExpansionBasis: BASES.includes(load('aoc.basis')) ? load('aoc.basis') : RULESET.settings.areaExpansionBasis, mixedBasis: MIXED_BASES.includes(load('aoc.mixbasis')) ? load('aoc.mixbasis') : 'A', partMonth: PART_RULES.includes(load('aoc.partmonth')) ? load('aoc.partmonth') : 'up'},
+  settings:{areaExpansionBasis: BASES.includes(load('aoc.basis')) ? load('aoc.basis') : RULESET.settings.areaExpansionBasis, mixedBasis: MIXED_BASES.includes(load('aoc.mixbasis')) ? load('aoc.mixbasis') : 'A', partMonth: PART_RULES.includes(load('aoc.partmonth')) ? load('aoc.partmonth') : 'up', expandMode: EXPAND_MODES.includes(load('aoc.expmode')) ? load('aoc.expmode') : 'literal'},
   operator:'', addingOp:false, opDraft:'',
   customOps:(()=>{ try{ return JSON.parse(load('aoc.customOps')||'[]').filter(x=>typeof x==='string'); }catch(e){ return []; } })(),
   changesAdded:[], loadedSig:null, fleetFrom:null, expiryAuto:false, txAuto:false, na:{change:true,insp:true}, opCache:{}, pipeF:'all', staleOps:{}
 };
 /* Added changes keep their inputs and basis; text is rebuilt in the current language. */
-function CH(){ return S.changesAdded.map(x=>Object.assign({id:x.id,mode:x.mode,title:modeTitle(x.mode)},calcChange(x.mode,x.p,{areaExpansionBasis:x.basis}))); }
+function CH(){ return S.changesAdded.map(x=>Object.assign({id:x.id,mode:x.mode,title:modeTitle(x.mode)},calcChange(x.mode,x.p,{areaExpansionBasis:x.basis,expandMode:x.expandMode||'literal'}))); }
 setLang(S.lang);
 /* ---------- Operator switching: each operator has its own estimate ----------
    First visit: values come from the Ops Spec list and the AOC register. Edits are kept per operator for this
@@ -1960,14 +1995,48 @@ function aocArea(cat){
   return {from,heavy,max,widest:from===max,next:AREAS_FOR[cat].find(x=>RANK[x]>RANK[from])||from};
 }
 function aocMainCat(){ const ts=S.types||[]; return ts.some(t=>t.cat==='AEROPLANE'&&t.area)?'AEROPLANE':ts.some(t=>t.cat==='HELICOPTER'&&t.area)?'HELICOPTER':null; }
+function validType(t){ return t&&t.cat&&t.cat!=='BALLOON'&&AREAS_FOR[t.cat]&&AREAS_FOR[t.cat].includes(t.area); }
+function expandType(){
+  const c=S.change; if(c.typeId==='OTHER') return null;
+  const ts=S.types||[]; let t=ts.find(x=>x.id===c.typeId&&validType(x));
+  if(!t){ const v=ts.filter(validType); t=v.find(x=>x.area!==AREAS_FOR[x.cat][AREAS_FOR[x.cat].length-1])||v[0]||null; c.typeId=t?t.id:''; }
+  return t;
+}
+const typeHeavy=t=>{ const k=classify(t); return k.legacy===catCode(t.cat,true)||k.mr===catCode(t.cat,true); };
+function typeName(t){ return (t.name||'').trim()||L('Unnamed type','แบบอากาศยานไม่ระบุชื่อ'); }
 function syncArea(){
-  const c=S.change; if(!S.operator&&!(S.types||[]).some(t=>t.area)) return;
+  const c=S.change;
+  if(c.mode==='expand'){
+    const t=expandType();
+    if(t){ c.cat=t.cat; c.heavy=typeHeavy(t);
+      if(c.fromAuto!==false){ c.from=t.area; }
+      if(RANK[c.to]<=RANK[c.from]||!AREAS_FOR[c.cat].includes(c.to)) c.to=AREAS_FOR[c.cat].find(x=>RANK[x]>RANK[c.from])||c.from;
+      c.expIdx=S.types.indexOf(t); c.expName=typeName(t); c.certTypes=JSON.parse(JSON.stringify(S.types)); return; }
+    c.expIdx=-1; c.expName=''; c.certTypes=null;
+  } if(!S.operator&&!(S.types||[]).some(t=>t.area)) return;
   if(c.catAuto!==false){ const mc=aocMainCat(); if(mc){ c.cat=mc; } }
   if(c.cat==='BALLOON') return;
   const a=aocArea(c.cat); if(!a) return;
   if(c.catAuto!==false) c.heavy=a.heavy;
   if(c.fromAuto!==false){ c.from=a.from; if(RANK[c.to]<=RANK[c.from]||!AREAS_FOR[c.cat].includes(c.to)) c.to=a.next; }
   if(c.areaAuto!==false) c.area = c.mode==='newType' ? a.from : a.next;
+}
+function typeHintHTML(){
+  const c=S.change, t=c.mode==='expand'?expandType():null; if(!t) return '';
+  const max=AREAS_FOR[t.cat][AREAS_FOR[t.cat].length-1], cur=areaL(t.area);
+  let h;
+  if(c.fromAuto!==false||c.from===t.area) h=`${ICON.info}<span>${esc(L(`${typeName(t)} flies in ${cur} on the Certificate page.`,`${typeName(t)} ปฏิบัติการในพื้นที่${cur} ตามหน้าค่าใบรับรอง`))}</span>`;
+  else h=`${ICON.warn}<span>${esc(L(`Selected manually. ${typeName(t)} flies in ${cur} on the Certificate page.`,`เลือกเอง ${typeName(t)} ปฏิบัติการในพื้นที่${cur} ตามหน้าค่าใบรับรอง`))}</span><button type="button" class="btn btn-s" data-act="cAreaAuto" data-val="from">${L(`Use ${cur}`,`ใช้ ${cur}`)}</button>`;
+  let out=`<div class="fleetline ${c.fromAuto===false&&c.from!==t.area?'':'muted'}" style="margin:8px 0 4px">${h}</div>`;
+  if(c.from===max) out+=`<div class="fleetline muted" style="margin:8px 0 4px">${ICON.info}<span>${esc(L(`${typeName(t)} already flies in the widest area (${areaL(max)}), so there is no area to expand to. Choose another type.`,`${typeName(t)} ปฏิบัติการในพื้นที่กว้างที่สุดแล้ว (${areaL(max)}) จึงไม่มีพื้นที่ให้เพิ่ม กรุณาเลือกแบบอื่น`))}</span></div>`;
+  return out;
+}
+function typePickHTML(){
+  const c=S.change, v=(S.types||[]).filter(validType); expandType();
+  const kindL=t=>t.cat==='AEROPLANE'?L(typeHeavy(t)?'Aeroplane over 5,700 kg':'Aeroplane up to 5,700 kg',typeHeavy(t)?'เครื่องบิน น้ำหนักเกิน 5,700 กก.':'เครื่องบิน น้ำหนักไม่เกิน 5,700 กก.'):L(typeHeavy(t)?'Helicopter over 3,192 kg':'Helicopter up to 3,192 kg',typeHeavy(t)?'เฮลิคอปเตอร์ น้ำหนักเกิน 3,192 กก.':'เฮลิคอปเตอร์ น้ำหนักไม่เกิน 3,192 กก.');
+  const rows=v.map(t=>`<button type="button" class="opt ${c.typeId===t.id?'on':''}" data-act="ctype" data-val="${esc(t.id)}"><span class="rd"></span><span><b>${esc(typeName(t))}</b><span class="thai">${esc(areaL(t.area))} · ${esc(kindL(t))}</span></span></button>`).join('');
+  return `<div class="lbl">${L('Which aircraft type?','แบบอากาศยานที่ขอเพิ่มพื้นที่')} <small>${L('from the Certificate page; the area belongs to each type in the Ops Spec','จากหน้าค่าใบรับรอง พื้นที่ปฏิบัติการกำหนดรายแบบในข้อกำหนดการปฏิบัติการ')}</small></div>
+    <div class="opts">${rows}<button type="button" class="opt ${c.typeId==='OTHER'||!v.length?'on':''}" data-act="ctype" data-val="OTHER"><span class="rd"></span><span><b>${L('Other / not listed','อื่น ๆ / ไม่อยู่ในรายการ')}</b><span class="thai">${L('enter the category and current area yourself','ระบุประเภทอากาศยานและพื้นที่ปัจจุบันเอง')}</span></span></button></div>`;
 }
 function areaHintHTML(kind){
   const c=S.change, a=aocArea(c.cat); if(!a) return '';
@@ -2006,7 +2075,9 @@ function renderChange(){
   let h=`<div class="card"><div class="eyebrow">${L('During AOC validity','ระหว่างอายุใบรับรอง')}</div><h2>${L('What is changing?','ประเภทการเปลี่ยนแปลง')}</h2><p class="sub">${L('Every prorated result is an estimate until LEG/FAD confirm the rate basis.','ผลการคำนวณตามสัดส่วนเป็นการประมาณการจนกว่า LEG/FAD จะยืนยันหลักเกณฑ์')}</p>
     <div class="modes">${MODES().map(m=>`<button type="button" class="mode ${c.mode===m[0]?'on':''}" data-act="cmode" data-val="${m[0]}"><b>${esc(m[1])}</b><span>${esc(m[2])}</span></button>`).join('')}</div></div>`;
   h+=`<div class="card"><h2>${L('Details','รายละเอียด')}</h2>`;
-  if(['newTypeArea','newType','expand'].includes(c.mode)){
+  const expT=c.mode==='expand'?expandType():null;
+  if(c.mode==='expand') h+=typePickHTML();
+  if(['newTypeArea','newType'].includes(c.mode)||(c.mode==='expand'&&!expT)){
     h+=`<div class="lbl">${L('Category','ประเภทอากาศยาน')}</div>${catsHTML(c.cat==='BALLOON'?'AEROPLANE':c.cat,'ccat','','',true)}
       <div class="lbl">${L('Weight class','ช่วงน้ำหนัก')}</div>${seg([[false,weightLabels(c.cat)[0]],[true,weightLabels(c.cat)[1]]],c.heavy,'cheavy','','',true)}`;
   }
@@ -2017,9 +2088,13 @@ function renderChange(){
     if(c.mode==='newTypeArea'||c.prorate) h+=monthsHTML();
   }
   if(c.mode==='expand'){
-    h+=`<div class="lbl">${L('Current area','พื้นที่ปัจจุบัน')}</div>${routeHTML(c.cat,c.from,'cfrom')}${areaHintHTML('from')}<div class="lbl">${L('Expanded area','พื้นที่ที่ขอเพิ่ม')}</div>${routeHTML(c.cat,c.to,'cto')}`+monthsHTML();
+    h+=`<div class="lbl">${L('Current area','พื้นที่ปัจจุบัน')}</div>${routeHTML(c.cat,c.from,'cfrom')}${expT?typeHintHTML():''}<div class="lbl">${L('Expanded area','พื้นที่ที่ขอเพิ่ม')}</div>${routeHTML(c.cat,c.to,'cto')}`
+      +(expT&&S.settings.expandMode!=='literal'?`<div class="lbl">${L('Extra-type rate column (item 3)','อัตราค่าเพิ่มแบบ (ข้อ 3)')} <small>${L('used by option 2; not settled by the Announcement','ใช้กับตัวเลือกที่ 2 ประกาศ กพท. มิได้กำหนดไว้')}</small></div>${seg([['initial',L('Initial rate','อัตราการออกครั้งแรก')],['renewal',L('Renewal rate','อัตราการต่ออายุ')]],c.col,'ccol','','',true)}`:'')
+      +monthsHTML();
     const bl={MR2567:L('2024 Ministerial Regulation (default)','กฎกระทรวง (ฉบับที่ 3) พ.ศ. 2567 (ค่าเริ่มต้น)'),'2018_INITIAL':L('2018 Announcement initial rates','อัตราการออกครั้งแรก ประกาศ กพท. พ.ศ. 2561'),'2018_RENEWAL':L('2018 Announcement renewal rates','อัตราการต่ออายุ ประกาศ กพท. พ.ศ. 2561')}[S.settings.areaExpansionBasis];
     h+=note(S.settings.areaExpansionBasis==='MR2567'?'info':'warn',L(`Reference rates: ${bl}. Change in Settings.`,`อัตราอ้างอิง: ${bl} เปลี่ยนได้ที่หน้าตั้งค่า`));
+    { const em=S.settings.expandMode, eml={literal:L('1 · Rule word for word (default)','1 · คิดตามตัวอักษรของข้อ 5) (ค่าเริ่มต้น)'),structure:L('2 · Charge what actually goes up','2 · คิดเฉพาะส่วนที่เพิ่มขึ้นจริง'),both:L('3 · Show both amounts','3 · แสดงทั้งสองจำนวน')}[em];
+      h+=note(em==='literal'?'info':'warn',L(`Fee basis: ${eml}. Change in Settings › Changes.`,`หลักการคิดค่าธรรมเนียม: ${eml} เปลี่ยนได้ที่ ตั้งค่า › การเปลี่ยนแปลง`)); }
   }
   if(c.mode==='balloon'){ h+=`<div class="lbl">${L('Rate column','อัตราที่ใช้')}</div>${seg([['initial',L('Initial 75,000','การออกครั้งแรก 75,000')],['renewal',L('Renewal 65,000','การต่ออายุ 65,000')]],c.col,'ccol','','',true)}`+monthsHTML(); }
   if(c.mode==='amend'){ h+=`<div class="lbl">${L('Number of amendments','จำนวนครั้งที่แก้ไข')}</div><div class="stepper"><button type="button" data-act="cocc" data-val="-1">−</button><span>${c.occasions}</span><button type="button" data-act="cocc" data-val="1">+</button></div>`; }
@@ -2104,6 +2179,13 @@ function renderSettings(){
     h+=`<div class="card"><h2>${L('Remaining validity: part months','อายุใบรับรองคงเหลือ: การนับเศษเดือน')}</h2><p class="sub">${L('Used for prorated changes (new type and area, new type prorated, area expansion, balloon type). When an AOC is selected, Remaining validity is filled from the Count from date (today if blank) to its expiry date with this rule. A number typed on the Changes page overrides it for that operator. Saved on this device only.','ใช้กับการคำนวณตามสัดส่วน (เพิ่มแบบอากาศยานและพื้นที่ เพิ่มแบบอากาศยานแบบคิดตามสัดส่วน เพิ่มพื้นที่ปฏิบัติการ และเพิ่มแบบบัลลูน) เมื่อเลือกใบรับรอง ระบบจะคำนวณอายุใบรับรองคงเหลือตั้งแต่วันที่ที่ระบุในช่องนับตั้งแต่วันที่ (หากไม่ระบุจะใช้วันนี้) ถึงวันหมดอายุตามวิธีนี้ หากกรอกจำนวนเดือนเองที่หน้าการเปลี่ยนแปลง จะใช้ค่าที่กรอกสำหรับผู้ดำเนินการรายนั้น บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>
       <div class="opts">${opts.map(o=>`<button type="button" class="opt ${pm===o[0]?'on':''}" data-act="partmonth" data-val="${o[0]}"><span class="rd"></span><span><b>${esc(o[1])}${o[3]?`<span class="tag">${L('Default','ค่าเริ่มต้น')}</span>`:''}</b><span class="thai">${esc(o[2])}</span></span></button>`).join('')}</div>
       ${pm!=='up'?note('warn',L('A non-default rule is active. Prorated fees will be lower than with round up, and each result shows the rule used.','กำลังใช้วิธีที่ไม่ใช่ค่าเริ่มต้น ค่าธรรมเนียมตามสัดส่วนจะต่ำกว่าการปัดขึ้น และผลการคำนวณจะระบุวิธีที่ใช้ทุกครั้ง')):''}</div>`; }
+  { const em=S.settings.expandMode;
+    const opts=[['literal',L('1 · Rule word for word','1 · คิดตามตัวอักษรของข้อ 5)'),L('Always the increase in the main fee (item 2), whichever type is expanded. Closest to the text of item 5. Highest fee for CAAT. Example: Thai A320 Asia → Other regions, 6 of 60 months = ฿150,000.','คิดส่วนต่างค่าใบรับรอง (ข้อ 2) ทุกกรณี ไม่ว่าจะเป็นแบบใด ใกล้เคียงถ้อยคำของข้อ 5) มากที่สุด ค่าธรรมเนียมสูงสุด ตัวอย่าง: A320 ของการบินไทย เอเชีย → ภูมิภาคอื่น คงเหลือ 6 จาก 60 เดือน = 150,000 บาท'),true],
+      ['structure',L('2 · Charge what actually goes up','2 · คิดเฉพาะส่วนที่เพิ่มขึ้นจริง'),L('The increase in the AOC\'s certificate fees when this type moves: the main fee if it becomes the highest area, otherwise the extra-type fee (item 3). Example: Thai A320 = ฿110,000 (renewal column) or ฿120,000 (initial column).','ส่วนต่างของค่าใบรับรองทั้งฉบับเมื่อแบบนี้เปลี่ยนพื้นที่ หากกลายเป็นพื้นที่สูงสุดจะคิดจากค่าใบรับรอง หากเป็นแบบเพิ่มเติมจะคิดจากค่าเพิ่มแบบ (ข้อ 3) ตัวอย่าง: A320 ของการบินไทย = 110,000 บาท (อัตราการต่ออายุ) หรือ 120,000 บาท (อัตราการออกครั้งแรก)'),false],
+      ['both',L('3 · Show both amounts','3 · แสดงทั้งสองจำนวน'),L('The total uses option 1. The option 2 amount is shown under it for FAD to decide.','ยอดรวมใช้ตัวเลือกที่ 1 และแสดงจำนวนตามตัวเลือกที่ 2 ไว้ด้านล่างเพื่อให้ FAD พิจารณา'),false]];
+    h+=`<div class="card"><h2>${L('Area expansion: fee basis','การเพิ่มพื้นที่ปฏิบัติการ: หลักการคิดค่าธรรมเนียม')}</h2><p class="sub">${L('Item 5 charges the difference in item 2 rates between the current and new areas. It does not say what applies when the expanded type is an extra type and the AOC already pays the main fee for a wider area. The options only differ in that case. To be confirmed by LEG/FAD. Saved on this device only.','ข้อ 5) กำหนดให้คิดส่วนต่างอัตราตามข้อ 2) ระหว่างพื้นที่ปัจจุบันและพื้นที่ที่ขอเพิ่ม แต่มิได้กำหนดกรณีที่แบบที่ขอเพิ่มพื้นที่เป็นแบบเพิ่มเติม และใบรับรองชำระค่าใบรับรองในพื้นที่ที่กว้างกว่าอยู่แล้ว ตัวเลือกจะต่างกันเฉพาะกรณีนี้ ต้องได้รับการยืนยันจาก LEG/FAD บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>
+      <div class="opts">${opts.map(o=>`<button type="button" class="opt ${em===o[0]?'on':''}" data-act="expmode" data-val="${o[0]}"><span class="rd"></span><span><b>${esc(o[1])}${o[3]?`<span class="tag">${L('Default','ค่าเริ่มต้น')}</span>`:''}</b><span class="thai">${esc(o[2])}</span></span></button>`).join('')}</div>
+      ${em!=='literal'?note('warn',L('A non-default fee basis is active. Results will say which option was used.','กำลังใช้หลักการที่ไม่ใช่ค่าเริ่มต้น ผลการคำนวณจะระบุตัวเลือกที่ใช้')):''}</div>`; }
   h+=`<div class="card"><h2>${L('Area-expansion reference rates','อัตราอ้างอิงสำหรับการเพิ่มพื้นที่ปฏิบัติการ')}</h2><p class="sub">${L('Item 5) of the 2018 Announcement points to certificate fees that the 2024 Regulation replaced. Choose the rates used for the difference. Saved on this device only.','ข้อ 5) ของประกาศ กพท. พ.ศ. 2561 อ้างอิงค่าใบรับรองซึ่งถูกแทนที่โดยกฎกระทรวง พ.ศ. 2567 เลือกอัตราที่ใช้คำนวณส่วนต่าง บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>
     <div class="opts">
       ${[['MR2567',L('2024 Ministerial Regulation','กฎกระทรวง (ฉบับที่ 3) พ.ศ. 2567'),L('กฎกระทรวง (ฉบับที่ 3) 2567 · current certificate rates','อัตราค่าใบรับรองปัจจุบัน'),true],
@@ -2938,7 +3020,7 @@ function restoreEdits(){
 let RESETTING=false;
 function resetCounts(){
   const ops=savedOps().length, custom=S.customOps.length;
-  const sets=[S.settings.areaExpansionBasis!==RULESET.settings.areaExpansionBasis, S.settings.mixedBasis!=='A', S.settings.partMonth!=='up', S.sumMode!=='detailed', !!(load('aoc.mailTo')||''), (load('aoc.survBudget')!=null&&toNum(load('aoc.survBudget'))!==16000000)].filter(Boolean).length;
+  const sets=[S.settings.areaExpansionBasis!==RULESET.settings.areaExpansionBasis, S.settings.mixedBasis!=='A', S.settings.partMonth!=='up', S.settings.expandMode!=='literal', S.sumMode!=='detailed', !!(load('aoc.mailTo')||''), (load('aoc.survBudget')!=null&&toNum(load('aoc.survBudget'))!==16000000)].filter(Boolean).length;
   return {ops,custom,sets,cur:!!S.operator,total:ops+custom+sets};
 }
 function confirmReset(){
@@ -2956,7 +3038,7 @@ function resetApp(c){
   clearTimeout(persistT);
   try{ const keep=load('aoc.lang'); Object.keys(localStorage).filter(k=>k.startsWith('aoc.')).forEach(k=>localStorage.removeItem(k)); if(keep) store('aoc.lang',keep); }catch(e){}
   S.opCache={}; S.staleOps={}; S.customOps=[]; touched.clear();
-  S.settings.areaExpansionBasis=RULESET.settings.areaExpansionBasis; S.settings.mixedBasis='A'; setMixedBasis('A'); S.settings.partMonth='up'; S.sumMode='detailed'; S.pipeF='all'; S.survBudget='16000000'; S.survOpen=false; S.survUnlocked=false; S.survAsk=false; S.survErr='';
+  S.settings.areaExpansionBasis=RULESET.settings.areaExpansionBasis; S.settings.mixedBasis='A'; setMixedBasis('A'); S.settings.partMonth='up'; S.settings.expandMode='literal'; S.sumMode='detailed'; S.pipeF='all'; S.survBudget='16000000'; S.survOpen=false; S.survUnlocked=false; S.survAsk=false; S.survErr='';
   S.addingOp=false; S.opDraft=''; S.operator=''; freshOp(''); S.expiry=''; S.expiryAuto=false; S.tx='renewal'; S.txAuto=false;
   store(EDIT_KEY,JSON.stringify({v:1,cur:'',ops:{}}));
   const t=new Date(), hm=String(t.getHours()).padStart(2,'0')+':'+String(t.getMinutes()).padStart(2,'0');
@@ -3144,7 +3226,7 @@ function reportHref(){
   const body=[L('Please describe the error (what you did, what you expected, what you saw):','โปรดระบุข้อผิดพลาด (สิ่งที่ทำ ผลที่คาดหวัง และผลที่ปรากฏ):'),'','','',
     '--- App details ---',
     `App version: ${APP_VERSION}`,`Rule set: ${RULESET.version}`,`Screen: ${S.tab}`,`Operator: ${S.operator?S.operator+(oi.aoc?' ('+oi.aoc+')':''):'-'}`,
-    `Transaction: ${S.tx}`,`Total shown: ${total}`,`Self-test: ${S.tests.filter(t=>t.pass).length}/${S.tests.length}`,`Mixed-AOC reading: ${S.settings.mixedBasis}`,`Part-month rule: ${S.settings.partMonth}`,
+    `Transaction: ${S.tx}`,`Total shown: ${total}`,`Self-test: ${S.tests.filter(t=>t.pass).length}/${S.tests.length}`,`Mixed-AOC reading: ${S.settings.mixedBasis}`,`Part-month rule: ${S.settings.partMonth}`,`Area-expansion fee basis: ${S.settings.expandMode}`,
     `Language: ${LANG}`,`Date: ${stamp}`,`Device: ${dev}`].join('\r\n');
   return `mailto:${REPORT_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
@@ -3244,12 +3326,14 @@ document.addEventListener('click',e=>{
     case 'aexcl': a.excluded=Math.max(0,a.excluded+Number(el.dataset.val)); break;
     case 'mixbasis': S.settings.mixedBasis=MIXED_BASES.includes(v)?v:'A'; setMixedBasis(S.settings.mixedBasis); store('aoc.mixbasis',S.settings.mixedBasis); toast(L('Mixed-AOC reading saved on this device','บันทึกแนวทางคำนวณใบรับรองประเภทผสมในอุปกรณ์นี้แล้ว')); break;
     case 'cAsOfToday': c.asOf=''; syncMonths(); break;
+    case 'ctype': c.typeId=v; c.fromAuto=true; if(v!=='OTHER'){ c.to=''; } syncArea(); break;
+    case 'expmode': S.settings.expandMode=EXPAND_MODES.includes(v)?v:'literal'; store('aoc.expmode',S.settings.expandMode); toast(L('Area-expansion fee basis saved on this device','บันทึกหลักการคิดค่าเพิ่มพื้นที่ในอุปกรณ์นี้แล้ว')); break;
     case 'cAreaAuto': if(v==='from') c.fromAuto=true; else c.areaAuto=true; syncArea(); break;
     case 'cMauto': c.Mauto=true; syncMonths(); toast(L('Remaining validity follows the AOC expiry again','อายุใบรับรองคงเหลือคำนวณตามวันหมดอายุอีกครั้ง')); break;
     case 'partmonth': S.settings.partMonth=PART_RULES.includes(v)?v:'up'; store('aoc.partmonth',S.settings.partMonth); syncMonths(); toast(L('Part-month rule saved on this device','บันทึกวิธีนับเศษเดือนในอุปกรณ์นี้แล้ว')); break;
     case 'basis': S.settings.areaExpansionBasis=v; store('aoc.basis',v); toast(L('Area-expansion basis saved on this device','บันทึกอัตราอ้างอิงในอุปกรณ์นี้แล้ว')); break;
     case 'addChange': { const r=calcChange(c.mode,c,S.settings); if(r.status==='INCOMPLETE'){ toast(L('Complete the change details first','กรุณากรอกรายละเอียดให้ครบก่อน')); return; }
-      S.changesAdded.push({id:nid(),mode:c.mode,p:JSON.parse(JSON.stringify(c)),basis:S.settings.areaExpansionBasis}); toast(L('Added to Summary','เพิ่มในหน้าสรุปแล้ว')); break; }
+      S.changesAdded.push({id:nid(),mode:c.mode,p:JSON.parse(JSON.stringify(c)),basis:S.settings.areaExpansionBasis,expandMode:S.settings.expandMode}); toast(L('Added to Summary','เพิ่มในหน้าสรุปแล้ว')); break; }
     case 'delChange': S.changesAdded=S.changesAdded.filter(x=>x.id!==id); break;
     case 'goSum': S.tab='sum'; renderAll(); window.scrollTo({top:0,behavior:'smooth'}); return;
     case 'opSave': saveOperator(); return;
