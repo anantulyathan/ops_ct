@@ -2539,8 +2539,11 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.81', APP_DATE='2026-11-21';
+const APP_VERSION='3.83', APP_DATE='2026-11-21';
 const APP_LOG=[
+  {v:'3.83',d:'2026-11-21',en:['The international globe now glides back to the Bangkok view after 3 seconds of being left alone (was 8 seconds).'],th:['ลูกโลกพื้นที่ปฏิบัติการต่างประเทศจะเลื่อนกลับมาที่มุมมองกรุงเทพฯ เมื่อไม่มีการสัมผัสนาน 3 วินาที (เดิม 8 วินาที)']},
+  {v:'3.82',d:'2026-11-21',en:['The Other regions (international) globe no longer spins all the way round. It now sways slowly between views (East Asia, Australia, India and the Middle East), returning to a Bangkok-centred view between each one, so Bangkok stays on the front of the globe as the hub. Drag to look at any angle; if Bangkok is out of view and the globe is left alone for 8 seconds, it glides back to the Bangkok view and the slow replay resumes. With Reduce Motion on, the globe stays still on the Bangkok view.','The glow of the sun and the moon, and the tint they put on the edge of the globe, is about 15% stronger. The edge tint is now cool blue when the moon is showing.'],
+   th:['ลูกโลกพื้นที่ปฏิบัติการต่างประเทศไม่หมุนรอบตัวอีกต่อไป แต่แกว่งช้าๆ ผ่านมุมมองเอเชียตะวันออก ออสเตรเลีย อินเดียและตะวันออกกลาง โดยกลับมาที่มุมมองที่มีกรุงเทพฯ อยู่กลางทุกครั้งคั่นระหว่างมุมมอง เพื่อให้กรุงเทพฯ อยู่ด้านหน้าของลูกโลกในฐานะศูนย์กลาง ลากเพื่อดูได้ทุกมุม หากกรุงเทพฯ อยู่นอกมุมมองและไม่มีการสัมผัสลูกโลกนาน 8 วินาที ลูกโลกจะเลื่อนกลับมาที่มุมมองกรุงเทพฯ และเล่นต่อ เมื่อเปิดลดการเคลื่อนไหว ลูกโลกจะหยุดนิ่งที่มุมมองกรุงเทพฯ','แสงเรืองของดวงอาทิตย์และดวงจันทร์ รวมถึงสีที่ส่องต่อขอบลูกโลก เข้มขึ้นประมาณ 15% และเมื่อแสดงดวงจันทร์ สีที่ขอบลูกโลกจะเป็นโทนฟ้าเย็น']},
   {v:'3.81',d:'2026-11-21',en:['New: choose the colour of the flight paths on the globe. A small colour selector sits directly below every globe, and the same choice is in Settings. Colours: white (default), blue, green, orange, yellow, red, purple, cyan and rainbow. It is a small drop-down that shows only the current colour until opened, in both Detailed and Simple view. The choice applies to every globe in the app and is saved on this device.','The Principal / Additional labels on the Certificate and Summary tabs now have a small shine that passes over them every few seconds (Detailed view only; off with Reduce Motion and in Simple view). Tap or click the sun on any globe to turn it into a moon, and tap the moon to bring the sun back. The choice applies to every globe and is saved on this device. The Additional label is now blue.'],
    th:['ใหม่: เลือกสีเส้นทางบินบนลูกโลกได้ มีตัวเลือกขนาดเล็กอยู่ใต้ลูกโลกทุกลูก และมีตัวเลือกเดียวกันในการตั้งค่า สีที่มี: ขาว (ค่าเริ่มต้น) น้ำเงิน เขียว ส้ม เหลือง แดง ม่วง ฟ้า และรุ้ง แสดงเฉพาะสีปัจจุบันจนกว่าจะเปิดรายการ ทั้งในมุมมองแบบละเอียดและแบบย่อ ใช้กับลูกโลกทุกลูกในแอปและบันทึกไว้ในอุปกรณ์นี้','ป้าย “แบบหลัก” และ “แบบเพิ่มเติม” ในหน้าค่าใบรับรองและหน้าสรุปมีแสงวาบเล็กน้อยผ่านทุกไม่กี่วินาที (เฉพาะมุมมองแบบละเอียด ปิดเมื่อเปิดลดการเคลื่อนไหว และในมุมมองแบบย่อ) แตะหรือคลิกดวงอาทิตย์บนลูกโลกเพื่อเปลี่ยนเป็นดวงจันทร์ และแตะดวงจันทร์เพื่อกลับเป็นดวงอาทิตย์ ใช้กับลูกโลกทุกลูกและบันทึกไว้ในอุปกรณ์นี้ ป้าย “เพิ่มเติม” เปลี่ยนเป็นสีน้ำเงิน']},
   {v:'3.80',d:'2026-11-21',en:['New Simple / Detailed view switch at the top of every page and in Settings. Simple keeps the inputs, results and errors, and hides instructions, field hints, notes, line details, step-by-step calculations and animations (the globe stays). Detailed is the default and is the same as before.','The language control at the top is now a small switch, stacked under the view switch, each with a blinking light.','Printed reports, PDFs and shared summaries are not affected by the view.'],
@@ -2800,12 +2803,12 @@ function globeDraw(g,now){
   if(g.sunOn!==sunOn){ g.sunOn=sunOn; if(g.el) g.el.classList.toggle('nosun',!sunOn); }
   if(sunOn){ const sT=skyT(now), sa=S.sky==='sun'?sT:1-sT, ma=1-sa; const pu=g.mot?1+.06*Math.sin((now||0)/1000*1.6)+.03*Math.sin((now||0)/1000*3.7):1;
     if(sa>.01){ x.save(); x.globalAlpha=sa; x.save(); x.globalCompositeOperation='lighter';
-    let sg=x.createRadialGradient(sX,sY,0,sX,sY,sR*3.4*pu); sg.addColorStop(0,'rgba(255,196,110,.27)'); sg.addColorStop(.25,'rgba(255,170,80,.096)'); sg.addColorStop(1,'rgba(255,150,60,0)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR*3.4*pu,0,7); x.fill();
-    sg=x.createRadialGradient(sX,sY,sR*.8,sX,sY,sR*1.9*pu); sg.addColorStop(0,'rgba(255,214,140,.55)'); sg.addColorStop(1,'rgba(255,170,80,0)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR*1.9*pu,0,7); x.fill();
+    let sg=x.createRadialGradient(sX,sY,0,sX,sY,sR*3.4*pu); sg.addColorStop(0,'rgba(255,196,110,.31)'); sg.addColorStop(.25,'rgba(255,170,80,.11)'); sg.addColorStop(1,'rgba(255,150,60,0)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR*3.4*pu,0,7); x.fill();
+    sg=x.createRadialGradient(sX,sY,sR*.8,sX,sY,sR*1.9*pu); sg.addColorStop(0,'rgba(255,214,140,.63)'); sg.addColorStop(1,'rgba(255,170,80,0)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR*1.9*pu,0,7); x.fill();
     x.restore();
     sg=x.createRadialGradient(sX,sY,0,sX,sY,sR); sg.addColorStop(0,'#fffdf2'); sg.addColorStop(.55,'#fff0c4'); sg.addColorStop(1,'rgba(255,205,120,.95)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR,0,7); x.fill(); x.restore(); }
     if(ma>.01){ const mu=g.mot?1+.03*Math.sin((now||0)/1000*1.2):1; x.save(); x.globalAlpha=ma; x.save(); x.globalCompositeOperation='lighter';
-      let mg=x.createRadialGradient(sX,sY,0,sX,sY,sR*3.2*mu); mg.addColorStop(0,'rgba(170,195,255,.28)'); mg.addColorStop(.3,'rgba(150,180,255,.1)'); mg.addColorStop(1,'rgba(140,170,255,0)'); x.fillStyle=mg; x.beginPath(); x.arc(sX,sY,sR*3.2*mu,0,7); x.fill(); x.restore();
+      let mg=x.createRadialGradient(sX,sY,0,sX,sY,sR*3.2*mu); mg.addColorStop(0,'rgba(170,195,255,.32)'); mg.addColorStop(.3,'rgba(150,180,255,.115)'); mg.addColorStop(1,'rgba(140,170,255,0)'); x.fillStyle=mg; x.beginPath(); x.arc(sX,sY,sR*3.2*mu,0,7); x.fill(); x.restore();
       mg=x.createRadialGradient(sX-sR*.3,sY-sR*.3,0,sX,sY,sR*1.02); mg.addColorStop(0,'#ffffff'); mg.addColorStop(.6,'#e9eefb'); mg.addColorStop(1,'#bfc9e4'); x.fillStyle=mg; x.beginPath(); x.arc(sX,sY,sR*1.02,0,7); x.fill();
       x.fillStyle='rgba(140,153,190,.42)'; [[-.38,-.12,.26],[.22,.3,.2],[.3,-.36,.15],[-.1,.45,.12]].forEach(c=>{ x.beginPath(); x.arc(sX+c[0]*sR,sY+c[1]*sR,c[2]*sR,0,7); x.fill(); });
       x.restore(); } }
@@ -2820,17 +2823,18 @@ function globeDraw(g,now){
     x.beginPath(); path(f); x.fillStyle=col; x.fill(); x.strokeStyle='rgba(15,34,56,.35)'; x.lineWidth=Math.max(.6,W/700); x.stroke(); }
   gr=x.createRadialGradient(cx-R*.35,cy-R*.4,0,cx-R*.35,cy-R*.4,R*.9); gr.addColorStop(0,'rgba(255,255,255,.2)'); gr.addColorStop(1,'rgba(255,255,255,0)'); x.fillStyle=gr; x.beginPath(); x.arc(cx,cy,R,0,7); x.fill();
   gr=x.createRadialGradient(cx+R*.3,cy+R*.35,R*.3,cx,cy,R*1.02); gr.addColorStop(0,'rgba(5,15,30,0)'); gr.addColorStop(1,'rgba(5,15,30,.55)'); x.fillStyle=gr; x.beginPath(); x.arc(cx,cy,R,0,7); x.fill();
-  if(sunOn){ /* faint warm edge on the sun-facing limb */
-    x.save(); x.beginPath(); x.arc(cx,cy,R*1.09,0,7); x.moveTo(cx+R*.965,cy); x.arc(cx,cy,R*.965,0,7,true); x.clip('evenodd');
-    gr=x.createRadialGradient(sX,sY,0,sX,sY,Math.hypot(sX-cx,sY-cy)+R*.9); gr.addColorStop(0,'rgba(255,214,150,.19)'); gr.addColorStop(.6,'rgba(255,190,110,.05)'); gr.addColorStop(1,'rgba(255,170,90,0)');
-    x.globalCompositeOperation='lighter'; x.fillStyle=gr; x.fillRect(0,0,W,H); x.restore(); }
+  if(sunOn){ /* faint edge tint on the limb facing the sun (warm) or moon (cool) */
+    const sa2=S.sky==='sun'?skyT(now):1-skyT(now), tints=[[sa2,'255,214,150','255,190,110','255,170,90'],[1-sa2,'190,210,255','160,190,255','140,170,255']];
+    x.save(); x.beginPath(); x.arc(cx,cy,R*1.09,0,7); x.moveTo(cx+R*.965,cy); x.arc(cx,cy,R*.965,0,7,true); x.clip('evenodd'); x.globalCompositeOperation='lighter';
+    tints.forEach(t=>{ if(t[0]<.01) return; gr=x.createRadialGradient(sX,sY,0,sX,sY,Math.hypot(sX-cx,sY-cy)+R*.9); gr.addColorStop(0,`rgba(${t[1]},${.2185*t[0]})`); gr.addColorStop(.6,`rgba(${t[2]},${.0575*t[0]})`); gr.addColorStop(1,`rgba(${t[3]},0)`); x.fillStyle=gr; x.fillRect(0,0,W,H); });
+    x.restore(); }
   const dpr=g.dpr, front=p=>d3.geoDistance(p,ctr)<1.55;
-  const RT=gRT(g.cat,v); if(RT&&lit>0){ const mo=g.mot, T=(now||0)/1000, N=RT.length, CYC=7.5, HP=Math.PI/2, P=Math.PI;
+  const RT=gRT(g.cat,v); if(RT&&lit>0){ const mo=g.mot, T=(now||0)/1000, N=RT.length, CYC=7.5, HP=g.hp||Math.PI/2, P=Math.PI;
     const line=(pts,a,w,ci)=>{ x.strokeStyle=pcol(ci,a); x.lineWidth=w; x.lineCap='round'; x.beginPath(); let pen=false; for(const q of pts){ if(!q){ pen=false; continue; } if(pen) x.lineTo(q[0],q[1]); else { x.moveTo(q[0],q[1]); pen=true; } } x.stroke(); };
     RT.forEach((d,i)=>{
       const ip=d3.geoInterpolate(BKK,d), H=.06+.2*Math.min(1,d3.geoDistance(BKK,d)/2.6);
       const gd=d3.geoDistance(BKK,d), A0=proj(BKK), A1=proj(d), cl=Math.hypot(A1[0]-A0[0],A1[1]-A0[1])||1; let nx=-(A1[1]-A0[1])/cl, ny=(A1[0]-A0[0])/cl; if(ny>0){ nx=-nx; ny=-ny; } const bw=gd<.6?.22*cl:0;
-      const at=t=>{ const p=ip(t); if(d3.geoDistance(p,ctr)>=HP) return null; const q=proj(p), s=Math.sin(P*t), l=1+H*s; return [cx+(q[0]-cx)*l+nx*bw*s, cy+(q[1]-cy)*l+ny*bw*s]; };
+      const at=t=>{ const p=ip(t); if(d3.geoDistance(p,ctr)>=HP) return null; const dd=d3.geoDistance(p,ctr), q=proj(p), s=Math.sin(P*t), l=1+H*s*(g.hp?Math.max(0,Math.min(1,(HP-dd)/.5)):1); return [cx+(q[0]-cx)*l+nx*bw*s, cy+(q[1]-cy)*l+ny*bw*s]; };
       const ph=mo?((T/CYC+i/N)%1):1, gp=mo?Math.min(1,ph/.4):1, fade=mo?(ph<.82?1:Math.max(.25,1-(ph-.82)/.18*.75)):1;
       const arc=t1=>{ const a=[]; for(let t=0;t<=t1+1e-6;t+=.025) a.push(at(Math.min(t,t1))); return a; };
       line(arc(1),.2*lit,1*dpr,i);
@@ -2845,11 +2849,23 @@ function globeDraw(g,now){
     if(g.spin||g.anim||g.mot){ const pr=((now||0)%1600)/1600; x.beginPath(); x.arc(b[0],b[1],(4+12*pr)*dpr,0,7); x.strokeStyle=`rgba(255,255,255,${.8*(1-pr)})`; x.lineWidth=1.5*dpr; x.stroke(); }
     x.beginPath(); x.arc(b[0],b[1],4.2*dpr,0,7); x.fillStyle='#fff'; x.fill(); x.beginPath(); x.arc(b[0],b[1],2.2*dpr,0,7); x.fillStyle='#1a2e4a'; x.fill(); }
 }
+/* Other regions globe: slow replay of viewing angles that always keep Bangkok on the front; drag any angle, then glide back to Bangkok after 3 s idle */
+const GKF=[[100.75,14],[124,24],[100.75,14],[138,-14],[100.75,14],[74,14],[52,26],[74,14]], GMV=3600, GDW=1500, GCY=(GMV+GDW)*GKF.length;
+function gKfAt(T){ T=((T%GCY)+GCY)%GCY; const i=Math.floor(T/(GMV+GDW)), r=T-i*(GMV+GDW), a=GKF[i], b=GKF[(i+1)%GKF.length]; if(r<GDW) return a;
+  const q=(r-GDW)/GMV, e=q<.5?2*q*q:1-Math.pow(-2*q+2,2)/2; let dl=b[0]-a[0]; dl=((dl+540)%360)-180; return [a[0]+dl*e,a[1]+(b[1]-a[1])*e]; }
+function gReplay(g,now){
+  const r=g.rp||(g.rp={m:'glide',t0:now,from:g.rot.slice(),off:0,idle:now,last:now}), dt=Math.min(100,now-r.last); r.last=now;
+  if(g.drag){ r.m='free'; r.idle=now; return; }
+  if(r.m==='free'){ if(now-r.idle<3000) return; r.m='glide'; r.t0=now; r.from=g.rot.slice(); }
+  if(r.m==='glide'){ const q=Math.min(1,(now-r.t0)/1800), e=q<.5?4*q*q*q:1-Math.pow(-2*q+2,3)/2, to=[-GKF[0][0],-GKF[0][1]]; let dl=to[0]-r.from[0]; dl=((dl+540)%360)-180;
+    g.rot=[r.from[0]+dl*e, r.from[1]+(to[1]-r.from[1])*e]; if(q>=1){ r.m='play'; r.off=0; } return; }
+  r.off+=dt; const c=gKfAt(r.off); g.rot=[-c[0],-c[1]];
+}
 let gLast=0;
 function gTick(now){
   if(now-gLast<33){ gLoop=requestAnimationFrame(gTick); return; } gLast=now;
   let any=false;
-  GSPIN.forEach(g=>{ if(!g.cv.isConnected){ GSPIN.delete(g); return; } if(!g.vis) return; any=true; if(!g.drag&&!g.still) g.rot[0]+=.1; GST[g.k].rot=g.rot.slice(); globeDraw(g,now); });
+  GSPIN.forEach(g=>{ if(!g.cv.isConnected){ GSPIN.delete(g); return; } if(!g.vis) return; any=true; if(!g.still) gReplay(g,now); GST[g.k].rot=g.rot.slice(); globeDraw(g,now); });
   gLoop=any||GSPIN.size?requestAnimationFrame(gTick):0;
 }
 const gIO=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{ if(e.target._g){ e.target._g.vis=e.isIntersecting; if(e.isIntersecting&&!e.target._g.spin&&!e.target._g.anim) try{ globeDraw(e.target._g,performance.now()); }catch(x){} } }),{threshold:.05}):null;
@@ -2859,7 +2875,7 @@ function mountGlobes(){
     if(el._g) return; const cv=el.querySelector('canvas'), w=cv.clientWidth, h=cv.clientHeight; if(!w||!h) return;
     const dpr=Math.min(2,window.devicePixelRatio||1); cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr);
     const k=el.dataset.gk, val=el.dataset.val, cat=el.dataset.cat, T=GVIEW[val]||GVIEW[''], prev=GST[k], mot=MOTION();
-    const g={el,cv,ctx:cv.getContext('2d'),dpr,k,cat,val,rot:T[0].slice(),sc:T[1],lit:val?1:0,spin:mot&&!!gRT(cat,val),still:val!=='INTL',mot,vis:true,anim:false,drag:false};
+    const g={el,cv,ctx:cv.getContext('2d'),dpr,k,cat,val,rot:T[0].slice(),sc:T[1],lit:val?1:0,spin:mot&&!!gRT(cat,val),still:val!=='INTL',hp:val==='INTL'?1.22:0,mot,vis:true,anim:false,drag:false};
     el._g=g; if(gIO) gIO.observe(el);
     if(el.dataset.from!=null){ gMorph(g,el.dataset.from,val,mot); return; }
     const done=()=>{ g.anim=false; GST[k]={rot:g.rot.slice(),sc:g.sc,val}; if(g.spin){ GSPIN.add(g); if(!gLoop) gLoop=requestAnimationFrame(gTick); } else globeDraw(g,performance.now()); };
