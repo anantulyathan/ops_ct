@@ -1713,6 +1713,9 @@ body[data-view="simple"] .fleetline:not(.muted):has(> button){background:transpa
 .gp-s.on{box-shadow:0 0 0 2px var(--navy,#1a2e4a)}
 .gpick.gs{margin:0}
 @media (prefers-reduced-motion:reduce){ .gp-s,.gp-c{transition:none} }
+.gsun{position:absolute;left:calc(88% - 22px);top:calc(20% - 22px);width:44px;height:44px;border:0;border-radius:50%;background:transparent;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;z-index:2}
+.gsun:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+.globe.nosun .gsun{display:none}
 /* ambient shine on Principal / Additional labels */
 .bdg::before,#shell .chip.p::before,#shell .chip.sh::before{content:"";position:absolute;top:0;left:-70%;width:38%;height:100%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:lblShine 5.2s ease-in-out infinite}
 #shell .chip.p,#shell .chip.sh{position:relative;overflow:hidden}
@@ -2538,8 +2541,8 @@ let uid=0; const nid=()=> 't'+(++uid);
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
 const APP_VERSION='3.81', APP_DATE='2026-11-21';
 const APP_LOG=[
-  {v:'3.81',d:'2026-11-21',en:['New: choose the colour of the flight paths on the globe. A small colour selector sits directly below every globe, and the same choice is in Settings. Colours: white (default), blue, green, orange, yellow, red, purple, cyan and rainbow. It is a small drop-down that shows only the current colour until opened, in both Detailed and Simple view. The choice applies to every globe in the app and is saved on this device.','The Principal / Additional labels on the Certificate and Summary tabs now have a small shine that passes over them every few seconds (Detailed view only; off with Reduce Motion and in Simple view). The Additional label is now blue.'],
-   th:['ใหม่: เลือกสีเส้นทางบินบนลูกโลกได้ มีตัวเลือกขนาดเล็กอยู่ใต้ลูกโลกทุกลูก และมีตัวเลือกเดียวกันในการตั้งค่า สีที่มี: ขาว (ค่าเริ่มต้น) น้ำเงิน เขียว ส้ม เหลือง แดง ม่วง ฟ้า และรุ้ง แสดงเฉพาะสีปัจจุบันจนกว่าจะเปิดรายการ ทั้งในมุมมองแบบละเอียดและแบบย่อ ใช้กับลูกโลกทุกลูกในแอปและบันทึกไว้ในอุปกรณ์นี้','ป้าย “แบบหลัก” และ “แบบเพิ่มเติม” ในหน้าค่าใบรับรองและหน้าสรุปมีแสงวาบเล็กน้อยผ่านทุกไม่กี่วินาที (เฉพาะมุมมองแบบละเอียด ปิดเมื่อเปิดลดการเคลื่อนไหว และในมุมมองแบบย่อ) ป้าย “เพิ่มเติม” เปลี่ยนเป็นสีน้ำเงิน']},
+  {v:'3.81',d:'2026-11-21',en:['New: choose the colour of the flight paths on the globe. A small colour selector sits directly below every globe, and the same choice is in Settings. Colours: white (default), blue, green, orange, yellow, red, purple, cyan and rainbow. It is a small drop-down that shows only the current colour until opened, in both Detailed and Simple view. The choice applies to every globe in the app and is saved on this device.','The Principal / Additional labels on the Certificate and Summary tabs now have a small shine that passes over them every few seconds (Detailed view only; off with Reduce Motion and in Simple view). Tap or click the sun on any globe to turn it into a moon, and tap the moon to bring the sun back. The choice applies to every globe and is saved on this device. The Additional label is now blue.'],
+   th:['ใหม่: เลือกสีเส้นทางบินบนลูกโลกได้ มีตัวเลือกขนาดเล็กอยู่ใต้ลูกโลกทุกลูก และมีตัวเลือกเดียวกันในการตั้งค่า สีที่มี: ขาว (ค่าเริ่มต้น) น้ำเงิน เขียว ส้ม เหลือง แดง ม่วง ฟ้า และรุ้ง แสดงเฉพาะสีปัจจุบันจนกว่าจะเปิดรายการ ทั้งในมุมมองแบบละเอียดและแบบย่อ ใช้กับลูกโลกทุกลูกในแอปและบันทึกไว้ในอุปกรณ์นี้','ป้าย “แบบหลัก” และ “แบบเพิ่มเติม” ในหน้าค่าใบรับรองและหน้าสรุปมีแสงวาบเล็กน้อยผ่านทุกไม่กี่วินาที (เฉพาะมุมมองแบบละเอียด ปิดเมื่อเปิดลดการเคลื่อนไหว และในมุมมองแบบย่อ) แตะหรือคลิกดวงอาทิตย์บนลูกโลกเพื่อเปลี่ยนเป็นดวงจันทร์ และแตะดวงจันทร์เพื่อกลับเป็นดวงอาทิตย์ ใช้กับลูกโลกทุกลูกและบันทึกไว้ในอุปกรณ์นี้ ป้าย “เพิ่มเติม” เปลี่ยนเป็นสีน้ำเงิน']},
   {v:'3.80',d:'2026-11-21',en:['New Simple / Detailed view switch at the top of every page and in Settings. Simple keeps the inputs, results and errors, and hides instructions, field hints, notes, line details, step-by-step calculations and animations (the globe stays). Detailed is the default and is the same as before.','The language control at the top is now a small switch, stacked under the view switch, each with a blinking light.','Printed reports, PDFs and shared summaries are not affected by the view.'],
    th:['เพิ่มสวิตช์แบบละเอียด/แบบย่อที่ด้านบนของทุกหน้าและในการตั้งค่า แบบย่อคงช่องกรอก ผลการคำนวณ และข้อผิดพลาดไว้ และซ่อนคำอธิบาย คำแนะนำประกอบช่องกรอก หมายเหตุ รายละเอียดรายการ ขั้นตอนการคำนวณ และภาพเคลื่อนไหว (ยังแสดงลูกโลก) ค่าเริ่มต้นคือแบบละเอียดซึ่งเหมือนเดิม','ตัวเลือกภาษาด้านบนเปลี่ยนเป็นสวิตช์ขนาดเล็กซ้อนใต้สวิตช์มุมมอง แต่ละสวิตช์มีไฟกะพริบ','รายงานที่พิมพ์ ไฟล์ PDF และสรุปที่ส่งต่อไม่ได้รับผลจากมุมมองนี้']},
   {v:'3.79',d:'2026-11-21',en:['Certificate: the Principal / Additional label is now a plain badge. A single soft light sweep crosses it when a card becomes the principal. The airport letter board is removed.','Certificate: when you tap “Make principal” or an edit makes another card the principal, the cards glide to their new places. The fee on a card glows briefly when its amount changes, and a card that becomes a duplicate gives a short shake.','Result card: a ring shows each part of the fee (application, certificate, additional types) with its percentage, and draws itself in when the result first appears.','Renewal timeline: the days-left number sits inside a progress ring that is green, amber or red with the deadline.','Renewal revenue chart: the bars grow in when the chart scrolls into view.','The title bar that appears when you scroll shifts its colour gently with scroll depth.','All motion stops with Reduce Motion and does not appear in print or PDF.'],
@@ -2684,6 +2687,7 @@ const S={
   sumMode: load('aoc.sumMode')==='simple'?'simple':'detailed',
   view: load('aoc.view')==='simple'?'simple':'detailed',
   pathColor: PCKEYS.includes(load('aoc.pcol'))?load('aoc.pcol'):'white',
+  sky: load('aoc.sky')==='moon'?'moon':'sun', skyAt:0,
   revAll:false, survBudget: load('aoc.survBudget')||'16000000', survOpen:false, survUnlocked:false, survAsk:false, survErr:'',
   tx:'renewal',
   types:[{id:nid(),ac:'',name:'',cat:'AEROPLANE',heavy:true,area:'',mtow:'',count:1,showMtow:false,legacyConfirm:null}],
@@ -2766,13 +2770,13 @@ document.addEventListener('animationiteration',e=>{ if(e.animationName!=='gFall'
 function morphHTML(cat,from,to,k){
   if(!AREAS_FOR[cat]||AREAS_FOR[cat].length<2) return '';
   const ill=(from&&from!=='DOM')||(to&&to!=='DOM');
-  return `<div class="globe gmorph g-${from||'none'} ph-a" data-gk="${esc(k)}" data-cat="${cat}" data-val="${to||''}" data-from="${from||''}">${gSkyHTML()}<canvas aria-hidden="true"></canvas>
+  return `<div class="globe gmorph g-${from||'none'} ph-a" data-gk="${esc(k)}" data-cat="${cat}" data-val="${to||''}" data-from="${from||''}">${gSkyHTML()}<canvas aria-hidden="true"></canvas><button type="button" class="gsun" data-act="sky" aria-label="${L('Switch sun and moon','สลับดวงอาทิตย์และดวงจันทร์')}" title="${L('Sun / moon','ดวงอาทิตย์ / ดวงจันทร์')}"></button>
     <div class="gcap gm"><span class="gm-r"><span class="gm-a">${esc(from?areaL(from):'—')}</span><i aria-hidden="true">${PLANE_SVG}</i><span class="gm-b">${esc(to?areaL(to):'—')}</span></span><small>${esc(L('Current area → expanded area','พื้นที่ปัจจุบัน → พื้นที่ที่ขอเพิ่ม'))}</small></div>${ill?`<div class="gnote">${L('Map is illustrative','แผนที่เพื่อประกอบเท่านั้น')}</div>`:''}</div>`+pcPick(false);
 }
 function globeHTML(cat,val,k){
   if(!AREAS_FOR[cat]||AREAS_FOR[cat].length<2) return '';
   const ill=val&&val!=='DOM';
-  return `<div class="globe g-${val||'none'}" data-gk="${esc(k)}" data-cat="${cat}" data-val="${val||''}">${gSkyHTML()}<canvas aria-hidden="true"></canvas>
+  return `<div class="globe g-${val||'none'}" data-gk="${esc(k)}" data-cat="${cat}" data-val="${val||''}">${gSkyHTML()}<canvas aria-hidden="true"></canvas><button type="button" class="gsun" data-act="sky" aria-label="${L('Switch sun and moon','สลับดวงอาทิตย์และดวงจันทร์')}" title="${L('Sun / moon','ดวงอาทิตย์ / ดวงจันทร์')}"></button>
     <div class="gcap">${val?esc(L(AREA_LABEL[val],AREA_TH[val])):esc(L('Select an area','เลือกพื้นที่'))}${val?`<small>${esc(LANG==='th'?AREA_LABEL[val]:AREA_TH[val])}</small>`:''}</div>${ill?`<div class="gnote">${L('Map is illustrative','แผนที่เพื่อประกอบเท่านั้น')}</div>`:''}</div>`+pcPick(false);
 }
 const gMix=(a,b,t)=>{ const A=[1,3,5].map(i=>parseInt(a.substr(i,2),16)), B=[1,3,5].map(i=>parseInt(b.substr(i,2),16)); return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')})`; };
@@ -2784,6 +2788,8 @@ const srcL=s=>(LANG==='th'&&SRC_TH[s])||s;
 function pcol(i,a){ const k=S.pathColor; if(k==='rainbow') return i<0?`rgba(255,255,255,${a})`:`hsla(${(i*47+10)%360},82%,68%,${a})`; const c=(PCOLS.find(x=>x[0]===k)||PCOLS[0])[3]; return `rgba(${c},${a})`; }
 function pcPick(gs){ const cur=PCOLS.find(c=>c[0]===S.pathColor)||PCOLS[0], dot=c=>`<i class="gp-d${c[0]==='rainbow'?' rb':''}" style="--pc:rgb(${c[3]||'255,255,255'})"></i>`;
   return `<div class="gpick${gs?' gs':''}"><button type="button" class="gp-t" data-act="pcopen" aria-haspopup="true" aria-expanded="false" aria-label="${L('Flight path colour','สีเส้นทางบิน')}: ${esc(L(cur[1],cur[2]))}">${dot(cur)}<span class="gp-n">${L('Flight path','เส้นทางบิน')}: <b>${esc(L(cur[1],cur[2]))}</b></span><svg class="gp-c" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4.2 6 8l4-3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="gp-r" role="radiogroup" aria-label="${L('Flight path colour','สีเส้นทางบิน')}">${PCOLS.map(c=>`<button type="button" class="gp-s${c[0]==='rainbow'?' rb':''}${c[0]===cur[0]?' on':''}" data-act="pcol" data-val="${c[0]}" role="radio" aria-checked="${c[0]===cur[0]}" aria-label="${esc(L(c[1],c[2]))}" title="${esc(L(c[1],c[2]))}" style="--pc:rgb(${c[3]||'255,255,255'})"></button>`).join('')}</div></div>`; }
+function skyT(now){ if(!MOTION()||!S.skyAt) return 1; return Math.min(1,Math.max(0,((now||performance.now())-S.skyAt)/500)); }
+function skyRun(){ const t0=performance.now(); (function f(n){ document.querySelectorAll('.globe[data-gk]').forEach(el=>{ const g=el._g; if(g&&!g.spin&&!g.anim) globeDraw(g,n); }); if(n-t0<560&&MOTION()) requestAnimationFrame(f); })(t0); }
 function globeDraw(g,now){
   const D=geoData(); if(!D) return; const cv=g.cv, x=g.ctx, W=cv.width, H=cv.height, cx=W/2, cy=H/2+H*.02, R=H*.4*g.sc;
   if(!(R>0.5)) return;
@@ -2791,12 +2797,18 @@ function globeDraw(g,now){
   x.clearRect(0,0,W,H);
   /* sun behind the Earth: a small soft disc with a gentle glow; the globe is drawn over it */
   const sunOn=R<W*1.05, sX=W*.88, sY=H*.2, sR=10*g.dpr;
-  if(sunOn){ const pu=g.mot?1+.06*Math.sin((now||0)/1000*1.6)+.03*Math.sin((now||0)/1000*3.7):1;
-    x.save(); x.globalCompositeOperation='lighter';
+  if(g.sunOn!==sunOn){ g.sunOn=sunOn; if(g.el) g.el.classList.toggle('nosun',!sunOn); }
+  if(sunOn){ const sT=skyT(now), sa=S.sky==='sun'?sT:1-sT, ma=1-sa; const pu=g.mot?1+.06*Math.sin((now||0)/1000*1.6)+.03*Math.sin((now||0)/1000*3.7):1;
+    if(sa>.01){ x.save(); x.globalAlpha=sa; x.save(); x.globalCompositeOperation='lighter';
     let sg=x.createRadialGradient(sX,sY,0,sX,sY,sR*3.4*pu); sg.addColorStop(0,'rgba(255,196,110,.27)'); sg.addColorStop(.25,'rgba(255,170,80,.096)'); sg.addColorStop(1,'rgba(255,150,60,0)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR*3.4*pu,0,7); x.fill();
     sg=x.createRadialGradient(sX,sY,sR*.8,sX,sY,sR*1.9*pu); sg.addColorStop(0,'rgba(255,214,140,.55)'); sg.addColorStop(1,'rgba(255,170,80,0)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR*1.9*pu,0,7); x.fill();
     x.restore();
-    sg=x.createRadialGradient(sX,sY,0,sX,sY,sR); sg.addColorStop(0,'#fffdf2'); sg.addColorStop(.55,'#fff0c4'); sg.addColorStop(1,'rgba(255,205,120,.95)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR,0,7); x.fill(); }
+    sg=x.createRadialGradient(sX,sY,0,sX,sY,sR); sg.addColorStop(0,'#fffdf2'); sg.addColorStop(.55,'#fff0c4'); sg.addColorStop(1,'rgba(255,205,120,.95)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR,0,7); x.fill(); x.restore(); }
+    if(ma>.01){ const mu=g.mot?1+.03*Math.sin((now||0)/1000*1.2):1; x.save(); x.globalAlpha=ma; x.save(); x.globalCompositeOperation='lighter';
+      let mg=x.createRadialGradient(sX,sY,0,sX,sY,sR*3.2*mu); mg.addColorStop(0,'rgba(170,195,255,.28)'); mg.addColorStop(.3,'rgba(150,180,255,.1)'); mg.addColorStop(1,'rgba(140,170,255,0)'); x.fillStyle=mg; x.beginPath(); x.arc(sX,sY,sR*3.2*mu,0,7); x.fill(); x.restore();
+      mg=x.createRadialGradient(sX-sR*.3,sY-sR*.3,0,sX,sY,sR*1.02); mg.addColorStop(0,'#ffffff'); mg.addColorStop(.6,'#e9eefb'); mg.addColorStop(1,'#bfc9e4'); x.fillStyle=mg; x.beginPath(); x.arc(sX,sY,sR*1.02,0,7); x.fill();
+      x.fillStyle='rgba(140,153,190,.42)'; [[-.38,-.12,.26],[.22,.3,.2],[.3,-.36,.15],[-.1,.45,.12]].forEach(c=>{ x.beginPath(); x.arc(sX+c[0]*sR,sY+c[1]*sR,c[2]*sR,0,7); x.fill(); });
+      x.restore(); } }
   let gr=x.createRadialGradient(cx,cy,R*.95,cx,cy,R*1.13); gr.addColorStop(0,'rgba(95,211,196,.33)'); gr.addColorStop(1,'rgba(95,211,196,0)'); x.fillStyle=gr; x.beginPath(); x.arc(cx,cy,R*1.13,0,7); x.fill();
   gr=x.createRadialGradient(cx-R*.4,cy-R*.45,R*.1,cx,cy,R); gr.addColorStop(0,'#4f8fca'); gr.addColorStop(.55,'#24578f'); gr.addColorStop(1,'#10294d'); x.fillStyle=gr; x.beginPath(); x.arc(cx,cy,R,0,7); x.fill();
   x.beginPath(); path(D.grat); x.strokeStyle='rgba(255,255,255,.07)'; x.lineWidth=1; x.stroke();
@@ -2840,7 +2852,7 @@ function gTick(now){
   GSPIN.forEach(g=>{ if(!g.cv.isConnected){ GSPIN.delete(g); return; } if(!g.vis) return; any=true; if(!g.drag&&!g.still) g.rot[0]+=.1; GST[g.k].rot=g.rot.slice(); globeDraw(g,now); });
   gLoop=any||GSPIN.size?requestAnimationFrame(gTick):0;
 }
-const gIO=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{ if(e.target._g) e.target._g.vis=e.isIntersecting; }),{threshold:.05}):null;
+const gIO=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{ if(e.target._g){ e.target._g.vis=e.isIntersecting; if(e.isIntersecting&&!e.target._g.spin&&!e.target._g.anim) try{ globeDraw(e.target._g,performance.now()); }catch(x){} } }),{threshold:.05}):null;
 function mountGlobes(){
   if(!geoData()) return;
   document.querySelectorAll('.globe[data-gk]').forEach(el=>{
@@ -4705,7 +4717,7 @@ function confirmReset(){
 }
 function resetApp(c){
   clearTimeout(persistT);
-  try{ const keep=load('aoc.lang'), keepV=load('aoc.view'), keepP=load('aoc.pcol'); Object.keys(localStorage).filter(k=>k.startsWith('aoc.')).forEach(k=>localStorage.removeItem(k)); if(keep) store('aoc.lang',keep); if(keepV) store('aoc.view',keepV); if(keepP) store('aoc.pcol',keepP); }catch(e){}
+  try{ const keep=load('aoc.lang'), keepV=load('aoc.view'), keepP=load('aoc.pcol'), keepK=load('aoc.sky'); Object.keys(localStorage).filter(k=>k.startsWith('aoc.')).forEach(k=>localStorage.removeItem(k)); if(keep) store('aoc.lang',keep); if(keepV) store('aoc.view',keepV); if(keepP) store('aoc.pcol',keepP); if(keepK) store('aoc.sky',keepK); }catch(e){}
   S.opCache={}; S.staleOps={}; S.customOps=[]; touched.clear();
   S.settings.areaExpansionBasis=RULESET.settings.areaExpansionBasis; S.settings.mixedBasis='A'; setMixedBasis('A'); S.settings.partMonth='up'; S.settings.expandMode='literal'; S.settings.capMode='main'; setCapMode('main'); store('aoc.capmode','main'); S.settings.sumInc={initial:true,renewal:true,change:true,insp:true}; ['initial','renewal','change','insp'].forEach(k=>store('aoc.sum.'+k,'1')); S.settings.cover=true; S.settings.notify={open:false,ack:false,fad:false}; setFadRemind(false); ['open','ack','fad'].forEach(k=>store('aoc.n.'+k,'0')); S.sumMode='detailed'; S.pipeF='all'; S.survBudget='16000000'; S.survOpen=false; S.survUnlocked=false; S.survAsk=false; S.survErr='';
   S.addingOp=false; S.opDraft=''; S.operator=''; freshOp(''); S.expiry=''; S.expiryAuto=false; S.tx='renewal'; S.txAuto=false;
@@ -4968,6 +4980,7 @@ document.addEventListener('click',e=>{
   const t=id?findT(id):null, a=id?findA(id):null, c=S.change;
   switch(act){
     case 'tab': S.tab=v; renderAll(); window.scrollTo({top:0,behavior:'smooth'}); return;
+    case 'sky': { S.sky=S.sky==='sun'?'moon':'sun'; store('aoc.sky',S.sky); S.skyAt=performance.now(); skyRun(); return; }
     case 'pcopen': { const gp=el.closest('.gpick'), o=!gp.classList.contains('open'); document.querySelectorAll('.gpick.open').forEach(x=>{ x.classList.remove('open'); const t=x.querySelector('.gp-t'); t&&t.setAttribute('aria-expanded','false'); }); if(o){ gp.classList.add('open'); el.setAttribute('aria-expanded','true'); } return; }
     case 'pcol': { S.pathColor=PCKEYS.includes(v)?v:'white'; store('aoc.pcol',S.pathColor);
       document.querySelectorAll('.gpick').forEach(el=>{ const gs=el.classList.contains('gs'); el.outerHTML=pcPick(gs); });
