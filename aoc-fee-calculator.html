@@ -1695,6 +1695,25 @@ body[data-view="simple"] #shell .card,body[data-view="simple"] #shell .sechead{b
 body[data-view="simple"] #shell .card h2{margin-bottom:12px}
 body[data-view="simple"] #shell .lbl small,body[data-view="simple"] #shell .sgrp small,body[data-view="simple"] #shell .stepey,body[data-view="simple"] #shell .tile .thai,body[data-view="simple"] #shell .stop .th,body[data-view="simple"] #shell .mode > span,body[data-view="simple"] #shell .opt .thai,body[data-view="simple"] #shell .type-fee > span,body[data-view="simple"] #shell .tlx-tt p,body[data-view="simple"] #shell .tlx-ey,body[data-view="simple"] #shell .result-top .cap,body[data-view="simple"] #shell .globe .gcap small,body[data-view="simple"] #shell .legend,body[data-view="simple"] #shell .line .r,body[data-view="simple"] #shell .empty{display:none!important}
 body[data-view="simple"] .fleetline:not(.muted):has(> button){background:transparent!important;box-shadow:none!important;padding:0;color:inherit!important}
+
+/* ---------- v3.81 flight path colour selector (compact drop-down) ---------- */
+.gpick{margin:-2px 0 10px;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.gp-t{display:inline-flex;align-items:center;gap:7px;padding:4px 10px 4px 7px;border-radius:999px;border:1px solid var(--grey-light,#e3e9f0);background:#f6f8fb;color:var(--grey-soft,#6b7a8f);font:inherit;font-size:12px;line-height:1.2;cursor:pointer}
+.gp-t b{font-weight:600;color:var(--navy,#1a2e4a)}
+.gp-t:hover{background:#eef2f7}
+.gp-t:focus-visible,.gp-s:focus-visible{outline:2px solid var(--blue,#4f95d8);outline-offset:2px}
+.gp-d{width:12px;height:12px;border-radius:50%;flex:none;background:var(--pc);box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.gp-d.rb,.gp-s.rb{background:conic-gradient(#f06262,#faa64d,#fad650,#58c88c,#54cede,#60a5fa,#aa80f0,#f06262)}
+.gp-c{flex:none;transition:transform .15s}
+.gpick.open .gp-c{transform:rotate(180deg)}
+.gp-r{display:none;flex-wrap:wrap;gap:8px;padding:8px 10px;border-radius:12px;background:#f6f8fb;border:1px solid var(--grey-light,#e3e9f0)}
+.gpick.open .gp-r{display:flex}
+.gp-s{width:22px;height:22px;border-radius:50%;border:2px solid #fff;padding:0;cursor:pointer;background:var(--pc);box-shadow:0 0 0 1px rgba(0,0,0,.2);transition:transform .15s}
+.gp-s:hover{transform:scale(1.12)}
+.gp-s.on{box-shadow:0 0 0 2px var(--navy,#1a2e4a)}
+.gpick.gs{margin:0}
+@media (prefers-reduced-motion:reduce){ .gp-s,.gp-c{transition:none} }
+@media print{ .gpick{display:none!important} }
 </style>
 </head>
 <body data-sec="cert">
@@ -2508,8 +2527,10 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.80', APP_DATE='2026-11-21';
+const APP_VERSION='3.81', APP_DATE='2026-11-21';
 const APP_LOG=[
+  {v:'3.81',d:'2026-11-21',en:['New: choose the colour of the flight paths on the globe. A small colour selector sits directly below every globe, and the same choice is in Settings. Colours: white (default), blue, green, orange, yellow, red, purple, cyan and rainbow. It is a small drop-down that shows only the current colour until opened, in both Detailed and Simple view. The choice applies to every globe in the app and is saved on this device.','The Principal / Additional label for additional types is now blue.'],
+   th:['ใหม่: เลือกสีเส้นทางบินบนลูกโลกได้ มีตัวเลือกขนาดเล็กอยู่ใต้ลูกโลกทุกลูก และมีตัวเลือกเดียวกันในการตั้งค่า สีที่มี: ขาว (ค่าเริ่มต้น) น้ำเงิน เขียว ส้ม เหลือง แดง ม่วง ฟ้า และรุ้ง แสดงเฉพาะสีปัจจุบันจนกว่าจะเปิดรายการ ทั้งในมุมมองแบบละเอียดและแบบย่อ ใช้กับลูกโลกทุกลูกในแอปและบันทึกไว้ในอุปกรณ์นี้','ป้าย “เพิ่มเติม” ของแบบอากาศยานเปลี่ยนเป็นสีน้ำเงิน']},
   {v:'3.80',d:'2026-11-21',en:['New Simple / Detailed view switch at the top of every page and in Settings. Simple keeps the inputs, results and errors, and hides instructions, field hints, notes, line details, step-by-step calculations and animations (the globe stays). Detailed is the default and is the same as before.','The language control at the top is now a small switch, stacked under the view switch, each with a blinking light.','Printed reports, PDFs and shared summaries are not affected by the view.'],
    th:['เพิ่มสวิตช์แบบละเอียด/แบบย่อที่ด้านบนของทุกหน้าและในการตั้งค่า แบบย่อคงช่องกรอก ผลการคำนวณ และข้อผิดพลาดไว้ และซ่อนคำอธิบาย คำแนะนำประกอบช่องกรอก หมายเหตุ รายละเอียดรายการ ขั้นตอนการคำนวณ และภาพเคลื่อนไหว (ยังแสดงลูกโลก) ค่าเริ่มต้นคือแบบละเอียดซึ่งเหมือนเดิม','ตัวเลือกภาษาด้านบนเปลี่ยนเป็นสวิตช์ขนาดเล็กซ้อนใต้สวิตช์มุมมอง แต่ละสวิตช์มีไฟกะพริบ','รายงานที่พิมพ์ ไฟล์ PDF และสรุปที่ส่งต่อไม่ได้รับผลจากมุมมองนี้']},
   {v:'3.79',d:'2026-11-21',en:['Certificate: the Principal / Additional label is now a plain badge. A single soft light sweep crosses it when a card becomes the principal. The airport letter board is removed.','Certificate: when you tap “Make principal” or an edit makes another card the principal, the cards glide to their new places. The fee on a card glows briefly when its amount changes, and a card that becomes a duplicate gives a short shake.','Result card: a ring shows each part of the fee (application, certificate, additional types) with its percentage, and draws itself in when the result first appears.','Renewal timeline: the days-left number sits inside a progress ring that is green, amber or red with the deadline.','Renewal revenue chart: the bars grow in when the chart scrolls into view.','The title bar that appears when you scroll shifts its colour gently with scroll depth.','All motion stops with Reduce Motion and does not appear in print or PDF.'],
@@ -2643,11 +2664,17 @@ const APP_LOG=[
 function store(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 function load(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
 
+const PCOLS=[['white','White','ขาว','255,255,255'],['blue','Blue','น้ำเงิน','96,165,250'],['green','Green','เขียว','88,200,140'],['orange','Orange','ส้ม','255,166,77'],['yellow','Yellow','เหลือง','250,214,80'],['red','Red','แดง','240,98,98'],['purple','Purple','ม่วง','170,128,240'],['cyan','Cyan','ฟ้า','84,206,222'],['rainbow','Rainbow','รุ้ง','']];
+const PCKEYS=PCOLS.map(c=>c[0]);
+const pcClose=()=>document.querySelectorAll('.gpick.open').forEach(x=>{ x.classList.remove('open'); const t=x.querySelector('.gp-t'); t&&t.setAttribute('aria-expanded','false'); });
+document.addEventListener('click',e=>{ if(!e.target.closest('.gpick')) pcClose(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') pcClose(); });
 const S={
   tab:'cert', healthy:true, tests:[],
   lang: load('aoc.lang')==='th'?'th':'en',
   sumMode: load('aoc.sumMode')==='simple'?'simple':'detailed',
   view: load('aoc.view')==='simple'?'simple':'detailed',
+  pathColor: PCKEYS.includes(load('aoc.pcol'))?load('aoc.pcol'):'white',
   revAll:false, survBudget: load('aoc.survBudget')||'16000000', survOpen:false, survUnlocked:false, survAsk:false, survErr:'',
   tx:'renewal',
   types:[{id:nid(),ac:'',name:'',cat:'AEROPLANE',heavy:true,area:'',mtow:'',count:1,showMtow:false,legacyConfirm:null}],
@@ -2731,13 +2758,13 @@ function morphHTML(cat,from,to,k){
   if(!AREAS_FOR[cat]||AREAS_FOR[cat].length<2) return '';
   const ill=(from&&from!=='DOM')||(to&&to!=='DOM');
   return `<div class="globe gmorph g-${from||'none'} ph-a" data-gk="${esc(k)}" data-cat="${cat}" data-val="${to||''}" data-from="${from||''}">${gSkyHTML()}<canvas aria-hidden="true"></canvas>
-    <div class="gcap gm"><span class="gm-r"><span class="gm-a">${esc(from?areaL(from):'—')}</span><i aria-hidden="true">${PLANE_SVG}</i><span class="gm-b">${esc(to?areaL(to):'—')}</span></span><small>${esc(L('Current area → expanded area','พื้นที่ปัจจุบัน → พื้นที่ที่ขอเพิ่ม'))}</small></div>${ill?`<div class="gnote">${L('Map is illustrative','แผนที่เพื่อประกอบเท่านั้น')}</div>`:''}</div>`;
+    <div class="gcap gm"><span class="gm-r"><span class="gm-a">${esc(from?areaL(from):'—')}</span><i aria-hidden="true">${PLANE_SVG}</i><span class="gm-b">${esc(to?areaL(to):'—')}</span></span><small>${esc(L('Current area → expanded area','พื้นที่ปัจจุบัน → พื้นที่ที่ขอเพิ่ม'))}</small></div>${ill?`<div class="gnote">${L('Map is illustrative','แผนที่เพื่อประกอบเท่านั้น')}</div>`:''}</div>`+pcPick(false);
 }
 function globeHTML(cat,val,k){
   if(!AREAS_FOR[cat]||AREAS_FOR[cat].length<2) return '';
   const ill=val&&val!=='DOM';
   return `<div class="globe g-${val||'none'}" data-gk="${esc(k)}" data-cat="${cat}" data-val="${val||''}">${gSkyHTML()}<canvas aria-hidden="true"></canvas>
-    <div class="gcap">${val?esc(L(AREA_LABEL[val],AREA_TH[val])):esc(L('Select an area','เลือกพื้นที่'))}${val?`<small>${esc(LANG==='th'?AREA_LABEL[val]:AREA_TH[val])}</small>`:''}</div>${ill?`<div class="gnote">${L('Map is illustrative','แผนที่เพื่อประกอบเท่านั้น')}</div>`:''}</div>`;
+    <div class="gcap">${val?esc(L(AREA_LABEL[val],AREA_TH[val])):esc(L('Select an area','เลือกพื้นที่'))}${val?`<small>${esc(LANG==='th'?AREA_LABEL[val]:AREA_TH[val])}</small>`:''}</div>${ill?`<div class="gnote">${L('Map is illustrative','แผนที่เพื่อประกอบเท่านั้น')}</div>`:''}</div>`+pcPick(false);
 }
 const gMix=(a,b,t)=>{ const A=[1,3,5].map(i=>parseInt(a.substr(i,2),16)), B=[1,3,5].map(i=>parseInt(b.substr(i,2),16)); return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')})`; };
 const SRC_TH={'AIRBUS A320 (listed in the AOC register; MTOW and area from Email 2)':'AIRBUS A320 (ปรากฏในทะเบียนใบรับรอง; น้ำหนักขึ้นสูงสุดและพื้นที่ปฏิบัติการจาก Email 2)',
@@ -2745,6 +2772,9 @@ const SRC_TH={'AIRBUS A320 (listed in the AOC register; MTOW and area from Email
   'B738 (AOC register; not in the Ops Spec sheet)':'B738 (ตามทะเบียนใบรับรอง; ไม่อยู่ในรายการข้อกำหนดการปฏิบัติการ)',
   'GULFSTREAM G500 (Ops Spec lists GV; updated by CT)':'GULFSTREAM G500 (ข้อกำหนดการปฏิบัติการระบุ GV; ปรับปรุงโดยกองรับรองผู้ดำเนินการเดินอากาศ (CT))'};
 const srcL=s=>(LANG==='th'&&SRC_TH[s])||s;
+function pcol(i,a){ const k=S.pathColor; if(k==='rainbow') return i<0?`rgba(255,255,255,${a})`:`hsla(${(i*47+10)%360},82%,68%,${a})`; const c=(PCOLS.find(x=>x[0]===k)||PCOLS[0])[3]; return `rgba(${c},${a})`; }
+function pcPick(gs){ const cur=PCOLS.find(c=>c[0]===S.pathColor)||PCOLS[0], dot=c=>`<i class="gp-d${c[0]==='rainbow'?' rb':''}" style="--pc:rgb(${c[3]||'255,255,255'})"></i>`;
+  return `<div class="gpick${gs?' gs':''}"><button type="button" class="gp-t" data-act="pcopen" aria-haspopup="true" aria-expanded="false" aria-label="${L('Flight path colour','สีเส้นทางบิน')}: ${esc(L(cur[1],cur[2]))}">${dot(cur)}<span class="gp-n">${L('Flight path','เส้นทางบิน')}: <b>${esc(L(cur[1],cur[2]))}</b></span><svg class="gp-c" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4.2 6 8l4-3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="gp-r" role="radiogroup" aria-label="${L('Flight path colour','สีเส้นทางบิน')}">${PCOLS.map(c=>`<button type="button" class="gp-s${c[0]==='rainbow'?' rb':''}${c[0]===cur[0]?' on':''}" data-act="pcol" data-val="${c[0]}" role="radio" aria-checked="${c[0]===cur[0]}" aria-label="${esc(L(c[1],c[2]))}" title="${esc(L(c[1],c[2]))}" style="--pc:rgb(${c[3]||'255,255,255'})"></button>`).join('')}</div></div>`; }
 function globeDraw(g,now){
   const D=geoData(); if(!D) return; const cv=g.cv, x=g.ctx, W=cv.width, H=cv.height, cx=W/2, cy=H/2+H*.02, R=H*.4*g.sc;
   if(!(R>0.5)) return;
@@ -2775,20 +2805,20 @@ function globeDraw(g,now){
     x.globalCompositeOperation='lighter'; x.fillStyle=gr; x.fillRect(0,0,W,H); x.restore(); }
   const dpr=g.dpr, front=p=>d3.geoDistance(p,ctr)<1.55;
   const RT=gRT(g.cat,v); if(RT&&lit>0){ const mo=g.mot, T=(now||0)/1000, N=RT.length, CYC=7.5, HP=Math.PI/2, P=Math.PI;
-    const line=(pts,a,w)=>{ x.strokeStyle=`rgba(255,255,255,${a})`; x.lineWidth=w; x.lineCap='round'; x.beginPath(); let pen=false; for(const q of pts){ if(!q){ pen=false; continue; } if(pen) x.lineTo(q[0],q[1]); else { x.moveTo(q[0],q[1]); pen=true; } } x.stroke(); };
+    const line=(pts,a,w,ci)=>{ x.strokeStyle=pcol(ci,a); x.lineWidth=w; x.lineCap='round'; x.beginPath(); let pen=false; for(const q of pts){ if(!q){ pen=false; continue; } if(pen) x.lineTo(q[0],q[1]); else { x.moveTo(q[0],q[1]); pen=true; } } x.stroke(); };
     RT.forEach((d,i)=>{
       const ip=d3.geoInterpolate(BKK,d), H=.06+.2*Math.min(1,d3.geoDistance(BKK,d)/2.6);
       const gd=d3.geoDistance(BKK,d), A0=proj(BKK), A1=proj(d), cl=Math.hypot(A1[0]-A0[0],A1[1]-A0[1])||1; let nx=-(A1[1]-A0[1])/cl, ny=(A1[0]-A0[0])/cl; if(ny>0){ nx=-nx; ny=-ny; } const bw=gd<.6?.22*cl:0;
       const at=t=>{ const p=ip(t); if(d3.geoDistance(p,ctr)>=HP) return null; const q=proj(p), s=Math.sin(P*t), l=1+H*s; return [cx+(q[0]-cx)*l+nx*bw*s, cy+(q[1]-cy)*l+ny*bw*s]; };
       const ph=mo?((T/CYC+i/N)%1):1, gp=mo?Math.min(1,ph/.4):1, fade=mo?(ph<.82?1:Math.max(.25,1-(ph-.82)/.18*.75)):1;
       const arc=t1=>{ const a=[]; for(let t=0;t<=t1+1e-6;t+=.025) a.push(at(Math.min(t,t1))); return a; };
-      line(arc(1),.2*lit,1*dpr);
+      line(arc(1),.2*lit,1*dpr,i);
       x.setLineDash([]);
-      const sm=gd<.6?.72:1; line(arc(gp),.2*lit*fade,4.5*sm*dpr); line(arc(gp),.92*lit*fade,1.7*sm*dpr);
-      if(mo&&gp<1){ const q=at(gp); if(q){ x.beginPath(); x.arc(q[0],q[1],5*sm*dpr,0,7); x.fillStyle=`rgba(255,255,255,${.25*lit})`; x.fill(); x.beginPath(); x.arc(q[0],q[1],2.6*sm*dpr,0,7); x.fillStyle='#fff'; x.fill(); } }
+      const sm=gd<.6?.72:1; line(arc(gp),.2*lit*fade,4.5*sm*dpr,i); line(arc(gp),.92*lit*fade,1.7*sm*dpr,i);
+      if(mo&&gp<1){ const q=at(gp); if(q){ x.beginPath(); x.arc(q[0],q[1],5*sm*dpr,0,7); x.fillStyle=pcol(i,.25*lit); x.fill(); x.beginPath(); x.arc(q[0],q[1],2.6*sm*dpr,0,7); x.fillStyle=pcol(i,1); x.fill(); } }
       if(front(d)){ const e=proj(d), arr=gp>=1;
-        if(mo&&arr&&ph<.7){ const pr=(ph-.4)/.3; x.beginPath(); x.arc(e[0],e[1],(3+11*pr)*sm*dpr,0,7); x.strokeStyle=`rgba(255,255,255,${.75*(1-pr)*lit})`; x.lineWidth=1.4*dpr; x.stroke(); }
-        x.beginPath(); x.arc(e[0],e[1],(arr?3.2:2.4)*sm*dpr,0,7); x.fillStyle=arr?'#7ff0de':'rgba(95,224,207,.55)'; x.fill(); }
+        if(mo&&arr&&ph<.7){ const pr=(ph-.4)/.3; x.beginPath(); x.arc(e[0],e[1],(3+11*pr)*sm*dpr,0,7); x.strokeStyle=pcol(i,.75*(1-pr)*lit); x.lineWidth=1.4*dpr; x.stroke(); }
+        x.beginPath(); x.arc(e[0],e[1],(arr?3.2:2.4)*sm*dpr,0,7); x.fillStyle=S.pathColor==='white'?(arr?'#7ff0de':'rgba(95,224,207,.55)'):pcol(i,arr?1:.55); x.fill(); }
     }); }
   if(front(BKK)){ const b=proj(BKK);
     if(g.spin||g.anim||g.mot){ const pr=((now||0)%1600)/1600; x.beginPath(); x.arc(b[0],b[1],(4+12*pr)*dpr,0,7); x.strokeStyle=`rgba(255,255,255,${.8*(1-pr)})`; x.lineWidth=1.5*dpr; x.stroke(); }
@@ -3389,6 +3419,7 @@ function renderSettings(){
   let h=grp(L('General','ทั่วไป'),L('Language and error reporting','ภาษาและการแจ้งข้อผิดพลาด'));
   h+=`<div class="card"><div class="eyebrow">${L('Settings','ตั้งค่า')}</div><h2>${L('Language','ภาษา')}</h2><p class="sub">${L('Applies to the app and to printed reports. Saved on this device.','ใช้กับทั้งระบบและรายงานที่พิมพ์ บันทึกไว้ในอุปกรณ์นี้')}</p>${seg([['en','English'],['th','ภาษาไทย']],S.lang,'lang','','',true)}</div>`;
   h+=`<div class="card"><h2>${L('View','มุมมอง')}</h2><p class="sub">${L('Simple view shows only inputs, results and errors on every page. Same switch as at the top. Printed reports and PDFs are not affected. Saved on this device.','แบบย่อแสดงเฉพาะช่องกรอก ผลการคำนวณ และข้อผิดพลาดในทุกหน้า เป็นสวิตช์เดียวกับด้านบน ไม่มีผลต่อรายงานที่พิมพ์และไฟล์ PDF บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p><div class="opts"><button type="button" class="opt vw ${S.view==='simple'?'on':''}" data-act="viewTog" role="switch" aria-checked="${S.view==='simple'}"><span class="sw ${S.view==='simple'?'on':''}" aria-hidden="true"><i></i></span><span><b>${L('Simple view','มุมมองแบบย่อ')}<span class="tag">${S.view==='simple'?L('Simple','แบบย่อ'):L('Detailed','ละเอียด')}</span></b><span class="thai">${L('Inputs, results and errors only, on every page.','แสดงเฉพาะช่องกรอก ผลการคำนวณ และข้อผิดพลาด ในทุกหน้า')}</span></span></button></div></div>`;
+  h+=`<div class="card"><h2>${L('Globe flight paths','เส้นทางบินบนลูกโลก')}</h2><p class="sub">${L('Colour of the flight paths on every globe. The same choice sits under each globe in Detailed view. Saved on this device.','สีของเส้นทางบินบนลูกโลกทุกลูก ตัวเลือกเดียวกันอยู่ใต้ลูกโลกในมุมมองแบบละเอียด บันทึกไว้ในอุปกรณ์นี้')}</p>${pcPick(true)}</div>`;
   h+=`<div class="card"><h2>${L('Appearance','รูปลักษณ์')}</h2><p class="sub">${L('Night mode darkens the app. Auto turns it on from 19:00 to 06:00. Boarding passes, globes and tail fins keep their colours. Printed reports and PDFs are not affected. Saved on this device.','โหมดกลางคืนปรับหน้าจอเป็นโทนมืด อัตโนมัติจะเปิดระหว่าง 19.00–06.00 น. บัตรโดยสาร ลูกโลก และแพนหางคงสีเดิม ไม่มีผลต่อรายงานที่พิมพ์และไฟล์ PDF บันทึกไว้ในอุปกรณ์นี้')}</p>${seg([['light',L('Light','สว่าง')],['night',L('Night','กลางคืน')],['auto',L('Auto','อัตโนมัติ')]],load('aoc.theme')||'light','theme','','',true)}</div>`;
   h+=`<div class="card"><h2>${L('Report an error','แจ้งข้อผิดพลาด')}</h2><p class="sub">${L('Opens a new email to anan.t@caat.or.th in your mail app, with the rule set, screen, operator and total filled in. Add a short description and send.','เปิดอีเมลฉบับใหม่ถึง anan.t@caat.or.th ในแอปอีเมล พร้อมระบุชุดอัตรา หน้าจอ ผู้ดำเนินการเดินอากาศ และยอดรวมให้โดยอัตโนมัติ กรุณาเพิ่มรายละเอียดโดยย่อแล้วส่ง')}</p><button type="button" class="btn btn-s" data-act="report">${ICON.mail} ${L('Report error','แจ้งข้อผิดพลาด')}</button></div>`;
   h+=grp(L('Protected settings','การตั้งค่าที่ต้องใช้รหัสผ่าน'),L('Balloons, Certificate and Changes · one password','บัลลูน ค่าใบรับรอง และการเปลี่ยนแปลง · รหัสผ่านเดียว'));
@@ -4665,7 +4696,7 @@ function confirmReset(){
 }
 function resetApp(c){
   clearTimeout(persistT);
-  try{ const keep=load('aoc.lang'), keepV=load('aoc.view'); Object.keys(localStorage).filter(k=>k.startsWith('aoc.')).forEach(k=>localStorage.removeItem(k)); if(keep) store('aoc.lang',keep); if(keepV) store('aoc.view',keepV); }catch(e){}
+  try{ const keep=load('aoc.lang'), keepV=load('aoc.view'), keepP=load('aoc.pcol'); Object.keys(localStorage).filter(k=>k.startsWith('aoc.')).forEach(k=>localStorage.removeItem(k)); if(keep) store('aoc.lang',keep); if(keepV) store('aoc.view',keepV); if(keepP) store('aoc.pcol',keepP); }catch(e){}
   S.opCache={}; S.staleOps={}; S.customOps=[]; touched.clear();
   S.settings.areaExpansionBasis=RULESET.settings.areaExpansionBasis; S.settings.mixedBasis='A'; setMixedBasis('A'); S.settings.partMonth='up'; S.settings.expandMode='literal'; S.settings.capMode='main'; setCapMode('main'); store('aoc.capmode','main'); S.settings.sumInc={initial:true,renewal:true,change:true,insp:true}; ['initial','renewal','change','insp'].forEach(k=>store('aoc.sum.'+k,'1')); S.settings.cover=true; S.settings.notify={open:false,ack:false,fad:false}; setFadRemind(false); ['open','ack','fad'].forEach(k=>store('aoc.n.'+k,'0')); S.sumMode='detailed'; S.pipeF='all'; S.survBudget='16000000'; S.survOpen=false; S.survUnlocked=false; S.survAsk=false; S.survErr='';
   S.addingOp=false; S.opDraft=''; S.operator=''; freshOp(''); S.expiry=''; S.expiryAuto=false; S.tx='renewal'; S.txAuto=false;
@@ -4928,6 +4959,10 @@ document.addEventListener('click',e=>{
   const t=id?findT(id):null, a=id?findA(id):null, c=S.change;
   switch(act){
     case 'tab': S.tab=v; renderAll(); window.scrollTo({top:0,behavior:'smooth'}); return;
+    case 'pcopen': { const gp=el.closest('.gpick'), o=!gp.classList.contains('open'); document.querySelectorAll('.gpick.open').forEach(x=>{ x.classList.remove('open'); const t=x.querySelector('.gp-t'); t&&t.setAttribute('aria-expanded','false'); }); if(o){ gp.classList.add('open'); el.setAttribute('aria-expanded','true'); } return; }
+    case 'pcol': { S.pathColor=PCKEYS.includes(v)?v:'white'; store('aoc.pcol',S.pathColor);
+      document.querySelectorAll('.gpick').forEach(el=>{ const gs=el.classList.contains('gs'); el.outerHTML=pcPick(gs); });
+      document.querySelectorAll('.globe[data-gk]').forEach(el=>{ if(el._g&&!el._g.spin) globeDraw(el._g,performance.now()); }); return; }
     case 'viewTog': S.view=S.view==='simple'?'detailed':'simple'; store('aoc.view',S.view); renderHero(); if(S.tab==='settings') rerenderKeepScroll(); return;
     case 'lang': S.lang=v==='th'?'th':'en'; setLang(S.lang); store('aoc.lang',S.lang); renderAll(); return;
     case 'sumMode': S.sumMode=v==='simple'?'simple':'detailed'; store('aoc.sumMode',S.sumMode); break;
