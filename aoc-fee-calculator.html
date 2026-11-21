@@ -1281,7 +1281,8 @@ body.has-brand #page-sum .card{border-top:3px solid color-mix(in srgb,var(--o2) 
 /* aircraft type card: full-width filled header; principal card tinted */
 .type{padding-top:0}
 .type-top{margin:0 -16px 14px;padding:10px 12px 10px 16px;border-bottom:0;border-radius:15px 15px 0 0;
-  background:linear-gradient(135deg,#7d93ad 0%,#5c7592 100%);box-shadow:inset 0 -1px 0 rgba(0,0,0,.06)}
+  background:linear-gradient(135deg,#4f6b8a 0%,#3d566f 100%);box-shadow:inset 0 -1px 0 rgba(0,0,0,.06)}
+.type:not(.principal){border-color:#b7c5d6}
 .type-top .type-lbl{background:none!important;box-shadow:none;padding:0;font-size:14.5px;color:#fff;letter-spacing:.02em}
 .type.principal .type-top{background:linear-gradient(135deg,var(--sec) 0%,var(--sec-2) 100%)}
 .type-top .pill{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.38);box-shadow:none}
@@ -1538,7 +1539,7 @@ html[lang=th] .vw small{letter-spacing:0}
 html.night{color-scheme:dark;background:#0d1828}
 html.night body{background:radial-gradient(1000px 600px at 105% -8%,rgba(42,157,143,.12),transparent 62%),radial-gradient(900px 520px at -12% 18%,rgba(37,99,168,.14),transparent 60%),linear-gradient(180deg,#0d1828,#101c2d 50%,#0d1828)!important;background-attachment:fixed!important}
 html.night #shell,html.night #banner{filter:invert(.9) hue-rotate(180deg) saturate(.9)}
-html.night #shell :is(canvas,img,video,.bpass,.pr-bp,.globe,.tlx-hd,svg.fin,.amap,.fwall svg,.btn-p):not(:is(.bpass,.pr-bp,.globe,.tlx-hd,.btn-p) *){filter:saturate(1.11) hue-rotate(180deg) invert(1) contrast(1.25)}
+html.night #shell :is(canvas,img,video,.bpass,.pr-bp,.globe,.tlx-hd,svg.fin,.amap,.fwall svg,.btn-p,.fb):not(:is(.bpass,.pr-bp,.globe,.tlx-hd,.btn-p,.fb) *){filter:saturate(1.11) hue-rotate(180deg) invert(1) contrast(1.25)}
 html.night #shell *{text-shadow:none}
 html.night .nav-in{background:linear-gradient(180deg,rgba(20,34,54,.66),rgba(14,26,42,.6))!important;border-color:rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 10px 30px -10px rgba(0,0,0,.6)!important}
 html.night .nav button{color:#a9bbd1}
@@ -1546,6 +1547,64 @@ html.night .nav button:hover{background:rgba(255,255,255,.06)}
 html.night .tglass{background:linear-gradient(180deg,rgba(20,34,54,.72),rgba(14,26,42,.62));border-bottom-color:rgba(255,255,255,.06)}
 html.night .tglass b{color:#e6eef8}html.night .tglass span{color:#a9bbd1}
 @media print{html.night #shell,html.night #banner,html.night #shell *{filter:none!important}html.night body{background:#fff!important}}
+
+/* v3.69 departure-board role label */
+.fb{flex:none;display:inline-flex;align-items:center;gap:4px;padding:4px 5px;border-radius:8px;background:linear-gradient(180deg,#0f2038,#1a3252);border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 4px 10px -3px rgba(0,0,0,.5)}
+.fb-led{flex:none;width:6px;height:6px;border-radius:50%}
+.fb.p .fb-led{background:#7ff0de;box-shadow:0 0 6px #7ff0de}
+.fb.a .fb-led{border:1.2px solid rgba(255,255,255,.6)}
+.fb-row{display:inline-flex;gap:1px}
+.fb-t{position:relative;width:8px;height:19px;perspective:80px;border-radius:2px;font:800 10.5px/19px ui-monospace,"SF Mono",Menlo,Consolas,monospace;text-align:center;color:#eaf3fc}
+.fb-t::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;margin-top:-.5px;background:rgba(0,0,0,.5);z-index:3}
+.fb-h{position:absolute;left:0;right:0;height:50%;overflow:hidden;background:linear-gradient(180deg,#2c4a74,#1d3558);-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.fb.a .fb-h{background:linear-gradient(180deg,#3b4f69,#2a3b53);color:#dfe7f0}
+.fb-h.t{top:0;border-radius:3px 3px 0 0;transform-origin:50% 100%}
+.fb-h.b{bottom:0;border-radius:0 0 3px 3px;transform-origin:50% 0;filter:brightness(.9)}
+.fb-h i{position:absolute;left:0;right:0;height:19px;line-height:19px;font-style:normal}
+.fb-h.t i{top:0}.fb-h.b i{bottom:0}
+.fb-h.fl{z-index:2}
+@media (prefers-reduced-motion:no-preference){.fb.p .fb-led{animation:fbBlink 1.6s ease-in-out infinite}}
+@keyframes fbBlink{50%{opacity:.35}}
+@media print{.fb-h.fl{display:none}.fb.p .fb-led{animation:none}}
+/* beside the title; drops under it only when the card is too narrow */
+.type{container-type:inline-size}
+.type-top{gap:7px}
+.type-top .tping{width:30px;height:30px}
+.type-top .type-lbl .tl2{margin-left:.3em}
+.type-top .type-lbl{flex:0 1 auto;min-width:0}
+.type-top .pslot{margin-left:auto;flex:none;display:flex}
+.type-top .pslot:empty{display:none}
+@container (max-width:314px){
+  html[lang=th] .type-top .type-lbl{white-space:normal;line-height:1.15;font-size:13px}
+  html[lang=th] .type-top .type-lbl .tl1,html[lang=th] .type-top .type-lbl .tl2{display:block;margin:0}
+}
+@container (max-width:268px){
+  .type-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"ic lbl x" "ic role x";column-gap:10px;row-gap:5px}
+  .type-top .tping{grid-area:ic}.type-top .type-lbl{grid-area:lbl}.type-top .pslot{grid-area:role;margin-left:0;justify-self:start}.type-top .icon-btn{grid-area:x}
+}
+@container (max-width:285px){
+  html[lang=th] .type-top .type-lbl{white-space:nowrap;line-height:normal;font-size:14.5px}
+  html[lang=th] .type-top .type-lbl .tl1,html[lang=th] .type-top .type-lbl .tl2{display:inline}
+  html[lang=th] .type-top .type-lbl .tl2{margin-left:.3em}
+  html[lang=th] .type-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"ic lbl x" "ic role x";column-gap:10px;row-gap:5px}
+  html[lang=th] .type-top .tping{grid-area:ic}html[lang=th] .type-top .type-lbl{grid-area:lbl}html[lang=th] .type-top .pslot{grid-area:role;margin-left:0;justify-self:start}html[lang=th] .type-top .icon-btn{grid-area:x}
+}
+
+/* v3.68 radar-ping type icon */
+.tping{flex:none;position:relative;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+.tping svg{position:relative;z-index:1;display:block}
+.tping b{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(127,240,222,.8);opacity:0}
+@media (prefers-reduced-motion:no-preference){
+  .tping b{animation:tPing 2.4s ease-out infinite}
+  .tping b:nth-of-type(2){animation-delay:1.2s}
+  .tping .tr-mr{transform-box:fill-box;transform-origin:center;animation:tRot .35s linear infinite}
+  .tping .tr-tr{transform-box:fill-box;transform-origin:center;animation:tSpin .25s linear infinite}
+}
+@keyframes tPing{0%{transform:scale(.8);opacity:.9}100%{transform:scale(1.85);opacity:0}}
+@keyframes tRot{50%{transform:scaleX(.15)}}
+@keyframes tSpin{to{transform:rotate(360deg)}}
+.type-top{overflow:visible}
+@media print{.tping b{display:none}}
 </style>
 </head>
 <body data-sec="cert">
@@ -2315,8 +2374,16 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.67', APP_DATE='2026-11-21';
+const APP_VERSION='3.71', APP_DATE='2026-11-21';
 const APP_LOG=[
+  {v:'3.71',d:'2026-11-21',en:['Globes: a small soft sun now sits in the sky behind the Earth, in the upper-right corner. It glows and breathes gently, and puts a faint warm edge on the sun-facing side of the Earth. It stays still with Reduce Motion, and is hidden when the globe fills the picture (Domestic).'],
+   th:['ลูกโลก: เพิ่มดวงอาทิตย์ดวงเล็กนุ่มนวลอยู่ด้านหลังโลก ที่มุมขวาบน เรืองแสงและกะพริบเบาๆ พร้อมขอบสีอุ่นจางๆ ด้านที่หันเข้าหาดวงอาทิตย์ จะหยุดนิ่งเมื่อเปิดลดการเคลื่อนไหว และจะถูกบังเมื่อโลกเต็มภาพ (ในประเทศ)']},
+  {v:'3.70',d:'2026-11-21',en:['Certificate: the Principal / Additional departure board now sits beside the A/C Type title again, in a more compact size. The board always shows the English words (PRINCIPAL, ADDITIONAL), also in Thai mode. On very narrow screens it drops to its own line under the title.'],
+   th:['ใบรับรอง: ป้ายกระดานเที่ยวบิน Principal / Additional กลับมาอยู่ข้างชื่อแบบอากาศยาน ในขนาดที่เล็กลง ป้ายแสดงเป็นคำภาษาอังกฤษ (PRINCIPAL, ADDITIONAL) เสมอ รวมถึงในโหมดภาษาไทย บนหน้าจอที่แคบมากป้ายจะย้ายลงไปอยู่บรรทัดใต้ชื่อ']},
+  {v:'3.69',d:'2026-11-21',en:['Certificate: the Principal / Additional label in each A/C Type header is now a small departure-board panel with a status light. A letter or two flips now and then so it stays alive; it pauses off-screen, and stays still with Reduce Motion, in print and in PDFs.','Certificate: additional A/C Type headers use a deeper slate blue, so they no longer look faded next to the principal type.'],
+   th:['ใบรับรอง: ป้าย แบบหลัก / แบบเพิ่มเติม ที่แถบหัวของแบบอากาศยานแต่ละแบบ เปลี่ยนเป็นแผงป้ายแบบกระดานเที่ยวบินขนาดเล็กพร้อมไฟสถานะ ตัวอักษรจะพลิกเป็นระยะ หยุดเมื่ออยู่นอกหน้าจอ และไม่เคลื่อนไหวเมื่อเปิดลดการเคลื่อนไหว เมื่อพิมพ์ และในไฟล์ PDF','ใบรับรอง: แถบหัวของแบบอากาศยานเพิ่มเติมใช้สีน้ำเงินอมเทาเข้มขึ้น ไม่ดูซีดเมื่อเทียบกับแบบหลัก']},
+  {v:'3.68',d:'2026-11-21',en:['Certificate: each A/C Type header shows an icon for the selected category (aeroplane, helicopter or balloon), with soft radar rings rippling out from it. The helicopter rotors spin. The icon changes when you change the Category.'],
+   th:['ใบรับรอง: แถบหัวของแบบอากาศยานแต่ละแบบแสดงไอคอนตามประเภทที่เลือก (เครื่องบิน เฮลิคอปเตอร์ หรือบัลลูน) พร้อมวงคลื่นเรดาร์กระจายออกเบา ๆ ใบพัดเฮลิคอปเตอร์หมุน และไอคอนเปลี่ยนตามประเภทที่เลือก']},
   {v:'3.67',d:'2026-11-21',en:['Thai Airways: the A330 now loads as A330-300 (A333) by default instead of asking for a manual selection. Same area (Asia) and the same fee.'],
    th:['การบินไทย: แบบ A330 โหลดเป็น A330-300 (A333) โดยอัตโนมัติ แทนการให้เลือกเอง พื้นที่ปฏิบัติการ (เอเชีย) และค่าธรรมเนียมเท่าเดิม']},
   {v:'3.66',d:'2026-11-21',en:[
@@ -2522,6 +2589,14 @@ function globeDraw(g,now){
   const D=geoData(); if(!D) return; const cv=g.cv, x=g.ctx, W=cv.width, H=cv.height, cx=W/2, cy=H/2+H*.02, R=H*.4*g.sc;
   const proj=d3.geoOrthographic().translate([cx,cy]).scale(R).rotate(g.rot).clipAngle(90).precision(.4), path=d3.geoPath(proj,x), ctr=proj.invert([cx,cy]);
   x.clearRect(0,0,W,H);
+  /* sun behind the Earth: a small soft disc with a gentle glow; the globe is drawn over it */
+  const sunOn=R<W*1.05, sX=W*.88, sY=H*.2, sR=10*g.dpr;
+  if(sunOn){ const pu=g.mot?1+.06*Math.sin((now||0)/1000*1.6)+.03*Math.sin((now||0)/1000*3.7):1;
+    x.save(); x.globalCompositeOperation='lighter';
+    let sg=x.createRadialGradient(sX,sY,0,sX,sY,sR*3.4*pu); sg.addColorStop(0,'rgba(255,196,110,.27)'); sg.addColorStop(.25,'rgba(255,170,80,.096)'); sg.addColorStop(1,'rgba(255,150,60,0)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR*3.4*pu,0,7); x.fill();
+    sg=x.createRadialGradient(sX,sY,sR*.8,sX,sY,sR*1.9*pu); sg.addColorStop(0,'rgba(255,214,140,.55)'); sg.addColorStop(1,'rgba(255,170,80,0)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR*1.9*pu,0,7); x.fill();
+    x.restore();
+    sg=x.createRadialGradient(sX,sY,0,sX,sY,sR); sg.addColorStop(0,'#fffdf2'); sg.addColorStop(.55,'#fff0c4'); sg.addColorStop(1,'rgba(255,205,120,.95)'); x.fillStyle=sg; x.beginPath(); x.arc(sX,sY,sR,0,7); x.fill(); }
   let gr=x.createRadialGradient(cx,cy,R*.95,cx,cy,R*1.13); gr.addColorStop(0,'rgba(95,211,196,.33)'); gr.addColorStop(1,'rgba(95,211,196,0)'); x.fillStyle=gr; x.beginPath(); x.arc(cx,cy,R*1.13,0,7); x.fill();
   gr=x.createRadialGradient(cx-R*.4,cy-R*.45,R*.1,cx,cy,R); gr.addColorStop(0,'#4f8fca'); gr.addColorStop(.55,'#24578f'); gr.addColorStop(1,'#10294d'); x.fillStyle=gr; x.beginPath(); x.arc(cx,cy,R,0,7); x.fill();
   x.beginPath(); path(D.grat); x.strokeStyle='rgba(255,255,255,.07)'; x.lineWidth=1; x.stroke();
@@ -2533,6 +2608,10 @@ function globeDraw(g,now){
     x.beginPath(); path(f); x.fillStyle=col; x.fill(); x.strokeStyle='rgba(15,34,56,.35)'; x.lineWidth=Math.max(.6,W/700); x.stroke(); }
   gr=x.createRadialGradient(cx-R*.35,cy-R*.4,0,cx-R*.35,cy-R*.4,R*.9); gr.addColorStop(0,'rgba(255,255,255,.2)'); gr.addColorStop(1,'rgba(255,255,255,0)'); x.fillStyle=gr; x.beginPath(); x.arc(cx,cy,R,0,7); x.fill();
   gr=x.createRadialGradient(cx+R*.3,cy+R*.35,R*.3,cx,cy,R*1.02); gr.addColorStop(0,'rgba(5,15,30,0)'); gr.addColorStop(1,'rgba(5,15,30,.55)'); x.fillStyle=gr; x.beginPath(); x.arc(cx,cy,R,0,7); x.fill();
+  if(sunOn){ /* faint warm edge on the sun-facing limb */
+    x.save(); x.beginPath(); x.arc(cx,cy,R*1.09,0,7); x.moveTo(cx+R*.965,cy); x.arc(cx,cy,R*.965,0,7,true); x.clip('evenodd');
+    gr=x.createRadialGradient(sX,sY,0,sX,sY,Math.hypot(sX-cx,sY-cy)+R*.9); gr.addColorStop(0,'rgba(255,214,150,.19)'); gr.addColorStop(.6,'rgba(255,190,110,.05)'); gr.addColorStop(1,'rgba(255,170,90,0)');
+    x.globalCompositeOperation='lighter'; x.fillStyle=gr; x.fillRect(0,0,W,H); x.restore(); }
   const dpr=g.dpr, front=p=>d3.geoDistance(p,ctr)<1.55;
   const RT=gRT(g.cat,v); if(RT&&lit>0){ const mo=g.mot, T=(now||0)/1000, N=RT.length, CYC=7.5, HP=Math.PI/2, P=Math.PI;
     const line=(pts,a,w)=>{ x.strokeStyle=`rgba(255,255,255,${a})`; x.lineWidth=w; x.lineCap='round'; x.beginPath(); let pen=false; for(const q of pts){ if(!q){ pen=false; continue; } if(pen) x.lineTo(q[0],q[1]); else { x.moveTo(q[0],q[1]); pen=true; } } x.stroke(); };
@@ -2756,7 +2835,53 @@ const AOCTX=()=> L('AOC '+TXL(), TXL()+'ใบรับรองผู้ดำ�
 
 /* ---------- Certificate page ---------- */
 const isMainT=(res,i)=>res.principalIdxs?res.principalIdxs.includes(i):res.principalIdx===i;
-function pillHTML(res,i){ if(res.total==null) return ''; return isMainT(res,i)?`<span class="pill principal">${L('Principal','แบบหลัก')}</span>`:`<span class="pill add">${L('Additional','แบบเพิ่มเติม')}</span>`; }
+function pillKey(res,i){ return res.total==null?'':(isMainT(res,i)?'p':'a'); }
+function fbSplit(s){ return s.toUpperCase().split(''); }
+function fbTile(c){ return `<span class="fb-t" data-c="${esc(c)}"><span class="fb-h t"><i>${esc(c)}</i></span><span class="fb-h b"><i>${esc(c)}</i></span></span>`; }
+function pillHTML(res,i){ const k=pillKey(res,i); if(!k) return ''; const w=k==='p'?L('Principal','แบบหลัก'):L('Additional','แบบเพิ่มเติม'), bw=k==='p'?'PRINCIPAL':'ADDITIONAL';
+  return `<span class="fb ${k}" role="img" aria-label="${esc(w)}" title="${esc(w)}" data-w="${bw}"><span class="fb-led" aria-hidden="true"></span><span class="fb-row" aria-hidden="true">${fbSplit(bw).map(fbTile).join('')}</span></span>`; }
+/* Departure-board label: a letter or two flips every second or so; paused off-screen, in hidden tabs and with Reduce Motion. */
+const FB={set:new Set(),seen:{},io:null,tm:null};
+const FB_CH={en:'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'};
+const fbRM=()=>REDUCE_MOTION||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+const fbRnd=()=>{const s=FB_CH.en;return s[Math.floor(Math.random()*s.length)];};
+const fbSleep=ms=>new Promise(r=>setTimeout(r,ms));
+function fbSet(t,c){ t.dataset.c=c; t.querySelectorAll('i').forEach(e=>e.textContent=c); }
+async function fbFlip(t,to){
+  const from=t.dataset.c; if(from===to||!t.animate) { fbSet(t,to); return; }
+  t.dataset.c=to; const top=t.querySelector('.fb-h.t'), bot=t.querySelector('.fb-h.b'); top.firstChild.textContent=to;
+  const a=document.createElement('span'); a.className='fb-h t fl'; a.innerHTML='<i></i>'; a.firstChild.textContent=from; t.appendChild(a);
+  try{ await a.animate([{transform:'rotateX(0)'},{transform:'rotateX(-90deg)'}],{duration:70,easing:'ease-in'}).finished; }catch(e){} a.remove();
+  const b=document.createElement('span'); b.className='fb-h b fl'; b.innerHTML='<i></i>'; b.firstChild.textContent=to; t.appendChild(b);
+  try{ await b.animate([{transform:'rotateX(90deg)'},{transform:'rotateX(0)'}],{duration:100,easing:'cubic-bezier(.3,1.5,.5,1)'}).finished; }catch(e){}
+  bot.firstChild.textContent=to; b.remove();
+}
+async function fbFlick(b,i,n){ const t=b._tiles[i]; for(let k=0;k<n;k++) await fbFlip(t,fbRnd(b)); await fbFlip(t,b._w[i]); }
+async function fbIntro(b){ b._busy=true; b._tiles.forEach(t=>fbSet(t,' '));
+  await Promise.all(b._tiles.map(async(t,i)=>{ await fbSleep(i*50); for(let k=0;k<3;k++) await fbFlip(t,fbRnd(b)); await fbFlip(t,b._w[i]); }));
+  b._busy=false; b._next=performance.now()+900; }
+function fbTick(){
+  if(!FB.set.size){ clearInterval(FB.tm); FB.tm=null; return; }
+  if(document.hidden||fbRM()) return;
+  const now=performance.now();
+  FB.set.forEach(b=>{
+    if(!b.isConnected){ FB.set.delete(b); if(FB.io) FB.io.unobserve(b); return; }
+    if(!b._vis||b._busy||now<(b._next||0)) return;
+    b._next=now+500+Math.random()*650;
+    const picks=b._w.map((c,i)=>i).sort(()=>Math.random()-.5).slice(0,Math.random()<.4?2:1);
+    b._busy=true; Promise.all(picks.map(i=>fbFlick(b,i,2))).catch(()=>{}).then(()=>{ b._busy=false; });
+  });
+}
+function fbMount(){
+  if(!FB.io&&'IntersectionObserver' in window) FB.io=new IntersectionObserver(es=>es.forEach(e=>{ e.target._vis=e.isIntersecting; }),{threshold:.1});
+  document.querySelectorAll('.fb:not([data-on])').forEach(b=>{
+    b.dataset.on='1'; b._vis=true; b._tiles=[...b.querySelectorAll('.fb-t')]; b._w=b._tiles.map(t=>t.dataset.c);
+    FB.set.add(b); if(FB.io) FB.io.observe(b);
+    const ty=b.closest('.type'), tid=ty?ty.dataset.tid:'', key=b.dataset.w;
+    if(!fbRM()&&FB.seen[tid]!==key){ FB.seen[tid]=key; fbIntro(b); } else FB.seen[tid]=key;
+  });
+  if(FB.set.size&&!FB.tm) FB.tm=setInterval(fbTick,250);
+}
 function feeHTML(l){ return l?`<div class="type-fee"><span>${esc(l.kind==='C'?L('2024 certificate rate','อัตราค่าใบรับรอง ปี 2567'):L('2018 additional-type rate','อัตราเพิ่มแบบอากาศยาน ปี 2561'))}</span><b>฿ ${fmt(l.amount)}</b></div>`:''; }
 function boundaryHTML(t){
   if(t.cat==='BALLOON'||!classify(t).boundary) return '';
@@ -2771,11 +2896,18 @@ function refreshTypeCards(){
   S.types.forEach((t,i)=>{
     const card=document.querySelector(`.type[data-tid="${t.id}"]`); if(!card) return;
     card.classList.toggle('principal',res.total!=null&&isMainT(res,i));
-    const p=card.querySelector('.pslot'); if(p) p.innerHTML=pillHTML(res,i);
+    const p=card.querySelector('.pslot'), pk=pillKey(res,i); if(p&&p.dataset.r!==pk){ p.dataset.r=pk; p.innerHTML=pillHTML(res,i); try{ fbMount(); }catch(e){} }
     const f=card.querySelector('.fslot'); if(f) f.innerHTML=feeHTML(res.total!=null?(res.lines||[]).find(x=>x.typeIdx===i):null);
     const b=card.querySelector('.bslot'); if(b){ const nb=boundaryHTML(t); if(b.dataset.h!==nb){ b.innerHTML=nb; b.dataset.h=nb; } }
     const ac=card.querySelector('.acslot'); if(ac){ const na=acAutoHTML(t); if(ac.dataset.h!==na){ ac.innerHTML=na; ac.dataset.h=na; } }
   });
+}
+function typeIco(cat){
+  const pl='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z" fill="#fff" transform="rotate(90 12 12)"/></svg>';
+  const he='<svg viewBox="0 0 28 24" width="24" height="20" aria-hidden="true"><g fill="#fff"><rect class="tr-mr" x="2" y="3" width="20" height="1.8" rx=".9"/><rect x="11.2" y="4.5" width="1.6" height="3.2"/><path d="M5 12.5c0-3 2.6-5 6.2-5h2.6c3.4 0 5.6 2.2 5.6 4.6v.6c0 1.6-1.3 2.8-3 2.8H8c-1.7 0-3-1.3-3-3z"/><path d="M19 11h5.5l1.5-2.5h1.2l-.8 4H19z"/><circle class="tr-tr" cx="26.5" cy="8.6" r="1.6" fill="none" stroke="#fff" stroke-width=".8" stroke-dasharray="1.6 1.4"/><rect x="7" y="17.6" width="11" height="1.4" rx=".7"/><rect x="9" y="15.4" width="1.2" height="2.6"/><rect x="15" y="15.4" width="1.2" height="2.6"/></g><path d="M7.2 11.3c.3-1.5 1.6-2.4 3.4-2.4h1.4v3.2H7.2z" fill="rgba(140,200,255,.9)"/></svg>';
+  const ba='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.5c-4.1 0-7 3-7 6.8 0 3.3 2.6 6 5 7.4h4c2.4-1.4 5-4.1 5-7.4 0-3.8-2.9-6.8-7-6.8z" fill="#fff"/><path d="M10 16.7l.6 2.3h2.8l.6-2.3" stroke="#fff" stroke-width="1" fill="none"/><rect x="10.3" y="19" width="3.4" height="2.6" rx=".6" fill="#fff"/></svg>';
+  const nm=cat==='HELICOPTER'?L('Helicopter','เฮลิคอปเตอร์'):cat==='BALLOON'?L('Balloon','บัลลูน'):L('Aeroplane','เครื่องบิน');
+  return `<span class="tping" role="img" aria-label="${esc(nm)}" title="${esc(nm)}"><b></b><b></b>${cat==='HELICOPTER'?he:cat==='BALLOON'?ba:pl}</span>`;
 }
 function renderCert(){
   const res=calcCertificate(S.types,S.tx);
@@ -2790,8 +2922,8 @@ function renderCert(){
     const isP = res.total!=null && isMainT(res,i);
     const wl=weightLabels(t.cat);
     h+=`<div class="type ${isP?'principal':''}" data-tid="${t.id}">
-      <div class="type-top"><span class="type-lbl">${L(`A/C Type ${i+1}`,`แบบอากาศยานที่ ${i+1}`)}</span>
-        <span class="pslot">${pillHTML(res,i)}</span>
+      <div class="type-top">${typeIco(t.cat)}<span class="type-lbl">${LANG==='th'?`<span class="tl1">แบบอากาศยาน</span><span class="tl2">ที่ ${i+1}</span>`:`A/C Type ${i+1}`}</span>
+        <span class="pslot" data-r="${pillKey(res,i)}">${pillHTML(res,i)}</span>
         ${S.types.length>1?`<button type="button" class="icon-btn" data-act="delType" data-id="${t.id}" aria-label="${esc(L(`Remove A/C Type ${i+1}`,`ลบแบบอากาศยานที่ ${i+1}`))}">${ICON.x}</button>`:''}
       </div>
       <div class="type-h">${acSelectHTML(t)}</div>
@@ -3316,6 +3448,7 @@ function animRoutes(){
     pl.classList.remove('fly'); void pl.offsetWidth; pl.classList.add('fly');
   });
   try{ mountGlobes(); }catch(e){}
+  try{ fbMount(); }catch(e){}
 }
 function tglassSet(){ const g=document.getElementById('tglass'), hd=document.querySelector('.hero'); if(!g||!hd) return; const on=window.scrollY>hd.offsetHeight-20; g.classList.toggle('on',on); }
 function tglassFill(){ const g=document.getElementById('tglass'); if(!g) return; const sh=SECHEAD()[S.tab]||['','',''];
