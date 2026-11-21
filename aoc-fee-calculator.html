@@ -576,7 +576,7 @@ html[lang=th] .eyebrow,html[lang=th] .op-l,html[lang=th] .tag,
 @page{size:A4;margin:12mm 13mm 14mm}
 @media print{
   html,body{background:#fff!important;padding:0!important}
-  .hero,.nav,.shell,.mini,.banner,.toast,.opwrap{display:none!important}
+  .hero,.nav,.shell,.mini,.banner,.toast,.opwrap,.tglass{display:none!important}
   #print{display:block}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
@@ -821,6 +821,8 @@ body[data-sec=pipe]{--sec:#3e6a9e;--sec-2:#2b4f7d;--sec-lt:#93b4d9;--sec-soft:#e
 .rc-seg{border:0;padding:0;margin:0;min-height:3px;cursor:pointer;border-top:1px solid rgba(255,255,255,.55);transition:filter .15s}
 .rc-seg:hover,.rc-seg.sel{filter:brightness(1.18) saturate(1.1)}
 .rc-y{font-size:12px;font-weight:600;color:var(--navy);text-align:center}
+.rc-lg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--grey-mid);margin:10px 0 0}.rc-lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.rev-split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 0}.rev-split div{border-radius:12px;padding:9px 11px;border:1px solid #c7d8ee;background:#e8eff8}.rev-split .rs-r{background:#eaf3ee;border-color:#c9ddd0}.rev-split small{display:block;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:#4a5568;font-weight:600}.rev-split b{display:block;font-size:16px;color:var(--navy);margin-top:2px;font-variant-numeric:tabular-nums}.rev-split b i{font-style:normal;font-weight:600;margin-right:2px}
 .rc-tip{font-size:12.5px;color:var(--grey-mid);padding:6px 4px 0;min-height:22px}
 .rc-tip.on{color:var(--navy);font-weight:600}
 .rp-ico{position:absolute;right:0;top:12px;width:30px;height:30px;border-radius:8px;opacity:.95}
@@ -1853,7 +1855,7 @@ function mixedCert(cl,tx,R,flags,errors,warnings,notes){
      at 20,000,000 per certificate. It applies to the main certificate fee (กฎกระทรวง ฉบับที่ 3 พ.ศ. 2567 ข้อ 5). The application and
      additional-type fees are set by the 2561 CAAT Announcement, so they are not counted against it. */
   if(CAP_MODE!=='total'&&C>R.STATUTORY_MAX_AOC) warnings.push(L(`Main certificate fee ${fmt(C)} is above the THB 20,000,000 maximum per certificate (fee schedule item (28/1), พ.ร.บ. การเดินอากาศ (ฉบับที่ 14) พ.ศ. 2562 มาตรา 64). No reduction applied${RM(': verify with FAD')}.`,
-    `ค่าใบรับรองหลัก ${fmt(C)} บาท สูงกว่าอัตราขั้นสูง 20,000,000 บาทต่อฉบับ ตามอัตราค่าธรรมเนียม (๒๘/๑) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งเพิ่มโดยพระราชบัญญัติการเดินอากาศ (ฉบับที่ ๑๔) พ.ศ. ๒๕๖๒ มาตรา ๖๔ ระบบมิได้ปรับลดยอด${RM(' กรุณาตรวจสอบกับ FAD')}`));
+    `ค่าใบรับรองหลัก ${fmt(C)} บาท สูงกว่าอัตราขั้นสูง 20,000,000 บาทต่อฉบับ ตามอัตราค่าธรรมเนียม (28/1) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งเพิ่มโดยพระราชบัญญัติการเดินอากาศ (ฉบับที่ 14) พ.ศ. 2562 มาตรา 64 ระบบมิได้ปรับลดยอด${RM(' กรุณาตรวจสอบกับ FAD')}`));
   return {status,flags,errors,warnings,notes,lines,P,C,sumA,certSubtotal,total,principalIdx:mainT.idx,principalIdxs:Cs.map(l=>l.typeIdx),mixedBasis:multi?kk:null,category:mainT.legacy,principalArea:mainT.area,principalMr:mainT.mr};
 }
 function calcCertificate(types, tx, R){
@@ -1862,7 +1864,7 @@ function calcCertificate(types, tx, R){
   const M=R.STATUTORY_MAX_AOC, over=r.total-M;
   r.capMode=CAP_MODE; r.uncapped=r.total; r.capOver=over>0?over:0;
   if(over<=0||CAP_MODE==='main') return r;
-  const ref=L('Fee schedule (28/1), พ.ร.บ. การเดินอากาศ (ฉบับที่ 14) 2562 มาตรา 64','อัตราค่าธรรมเนียม (๒๘/๑) ท้าย พ.ร.บ. การเดินอากาศ (ฉบับที่ ๑๔) พ.ศ. ๒๕๖๒ มาตรา ๖๔');
+  const ref=L('Fee schedule (28/1), พ.ร.บ. การเดินอากาศ (ฉบับที่ 14) 2562 มาตรา 64','อัตราค่าธรรมเนียม (28/1) ท้าย พ.ร.บ. การเดินอากาศ (ฉบับที่ 14) พ.ศ. 2562 มาตรา 64');
   if(r.mixedBasis==='C'){
     r.notes=r.notes.concat([L(`The total of ${fmt(r.total)} is above ${fmt(M)}, but reading C issues a separate certificate for each kind of aircraft, so the cap on the total is not applied.${RM(' Verify with FAD.')}`,
       `ยอดรวม ${fmt(r.total)} บาท สูงกว่า ${fmt(M)} บาท แต่แนวทาง C ออกใบรับรองแยกตามประเภทอากาศยาน จึงมิได้ใช้อัตราขั้นสูงกับยอดรวม${RM(' กรุณาตรวจสอบกับ FAD')}`)]);
@@ -1931,7 +1933,7 @@ function calcCertificateBase(types, tx, R){
      at 20,000,000 per certificate. It applies to the main certificate fee (กฎกระทรวง ฉบับที่ 3 พ.ศ. 2567 ข้อ 5). The application and
      additional-type fees are set by the 2561 CAAT Announcement, so they are not counted against it. */
   if(CAP_MODE!=='total'&&principal.C>R.STATUTORY_MAX_AOC) warnings.push(L(`Main certificate fee ${fmt(principal.C)} is above the THB 20,000,000 maximum per certificate (fee schedule item (28/1), พ.ร.บ. การเดินอากาศ (ฉบับที่ 14) พ.ศ. 2562 มาตรา 64). No reduction applied${RM(': verify with FAD')}.`,
-    `ค่าใบรับรองหลัก ${fmt(principal.C)} บาท สูงกว่าอัตราขั้นสูง 20,000,000 บาทต่อฉบับ ตามอัตราค่าธรรมเนียม (๒๘/๑) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งเพิ่มโดยพระราชบัญญัติการเดินอากาศ (ฉบับที่ ๑๔) พ.ศ. ๒๕๖๒ มาตรา ๖๔ ระบบมิได้ปรับลดยอด${RM(' กรุณาตรวจสอบกับ FAD')}`));
+    `ค่าใบรับรองหลัก ${fmt(principal.C)} บาท สูงกว่าอัตราขั้นสูง 20,000,000 บาทต่อฉบับ ตามอัตราค่าธรรมเนียม (28/1) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งเพิ่มโดยพระราชบัญญัติการเดินอากาศ (ฉบับที่ 14) พ.ศ. 2562 มาตรา 64 ระบบมิได้ปรับลดยอด${RM(' กรุณาตรวจสอบกับ FAD')}`));
   if(cl.some(t=>t.cat!=='BALLOON' && t.legacy===t.mr) && types.length>1 && new Set(cl.map(t=>t.area)).size===1)
     notes.push(L('All types share one Area of Operation. Item 3) is applied to the second and later types, as in the Email 2 methodology.','แบบอากาศยานทุกแบบอยู่ในพื้นที่ปฏิบัติการเดียวกัน ระบบใช้อัตราตามข้อ 3) กับแบบที่สองเป็นต้นไป ตามแนวทางในอีเมลฉบับที่ 2'));
   return {status,flags,errors,warnings,notes,lines,P,C:principal.C,sumA,certSubtotal,total,principalIdx:principal.idx,principalIdxs:[principal.idx],category:cat,principalArea:principal.area,principalMr:principal.mr};
@@ -2370,7 +2372,7 @@ const opName=o=> (LANG==='th' && OPINFO[o] && OPINFO[o].th) ? OPINFO[o].th : o;
 /* Prefill from the register when an operator is chosen. Values the user typed are kept. */
 function applyOpInfo(op){
   const i=OPINFO[op]||{};
-  if(!S.expiry || S.expiryAuto){ S.expiry=i.until||''; S.expiryAuto=!!i.until; }
+  if(!S.expiry || S.expiryAuto){ const b=opBaseExpiry(op); S.expiry=b; S.expiryAuto=!!b; }
   if(i.app){ if(S.tx!=='initial'){ S.tx='initial'; S.txAuto=true; } }
   else if(i.until){ S.tx='renewal'; S.txAuto=false; }          // already certified: renewal
   else if(S.txAuto){ S.tx='renewal'; S.txAuto=false; }
@@ -2422,7 +2424,7 @@ function acSelectHTML(t){
 }
 function srcHTML(t){
   if(!t.src) return '';
-  return `<div class="autochip src">${ICON.info}<div><b>${L('From the Ops Spec list','จากรายการข้อกำหนดการปฏิบัติการ')}</b><span>${esc(t.src)}</span>${t.mref?`<span class="mg">${t.mref===2?L('Reference MTOW for the group is the higher of the two types (A320). Preliminary only: confirm each aircraft in its AFM.','น้ำหนักวิ่งขึ้นสูงสุดอ้างอิงของกลุ่มใช้ค่าที่สูงกว่าของสองแบบ (A320) เป็นค่าเบื้องต้นเท่านั้น กรุณายืนยันตาม AFM ของแต่ละลำ'):L('Preliminary reference MTOW. Confirm in the AFM of the aircraft.','น้ำหนักวิ่งขึ้นสูงสุดอ้างอิงเบื้องต้น กรุณายืนยันตาม AFM ของอากาศยานแต่ละลำ')}</span>`:''}${t.chk?`<span class="mg">${L('Not fully visible in the sheet: confirm the series, MTOW and area.','ข้อมูลในตารางแสดงไม่ครบ กรุณายืนยันรุ่น น้ำหนักวิ่งขึ้นสูงสุด และพื้นที่ปฏิบัติการ')}</span>`:''}</div></div>`;
+  return `<div class="autochip src">${ICON.info}<div><b>${L('From the Ops Spec list','จากรายการข้อกำหนดการปฏิบัติการ')}</b><span>${esc(srcL(t.src))}</span>${t.mref?`<span class="mg">${t.mref===2?L('Reference MTOW for the group is the higher of the two types (A320). Preliminary only: confirm each aircraft in its AFM.','น้ำหนักวิ่งขึ้นสูงสุดอ้างอิงของกลุ่มใช้ค่าที่สูงกว่าของสองแบบ (A320) เป็นค่าเบื้องต้นเท่านั้น กรุณายืนยันตาม AFM ของแต่ละลำ'):L('Preliminary reference MTOW. Confirm in the AFM of the aircraft.','น้ำหนักวิ่งขึ้นสูงสุดอ้างอิงเบื้องต้น กรุณายืนยันตาม AFM ของอากาศยานแต่ละลำ')}</span>`:''}${t.chk?`<span class="mg">${L('Not fully visible in the sheet: confirm the series, MTOW and area.','ข้อมูลในตารางแสดงไม่ครบ กรุณายืนยันรุ่น น้ำหนักวิ่งขึ้นสูงสุด และพื้นที่ปฏิบัติการ')}</span>`:''}</div></div>`;
 }
 function acAutoHTML(t){
   let pre=srcHTML(t);
@@ -2448,10 +2450,16 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.74', APP_DATE='2026-11-21';
+const APP_VERSION='3.77', APP_DATE='2026-11-21';
 const APP_LOG=[
+  {v:'3.77',d:'2026-11-21',en:['Printing: the app title bar (page name and operator) no longer prints at the top of every report page, where it overlapped a section heading.','Area globe: a drawing error that could appear for a moment during the area animation is fixed.','All Thai numerals are now Arabic numerals throughout the app, including the quoted fee-schedule item and statute references.','Thai mode: the four aircraft source notes (A320, A330, B738, G500) are now in Thai.'],
+   th:['การพิมพ์: แถบชื่อหน้าและผู้ดำเนินการเดินอากาศของแอปไม่พิมพ์ซ้ำที่ส่วนบนของทุกหน้ารายงานอีกต่อไป ซึ่งเดิมทับหัวข้อส่วนต่าง ๆ','ลูกโลกแสดงพื้นที่ปฏิบัติการ: แก้ข้อผิดพลาดการวาดภาพที่อาจเกิดขึ้นชั่วขณะระหว่างภาพเคลื่อนไหว','เปลี่ยนเลขไทยเป็นเลขอารบิกทั้งแอป รวมถึงข้อความอ้างอิงรายการท้ายพระราชบัญญัติและมาตราที่ยกมา','โหมดภาษาไทย: หมายเหตุแหล่งที่มาของแบบอากาศยาน 4 รายการ (A320, A330, B738, G500) แสดงเป็นภาษาไทยแล้ว']},
+  {v:'3.76',d:'2026-11-21',en:['Renewal status fixes. A renewed AOC now always uses the new expiry date from the renewal list, including on devices where the operator was opened before; an expiry date typed earlier than the new expiry is treated as out of date. This stops a renewed AOC from being counted twice in revenue.','Renewal list entries are checked: an unknown operator, a date not in YYYY-MM-DD form, a new expiry not after the renewal date, or a fee that is not a number makes the entry ignored, so it cannot remove an AOC from revenue by mistake.','An AOC with Application received or Under certification is shown as applied, with its expiry countdown, and is no longer counted in Deadline passed, Due within 30 days or Due within 90 days, or in the Next 90 days view.','A renewed AOC reads “Renewed (date) · next expiry (date)”. In the industry report, renewed AOCs are listed in their own group after the schedule and are not added to the schedule total.'],
+   th:['แก้ไขสถานะการต่ออายุ ใบรับรองที่ต่ออายุแล้วใช้วันหมดอายุใหม่จากรายการต่ออายุเสมอ รวมถึงในอุปกรณ์ที่เคยเปิดข้อมูลผู้ดำเนินการรายนั้นไว้แล้ว และวันหมดอายุที่กรอกไว้ก่อนวันหมดอายุใหม่ถือว่าล้าสมัย จึงไม่นับรายได้ของใบรับรองฉบับเดียวกันซ้ำ','ตรวจสอบรายการต่ออายุ หากชื่อผู้ดำเนินการไม่ตรงกับทะเบียน วันที่ไม่อยู่ในรูปแบบ YYYY-MM-DD วันหมดอายุใหม่ไม่อยู่หลังวันที่ต่ออายุ หรือค่าธรรมเนียมไม่เป็นตัวเลข ระบบจะไม่นำรายการนั้นมาใช้ เพื่อป้องกันมิให้รายได้ของใบรับรองหายไปโดยไม่ตั้งใจ','ใบรับรองที่มีสถานะรับคำขอแล้วหรืออยู่ระหว่างการรับรอง แสดงเป็นยื่นคำขอแล้ว พร้อมจำนวนวันก่อนหมดอายุ และไม่นับรวมในพ้นกำหนดยื่น ภายใน 30 วัน ภายใน 90 วัน หรือมุมมองภายใน 90 วัน','ใบรับรองที่ต่ออายุแล้วแสดงเป็น “ต่ออายุแล้ว (วันที่) · หมดอายุครั้งถัดไป (วันที่)” ในรายงานภาพรวมอุตสาหกรรม ใบรับรองที่ต่ออายุแล้วแยกเป็นกลุ่มต่อท้ายกำหนดการ และไม่รวมในยอดรวมของกำหนดการ']},
+  {v:'3.75',d:'2026-11-21',en:['Pipeline: renewal status. Each AOC can now show Application received, Under certification or Renewed (with the renewal date and the new expiry). The statuses are kept in a built-in list in this file (RENEWALS) and are updated by the CT head only; users see them but cannot change them. The list is empty until the first status is entered, so nothing changes yet.','Expected renewal revenue and the Surveillance Coverage Projection now show Realised (renewed AOCs, counted in the year they were renewed, at the actual invoiced fee when entered, otherwise at the estimate) and Expected (open AOCs, counted in the year they expire). The total of the two feeds the coverage projection, and the realised part is shown on its own. A renewed AOC leaves the “to collect” list, its countdown follows the new expiry, and its next cycle is added to Expected when the new expiry falls inside the 5-year window.'],
+   th:['ท่อต่ออายุ (Pipeline): เพิ่มสถานะการต่ออายุ ใบรับรองแต่ละฉบับแสดงได้ว่า รับคำขอแล้ว อยู่ระหว่างการรับรอง หรือ ต่ออายุแล้ว (พร้อมวันที่ต่ออายุและวันหมดอายุใหม่) สถานะเก็บไว้ในรายการภายในไฟล์นี้ (RENEWALS) และปรับปรุงโดยหัวหน้ากอง CT เท่านั้น ผู้ใช้งานดูได้แต่แก้ไขไม่ได้ รายการยังว่างอยู่จนกว่าจะบันทึกสถานะแรก จึงยังไม่มีอะไรเปลี่ยนแปลง','ประมาณการรายได้จากการต่ออายุและประมาณการความครอบคลุมงบประมาณการกำกับดูแล แสดงรายได้จริง (ใบรับรองที่ต่ออายุแล้ว นับในปีที่ต่ออายุ ใช้ค่าธรรมเนียมที่เรียกเก็บจริงเมื่อบันทึกไว้ มิฉะนั้นใช้ประมาณการ) และรายได้ที่คาดว่าจะได้ (ใบรับรองที่ยังไม่ต่ออายุ นับในปีที่หมดอายุ) ยอดรวมของทั้งสองส่วนใช้คำนวณความครอบคลุม และแสดงส่วนรายได้จริงแยกไว้ ใบรับรองที่ต่ออายุแล้วจะออกจากรายการ “รอเรียกเก็บ” การนับถอยหลังเปลี่ยนไปตามวันหมดอายุใหม่ และรอบถัดไปจะรวมในรายได้ที่คาดว่าจะได้เมื่อวันหมดอายุใหม่อยู่ในช่วง 5 ปี']},
   {v:'3.74',d:'2026-11-21',en:['Reports: the aeroplane on the cover page no longer covers text. Cover text (office, title, operator, AOC number, request type, date, footer) now sits above the aeroplane, and report content in general sits above the “ESTIMATE – NOT AN INVOICE” watermark, in the printout, PDF and preview, for the Summary and Industry reports.'],th:['รายงาน: รูปเครื่องบินบนหน้าปกไม่บังข้อความอีกต่อไป ข้อความบนหน้าปก (หน่วยงาน ชื่อรายงาน ผู้ดำเนินการ เลขที่ใบรับรอง ประเภทคำขอ วันที่ และท้ายหน้า) อยู่เหนือรูปเครื่องบิน และเนื้อหารายงานทั้งหมดอยู่เหนือลายน้ำ “ประมาณการ – มิใช่ใบแจ้งหนี้” ทั้งในรายงานที่พิมพ์ ไฟล์ PDF และตัวอย่างก่อนพิมพ์ ทั้งรายงานสรุปและรายงานภาพรวมอุตสาหกรรม']},
-  {v:'3.73',d:'2026-11-21',en:['Settings › Certificate (password protected): new Statutory maximum setting for the ฿20,000,000 per certificate in fee schedule item (28/1). 1 main certificate fee only (default, as before), 2 cap the total of all AOC fee lines, shown as an adjustment line, 3 show both amounts for FAD. The detailed calculation, Summary, reports and CSV follow the option. To be confirmed by LEG.'],th:['ตั้งค่า › ค่าใบรับรอง (ต้องใช้รหัสผ่าน): เพิ่มการตั้งค่าอัตราขั้นสูง 20,000,000 บาทต่อฉบับ ตามอัตราค่าธรรมเนียม (๒๘/๑) ได้แก่ 1 เฉพาะค่าใบรับรองหลัก (ค่าเริ่มต้น เหมือนเดิม) 2 จำกัดยอดรวมค่าธรรมเนียมทุกรายการ โดยแสดงเป็นรายการปรับลด 3 แสดงทั้งสองจำนวนเพื่อให้ FAD พิจารณา รายละเอียดการคำนวณ หน้าสรุป รายงาน และไฟล์ CSV เป็นไปตามตัวเลือกที่เลือก ต้องได้รับการยืนยันจาก LEG']},
+  {v:'3.73',d:'2026-11-21',en:['Settings › Certificate (password protected): new Statutory maximum setting for the ฿20,000,000 per certificate in fee schedule item (28/1). 1 main certificate fee only (default, as before), 2 cap the total of all AOC fee lines, shown as an adjustment line, 3 show both amounts for FAD. The detailed calculation, Summary, reports and CSV follow the option. To be confirmed by LEG.'],th:['ตั้งค่า › ค่าใบรับรอง (ต้องใช้รหัสผ่าน): เพิ่มการตั้งค่าอัตราขั้นสูง 20,000,000 บาทต่อฉบับ ตามอัตราค่าธรรมเนียม (28/1) ได้แก่ 1 เฉพาะค่าใบรับรองหลัก (ค่าเริ่มต้น เหมือนเดิม) 2 จำกัดยอดรวมค่าธรรมเนียมทุกรายการ โดยแสดงเป็นรายการปรับลด 3 แสดงทั้งสองจำนวนเพื่อให้ FAD พิจารณา รายละเอียดการคำนวณ หน้าสรุป รายงาน และไฟล์ CSV เป็นไปตามตัวเลือกที่เลือก ต้องได้รับการยืนยันจาก LEG']},
   {v:'3.72',d:'2026-11-21',en:['Certificate, Changes and Inspection: a “See Detailed Calculation” link at the bottom right of the result card unfolds every step of the calculation, one by one: how each type is classified, the area, the principal type, each rate with its formula and exact numbers, the legal reference (Ministerial Regulation, CAAT fee Announcement, Section 5/1 Regulation), the statutory maximum check and the final sum. Collapsed by default; built from the live result, so it always matches the figures on screen.'],
    th:['ใบรับรอง การเปลี่ยนแปลง และการตรวจสอบ: เพิ่มลิงก์ “ดูรายละเอียดการคำนวณ” ที่มุมขวาล่างของการ์ดผลลัพธ์ เมื่อกดจะแสดงขั้นตอนการคำนวณทีละขั้น ได้แก่ การจัดประเภทอากาศยาน พื้นที่ปฏิบัติการ แบบอากาศยานหลัก อัตราแต่ละรายการพร้อมสูตรและตัวเลข ข้อกฎหมายที่อ้างอิง (กฎกระทรวง ประกาศ กพท. ระเบียบ 5/1) การตรวจสอบอัตราขั้นสูง และผลรวม ซ่อนไว้เป็นค่าเริ่มต้น และสร้างจากผลการคำนวณจริงจึงตรงกับตัวเลขบนหน้าจอเสมอ']},
   {v:'3.71',d:'2026-11-21',en:['Globes: a small soft sun now sits in the sky behind the Earth, in the upper-right corner. It glows and breathes gently, and puts a faint warm edge on the sun-facing side of the Earth. It stays still with Reduce Motion, and is hidden when the globe fills the picture (Domestic).'],
@@ -2530,7 +2538,7 @@ const APP_LOG=[
   {v:'3.38',d:'2026-11-20',en:['Changes: Current area now comes from the selected AOC, as the widest area of its aircraft types on the Certificate page (for example K-Mile Air: Asia), instead of always Domestic. Category and weight class follow the AOC too, the expanded area starts at the next wider area, and New type, same area starts at the current area. They follow any edit to the types until a value is picked on the Changes page, with a button to switch back. An AOC already at the widest area shows a note.'],th:['การเปลี่ยนแปลง: พื้นที่ปัจจุบันใช้ตามใบรับรองที่เลือก โดยใช้พื้นที่กว้างที่สุดของแบบอากาศยานในหน้าค่าใบรับรอง (เช่น เค-ไมล์ แอร์: ภูมิภาคเอเชีย) แทนการตั้งเป็นภายในประเทศทุกครั้ง ประเภทและช่วงน้ำหนักใช้ตามใบรับรองเช่นกัน พื้นที่ที่ขอเพิ่มเริ่มที่พื้นที่ถัดไป และการเพิ่มแบบอากาศยานพื้นที่เดิมเริ่มที่พื้นที่ปัจจุบัน ค่าดังกล่าวเปลี่ยนตามการแก้ไขแบบอากาศยานจนกว่าจะเลือกเองในหน้าการเปลี่ยนแปลง และมีปุ่มกลับไปใช้ค่าตามใบรับรอง ใบรับรองที่ครอบคลุมพื้นที่กว้างที่สุดแล้วจะแสดงหมายเหตุ']},
   {v:'3.37',d:'2026-11-19',en:['Changes: new Count from date above Remaining validity, for example the change approval date. Remaining validity is counted from that date to the AOC expiry; blank means today, and Use today clears it. Prorated results show the date used.'],th:['การเปลี่ยนแปลง: เพิ่มช่องนับตั้งแต่วันที่ เหนืออายุใบรับรองคงเหลือ เช่น วันที่อนุมัติการเปลี่ยนแปลง ระบบจะนับอายุคงเหลือตั้งแต่วันที่ดังกล่าวถึงวันหมดอายุของใบรับรอง หากไม่ระบุจะใช้วันนี้ และปุ่มใช้วันนี้จะล้างค่าที่ระบุ ผลการคำนวณตามสัดส่วนระบุวันที่ที่ใช้']},
   {v:'3.36',d:'2026-11-19',en:['Changes: Remaining validity is now filled from the selected AOC\'s expiry date (today to expiry) every time an AOC is selected or its expiry date changes, instead of a fixed 24 months. A note under the field shows the months and days left. A typed value is kept for that operator, with a Use AOC expiry button to switch back.','Settings: new part-month rule under Changes: round up (default, highest fee for CAAT), round down, nearest month or exact. Prorated results show the rule used.','Settings are grouped under headings: General, Certificate, Changes, and Data and app information.'],th:['การเปลี่ยนแปลง: อายุใบรับรองคงเหลือคำนวณจากวันหมดอายุของใบรับรองที่เลือก (วันนี้ถึงวันหมดอายุ) ทุกครั้งที่เลือกใบรับรองหรือแก้ไขวันหมดอายุ แทนค่าคงที่ 24 เดือน และแสดงจำนวนเดือนและวันคงเหลือใต้ช่อง หากกรอกเอง ระบบจะคงค่าที่กรอกสำหรับผู้ดำเนินการรายนั้น และมีปุ่มใช้ตามวันหมดอายุเพื่อกลับไปคำนวณอัตโนมัติ','ตั้งค่า: เพิ่มวิธีนับเศษเดือนในหมวดการเปลี่ยนแปลง ได้แก่ ปัดขึ้น (ค่าเริ่มต้น ค่าธรรมเนียมสูงสุด) ปัดลง ปัดตามหลักทั่วไป และคิดตามจริง ผลการคำนวณตามสัดส่วนระบุวิธีที่ใช้','จัดกลุ่มหน้าตั้งค่าเป็นหมวด: ทั่วไป ค่าใบรับรอง การเปลี่ยนแปลง และข้อมูลและรายละเอียดระบบ']},
-  {v:'3.35',d:'2026-11-16',en:['20 million cap: now checked against the main certificate fee only, as item (28/1) of the fee schedule to the Air Navigation Act caps the certificate fee per certificate. The application and additional-type fees come from the 2561 CAAT Announcement and are not counted. Thai Airways (฿22,105,000) no longer shows the warning.'],th:['อัตราขั้นสูง 20 ล้านบาท: ตรวจสอบเฉพาะค่าใบรับรองหลัก ตามอัตราค่าธรรมเนียม (๒๘/๑) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งกำหนดค่าใบรับรองต่อฉบับ ค่าธรรมเนียมการยื่นคำขอและค่าเพิ่มแบบอากาศยานกำหนดตามประกาศ กพท. พ.ศ. 2561 จึงไม่นำมารวม การบินไทย (22,105,000 บาท) จึงไม่แสดงคำเตือนอีกต่อไป']},
+  {v:'3.35',d:'2026-11-16',en:['20 million cap: now checked against the main certificate fee only, as item (28/1) of the fee schedule to the Air Navigation Act caps the certificate fee per certificate. The application and additional-type fees come from the 2561 CAAT Announcement and are not counted. Thai Airways (฿22,105,000) no longer shows the warning.'],th:['อัตราขั้นสูง 20 ล้านบาท: ตรวจสอบเฉพาะค่าใบรับรองหลัก ตามอัตราค่าธรรมเนียม (28/1) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งกำหนดค่าใบรับรองต่อฉบับ ค่าธรรมเนียมการยื่นคำขอและค่าเพิ่มแบบอากาศยานกำหนดตามประกาศ กพท. พ.ศ. 2561 จึงไม่นำมารวม การบินไทย (22,105,000 บาท) จึงไม่แสดงคำเตือนอีกต่อไป']},
   {v:'3.34',d:'2026-11-16',en:['Bangkok Airways: the A319/A320 group is now listed first, so it is the principal type and the ATR 72 is the additional type. The fee is unchanged.'],th:['การบินกรุงเทพ: จัดกลุ่ม A319/A320 ไว้เป็นลำดับแรก จึงเป็นแบบหลัก และ ATR 72 เป็นแบบเพิ่มเติม ค่าธรรมเนียมไม่เปลี่ยนแปลง']},
   {v:'3.33',d:'2026-11-16',en:['Certificate fee panel: the application fee, certificate fees subtotal and total are now flat colour bands across the panel (light blue, light blue, dark navy), not rounded cards. Main certificate and additional types stay plain.'],th:['แผงค่าธรรมเนียมใบรับรอง: ค่าธรรมเนียมการยื่นคำขอ ยอดรวมค่าใบรับรอง และรวมค่าธรรมเนียม แสดงเป็นแถบสีเต็มความกว้าง (ฟ้าอ่อน ฟ้าอ่อน น้ำเงินเข้ม) ไม่ใช่การ์ดมุมมน ส่วนค่าใบรับรองหลักและค่าเพิ่มแบบอากาศยานยังคงเป็นข้อความปกติ']},
   {v:'3.32',d:'2026-11-16',en:['Certificate fee panel: the Certificate fees subtotal is back in light blue and the Total AOC fees in dark navy. The other fee lines stay plain text.'],th:['แผงค่าธรรมเนียมใบรับรอง: ยอดรวมค่าใบรับรองกลับมาเป็นสีฟ้าอ่อน และรวมค่าธรรมเนียมเป็นสีน้ำเงินเข้ม ส่วนรายการอื่นยังคงเป็นข้อความปกติ']},
@@ -2599,7 +2607,7 @@ const blankType=()=>({id:nid(),ac:'',name:'',cat:'AEROPLANE',heavy:true,area:'',
 function snapOp(){ const o={}; OP_KEYS.forEach(k=>o[k]=clone(S[k])); return o; }
 function freshOp(v){
   const i=OPINFO[v]||{}; delete S.staleOps[v];
-  S.expiry=i.until||''; S.expiryAuto=!!i.until;
+  { const b=opBaseExpiry(v); S.expiry=b; S.expiryAuto=!!b; }
   S.tx=i.app?'initial':'renewal'; S.txAuto=false;
   S.changesAdded=[]; S.change=clone(OP_DEF.change); S.insp=clone(OP_DEF.insp); S.na=clone(OP_DEF.na); S.naSet=false;
   if(FLEET[v]) loadFleet(v,true); else { S.types=[blankType()]; S.loadedSig=null; S.fleetFrom=null; }
@@ -2609,7 +2617,7 @@ function switchOperator(v){
   const keepTyped = !prev && !typesPristine();      // entries typed before any operator was chosen are kept
   if(prev){ touched.add(prev); if(hasEdits()) S.opCache[prev]=snapOp(); else delete S.opCache[prev]; }
   S.operator=v; if(!v){ freshOp(''); return; }   // no operator: start blank so one operator's aircraft never carry over to another
-  if(S.opCache[v]){ Object.assign(S,clone(S.opCache[v])); toast(L('Your earlier entries for this operator are restored','เรียกคืนข้อมูลที่กรอกไว้ของผู้ดำเนินการรายนี้แล้ว')); return; }
+  if(S.opCache[v]){ Object.assign(S,clone(S.opCache[v])); syncAutoExpiry(); toast(L('Your earlier entries for this operator are restored','เรียกคืนข้อมูลที่กรอกไว้ของผู้ดำเนินการรายนี้แล้ว')); return; }
   if(keepTyped){ applyOpInfo(v); toast(L('Kept the aircraft types you entered. Use “Load types” to replace them.','คงแบบอากาศยานที่กรอกไว้ เลือก “โหลดแบบอากาศยาน” หากต้องการแทนที่')); return; }
   freshOp(v);
   const n=FLEET[v]?FLEET[v].length:0;
@@ -2663,8 +2671,14 @@ function globeHTML(cat,val,k){
     <div class="gcap">${val?esc(L(AREA_LABEL[val],AREA_TH[val])):esc(L('Select an area','เลือกพื้นที่'))}${val?`<small>${esc(LANG==='th'?AREA_LABEL[val]:AREA_TH[val])}</small>`:''}</div>${ill?`<div class="gnote">${L('Map is illustrative','แผนที่เพื่อประกอบเท่านั้น')}</div>`:''}</div>`;
 }
 const gMix=(a,b,t)=>{ const A=[1,3,5].map(i=>parseInt(a.substr(i,2),16)), B=[1,3,5].map(i=>parseInt(b.substr(i,2),16)); return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')})`; };
+const SRC_TH={'AIRBUS A320 (listed in the AOC register; MTOW and area from Email 2)':'AIRBUS A320 (ปรากฏในทะเบียนใบรับรอง; น้ำหนักขึ้นสูงสุดและพื้นที่ปฏิบัติการจาก Email 2)',
+  'AIRBUS A330 (series cut off in the sheet; set to A330-300)':'AIRBUS A330 (รุ่นย่อยถูกตัดในแผ่นข้อมูล; กำหนดเป็น A330-300)',
+  'B738 (AOC register; not in the Ops Spec sheet)':'B738 (ตามทะเบียนใบรับรอง; ไม่อยู่ในรายการข้อกำหนดการปฏิบัติการ)',
+  'GULFSTREAM G500 (Ops Spec lists GV; updated by CT)':'GULFSTREAM G500 (ข้อกำหนดการปฏิบัติการระบุ GV; ปรับปรุงโดยกองรับรองผู้ดำเนินการเดินอากาศ (CT))'};
+const srcL=s=>(LANG==='th'&&SRC_TH[s])||s;
 function globeDraw(g,now){
   const D=geoData(); if(!D) return; const cv=g.cv, x=g.ctx, W=cv.width, H=cv.height, cx=W/2, cy=H/2+H*.02, R=H*.4*g.sc;
+  if(!(R>0.5)) return;
   const proj=d3.geoOrthographic().translate([cx,cy]).scale(R).rotate(g.rot).clipAngle(90).precision(.4), path=d3.geoPath(proj,x), ctr=proj.invert([cx,cy]);
   x.clearRect(0,0,W,H);
   /* sun behind the Earth: a small soft disc with a gentle glow; the globe is drawn over it */
@@ -3299,7 +3313,7 @@ function renderSettings(){
     const opts=[['main',L('1 · Main certificate fee only','1 · เฉพาะค่าใบรับรองหลัก'),L('Only the main certificate fee is compared with ฿20,000,000. If it is higher, a warning is shown and nothing is reduced. The application and additional-type fees come from the 2018 Announcement and are not counted. Example: Thai Airways renewal ฿22,105,000, no warning.','เปรียบเทียบเฉพาะค่าใบรับรองหลักกับ 20,000,000 บาท หากสูงกว่าจะแสดงคำเตือน โดยไม่ปรับลด ค่าธรรมเนียมการยื่นคำขอและค่าเพิ่มแบบอากาศยานกำหนดโดยประกาศ กพท. พ.ศ. 2561 จึงไม่นับรวม ตัวอย่าง: การต่ออายุของการบินไทย 22,105,000 บาท ไม่มีคำเตือน'),true],
       ['total',L('2 · Cap the total','2 · จำกัดยอดรวม'),L('All AOC fee lines (application, main certificate and additional types) are added up. A total above ฿20,000,000 is reduced to ฿20,000,000, shown as an adjustment line. Example: Thai Airways renewal ฿22,105,000 → ฿20,000,000.','รวมค่าธรรมเนียมทุกรายการ (การยื่นคำขอ ค่าใบรับรองหลัก และค่าเพิ่มแบบอากาศยาน) หากยอดรวมสูงกว่า 20,000,000 บาท จะปรับลดเหลือ 20,000,000 บาท และแสดงเป็นรายการปรับลด ตัวอย่าง: การต่ออายุของการบินไทย 22,105,000 บาท → 20,000,000 บาท'),false],
       ['both',L('3 · Show both amounts','3 · แสดงทั้งสองจำนวน'),L('The total uses option 1. When the total is above ฿20,000,000, the option 2 amount is shown under it for FAD to decide.','ยอดรวมใช้ตัวเลือกที่ 1 หากยอดรวมสูงกว่า 20,000,000 บาท จะแสดงจำนวนตามตัวเลือกที่ 2 ไว้ด้านล่างเพื่อให้ FAD พิจารณา'),false]];
-    h+=`<div class="card"><h2>${L('Statutory maximum: ฿20,000,000','อัตราขั้นสูง: 20,000,000 บาท')}</h2><p class="sub">${L('Fee schedule item (28/1) of the Air Navigation Act (added by the Act No. 14 B.E. 2562, section 64) sets ฿20,000,000 per AOC certificate. The instruments do not say whether this covers only the certificate fee or every fee charged on the certificate. To be confirmed by LEG. Applies to the Certificate page, Summary, reports and Industry. Saved on this device only.','อัตราค่าธรรมเนียม (๒๘/๑) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งเพิ่มโดยพระราชบัญญัติการเดินอากาศ (ฉบับที่ ๑๔) พ.ศ. ๒๕๖๒ มาตรา ๖๔ กำหนดใบรับรองผู้ดำเนินการเดินอากาศฉบับละ 20,000,000 บาท แต่มิได้ระบุว่าครอบคลุมเฉพาะค่าใบรับรองหรือค่าธรรมเนียมทุกรายการของใบรับรองฉบับนั้น ต้องได้รับการยืนยันจาก LEG ใช้กับหน้าค่าใบรับรอง หน้าสรุป รายงาน และหน้าอุตสาหกรรม บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>
+    h+=`<div class="card"><h2>${L('Statutory maximum: ฿20,000,000','อัตราขั้นสูง: 20,000,000 บาท')}</h2><p class="sub">${L('Fee schedule item (28/1) of the Air Navigation Act (added by the Act No. 14 B.E. 2562, section 64) sets ฿20,000,000 per AOC certificate. The instruments do not say whether this covers only the certificate fee or every fee charged on the certificate. To be confirmed by LEG. Applies to the Certificate page, Summary, reports and Industry. Saved on this device only.','อัตราค่าธรรมเนียม (28/1) ท้ายพระราชบัญญัติการเดินอากาศ ซึ่งเพิ่มโดยพระราชบัญญัติการเดินอากาศ (ฉบับที่ 14) พ.ศ. 2562 มาตรา 64 กำหนดใบรับรองผู้ดำเนินการเดินอากาศฉบับละ 20,000,000 บาท แต่มิได้ระบุว่าครอบคลุมเฉพาะค่าใบรับรองหรือค่าธรรมเนียมทุกรายการของใบรับรองฉบับนั้น ต้องได้รับการยืนยันจาก LEG ใช้กับหน้าค่าใบรับรอง หน้าสรุป รายงาน และหน้าอุตสาหกรรม บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p>
       <div class="opts">${opts.map(o=>`<button type="button" class="opt ${cm===o[0]?'on':''}" data-act="capmode" data-val="${o[0]}"><span class="rd"></span><span><b>${esc(o[1])}${o[3]?`<span class="tag">${L('Default','ค่าเริ่มต้น')}</span>`:''}</b><span class="thai">${esc(o[2])}</span></span></button>`).join('')}</div>
       ${cm!=='main'?note('warn',L('A non-default option is active. Results above the maximum will say which option was used.','กำลังใช้ตัวเลือกที่ไม่ใช่ค่าเริ่มต้น ผลการคำนวณที่สูงกว่าอัตราขั้นสูงจะระบุตัวเลือกที่ใช้')):''}</div>`; }
   h+=`<div class="sgrp sub"><h3>${L('Changes','การเปลี่ยนแปลง')}</h3><small>${L('Changes during AOC validity','การเปลี่ยนแปลงระหว่างอายุใบรับรอง')}</small></div>`;
@@ -3432,7 +3446,7 @@ function dcCert(r){
     if(l.kind==='C') s.p=L('Principal type, at the 2024 Ministerial Regulation rate for its area.','แบบอากาศยานหลัก ตามอัตราในกฎกระทรวง พ.ศ. 2567 ของพื้นที่ปฏิบัติการนั้น');
     if(l.kind==='A') s.p=L(`Each type after the principal, at the 2018 additional-type rate (${colL(S.tx)} column).`,`แบบที่ถัดจากแบบหลัก ตามอัตราค่าเพิ่มแบบอากาศยานในประกาศ กพท. พ.ศ. 2561 (อัตรา${colL(S.tx)})`);
     return s; }));
-  { const M=RULESET.STATUTORY_MAX_AOC, cm=r.capMode||'main', ref=L('Fee schedule (28/1), พ.ร.บ. การเดินอากาศ (ฉบับที่ 14) 2562 มาตรา 64','อัตราค่าธรรมเนียม (๒๘/๑) ท้าย พ.ร.บ. การเดินอากาศ (ฉบับที่ ๑๔) พ.ศ. ๒๕๖๒ มาตรา ๖๔');
+  { const M=RULESET.STATUTORY_MAX_AOC, cm=r.capMode||'main', ref=L('Fee schedule (28/1), พ.ร.บ. การเดินอากาศ (ฉบับที่ 14) 2562 มาตรา 64','อัตราค่าธรรมเนียม (28/1) ท้าย พ.ร.บ. การเดินอากาศ (ฉบับที่ 14) พ.ศ. 2562 มาตรา 64');
     const opt={main:L('option 1, main certificate fee only','ตัวเลือกที่ 1 เฉพาะค่าใบรับรองหลัก'),total:L('option 2, cap the total','ตัวเลือกที่ 2 จำกัดยอดรวม'),both:L('option 3, show both amounts','ตัวเลือกที่ 3 แสดงทั้งสองจำนวน')}[cm];
     const p=L(`Settings › Statutory maximum: ${opt}.`,`ตั้งค่า › อัตราขั้นสูง: ${opt}`);
     if(cm!=='total'&&r.C!=null) steps.push({t:L('Check the statutory maximum','ตรวจสอบอัตราขั้นสูง'),ok:r.C<=M,p,
@@ -3998,7 +4012,7 @@ function indData(){
   const hold=rows.filter(r=>r.band!=='app'&&r.band!=='nodate').sort((a,b)=>a.due.localeCompare(b.due)||opName(a.op).localeCompare(opName(b.op)));
   const apps=rows.filter(r=>r.band==='app'||r.band==='nodate').sort((a,b)=>opName(a.op).localeCompare(opName(b.op)));
   const late=hold.filter(r=>r.band==='overdue'||r.band==='expired'), d30=hold.filter(r=>r.band==='d30'), d90=hold.filter(r=>r.band==='d90');
-  const yr=hold.filter(r=>r.de>=0&&r.de<=365), collect=hold.filter(r=>r.de!=null&&r.de>=0);
+  const yr=hold.filter(r=>r.de>=0&&r.de<=365), collect=hold.filter(r=>r.de!=null&&r.de>=0&&r.stat!=='ren');
   const sum=a=>a.reduce((t,r)=>t+(r.fee||0),0);
   return {rows,today,hold,apps,late,d30,d90,yr,collect,yrFee:sum(yr),colFee:sum(collect),allFee:sum(hold),miss:hold.filter(r=>r.fee==null).length};
 }
@@ -4089,18 +4103,20 @@ function reportIndustry(){
   h+=`<div class="rp-kpis many">${kp.map(x=>`<div class="rp-kpi ${x[2]?'main':''}"><small>${esc(x[0])}</small><b>${esc(x[1])}</b></div>`).join('')}</div>`;
   h+=indProfileReport(D,sec);
   // 1 schedule, grouped by the year the AOC expires
-  const groups=[]; D.hold.forEach(r=>{ const y=+r.exp.slice(0,4); let g=groups.find(x=>x.y===y); if(!g){ g={y,rs:[]}; groups.push(g); } g.rs.push(r); });
+  const renR=D.hold.filter(r=>r.band==='ren'), schR=D.hold.filter(r=>r.band!=='ren'), schFee=schR.reduce((t,r)=>t+(r.fee||0),0), schMiss=schR.filter(r=>r.fee==null).length;
+  const groups=[]; schR.forEach(r=>{ const y=+r.exp.slice(0,4); let g=groups.find(x=>x.y===y); if(!g){ g={y,rs:[]}; groups.push(g); } g.rs.push(r); });
   groups.sort((a,b)=>a.y-b.y);
   let k=0;
   h+=`<div class="rp-s">${sec(L('Renewal schedule by application deadline','กำหนดการต่ออายุเรียงตามกำหนดยื่นคำขอ'))}<table class="t"><thead><tr>${TH('#')}${TH(L('Air operator · AOC No.','ผู้ดำเนินการเดินอากาศ · เลขที่ใบรับรอง'))}${TH(L('Types','แบบ'))}${TH(L('Apply by','ยื่นภายใน'))}${TH(L('Expires','หมดอายุ'))}${TH(L('Status','สถานะ'))}${NB}</tr></thead>
     ${groups.map(g=>{ const gs=g.rs.reduce((t,r)=>t+(r.fee||0),0), gm=g.rs.filter(r=>r.fee==null).length;
       return `<tr class="subt"><td colspan="6">${L(`AOCs expiring in ${g.y} · ${g.rs.length}`,`หมดอายุในปี พ.ศ. ${g.y+543} · ${g.rs.length} ฉบับ`)}${gm?L(` · ${gm} without an estimate`,` · ไม่มีประมาณการ ${gm} ฉบับ`):''}</td><td class="n">${fmt(gs)}</td></tr>`
-        +g.rs.map(r=>`<tr><td>${++k}</td><td><b><span class="rp-ifin">${finSVG(r.op,9)}</span>${esc(opName(r.op))}</b>${r.edited?'<sup>†</sup>':''}${r.i.aoc?`<span class="ref">${esc(r.i.aoc)}</span>`:''}</td><td>${r.n}</td><td class="dt"><b>${esc(dfmt(r.due))}</b></td><td class="dt">${esc(dfmt(r.exp))}</td><td>${esc(B[r.band][0])}<span class="ref">${esc(dueText(r))}</span></td><td class="n">${feeCell(r)}</td></tr>`).join(''); }).join('')}
-    <tr class="tot"><td colspan="6">${L(`Total · ${D.hold.length} AOCs${D.miss?` (${D.miss} without an estimate, not in the total)`:''}`,`รวม · ${D.hold.length} ฉบับ${D.miss?` (ไม่มีประมาณการ ${D.miss} ฉบับ ไม่นับรวม)`:''}`)}</td><td class="n">${fmt(D.allFee)}</td></tr></table></div>`;
+        +g.rs.map(r=>`<tr><td>${++k}</td><td><b><span class="rp-ifin">${finSVG(r.op,9)}</span>${esc(opName(r.op))}</b>${r.edited?'<sup>†</sup>':''}${r.i.aoc?`<span class="ref">${esc(r.i.aoc)}</span>`:''}</td><td>${r.n}</td><td class="dt"><b>${esc(dfmt(r.due))}</b></td><td class="dt">${esc(dfmt(r.exp))}</td><td>${esc(B[r.band][0])}<span class="ref">${esc(rnText(r))}</span></td><td class="n">${feeCell(r)}</td></tr>`).join(''); }).join('')}
+    <tr class="tot"><td colspan="6">${L(`Total · ${schR.length} AOCs${schMiss?` (${schMiss} without an estimate, not in the total)`:''}`,`รวม · ${schR.length} ฉบับ${schMiss?` (ไม่มีประมาณการ ${schMiss} ฉบับ ไม่นับรวม)`:''}`)}</td><td class="n">${fmt(schFee)}</td></tr>${renR.length?`<tr class="subt"><td colspan="7">${L(`Renewed AOCs · ${renR.length} · fee already realised (not in the total above); dates are for the next cycle`,`ใบรับรองที่ต่ออายุแล้ว · ${renR.length} ฉบับ · ค่าธรรมเนียมเป็นรายได้จริงแล้ว (ไม่รวมในยอดรวมข้างต้น) วันที่เป็นของรอบถัดไป`)}</td></tr>`+renR.map(r=>`<tr><td>–</td><td><b><span class="rp-ifin">${finSVG(r.op,9)}</span>${esc(opName(r.op))}</b>${r.i.aoc?`<span class="ref">${esc(r.i.aoc)}</span>`:''}</td><td>${r.n}</td><td class="dt">${esc(dfmt(r.due))}</td><td class="dt">${esc(dfmt(r.exp))}</td><td>${esc(B[r.band][0])}<span class="ref">${esc(rnText(r))}</span></td><td class="n">${r.ren.fee!=null?fmt(r.ren.fee):fmt(r.fee)}</td></tr>`).join(''):''}</table></div>`;
   // 2 by year
   const RW=revWindow(D.rows);
   h+=`<div class="rp-s keep">${sec(L('Expected renewal fees by year','ประมาณการค่าต่ออายุรายปี'))}<table class="t"><tr>${TH(L('Year','ปี'))}${TH(L('AOCs','จำนวน'))}${TH(L('Without an estimate','ไม่มีประมาณการ'))}${NB}</tr>
-    ${RW.Y.map(x=>`<tr><td><b>${esc(revYearLabel(x.y).main)}</b><span class="ref">${esc(x.sub)}</span></td><td>${x.rs.length}</td><td>${x.miss||'–'}</td><td class="n">${fmt(x.sum)}</td></tr>`).join('')}
+    ${RW.Y.map(x=>`<tr><td><b>${esc(revYearLabel(x.y).main)}</b><span class="ref">${esc(x.sub)}</span></td><td>${x.n}</td><td>${x.miss||'–'}</td><td class="n">${fmt(x.sum)}</td></tr>`).join('')}
+    ${RW.nr?`<tr class="subt"><td colspan="3">${L(`of which realised (${RW.nr} renewed AOC${RW.nr===1?'':'s'})`,`ในจำนวนนี้เป็นรายได้จริง (ต่ออายุแล้ว ${RW.nr} ฉบับ)`)}</td><td class="n">${fmt(RW.real)}</td></tr>`:''}
     <tr class="tot"><td>${L('Next 5 years','รวม 5 ปีข้างหน้า')}</td><td>${RW.n}</td><td>${RW.miss||'–'}</td><td class="n">${fmt(RW.total)}</td></tr></table></div>`;
   // 3 applications / no date
   if(D.apps.length) h+=`<div class="rp-s keep">${sec(L('Applications in progress and AOCs without an expiry date','คำขอที่อยู่ระหว่างดำเนินการ และใบรับรองที่ไม่มีวันหมดอายุ'))}<table class="t"><tr>${TH('#')}${TH(L('Air operator · AOC No.','ผู้ดำเนินการเดินอากาศ · เลขที่ใบรับรอง'))}${TH(L('Types','แบบ'))}${TH(L('Status','สถานะ'))}</tr>
@@ -4143,7 +4159,35 @@ function localISO(){ const d=new Date(); return d.getFullYear()+'-'+String(d.get
 const daysBetween=(a,b)=>Math.round((Date.parse(b+'T00:00:00Z')-Date.parse(a+'T00:00:00Z'))/864e5);
 function opState(op){ return op===S.operator ? S : S.opCache[op]; }
 function opTypes(op){ const st=opState(op); return st ? st.types : fleetCards(op); }
-function opExpiry(op){ const st=opState(op); return (st&&st.expiry) || (OPINFO[op]||{}).until || ''; }
+/* Renewal status, kept by the CT head and built into this file. Users see it; they cannot change it.
+   One entry per operator, keyed by the operator name exactly as in OPERATORS:
+     'Operator name': {st:'app'}                                              application received
+     'Operator name': {st:'cert'}                                             under certification
+     'Operator name': {st:'ren', date:'YYYY-MM-DD', exp:'YYYY-MM-DD', fee:null}   renewed: issue date, new expiry from the new certificate, actual invoiced fee (null = use the estimate)
+   Revenue counts a renewed AOC in the year of `date`. Leave the list empty when nothing has changed. */
+const RENEWALS={};
+const isISO=d=>{ if(typeof d!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(d)) return false; const t=new Date(d+'T00:00:00Z'); return !isNaN(t)&&t.toISOString().slice(0,10)===d; };
+/* Why an entry is not used ('' = valid). Invalid entries are ignored, so a typing error cannot remove an AOC from revenue. */
+function renewalIssue(op,r){
+  if(!OPERATORS.includes(op)) return 'unknown operator';
+  if(!r||!['app','cert','ren'].includes(r.st)) return 'status must be app, cert or ren';
+  if(r.st!=='ren') return '';
+  if(!isISO(r.date)) return 'renewal date must be YYYY-MM-DD';
+  if(!isISO(r.exp)) return 'new expiry must be YYYY-MM-DD';
+  if(r.exp<=r.date) return 'new expiry must be after the renewal date';
+  if(!(r.fee==null||(typeof r.fee==='number'&&isFinite(r.fee)&&r.fee>=0))) return 'fee must be a number or null';
+  return '';
+}
+function renewalIssues(){ return Object.entries(RENEWALS).map(([op,r])=>[op,renewalIssue(op,r)]).filter(x=>x[1]); }
+function renewalOf(op){ const r=RENEWALS[op]; return r&&!renewalIssue(op,r)?r:null; }
+/* Expiry from the register, or from the renewal list once renewed. */
+function opBaseExpiry(op){ const rn=renewalOf(op); return (rn&&rn.st==='ren'&&rn.exp) || (OPINFO[op]||{}).until || ''; }
+/* A date typed by the user wins, except an automatic one or one earlier than the new expiry of a renewed AOC (it predates the renewal). */
+function opExpiry(op){ const st=opState(op), base=opBaseExpiry(op), rn=renewalOf(op), typed=st&&st.expiry&&!st.expiryAuto?st.expiry:'';
+  if(rn&&rn.st==='ren') return typed&&typed>rn.exp?typed:rn.exp;
+  return typed || base || (st&&st.expiry) || ''; }
+function syncAutoExpiry(){ const op=S.operator; if(!op) return; const rn=renewalOf(op);
+  if(S.expiryAuto||(rn&&rn.st==='ren'&&(!S.expiry||S.expiry<rn.exp))){ const b=opBaseExpiry(op); if(b){ S.expiry=b; S.expiryAuto=true; } } }
 function hasEdits(){
   if(!S.operator) return false; const i=OPINFO[S.operator]||{};
   return !typesPristine() || S.changesAdded.length>0 || S.na.change!==OP_DEF.na.change || S.na.insp!==OP_DEF.na.insp || S.expiry!==(i.until||'') || S.tx!==(i.app?'initial':'renewal')
@@ -4160,11 +4204,16 @@ function pipeRows(){
     else if(!types.length) why='types';
     else { const R=calcCertificate(types,'renewal',RULESET); if(R.status==='CALCULATED'||(R.status==='ESTIMATED'&&(R.flags||[]).includes('MIXED_CATEGORY'))){ fee=R.total; mixed=(R.flags||[]).includes('MIXED_CATEGORY'); } else why=R.status==='VERIFICATION_REQUIRED'?'verify':(types.some(t=>t.cat!=='BALLOON'&&!AREAS_FOR[t.cat].includes(t.area))?'area':'check'); }
     const due=exp?addDays(exp,-150):null, dd=due?daysBetween(today,due):null, de=exp?daysBetween(today,exp):null;
-    const band = i.app ? 'app' : !exp ? 'nodate' : de<0 ? 'expired' : dd<0 ? 'overdue' : dd<=30 ? 'd30' : dd<=90 ? 'd90' : 'later';
-    return {op,i,exp,due,dd,de,fee,why,mixed,band,n:types.length,edited:opEdited(op)};
+    const rn0=renewalOf(op), band = i.app ? 'app' : !exp ? 'nodate' : de<0 ? 'expired' : rn0&&rn0.st==='ren' ? 'ren' : rn0 ? 'inp' : dd<0 ? 'overdue' : dd<=30 ? 'd30' : dd<=90 ? 'd90' : 'later';
+    const rn=renewalOf(op), stat=rn?rn.st:'', ren=rn&&rn.st==='ren'?{date:rn.date,fee:(rn.fee==null||rn.fee==='')?null:Number(rn.fee),exp0:i.until||''}:null;
+    return {op,i,exp,due,dd,de,fee,why,mixed,band,n:types.length,edited:opEdited(op),stat,ren};
   });
 }
-const BAND=()=>({expired:[L('Expired','หมดอายุแล้ว'),'b-red'],overdue:[L('Deadline passed','พ้นกำหนดยื่น'),'b-red'],d30:[L('Due within 30 days','ครบกำหนดภายใน 30 วัน'),'b-amber'],
+const statLbl=r=>r.stat==='ren'?L(`Renewed ${dfmt(r.ren.date)}`,`ต่ออายุแล้ว ${dfmt(r.ren.date)}`):r.stat==='cert'?L('Under certification','อยู่ระหว่างการรับรอง'):r.stat==='app'?L('Application received','รับคำขอแล้ว'):'';
+/* One status line: renewed → renewal date and next expiry; applied → status and expiry countdown; otherwise the deadline. */
+const rnText=r=>r.stat==='ren'?L(`Renewed ${dfmt(r.ren.date)} · next expiry ${dfmt(r.exp)}`,`ต่ออายุแล้ว ${dfmt(r.ren.date)} · หมดอายุครั้งถัดไป ${dfmt(r.exp)}`)
+  : (r.stat&&r.band!=='expired')?`${statLbl(r)} · ${cdText(r.de)}`:dueText(r);
+const BAND=()=>({ren:[L('Renewed','ต่ออายุแล้ว'),'b-green'],inp:[L('Applied','ยื่นคำขอแล้ว'),'b-blue'],expired:[L('Expired','หมดอายุแล้ว'),'b-red'],overdue:[L('Deadline passed','พ้นกำหนดยื่น'),'b-red'],d30:[L('Due within 30 days','ครบกำหนดภายใน 30 วัน'),'b-amber'],
   d90:[L('Due within 90 days','ครบกำหนดภายใน 90 วัน'),'b-blue'],later:[L('Later','ภายหลัง'),'b-green'],app:[L('Application in progress','อยู่ระหว่างยื่นขอ'),'b-grey'],nodate:[L('No expiry date','ไม่มีวันหมดอายุ'),'b-grey']});
 function cdText(de){
   if(de==null) return '';
@@ -4180,8 +4229,8 @@ function dueText(r){
 }
 /* Countdown ring: share of the year left before the 150-day deadline, in the same colour as its row (red passed, amber 30 days or less, blue 31–90, green later). */
 function ringHTML(r,k){
-  if(r.dd==null) return '';
-  const C=113.1, past=r.dd<0, f=past?1:Math.min(r.dd,365)/365, col={expired:'#b23a2e',overdue:'#b23a2e',d30:'#a8741a',d90:'#2f5f9a',later:'#4f7f5f'}[r.band]||'#7a8797';
+  if(r.dd==null||r.band==='ren'||r.band==='inp') return '';
+  const C=113.1, past=r.dd<0, f=past?1:Math.min(r.dd,365)/365, col={expired:'#b23a2e',overdue:'#b23a2e',d30:'#a8741a',d90:'#2f5f9a',later:'#4f7f5f',inp:'#2f5f9a',ren:'#4f7f5f'}[r.band]||'#7a8797';
   const lab=past?'!':(r.dd>999?'999+':String(r.dd));
   const tip=past?L(`Deadline passed ${-r.dd} day${-r.dd===1?'':'s'} ago`,`พ้นกำหนดยื่นมาแล้ว ${-r.dd} วัน`):L(`${r.dd} day${r.dd===1?'':'s'} to the application deadline`,`อีก ${r.dd} วันถึงกำหนดยื่นคำขอ`);
   return `<span class="pring ${past?'past':''} ${r.band==='d30'?'d30':''}" style="--k:${Math.min(k||0,15)}" title="${esc(tip)}" aria-label="${esc(tip)}"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" class="rt"/><circle cx="22" cy="22" r="18" class="rv" style="stroke:${col};stroke-dasharray:${(C*f).toFixed(1)} ${C}"/></svg><b class="${lab.length>=4?'xs':lab.length===3?'s':''}" style="color:${col}">${lab}</b></span>`;
@@ -4198,20 +4247,25 @@ function plusYears(iso,n){ const y=+iso.slice(0,4)+n, md=iso.slice(5); const d=n
 function revWindow(rows){
   const start=localISO(), end=plusYears(start,5), y0=revYear(start), y5=revYear(end);
   const live=rows.filter(r=>r.band!=='app'&&r.band!=='nodate'&&r.exp&&r.de>=0&&r.exp<=end);
-  const Y=[]; for(let y=y0;y<=y5;y++){ const rs=live.filter(r=>revYear(r.exp)===y).sort((a,b)=>a.exp.localeCompare(b.exp));
+  /* Realised: AOCs already renewed, counted in the calendar year of the renewal date (actual invoiced fee when entered, otherwise the estimate). */
+  const done=rows.filter(r=>r.ren&&r.ren.date&&revYear(r.ren.date)>=y0&&revYear(r.ren.date)<=y5).map(r=>Object.assign({},r,{fee:r.ren.fee!=null?r.ren.fee:r.fee,realised:true}));
+  const Y=[]; for(let y=y0;y<=y5;y++){ const rs=live.filter(r=>revYear(r.exp)===y).sort((a,b)=>a.exp.localeCompare(b.exp)), ra=done.filter(r=>revYear(r.ren.date)===y).sort((a,b)=>a.ren.date.localeCompare(b.ren.date));
     const dm=iso=>new Date(iso+'T00:00:00Z').toLocaleDateString(dloc(),{day:'numeric',month:'short',timeZone:'UTC'});
     const sub = y===y0 ? L(`${dm(start)} – 31 Dec`,`${dm(start)} – 31 ธ.ค.`) : y===y5 ? L(`1 Jan – ${dm(end)}`,`1 ม.ค. – ${dm(end)}`) : revYearLabel(y).sub;
-    Y.push({y,rs,sub,n:rs.length,sum:rs.reduce((a,r)=>a+(r.fee||0),0),miss:rs.filter(r=>r.fee==null).length,mix:rs.filter(r=>r.mixed&&r.fee!=null).length}); }
+    const esum=rs.reduce((a,r)=>a+(r.fee||0),0), rsum=ra.reduce((a,r)=>a+(r.fee||0),0);
+    Y.push({y,rs,ra,sub,n:rs.length+ra.length,esum,rsum,sum:esum+rsum,miss:rs.filter(r=>r.fee==null).length+ra.filter(r=>r.fee==null).length,mix:rs.filter(r=>r.mixed&&r.fee!=null).length}); }
   const sum=k=>Y.reduce((a,x)=>a+x[k],0);
-  return {start,end,Y,total:sum('sum'),n:sum('n'),miss:sum('miss'),mix:sum('mix'),
-    beyond:rows.filter(r=>r.band!=='app'&&r.band!=='nodate'&&r.exp&&r.exp>end).length,
+  return {start,end,Y,total:sum('sum'),real:sum('rsum'),exp:sum('esum'),n:sum('n'),nr:Y.reduce((a,x)=>a+x.ra.length,0),ne:Y.reduce((a,x)=>a+x.rs.length,0),miss:sum('miss'),mix:sum('mix'),
+    beyond:rows.filter(r=>r.band!=='app'&&r.band!=='nodate'&&r.band!=='ren'&&r.exp&&r.exp>end).length,
     expired:rows.filter(r=>r.band==='expired').length,apps:rows.filter(r=>r.band==='app').length};
 }
 const REV_COL=['#1a2e4a','#1e4d8c','#2a9d8f','#6c9bd2','#5f8f6f','#2563a8','#3bbfb0','#8aa4c4','#476a8f','#9fb3c8'];
+const REV_GRN=['#3f6b4d','#5f8f6f','#7aa88a','#9fc2ab'];
 function revChartHTML(Y){
-  const max=Math.max(1,...Y.map(x=>x.sum));
-  return `<div class="rev-chart" role="img" aria-label="${esc(L('Expected renewal revenue by year','ประมาณการรายได้จากการต่ออายุรายปี'))}">${Y.map((x,i)=>{ const lb=revYearLabel(x.y), fees=x.rs.filter(r=>r.fee);
-    return `<div class="rc-col ${i===0?'now':''}"><div class="rc-amt">${x.sum?'฿'+fmtShort(x.sum):'–'}</div><div class="rc-track"><div class="rc-bar" style="height:${x.sum/max*100}%;animation-delay:${i*90}ms">${fees.map((r,k)=>`<button type="button" class="rc-seg" data-act="revTip" data-tip="${esc(`${opName(r.op)} · ${L('expires','หมดอายุ')} ${dfmt(r.exp)} · ฿${fmt(r.fee)}`)}" style="flex:${r.fee} 1 0;background:${REV_COL[k%REV_COL.length]}" aria-label="${esc(opName(r.op))}"></button>`).join('')}</div></div><div class="rc-y">${esc(lb.main)}</div></div>`; }).join('')}</div>
+  const max=Math.max(1,...Y.map(x=>x.sum)), hasR=Y.some(x=>x.ra.length);
+  const seg=(r,k,real)=>`<button type="button" class="rc-seg ${real?'rl':''}" data-act="revTip" data-tip="${esc(real?`${opName(r.op)} · ${L('renewed','ต่ออายุแล้ว')} ${dfmt(r.ren.date)} · ฿${fmt(r.fee)}`:`${opName(r.op)} · ${L('expires','หมดอายุ')} ${dfmt(r.exp)} · ฿${fmt(r.fee)}`)}" style="flex:${r.fee} 1 0;background:${real?REV_GRN[k%REV_GRN.length]:REV_COL[k%REV_COL.length]}" aria-label="${esc(opName(r.op))}"></button>`;
+  return `${hasR?`<div class="rc-lg"><span><i style="background:#5f8f6f"></i>${L('Realised (renewed)','รายได้จริง (ต่ออายุแล้ว)')}</span><span><i style="background:#1e4d8c"></i>${L('Expected','คาดว่าจะได้')}</span></div>`:''}<div class="rev-chart" role="img" aria-label="${esc(L('Renewal revenue by year','รายได้จากการต่ออายุรายปี'))}">${Y.map((x,i)=>{ const lb=revYearLabel(x.y), fe=x.rs.filter(r=>r.fee), fr=x.ra.filter(r=>r.fee);
+    return `<div class="rc-col ${i===0?'now':''}"><div class="rc-amt">${x.sum?'฿'+fmtShort(x.sum):'–'}</div><div class="rc-track"><div class="rc-bar" style="height:${x.sum/max*100}%;animation-delay:${i*90}ms">${fr.map((r,k)=>seg(r,k,true)).join('')}${fe.map((r,k)=>seg(r,k,false)).join('')}</div></div><div class="rc-y">${esc(lb.main)}</div></div>`; }).join('')}</div>
     <div class="rc-tip" id="rcTip">${L('Tap a bar segment to see the AOC.','แตะส่วนของแท่งกราฟเพื่อดูรายละเอียดใบรับรอง')}</div>`;
 }
 /* ---------- Surveillance Coverage Projection: 5-year renewal revenue minus (annual surveillance budget × 5) ---------- */
@@ -4249,7 +4303,7 @@ function svcBreakEven(d,B,has){
 function svcOut(){
   const d=svcData(S._svcRows||pipeRows()), B=toNum(S.survBudget), has=B!=null&&!isNaN(B)&&B>0;
   const l0=dfmt(d.start), l4=dfmt(d.end);
-  const revTile=`<div class="svk"><small>${L('Renewal revenue per 5-year cycle','รายได้จากการต่ออายุต่อรอบ 5 ปี')}</small><b><i>฿</i>${fmt(d.total)}</b><span>${L(`${d.n} AOC${d.n===1?'':'s'} × one renewal each`,`${d.n} ฉบับ × ต่ออายุฉบับละครั้ง`)}</span></div>`;
+  const revTile=`<div class="svk"><small>${L('Renewal revenue per 5-year cycle','รายได้จากการต่ออายุต่อรอบ 5 ปี')}</small><b><i>฿</i>${fmt(d.total)}</b><span>${d.nr?L(`${d.nr} realised + ${d.ne} expected`,`รายได้จริง ${d.nr} + คาดว่าจะได้ ${d.ne}`):L(`${d.n} AOC${d.n===1?'':'s'} × one renewal each`,`${d.n} ฉบับ × ต่ออายุฉบับละครั้ง`)}</span></div>`;
   let h='';
   if(!has){
     h=`<div class="svk-row one">${revTile}</div>${svcBreakEven(d,0,false)}<div class="svc-empty">${ICON.info}<span>${L('Enter the annual surveillance budget above to see what remains after five years.','กรอกงบประมาณการกำกับดูแลต่อปีด้านบน เพื่อดูยอดคงเหลือเมื่อครบ 5 ปี')}</span></div>`;
@@ -4262,6 +4316,7 @@ function svcOut(){
     if(d.total>0) say.push(neg?L(`Over five years, renewal fees cover ${pctTxt(c.cover)} of the surveillance budget, leaving a gap of ฿${fmt(-c.rem)}.`,`ในรอบ 5 ปี ค่าธรรมเนียมการต่ออายุครอบคลุมงบประมาณการกำกับดูแลร้อยละ ${pctTxt(c.cover).replace('%','')} โดยยังขาดอีก ${fmt(-c.rem)} บาท`)
                               :L(`Over five years, renewal fees cover the surveillance budget and leave ฿${fmt(c.rem)} (${pctTxt(c.pct)} of the revenue).`,`ในรอบ 5 ปี ค่าธรรมเนียมการต่ออายุครอบคลุมงบประมาณการกำกับดูแล และคงเหลือ ${fmt(c.rem)} บาท (ร้อยละ ${pctTxt(c.pct).replace('%','')} ของรายได้)`));
     say.push(L(`Per AOC: average fee ฿${fmt(Math.round(d.total/Math.max(1,d.n)))} − surveillance ฿${fmt(Math.round(c.surv/Math.max(1,d.n)))} = ฿${fmt(Math.round(c.rem/Math.max(1,d.n)))} per cycle (budget shared equally across ${d.n} AOCs).`,`ต่อใบรับรอง: ค่าธรรมเนียมเฉลี่ย ${fmt(Math.round(d.total/Math.max(1,d.n)))} บาท − งบประมาณการกำกับดูแล ${fmt(Math.round(c.surv/Math.max(1,d.n)))} บาท = ${fmt(Math.round(c.rem/Math.max(1,d.n)))} บาทต่อรอบ (เฉลี่ยงบประมาณเท่ากันทุกฉบับ ${d.n} ฉบับ)`));
+    if(d.nr&&c.surv>0) say.push(L(`Realised so far: ฿${fmt(d.real)} from ${d.nr} renewed AOC${d.nr===1?'':'s'}, which covers ${pctTxt(d.real/c.surv*100)} of the 5-year surveillance budget.`,`รายได้จริงถึงปัจจุบัน ${fmt(d.real)} บาท จากใบรับรองที่ต่ออายุแล้ว ${d.nr} ฉบับ ครอบคลุมงบประมาณการกำกับดูแล 5 ปีร้อยละ ${pctTxt(d.real/c.surv*100).replace('%','')}`));
     h+=svcBreakEven(d,B,true);
     h+=`<div class="svc-viz"><div class="svc-dw">${svcDonut(d,c)}<div class="svc-lg">${neg
         ?`<span><i style="background:#d9a3a3"></i>${L('Covered by revenue','ส่วนที่รายได้ครอบคลุม')}</span><span><i style="background:#7a1717"></i>${L('Gap','ส่วนที่ขาด')}</span>`
@@ -4269,8 +4324,8 @@ function svcOut(){
       <div class="svc-say">${say.map(t=>`<p>${esc(t)}</p>`).join('')}</div></div>`;
   }
   h+=`<p class="svc-note">${L(
-    `Revenue = the renewal fee of every current AOC, counted once (${d.n} AOCs). No AOC is valid for more than 5 years, so each one renews once between ${l0} and ${l4}; this is the same total as the panel above. Surveillance = annual budget × 5, the same every year. Not counted: applications in progress${d.apps?` (${d.apps})`:''}, new AOCs, changes and inspection expenses${d.expired?`, expired AOCs (${d.expired})`:''}${d.miss?`, and ${d.miss} AOC${d.miss===1?'':'s'} without an estimate`:''}, so revenue is on the low side.${d.mix?' Includes '+d.mix+' mixed-AOC estimate (reading '+S.settings.mixedBasis+RM(', FAD to confirm')+').':''}`,
-    `รายได้ = ค่าต่ออายุของใบรับรองที่มีผลอยู่ทุกฉบับ นับฉบับละครั้ง (${d.n} ฉบับ) เนื่องจากใบรับรองมีอายุไม่เกิน 5 ปี ทุกฉบับจึงต่ออายุหนึ่งครั้งในช่วง ${l0} ถึง ${l4} ยอดนี้จึงเท่ากับยอดรวมในส่วนด้านบน งบประมาณการกำกับดูแล = งบประมาณต่อปี × 5 โดยกำหนดให้เท่ากันทุกปี ไม่รวมคำขอที่อยู่ระหว่างดำเนินการ${d.apps?` (${d.apps} ราย)`:''} ใบรับรองที่ออกใหม่ การเปลี่ยนแปลง และค่าใช้จ่ายในการตรวจสอบ${d.expired?` ใบรับรองที่หมดอายุแล้ว (${d.expired} ฉบับ)`:''}${d.miss?` และใบรับรองที่ยังไม่มีประมาณการ ${d.miss} ฉบับ`:''} รายได้ที่แสดงจึงเป็นตัวเลขขั้นต่ำ${d.mix?` รวมประมาณการใบรับรองประเภทผสม ${d.mix} ฉบับ (แนวทาง ${S.settings.mixedBasis}${RM(' รอ FAD ยืนยัน')})`:''}`)}</p>`;
+    `Revenue = the renewal fee of every current AOC, counted once (${d.n} AOCs${d.nr?`, of which ${d.nr} already renewed and counted as realised`:''}). No AOC is valid for more than 5 years, so each one renews once between ${l0} and ${l4}; this is the same total as the panel above. Surveillance = annual budget × 5, the same every year. Not counted: applications in progress${d.apps?` (${d.apps})`:''}, new AOCs, changes and inspection expenses${d.expired?`, expired AOCs (${d.expired})`:''}${d.miss?`, and ${d.miss} AOC${d.miss===1?'':'s'} without an estimate`:''}, so revenue is on the low side.${d.mix?' Includes '+d.mix+' mixed-AOC estimate (reading '+S.settings.mixedBasis+RM(', FAD to confirm')+').':''}`,
+    `รายได้ = ค่าต่ออายุของใบรับรองที่มีผลอยู่ทุกฉบับ นับฉบับละครั้ง (${d.n} ฉบับ${d.nr?` ในจำนวนนี้ต่ออายุแล้ว ${d.nr} ฉบับ นับเป็นรายได้จริง`:''}) เนื่องจากใบรับรองมีอายุไม่เกิน 5 ปี ทุกฉบับจึงต่ออายุหนึ่งครั้งในช่วง ${l0} ถึง ${l4} ยอดนี้จึงเท่ากับยอดรวมในส่วนด้านบน งบประมาณการกำกับดูแล = งบประมาณต่อปี × 5 โดยกำหนดให้เท่ากันทุกปี ไม่รวมคำขอที่อยู่ระหว่างดำเนินการ${d.apps?` (${d.apps} ราย)`:''} ใบรับรองที่ออกใหม่ การเปลี่ยนแปลง และค่าใช้จ่ายในการตรวจสอบ${d.expired?` ใบรับรองที่หมดอายุแล้ว (${d.expired} ฉบับ)`:''}${d.miss?` และใบรับรองที่ยังไม่มีประมาณการ ${d.miss} ฉบับ`:''} รายได้ที่แสดงจึงเป็นตัวเลขขั้นต่ำ${d.mix?` รวมประมาณการใบรับรองประเภทผสม ${d.mix} ฉบับ (แนวทาง ${S.settings.mixedBasis}${RM(' รอ FAD ยืนยัน')})`:''}`)}</p>`;
   return h;
 }
 /* Password gate (client-side only: hides the panel from casual users; the page source is public) */
@@ -4303,22 +4358,26 @@ document.addEventListener('submit',async e=>{
   else { S.survErr=L('Wrong password. Try again.','รหัสผ่านไม่ถูกต้อง โปรดลองอีกครั้ง'); svcRender('svcPw'); }
 });
 function fmtShort(n){ return n>=1e6 ? (Math.round(n/1e5)/10).toLocaleString('en-US')+'M' : fmt(n); }
+function revSplit(W){
+  return `<div class="rev-split"><div class="rs-r"><small>${L(`Realised · ${W.nr} renewed`,`รายได้จริง · ต่ออายุแล้ว ${W.nr} ฉบับ`)}</small><b><i>฿</i>${fmt(W.real)}</b></div><div class="rs-e"><small>${L(`Expected · ${W.ne} cycle${W.ne===1?'':'s'}`,`คาดว่าจะได้ · ${W.ne} รอบ`)}</small><b><i>฿</i>${fmt(W.exp)}</b></div></div>`;
+}
 function revenueHTML(rows){
   const W=revWindow(rows), Y=W.Y, all=W.total, allN=W.n, allMiss=W.miss, allMix=W.mix;
   const expired=rows.filter(r=>r.band==='expired').length, apps=rows.filter(r=>r.band==='app').length;
   let h=`<div class="card rev"><div class="rev-h"><div><h2>${L('Expected renewal revenue','ประมาณการรายได้จากการต่ออายุ')}</h2>
-    <p class="sub">${L(`The next 5 years (${dfmt(W.start)} – ${dfmt(W.end)}), by the calendar year each AOC expires. Every current AOC renews once in this period.`,`5 ปีข้างหน้า (${dfmt(W.start)} – ${dfmt(W.end)}) จัดตามปีปฏิทินที่ใบรับรองหมดอายุ ใบรับรองที่มีผลอยู่ทุกฉบับจะต่ออายุหนึ่งครั้งในช่วงนี้`)}</p></div></div>
+    <p class="sub">${L(`The next 5 years (${dfmt(W.start)} – ${dfmt(W.end)}), by the calendar year each AOC expires. Every current AOC renews once in this period.`,`5 ปีข้างหน้า (${dfmt(W.start)} – ${dfmt(W.end)}) จัดตามปีปฏิทินที่ใบรับรองหมดอายุ ใบรับรองที่มีผลอยู่ทุกฉบับจะต่ออายุหนึ่งครั้งในช่วงนี้`)}${W.nr?L(' AOCs already renewed count as realised, in the year they were renewed.',' ใบรับรองที่ต่ออายุแล้วนับเป็นรายได้จริงในปีที่ต่ออายุ'):''}</p></div></div>
     ${revChartHTML(Y)}
     <div class="rev-grid">${Y.map((x,i)=>{ const lb=revYearLabel(x.y);
-      return `<div class="rev-y ${i===0?'now':''} ${S.revAll&&x.rs.length?'open':''}"><div class="rev-t"><b>${esc(lb.main)}</b><span>${esc(x.sub)}</span></div>
+      return `<div class="rev-y ${i===0?'now':''} ${S.revAll&&x.n?'open':''}"><div class="rev-t"><b>${esc(lb.main)}</b><span>${esc(x.sub)}</span></div>
         <div class="rev-a"><i>฿</i>${fmt(x.sum)}</div>
-        <div class="rev-n">${L(`${x.rs.length} AOC${x.rs.length===1?'':'s'}`,`${x.rs.length} ฉบับ`)}${x.miss?`<span class="rev-miss">${L(`${x.miss} without an estimate`,`ไม่มีประมาณการ ${x.miss} ฉบับ`)}</span>`:''}</div>
-        ${x.rs.length?`<details class="rev-d" ${S.revAll?'open':''}><summary data-act="revAll">${S.revAll?L('Hide AOCs','ซ่อนรายการ'):L('Show AOCs','แสดงรายการ')}</summary><ul>${x.rs.map(r=>`<li><span>${esc(opName(r.op))}<small>${L('Expires','หมดอายุ')} ${dfmt(r.exp)}</small></span><b>${r.fee!=null?fmt(r.fee):`<em>${esc(WHY()[r.why]||'–')}</em>`}</b></li>`).join('')}</ul></details>`:''}
+        <div class="rev-n">${L(`${x.n} AOC${x.n===1?'':'s'}`,`${x.n} ฉบับ`)}${x.miss?`<span class="rev-miss">${L(`${x.miss} without an estimate`,`ไม่มีประมาณการ ${x.miss} ฉบับ`)}</span>`:''}</div>
+        ${x.n?`<details class="rev-d" ${S.revAll?'open':''}><summary data-act="revAll">${S.revAll?L('Hide AOCs','ซ่อนรายการ'):L('Show AOCs','แสดงรายการ')}</summary><ul>${x.ra.concat(x.rs).map(r=>`<li><span>${esc(opName(r.op))}<small>${r.realised?L('Renewed','ต่ออายุแล้ว')+' '+dfmt(r.ren.date):L('Expires','หมดอายุ')+' '+dfmt(r.exp)}</small></span><b>${r.fee!=null?fmt(r.fee):`<em>${esc(WHY()[r.why]||'–')}</em>`}</b></li>`).join('')}</ul></details>`:''}
       </div>`; }).join('')}</div>
+    ${W.nr?revSplit(W):''}
     <div class="rev-tot"><span>${L(`Next 5 years total · ${allN} AOC${allN===1?'':'s'}`,`รวม 5 ปีข้างหน้า · ${allN} ฉบับ`)}${allMiss?L(` · ${allMiss} without an estimate, not in the total`,` · ${allMiss} ฉบับไม่มีประมาณการ จึงไม่รวมในยอดนี้`):''}${allMix?MIXN(allMix):''}</span><b>฿ ${fmt(all)}</b></div>
     <p class="pnote" style="margin:10px 0 0">${L(
-      `Renewal fees at today’s rates (application fee + principal type + additional types); inspection expenses not included. Each AOC is counted once, in the year it expires: the new AOC can be issued at most 45 days earlier, but the application fee is paid when the operator applies, at least 150 days before expiry. AOCs already expired${expired?` (${expired})`:''} and applications in progress${apps?` (${apps})`:''} are not counted. No AOC is valid for more than 5 years, so each current AOC is counted exactly once; AOCs renewed during the period next expire after it.${W.beyond?` ${W.beyond} AOC${W.beyond===1?'':'s'} with an expiry date more than 5 years away (check the date) are not counted.`:''}`,
-      `ค่าต่ออายุตามอัตราปัจจุบัน (ค่าธรรมเนียมการยื่นคำขอ + แบบอากาศยานหลัก + แบบอากาศยานเพิ่มเติม) ไม่รวมค่าใช้จ่ายในการตรวจสอบ นับใบรับรองแต่ละฉบับครั้งเดียวในปีที่หมดอายุ โดยใบรับรองฉบับใหม่ออกได้ก่อนวันหมดอายุไม่เกิน 45 วัน แต่ค่าธรรมเนียมการยื่นคำขอชำระเมื่อยื่นคำขอ ซึ่งต้องยื่นก่อนวันหมดอายุไม่น้อยกว่า 150 วัน ไม่นับใบรับรองที่หมดอายุแล้ว${expired?` (${expired} ฉบับ)`:''} และคำขอที่อยู่ระหว่างดำเนินการ${apps?` (${apps} ราย)`:''} เนื่องจากใบรับรองมีอายุไม่เกิน 5 ปี จึงนับใบรับรองที่มีผลอยู่ทุกฉบับครั้งเดียว และใบรับรองที่ต่ออายุในช่วงนี้จะหมดอายุอีกครั้งหลังช่วงที่แสดง${W.beyond?` ไม่นับใบรับรอง ${W.beyond} ฉบับ ที่มีวันหมดอายุเกิน 5 ปี (โปรดตรวจสอบวันที่)`:''}`)}</p>${svcHTML(rows)}</div>`;
+      `Renewal fees at today’s rates (application fee + principal type + additional types); inspection expenses not included. Each AOC is counted once, in the year it expires: the new AOC can be issued at most 45 days earlier, but the application fee is paid when the operator applies, at least 150 days before expiry. AOCs already expired${expired?` (${expired})`:''} and applications in progress${apps?` (${apps})`:''} are not counted. No AOC is valid for more than 5 years, so each current AOC is counted exactly once; AOCs renewed during the period next expire after it, unless the new expiry is entered in the pipeline status.${W.beyond?` ${W.beyond} AOC${W.beyond===1?'':'s'} with an expiry date more than 5 years away (check the date) are not counted.`:''}`,
+      `ค่าต่ออายุตามอัตราปัจจุบัน (ค่าธรรมเนียมการยื่นคำขอ + แบบอากาศยานหลัก + แบบอากาศยานเพิ่มเติม) ไม่รวมค่าใช้จ่ายในการตรวจสอบ นับใบรับรองแต่ละฉบับครั้งเดียวในปีที่หมดอายุ โดยใบรับรองฉบับใหม่ออกได้ก่อนวันหมดอายุไม่เกิน 45 วัน แต่ค่าธรรมเนียมการยื่นคำขอชำระเมื่อยื่นคำขอ ซึ่งต้องยื่นก่อนวันหมดอายุไม่น้อยกว่า 150 วัน ไม่นับใบรับรองที่หมดอายุแล้ว${expired?` (${expired} ฉบับ)`:''} และคำขอที่อยู่ระหว่างดำเนินการ${apps?` (${apps} ราย)`:''} เนื่องจากใบรับรองมีอายุไม่เกิน 5 ปี จึงนับใบรับรองที่มีผลอยู่ทุกฉบับครั้งเดียว และใบรับรองที่ต่ออายุในช่วงนี้จะหมดอายุอีกครั้งหลังช่วงที่แสดง เว้นแต่จะบันทึกวันหมดอายุใหม่ไว้ในสถานะการต่ออายุ${W.beyond?` ไม่นับใบรับรอง ${W.beyond} ฉบับ ที่มีวันหมดอายุเกิน 5 ปี (โปรดตรวจสอบวันที่)`:''}`)}</p>${svcHTML(rows)}</div>`;
   return h;
 }
 const shortOp=op=>opName(op).replace(/\s+(Public\s+)?Company\s+Limited$|\s+Joint Stock Company Limited$|\s+Limited$/i,'').replace(/^บริษัท\s+|\s+จำกัด(\s*\(มหาชน\))?$/g,'');
@@ -4335,7 +4394,7 @@ function renderPipe(){
   const all=pipeRows(), rows=all.filter(kindOk), V=IV(), hold=rows.filter(r=>r.band!=='app'&&r.band!=='nodate').sort((a,b)=>a.due.localeCompare(b.due)), apps=rows.filter(r=>r.band==='app'||r.band==='nodate');
   const late=hold.filter(r=>r.band==='overdue'||r.band==='expired'), d30=hold.filter(r=>r.band==='d30'), d90=hold.filter(r=>r.band==='d90');
   const yr=hold.filter(r=>r.de>=0&&r.de<=365), yrFee=yr.reduce((a,r)=>a+(r.fee||0),0), yrMiss=yr.filter(r=>r.fee==null).length, yrMix=yr.filter(r=>r.mixed&&r.fee!=null).length;
-  const F=S.pipeF, collect=hold.filter(r=>r.de!=null&&r.de>=0), shown=F==='collect'?collect:F==='late'?late:F==='90'?hold.filter(r=>r.dd!=null&&r.dd<=90):hold;
+  const F=S.pipeF, collect=hold.filter(r=>r.de!=null&&r.de>=0&&r.stat!=='ren'), shown=F==='collect'?collect:F==='late'?late:F==='90'?hold.filter(r=>r.dd!=null&&r.dd<=90&&!r.stat):hold;
   const B=BAND(), W=WHY();
   let h=!FAD_REMIND?'':`<div class="redbox">${ICON.warn}<div><b>${L('Estimates only','เป็นการประมาณการเท่านั้น')}</b>${L(
       'Fees below are based on this app’s interpretation of the regulations and announcements, and on the Ops Spec and register data loaded in the app. They may be incorrect. Verify with the applicable regulations and recheck with FAD before relying on them.',
@@ -4360,8 +4419,8 @@ function renderPipe(){
   if(shown.length) h+=`<div class="pl-bar"><span>${L(`${shown.length} AOC${shown.length===1?'':'s'}`,`ใบรับรอง ${shown.length} ฉบับ`)}</span><div class="vw" role="group" aria-label="${esc(L('View','มุมมอง'))}"><small>${L('View','มุมมอง')}</small>${VW.map(o=>`<button type="button" class="vw-b ${V===o[0]?'on':''}" data-act="indView" data-val="${o[0]}" aria-pressed="${V===o[0]}">${o[2]}<span>${esc(o[1])}</span></button>`).join('')}</div></div>`;
   const PG=r=>{ if(!r.exp||!r.due) return .5; const s0=addMonthsISO(r.exp,-60), tot=daysBetween(s0,r.due); return Math.max(0,Math.min(1,tot>0?daysBetween(s0,localISO())/tot:1)); };
   const rowHTML=(r,open)=>{
-      const bc=B[r.band][1], st=dueText(r), pg=PG(r), rt=r.dd!=null&&r.dd<0?'late':r.dd!=null&&r.dd<=30?'soon':'';
-      const chips=(r.edited?`<span class="pchip b-grey">${L('Your edits','ข้อมูลที่แก้ไข')}</span>`:'')+(r.mixed?`<span class="pchip b-amber">${L('Mixed AOC: estimate'+RM(', FAD to confirm'),'ใบรับรองประเภทผสม: ประมาณการ'+RM(' รอ FAD ยืนยัน'))}</span>`:'');
+      const bc=B[r.band][1], st=rnText(r), pg=PG(r), rt=r.stat?'':r.dd!=null&&r.dd<0?'late':r.dd!=null&&r.dd<=30?'soon':'';
+      const chips=(r.stat?`<span class="pchip ${r.stat==='ren'?'b-green':'b-blue'}">${esc(statLbl(r))}</span>`:'')+(r.edited?`<span class="pchip b-grey">${L('Your edits','ข้อมูลที่แก้ไข')}</span>`:'')+(r.mixed?`<span class="pchip b-amber">${L('Mixed AOC: estimate'+RM(', FAD to confirm'),'ใบรับรองประเภทผสม: ประมาณการ'+RM(' รอ FAD ยืนยัน'))}</span>`:'');
       return `<div class="prow2 ${bc} ${open?'open':''}" style="--stub:${STUB[bc]||'#1a2e4a'}">
         <button type="button" class="pr-hd" data-act="indTog" data-op="${esc(r.op)}" aria-expanded="${open}"><span class="pr-bar"></span>${finSVG(r.op,18)}
           <span class="pr-m"><span class="pr-l1"><b class="pr-n">${esc(opName(r.op))}</b>${r.fee!=null?`<b class="pr-fee">฿${fmt(r.fee)}</b>`:`<span class="pr-fee pneed">${esc(W[r.why]||'')}</span>`}</span><em>${esc(st)}</em>
@@ -4380,7 +4439,7 @@ function renderPipe(){
   S._indRow={};
   if(!shown.length) h+=`<div class="pempty">${L('Nothing in this view.','ไม่มีรายการในมุมมองนี้')}</div>`;
   else if(V==='icon'){ h+=`<div class="icg">${shown.map(r=>{ S._indRow[r.op]=rowHTML(r,false); const bc=B[r.band][1];
-      return `<button type="button" class="ic-t ${bc}" data-act="indIcon" data-op="${esc(r.op)}" aria-expanded="false" title="${esc(opName(r.op))}">${finSVG(r.op,30)}<b>${esc(shortOp(r.op))}</b><small>${esc(r.due?dShort(r.due):'—')}</small><em>${esc(dueText(r))}</em></button>`; }).join('')}</div>`; }
+      return `<button type="button" class="ic-t ${bc}" data-act="indIcon" data-op="${esc(r.op)}" aria-expanded="false" title="${esc(opName(r.op))}">${finSVG(r.op,30)}<b>${esc(shortOp(r.op))}</b><small>${esc(r.due?dShort(r.due):'—')}</small><em>${esc(rnText(r))}</em></button>`; }).join('')}</div>`; }
   else h+=`<div class="plist2">${shown.map(r=>rowHTML(r,S.indOpen[r.op]!=null?S.indOpen[r.op]:V==='pass')).join('')}</div>`;
   if(apps.length) h+=`<div class="card" style="margin-top:18px"><h2>${L('Applications and AOCs without an expiry date','คำขอที่อยู่ระหว่างดำเนินการ และใบรับรองที่ไม่มีวันหมดอายุ')}</h2><div class="plist">${apps.map(r=>`<div class="prow b-grey slim"><div class="pmain"><div class="pop"><span class="pfin">${finSVG(r.op,15)}</span>${esc(opName(r.op))}</div><div class="pmeta"><span class="pchip b-grey">${esc(B[r.band][0])}</span>${r.n?`<span>${r.n} ${L(r.n===1?'type':'types','แบบ')}</span>`:''}</div></div><div class="pact"><button type="button" class="ib ib-go" data-act="pipeOpen" data-op="${esc(r.op)}" aria-label="${esc(L('Open in calculator','เปิดในหน้าคำนวณ'))}">${ICON.open}</button></div></div>`).join('')}</div></div>`;
   h+=`<p class="pnote">${L('Deadline = expiry minus 150 days. Days are counted from today on this device. Renewal fee = application fee + principal type + additional types; inspection expenses are not included.','กำหนดยื่น = วันหมดอายุลบ 150 วัน นับจำนวนวันจากวันที่ปัจจุบันของอุปกรณ์ ค่าต่ออายุ = ค่าธรรมเนียมการยื่นคำขอ + แบบอากาศยานหลัก + แบบอากาศยานเพิ่มเติม ไม่รวมค่าใช้จ่ายในการตรวจสอบ')}</p>`;
@@ -4978,7 +5037,7 @@ function init(){
     const okIcs=long.length===0 && txt.includes('DTSTART;VALUE=DATE:20270102') && txt.includes('DTEND;VALUE=DATE:20270103') && txt.includes('TRIGGER:-P29DT15H') && txt.includes('\\;') && txt.endsWith('END:VCALENDAR\r\n');
     S.tests.push({id:'PL-03',desc:'Calendar file: dates, reminders, escaping and line folding',expected:true,got:okIcs,pass:okIcs}); }
   S.healthy=S.tests.every(t=>t.pass);
-  restoreEdits();
+  restoreEdits(); syncAutoExpiry();
   /* Install/offline support was withdrawn: remove any offline worker left from a trial version. */
   try{ if('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>{ const w=r.active||r.waiting||r.installing; if(w&&/aoc-sw\.js/.test(w.scriptURL)) r.unregister(); })).catch(()=>{}); }catch(e){}
   document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') persistNow(); });
