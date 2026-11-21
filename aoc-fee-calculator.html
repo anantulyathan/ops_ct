@@ -481,12 +481,9 @@ body.pv-open .toast{z-index:120}
 .vlist b{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;color:#1a2e4a}.vlist small{color:#4a5568;margin-left:8px}.vlist ul{margin:6px 0 0 18px;padding:0;color:#2d3748;font-size:13.5px;line-height:1.5}
 .rpt{display:inline-flex;align-items:center;gap:6px;flex:none;margin-left:10px;padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.10);color:#fff;font-size:12.5px;font-weight:600;cursor:pointer}
 .rpt svg{width:16px;height:16px}.rpt:hover{background:rgba(255,255,255,.18)}
-@media (max-width:959px){ .rpt{margin-left:auto}.rpt+.langsw{margin-left:8px} }
+@media (max-width:959px){ .rpt{margin-left:auto}.rpt+.ctl{margin-left:8px} }
 @media (max-width:600px){ .rpt{padding:7px 9px}.rpt span{display:none} }
 @media print{ .rpt{display:none!important} }
-.langsw{display:flex;padding:3px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.2);margin-left:10px;flex:none}
-.langsw button{border:0;background:transparent;color:rgba(255,255,255,.8);padding:6px 11px;border-radius:999px;font-size:12.5px;font-weight:600;cursor:pointer}
-.langsw button.on{background:#fff;color:var(--navy);box-shadow:0 2px 6px rgba(0,0,0,.2)}
 .hero h1{line-height:1.25}
 /* summary mode bar */
 .modebar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
@@ -523,7 +520,7 @@ body.pv-open .toast{z-index:120}
 .rp-tot small{display:block;font-size:8.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;opacity:.8}
 .rp-tot b{display:block;font-size:17px;font-variant-numeric:tabular-nums}
 .rp[lang=th],.rp:lang(th){font-family:'Noto Sans Thai','Inter',sans-serif}
-@media (max-width:959px){ .langsw{margin-left:auto} }
+@media (max-width:959px){ .ctl{margin-left:auto} }
 
 
 /* Thai: no letter-spacing or uppercase tracking on Thai script */
@@ -1663,6 +1660,41 @@ html.night .tglass b{color:#e6eef8}html.night .tglass span{color:#a9bbd1}
 @keyframes tSpin{to{transform:rotate(360deg)}}
 .type-top{overflow:visible}
 @media print{.tping b{display:none}}
+
+/* ---------- v3.80 header switches + Simple view ---------- */
+.ctl{display:flex;flex-direction:column;gap:7px;flex:none;margin-left:10px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:7px 10px}
+.ctl .mt{display:flex;align-items:center;gap:7px;border:0;background:transparent;padding:0;margin:0;color:#fff;cursor:pointer;font:inherit;text-align:left}
+.ctl .mt:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:6px}
+.ctl .led{width:8px;height:8px;border-radius:50%;flex:none;background:var(--c);box-shadow:0 0 6px var(--c);animation:ctlblink var(--d,1.5s) ease-in-out infinite}
+.ctl .mt{--gr:#52b58a;--bl:#4f95d8}
+.ctl .mt.v{--c:var(--gr);--tk:var(--gr);--d:1.5s}.ctl .mt.v.on{--c:var(--bl);--tk:var(--bl)}
+.ctl .mt.l{--c:var(--gr);--tk:var(--gr);--d:2.4s}.ctl .mt.l.on{--c:var(--bl);--tk:var(--bl)}
+@keyframes ctlblink{0%,100%{opacity:1}50%{opacity:.35}}
+.ctl .t{position:relative;flex:none;width:32px;height:18px;border-radius:9px;background:var(--tk);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);transition:background .18s}
+.ctl .t i{position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);transition:left .18s}
+.ctl .mt.on .t i{left:17px}
+.ctl .lab{position:relative;display:inline-grid;min-width:50px;font-size:12px;font-weight:600;line-height:1.2}
+.ctl .lab span{grid-area:1/1;transition:opacity .18s}
+.ctl .lab .b{opacity:0}.ctl .mt.on .lab .a{opacity:0}.ctl .mt.on .lab .b{opacity:1}
+@media (max-width:600px){ .ctl{padding:6px 8px;gap:6px}.ctl .lab{min-width:44px;font-size:11.5px} }
+@media (max-width:359px){ .hero-in{gap:8px}.ctl{margin-left:6px;padding:5px 6px}.ctl .mt{gap:5px}.ctl .lab{min-width:38px;font-size:11px}.rpt+.ctl{margin-left:6px}.rpt{padding:6px 7px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.tiles.three{grid-template-columns:repeat(3,minmax(0,1fr))}.tile{min-width:0;flex-direction:column;align-items:flex-start;gap:8px;padding:12px}.tile .ic{width:34px;height:34px} }
+@media (prefers-reduced-motion:reduce){ .ctl .led{animation:none}.ctl .t,.ctl .t i,.ctl .lab span{transition:none} }
+@media print{ .ctl{display:none!important} }
+body[data-view="simple"] .opbar .fleetline:not(.muted) > svg,body[data-view="simple"] .opbar .fleetline:not(.muted) > span,body[data-view="simple"] .hero #heroSub,body[data-view="simple"] .hero .grid,body[data-view="simple"] .hero .aur{display:none}
+body[data-view="simple"] #shell .card .sub,body[data-view="simple"] #shell .sechead p,body[data-view="simple"] #shell .sechead .ey,body[data-view="simple"] #shell .eyebrow,
+body[data-view="simple"] #shell .afmnote,body[data-view="simple"] #shell .autochip,body[data-view="simple"] #shell .mp-note,body[data-view="simple"] #shell .fleetline:not(:has(> button)),body[data-view="simple"] #shell .fleetline:has(> button) > :not(button),
+body[data-view="simple"] #shell .note.n-info,body[data-view="simple"] #shell .note.n-warn,body[data-view="simple"] #shell .dcx,body[data-view="simple"] #shell .foot,
+body[data-view="simple"] #shell .pnote,body[data-view="simple"] #shell .globe .gnote,body[data-view="simple"] #shell .dflag,body[data-view="simple"] #shell .line .t .ref,
+body[data-view="simple"] #shell .sechead .orb,body[data-view="simple"] #shell .fxring,body[data-view="simple"] #shell .opt.vw > span > .thai{display:none!important}
+body[data-view="simple"] #shell .sechead::before,body[data-view="simple"] #shell .sechead::after{display:none}
+body[data-view="simple"] #shell :not(.globe,.globe *),body[data-view="simple"] #shell :not(.globe,.globe *)::before,body[data-view="simple"] #shell :not(.globe,.globe *)::after{animation:none!important;transition:none!important}
+body[data-view="simple"] #shell .card,body[data-view="simple"] #shell .sechead{box-shadow:none;background-image:none}
+/* Settings view row: green = Detailed, blue = Simple (never grey) */
+.opt.vw .sw,.opt.vw .sw.on{background:#52b58a}.opt.vw .sw.on{background:#4f95d8}
+.opt.vw .tag,.opt.vw .tag.off{background:#52b58a}.opt.vw.on .tag{background:#4f95d8}
+body[data-view="simple"] #shell .card h2{margin-bottom:12px}
+body[data-view="simple"] #shell .lbl small,body[data-view="simple"] #shell .sgrp small,body[data-view="simple"] #shell .stepey,body[data-view="simple"] #shell .tile .thai,body[data-view="simple"] #shell .stop .th,body[data-view="simple"] #shell .mode > span,body[data-view="simple"] #shell .opt .thai,body[data-view="simple"] #shell .type-fee > span,body[data-view="simple"] #shell .tlx-tt p,body[data-view="simple"] #shell .tlx-ey,body[data-view="simple"] #shell .result-top .cap,body[data-view="simple"] #shell .globe .gcap small,body[data-view="simple"] #shell .legend,body[data-view="simple"] #shell .line .r,body[data-view="simple"] #shell .empty{display:none!important}
+body[data-view="simple"] .fleetline:not(.muted):has(> button){background:transparent!important;box-shadow:none!important;padding:0;color:inherit!important}
 </style>
 </head>
 <body data-sec="cert">
@@ -1678,7 +1710,7 @@ html.night .tglass b{color:#e6eef8}html.night .tglass span{color:#a9bbd1}
     </div>
     <div class="badge" id="ruleBadge"><i></i><span>Rule set loading…</span></div>
     <button type="button" class="rpt" id="rptBtn" data-act="report"></button>
-    <div class="langsw" id="langSw" role="group" aria-label="Language"></div>
+    <div class="ctl" id="langSw" role="group" aria-label="View and language"></div>
   </div>
 </header>
 
@@ -2476,8 +2508,10 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.79', APP_DATE='2026-11-21';
+const APP_VERSION='3.80', APP_DATE='2026-11-21';
 const APP_LOG=[
+  {v:'3.80',d:'2026-11-21',en:['New Simple / Detailed view switch at the top of every page and in Settings. Simple keeps the inputs, results and errors, and hides instructions, field hints, notes, line details, step-by-step calculations and animations (the globe stays). Detailed is the default and is the same as before.','The language control at the top is now a small switch, stacked under the view switch, each with a blinking light.','Printed reports, PDFs and shared summaries are not affected by the view.'],
+   th:['เพิ่มสวิตช์แบบละเอียด/แบบย่อที่ด้านบนของทุกหน้าและในการตั้งค่า แบบย่อคงช่องกรอก ผลการคำนวณ และข้อผิดพลาดไว้ และซ่อนคำอธิบาย คำแนะนำประกอบช่องกรอก หมายเหตุ รายละเอียดรายการ ขั้นตอนการคำนวณ และภาพเคลื่อนไหว (ยังแสดงลูกโลก) ค่าเริ่มต้นคือแบบละเอียดซึ่งเหมือนเดิม','ตัวเลือกภาษาด้านบนเปลี่ยนเป็นสวิตช์ขนาดเล็กซ้อนใต้สวิตช์มุมมอง แต่ละสวิตช์มีไฟกะพริบ','รายงานที่พิมพ์ ไฟล์ PDF และสรุปที่ส่งต่อไม่ได้รับผลจากมุมมองนี้']},
   {v:'3.79',d:'2026-11-21',en:['Certificate: the Principal / Additional label is now a plain badge. A single soft light sweep crosses it when a card becomes the principal. The airport letter board is removed.','Certificate: when you tap “Make principal” or an edit makes another card the principal, the cards glide to their new places. The fee on a card glows briefly when its amount changes, and a card that becomes a duplicate gives a short shake.','Result card: a ring shows each part of the fee (application, certificate, additional types) with its percentage, and draws itself in when the result first appears.','Renewal timeline: the days-left number sits inside a progress ring that is green, amber or red with the deadline.','Renewal revenue chart: the bars grow in when the chart scrolls into view.','The title bar that appears when you scroll shifts its colour gently with scroll depth.','All motion stops with Reduce Motion and does not appear in print or PDF.'],
    th:['ใบรับรอง: ป้ายแบบหลัก/แบบเพิ่มเติมเป็นป้ายเรียบ มีแสงวาบผ่านหนึ่งครั้งเมื่อการ์ดกลายเป็นแบบหลัก และนำป้ายแสดงเที่ยวบินแบบสนามบินออกแล้ว','ใบรับรอง: เมื่อกด “ตั้งเป็นแบบหลัก” หรือเมื่อการแก้ไขทำให้การ์ดอื่นเป็นแบบหลัก การ์ดจะเลื่อนไปยังตำแหน่งใหม่อย่างนุ่มนวล ค่าธรรมเนียมบนการ์ดจะเรืองแสงสั้น ๆ เมื่อยอดเปลี่ยน และการ์ดที่ซ้ำกันจะสั่นเล็กน้อย','การ์ดผลลัพธ์: เพิ่มวงแหวนแสดงสัดส่วนของค่าธรรมเนียม (ค่ายื่นคำขอ ค่าใบรับรอง ค่าเพิ่มแบบ) พร้อมร้อยละ และวาดขึ้นเมื่อแสดงผลครั้งแรก','กำหนดเวลาการต่ออายุ: ตัวเลขจำนวนวันที่เหลืออยู่ในวงแหวนความคืบหน้า เป็นสีเขียว เหลืองอำพัน หรือแดงตามกำหนดยื่น','กราฟรายได้จากการต่ออายุ: แท่งกราฟเติบโตขึ้นเมื่อเลื่อนมาถึงกราฟ','แถบชื่อหน้าที่ปรากฏเมื่อเลื่อนลง เปลี่ยนโทนสีอย่างนุ่มนวลตามระยะการเลื่อน','การเคลื่อนไหวทั้งหมดหยุดเมื่อเปิดการลดการเคลื่อนไหว และไม่ปรากฏในการพิมพ์หรือ PDF']},
   {v:'3.78',d:'2026-11-21',en:['Certificate: if the same aircraft type is on two cards, both cards turn red and stay red until one is changed. The result stays blocked while the duplicate is there.','Certificate: new “Make principal” button on each additional card. It is available only when that card has the same certificate fee as the principal (a tie), and moves the card, with its type, area, weight class and count, to the top. If the card has a lower fee the button is greyed out, with the rule: ประกาศ กพท. 2561 ข้อ 3(1) 2), the “ทั้งนี้” paragraph (the first type is charged at the highest rate).','Certificate: when you change a card so that another card now has the highest certificate fee, that card moves to the top as the principal automatically, with a short message. If fees are equal, the top card stays.'],
@@ -2613,6 +2647,7 @@ const S={
   tab:'cert', healthy:true, tests:[],
   lang: load('aoc.lang')==='th'?'th':'en',
   sumMode: load('aoc.sumMode')==='simple'?'simple':'detailed',
+  view: load('aoc.view')==='simple'?'simple':'detailed',
   revAll:false, survBudget: load('aoc.survBudget')||'16000000', survOpen:false, survUnlocked:false, survAsk:false, survErr:'',
   tx:'renewal',
   types:[{id:nid(),ac:'',name:'',cat:'AEROPLANE',heavy:true,area:'',mtow:'',count:1,showMtow:false,legacyConfirm:null}],
@@ -3353,6 +3388,7 @@ function renderSettings(){
   const grp=(t,d)=>`<div class="sgrp"><h3>${t}</h3><small>${d}</small></div>`;
   let h=grp(L('General','ทั่วไป'),L('Language and error reporting','ภาษาและการแจ้งข้อผิดพลาด'));
   h+=`<div class="card"><div class="eyebrow">${L('Settings','ตั้งค่า')}</div><h2>${L('Language','ภาษา')}</h2><p class="sub">${L('Applies to the app and to printed reports. Saved on this device.','ใช้กับทั้งระบบและรายงานที่พิมพ์ บันทึกไว้ในอุปกรณ์นี้')}</p>${seg([['en','English'],['th','ภาษาไทย']],S.lang,'lang','','',true)}</div>`;
+  h+=`<div class="card"><h2>${L('View','มุมมอง')}</h2><p class="sub">${L('Simple view shows only inputs, results and errors on every page. Same switch as at the top. Printed reports and PDFs are not affected. Saved on this device.','แบบย่อแสดงเฉพาะช่องกรอก ผลการคำนวณ และข้อผิดพลาดในทุกหน้า เป็นสวิตช์เดียวกับด้านบน ไม่มีผลต่อรายงานที่พิมพ์และไฟล์ PDF บันทึกไว้ในอุปกรณ์นี้เท่านั้น')}</p><div class="opts"><button type="button" class="opt vw ${S.view==='simple'?'on':''}" data-act="viewTog" role="switch" aria-checked="${S.view==='simple'}"><span class="sw ${S.view==='simple'?'on':''}" aria-hidden="true"><i></i></span><span><b>${L('Simple view','มุมมองแบบย่อ')}<span class="tag">${S.view==='simple'?L('Simple','แบบย่อ'):L('Detailed','ละเอียด')}</span></b><span class="thai">${L('Inputs, results and errors only, on every page.','แสดงเฉพาะช่องกรอก ผลการคำนวณ และข้อผิดพลาด ในทุกหน้า')}</span></span></button></div></div>`;
   h+=`<div class="card"><h2>${L('Appearance','รูปลักษณ์')}</h2><p class="sub">${L('Night mode darkens the app. Auto turns it on from 19:00 to 06:00. Boarding passes, globes and tail fins keep their colours. Printed reports and PDFs are not affected. Saved on this device.','โหมดกลางคืนปรับหน้าจอเป็นโทนมืด อัตโนมัติจะเปิดระหว่าง 19.00–06.00 น. บัตรโดยสาร ลูกโลก และแพนหางคงสีเดิม ไม่มีผลต่อรายงานที่พิมพ์และไฟล์ PDF บันทึกไว้ในอุปกรณ์นี้')}</p>${seg([['light',L('Light','สว่าง')],['night',L('Night','กลางคืน')],['auto',L('Auto','อัตโนมัติ')]],load('aoc.theme')||'light','theme','','',true)}</div>`;
   h+=`<div class="card"><h2>${L('Report an error','แจ้งข้อผิดพลาด')}</h2><p class="sub">${L('Opens a new email to anan.t@caat.or.th in your mail app, with the rule set, screen, operator and total filled in. Add a short description and send.','เปิดอีเมลฉบับใหม่ถึง anan.t@caat.or.th ในแอปอีเมล พร้อมระบุชุดอัตรา หน้าจอ ผู้ดำเนินการเดินอากาศ และยอดรวมให้โดยอัตโนมัติ กรุณาเพิ่มรายละเอียดโดยย่อแล้วส่ง')}</p><button type="button" class="btn btn-s" data-act="report">${ICON.mail} ${L('Report error','แจ้งข้อผิดพลาด')}</button></div>`;
   h+=grp(L('Protected settings','การตั้งค่าที่ต้องใช้รหัสผ่าน'),L('Balloons, Certificate and Changes · one password','บัลลูน ค่าใบรับรอง และการเปลี่ยนแปลง · รหัสผ่านเดียว'));
@@ -3642,7 +3678,13 @@ function renderHero(){
   document.getElementById('heroTitle').textContent=L('AOC Fee Calculator','คำนวณค่าธรรมเนียมใบรับรองผู้ดำเนินการเดินอากาศ');
   document.getElementById('heroSub').textContent=L('ค่าธรรมเนียมใบรับรองผู้ดำเนินการเดินอากาศ · CT / OPS','AOC Fee Calculator · กองรับรองผู้ดำเนินการเดินอากาศ');
   const rb=document.getElementById('rptBtn'); if(rb){ rb.innerHTML=`${ICON.mail}<span>${L('Report error','แจ้งข้อผิดพลาด')}</span>`; rb.title=L('Report an error to anan.t@caat.or.th','แจ้งข้อผิดพลาดไปที่ anan.t@caat.or.th'); rb.setAttribute('aria-label',rb.title); }
-  document.getElementById('langSw').innerHTML=`<button type="button" class="${LANG==='en'?'on':''}" data-act="lang" data-val="en">EN</button><button type="button" class="${LANG==='th'?'on':''}" data-act="lang" data-val="th">ไทย</button>`;
+  { const sm=S.view==='simple', th=LANG==='th';
+    document.body.dataset.view=S.view;
+    const vt0=L('Simple view','มุมมองแบบย่อ');
+    document.getElementById('langSw').innerHTML=
+      `<button type="button" class="mt v ${sm?'on':''}" data-act="viewTog" role="switch" aria-checked="${sm}" aria-label="${vt0}" title="${vt0}"><i class="led"></i><span class="t"><i></i></span><span class="lab"><span class="a">${L('Detailed','ละเอียด')}</span><span class="b">${L('Simple','แบบย่อ')}</span></span></button>`+
+      `<button type="button" class="mt l ${th?'on':''}" data-act="lang" data-val="${th?'en':'th'}" role="switch" aria-checked="${th}" aria-label="${L('Thai language','ภาษาไทย')}" title="${L('Language: EN / ไทย','ภาษา: EN / ไทย')}"><i class="led"></i><span class="t"><i></i></span><span class="lab"><span class="a">EN</span><span class="b">ไทย</span></span></button>`;
+  }
   const vt=document.getElementById('verTag'); if(vt){ vt.textContent='v'+APP_VERSION; vt.title=L('Version '+APP_VERSION+' · '+APP_DATE+'. Click for version history.','เวอร์ชัน '+APP_VERSION+' · '+APP_DATE+' คลิกเพื่อดูประวัติเวอร์ชัน'); }
   const badge=document.getElementById('ruleBadge'); const n=S.tests.length;
   badge.classList.toggle('bad',!S.healthy); badge.style.display=S.healthy?'none':'';
@@ -4623,7 +4665,7 @@ function confirmReset(){
 }
 function resetApp(c){
   clearTimeout(persistT);
-  try{ const keep=load('aoc.lang'); Object.keys(localStorage).filter(k=>k.startsWith('aoc.')).forEach(k=>localStorage.removeItem(k)); if(keep) store('aoc.lang',keep); }catch(e){}
+  try{ const keep=load('aoc.lang'), keepV=load('aoc.view'); Object.keys(localStorage).filter(k=>k.startsWith('aoc.')).forEach(k=>localStorage.removeItem(k)); if(keep) store('aoc.lang',keep); if(keepV) store('aoc.view',keepV); }catch(e){}
   S.opCache={}; S.staleOps={}; S.customOps=[]; touched.clear();
   S.settings.areaExpansionBasis=RULESET.settings.areaExpansionBasis; S.settings.mixedBasis='A'; setMixedBasis('A'); S.settings.partMonth='up'; S.settings.expandMode='literal'; S.settings.capMode='main'; setCapMode('main'); store('aoc.capmode','main'); S.settings.sumInc={initial:true,renewal:true,change:true,insp:true}; ['initial','renewal','change','insp'].forEach(k=>store('aoc.sum.'+k,'1')); S.settings.cover=true; S.settings.notify={open:false,ack:false,fad:false}; setFadRemind(false); ['open','ack','fad'].forEach(k=>store('aoc.n.'+k,'0')); S.sumMode='detailed'; S.pipeF='all'; S.survBudget='16000000'; S.survOpen=false; S.survUnlocked=false; S.survAsk=false; S.survErr='';
   S.addingOp=false; S.opDraft=''; S.operator=''; freshOp(''); S.expiry=''; S.expiryAuto=false; S.tx='renewal'; S.txAuto=false;
@@ -4886,6 +4928,7 @@ document.addEventListener('click',e=>{
   const t=id?findT(id):null, a=id?findA(id):null, c=S.change;
   switch(act){
     case 'tab': S.tab=v; renderAll(); window.scrollTo({top:0,behavior:'smooth'}); return;
+    case 'viewTog': S.view=S.view==='simple'?'detailed':'simple'; store('aoc.view',S.view); renderHero(); if(S.tab==='settings') rerenderKeepScroll(); return;
     case 'lang': S.lang=v==='th'?'th':'en'; setLang(S.lang); store('aoc.lang',S.lang); renderAll(); return;
     case 'sumMode': S.sumMode=v==='simple'?'simple':'detailed'; store('aoc.sumMode',S.sumMode); break;
     case 'sumKind': S.sumKind=['AEROPLANE','HELICOPTER'].includes(v)?v:'all'; break;
