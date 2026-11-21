@@ -175,7 +175,11 @@ body[data-sky=night] .hero{background:radial-gradient(600px 240px at 85% 0%,rgba
 .rp-cover .cv-s{margin-top:8px;font-size:17px;font-weight:700;color:#2a9d8f}
 .rp-cover .cv-m{margin-top:14mm;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:12px;color:#5b6b80;max-width:120mm}
 .rp-cover .cv-m b{color:#1a2e4a;font-weight:700}
-.rp-cover .cv-plane{position:absolute;right:-30mm;bottom:22mm;width:150mm;height:150mm;color:#eef2f7;transform:rotate(45deg)}
+.rp-cover .cv-plane{position:absolute;right:-30mm;bottom:22mm;width:150mm;height:150mm;color:#eef2f7;transform:rotate(45deg);z-index:0;pointer-events:none}
+/* v3.74: everything on the cover sits above the plane and the watermark */
+.rp-cover>.cv-org,.rp-cover>.cv-t,.rp-cover>.cv-s,.rp-cover>.cv-m{position:relative;z-index:2}
+.rp-cover>.cv-foot{z-index:2}
+.rp-cover .cv-fin{z-index:1}
 .rp-cover .cv-plane svg{width:100%;height:100%}
 .rp-cover .cv-foot{margin-top:auto;margin-bottom:14px;padding-top:8px;border-top:1px solid #d9e1ea;font-size:9.5px;color:#718096;display:flex;justify-content:space-between;position:relative}
 .rp-cover .cv-bot{position:absolute;left:0;right:0;bottom:0;height:6px;background:#5f8f6f}
@@ -452,6 +456,9 @@ body.pv-open .toast{z-index:120}
 .pv-scroll{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:18px 12px 40px}
 .pv-page{width:794px;min-height:1123px;margin:0 auto;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.35);padding:45px 49px 53px;box-sizing:border-box;position:relative;transform:translateZ(0);overflow:hidden;border-radius:2px;color:#1a2e4a}
 .pv-page .rp-wm{position:absolute;top:520px}
+/* v3.74: report content always sits above the watermark and cover plane, so neither can hide text */
+.rp>*:not(.rp-wm):not(.rp-ico){position:relative;z-index:1}
+.rp>.rp-ico{z-index:3}
 @media print{ .pv{display:none!important} }
 .btn-lg{padding:13px 18px;font-size:14.5px;border-radius:13px}
 
@@ -2441,8 +2448,9 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.73', APP_DATE='2026-11-21';
+const APP_VERSION='3.74', APP_DATE='2026-11-21';
 const APP_LOG=[
+  {v:'3.74',d:'2026-11-21',en:['Reports: the aeroplane on the cover page no longer covers text. Cover text (office, title, operator, AOC number, request type, date, footer) now sits above the aeroplane, and report content in general sits above the “ESTIMATE – NOT AN INVOICE” watermark, in the printout, PDF and preview, for the Summary and Industry reports.'],th:['รายงาน: รูปเครื่องบินบนหน้าปกไม่บังข้อความอีกต่อไป ข้อความบนหน้าปก (หน่วยงาน ชื่อรายงาน ผู้ดำเนินการ เลขที่ใบรับรอง ประเภทคำขอ วันที่ และท้ายหน้า) อยู่เหนือรูปเครื่องบิน และเนื้อหารายงานทั้งหมดอยู่เหนือลายน้ำ “ประมาณการ – มิใช่ใบแจ้งหนี้” ทั้งในรายงานที่พิมพ์ ไฟล์ PDF และตัวอย่างก่อนพิมพ์ ทั้งรายงานสรุปและรายงานภาพรวมอุตสาหกรรม']},
   {v:'3.73',d:'2026-11-21',en:['Settings › Certificate (password protected): new Statutory maximum setting for the ฿20,000,000 per certificate in fee schedule item (28/1). 1 main certificate fee only (default, as before), 2 cap the total of all AOC fee lines, shown as an adjustment line, 3 show both amounts for FAD. The detailed calculation, Summary, reports and CSV follow the option. To be confirmed by LEG.'],th:['ตั้งค่า › ค่าใบรับรอง (ต้องใช้รหัสผ่าน): เพิ่มการตั้งค่าอัตราขั้นสูง 20,000,000 บาทต่อฉบับ ตามอัตราค่าธรรมเนียม (๒๘/๑) ได้แก่ 1 เฉพาะค่าใบรับรองหลัก (ค่าเริ่มต้น เหมือนเดิม) 2 จำกัดยอดรวมค่าธรรมเนียมทุกรายการ โดยแสดงเป็นรายการปรับลด 3 แสดงทั้งสองจำนวนเพื่อให้ FAD พิจารณา รายละเอียดการคำนวณ หน้าสรุป รายงาน และไฟล์ CSV เป็นไปตามตัวเลือกที่เลือก ต้องได้รับการยืนยันจาก LEG']},
   {v:'3.72',d:'2026-11-21',en:['Certificate, Changes and Inspection: a “See Detailed Calculation” link at the bottom right of the result card unfolds every step of the calculation, one by one: how each type is classified, the area, the principal type, each rate with its formula and exact numbers, the legal reference (Ministerial Regulation, CAAT fee Announcement, Section 5/1 Regulation), the statutory maximum check and the final sum. Collapsed by default; built from the live result, so it always matches the figures on screen.'],
    th:['ใบรับรอง การเปลี่ยนแปลง และการตรวจสอบ: เพิ่มลิงก์ “ดูรายละเอียดการคำนวณ” ที่มุมขวาล่างของการ์ดผลลัพธ์ เมื่อกดจะแสดงขั้นตอนการคำนวณทีละขั้น ได้แก่ การจัดประเภทอากาศยาน พื้นที่ปฏิบัติการ แบบอากาศยานหลัก อัตราแต่ละรายการพร้อมสูตรและตัวเลข ข้อกฎหมายที่อ้างอิง (กฎกระทรวง ประกาศ กพท. ระเบียบ 5/1) การตรวจสอบอัตราขั้นสูง และผลรวม ซ่อนไว้เป็นค่าเริ่มต้น และสร้างจากผลการคำนวณจริงจึงตรงกับตัวเลขบนหน้าจอเสมอ']},
