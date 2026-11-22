@@ -2539,8 +2539,10 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.83', APP_DATE='2026-11-21';
+const APP_VERSION='3.85', APP_DATE='2026-11-22';
 const APP_LOG=[
+  {v:'3.85',d:'2026-11-22',en:['The international globe no longer pauses on a Bangkok-centred view. The India view is now the main view: the replay returns to it between East Asia, Australia and the Middle East, and after being dragged and left alone for 3 seconds the globe glides back to it. Each view now holds 1.5 seconds longer.'],th:['ลูกโลกพื้นที่ปฏิบัติการต่างประเทศไม่หยุดที่มุมมองที่มีกรุงเทพฯ อยู่กลางอีกต่อไป มุมมองอินเดียเป็นมุมมองหลัก โดยจะกลับมาที่มุมมองนี้คั่นระหว่างเอเชียตะวันออก ออสเตรเลียและตะวันออกกลาง และเมื่อถูกลากแล้วปล่อยไว้ 3 วินาที ลูกโลกจะเลื่อนกลับมาที่มุมมองนี้ แต่ละมุมมองค้างนานขึ้น 1.5 วินาที']},
+  {v:'3.84',d:'2026-11-22',en:['The international globe now opens on the India view (about 26 degrees from Bangkok) and the slow replay starts from there. After being dragged and left alone it still glides back to the Bangkok-centred view.'],th:['ลูกโลกพื้นที่ปฏิบัติการต่างประเทศเริ่มที่มุมมองอินเดีย (ห่างจากกรุงเทพฯ ประมาณ 26 องศา) และเล่นต่อจากจุดนั้น เมื่อถูกลากแล้วปล่อยไว้ ลูกโลกยังคงเลื่อนกลับมาที่มุมมองที่มีกรุงเทพฯ อยู่กลาง']},
   {v:'3.83',d:'2026-11-21',en:['The international globe now glides back to the Bangkok view after 3 seconds of being left alone (was 8 seconds).'],th:['ลูกโลกพื้นที่ปฏิบัติการต่างประเทศจะเลื่อนกลับมาที่มุมมองกรุงเทพฯ เมื่อไม่มีการสัมผัสนาน 3 วินาที (เดิม 8 วินาที)']},
   {v:'3.82',d:'2026-11-21',en:['The Other regions (international) globe no longer spins all the way round. It now sways slowly between views (East Asia, Australia, India and the Middle East), returning to a Bangkok-centred view between each one, so Bangkok stays on the front of the globe as the hub. Drag to look at any angle; if Bangkok is out of view and the globe is left alone for 8 seconds, it glides back to the Bangkok view and the slow replay resumes. With Reduce Motion on, the globe stays still on the Bangkok view.','The glow of the sun and the moon, and the tint they put on the edge of the globe, is about 15% stronger. The edge tint is now cool blue when the moon is showing.'],
    th:['ลูกโลกพื้นที่ปฏิบัติการต่างประเทศไม่หมุนรอบตัวอีกต่อไป แต่แกว่งช้าๆ ผ่านมุมมองเอเชียตะวันออก ออสเตรเลีย อินเดียและตะวันออกกลาง โดยกลับมาที่มุมมองที่มีกรุงเทพฯ อยู่กลางทุกครั้งคั่นระหว่างมุมมอง เพื่อให้กรุงเทพฯ อยู่ด้านหน้าของลูกโลกในฐานะศูนย์กลาง ลากเพื่อดูได้ทุกมุม หากกรุงเทพฯ อยู่นอกมุมมองและไม่มีการสัมผัสลูกโลกนาน 8 วินาที ลูกโลกจะเลื่อนกลับมาที่มุมมองกรุงเทพฯ และเล่นต่อ เมื่อเปิดลดการเคลื่อนไหว ลูกโลกจะหยุดนิ่งที่มุมมองกรุงเทพฯ','แสงเรืองของดวงอาทิตย์และดวงจันทร์ รวมถึงสีที่ส่องต่อขอบลูกโลก เข้มขึ้นประมาณ 15% และเมื่อแสดงดวงจันทร์ สีที่ขอบลูกโลกจะเป็นโทนฟ้าเย็น']},
@@ -2757,7 +2759,7 @@ let GEO=null; const GST={}; const GSPIN=new Set(); let gLoop=0;
 const BKK=[100.75,13.69];
 const GROUTES={DOM:[[98.96,18.77],[99.88,20.0],[102.79,17.39],[102.78,16.47],[104.87,15.25],[102.32,12.27],[100.06,9.55],[98.31,8.11],[98.99,8.1],[100.39,6.93]],HELI_DOM:[[99.95,12.64],[101.0,12.68],[101.3,9.1],[100.6,7.19],[98.31,8.11],[98.96,18.77]],ASIA:[[140.39,35.77],[126.45,37.46],[116.6,40.08],[121.8,31.14],[113.92,22.31],[121.23,25.08],[121.02,14.51],[105.81,21.22],[103.99,1.36],[106.66,-6.13],[77.1,28.56],[72.87,19.09],[79.88,7.18]],INTL:[[139.78,35.55],[126.45,37.46],[77.1,28.56],[151.18,-33.94],[174.79,-37.0],[55.36,25.25],[31.41,30.12],[36.93,-1.32],[28.24,-26.13],[-0.45,51.47],[2.55,49.0],[37.41,55.97],[-73.78,40.64],[-122.38,37.62],[-99.07,19.44],[-46.47,-23.43],[-70.79,-33.39]],HELI_INTL:[[101.71,2.74],[103.99,1.36],[96.13,16.9],[104.84,11.55],[102.56,17.99]]};
 const gRT=(cat,v)=>GROUTES[cat==='HELICOPTER'&&v==='DOM'?'HELI_DOM':v];
-const GVIEW={DOM:[[-100.8,-13.2],5.2],ASIA:[[-98,-24],1.45],INTL:[[-80,-12],.92],HELI_INTL:[[-101,-12],1.95],'':[[-100,-15],1.05]};
+const GVIEW={DOM:[[-100.8,-13.2],5.2],ASIA:[[-98,-24],1.45],INTL:[[-74,-14],.92],HELI_INTL:[[-101,-12],1.95],'':[[-100,-15],1.05]};
 function geoData(){
   if(GEO) return GEO; if(!window.d3||!d3.geoOrthographic||!window.topojson) return null;
   try{ const w=JSON.parse(document.getElementById('geoData').textContent), f=topojson.feature(w,w.objects.countries).features, asia=new Set();
@@ -2849,16 +2851,16 @@ function globeDraw(g,now){
     if(g.spin||g.anim||g.mot){ const pr=((now||0)%1600)/1600; x.beginPath(); x.arc(b[0],b[1],(4+12*pr)*dpr,0,7); x.strokeStyle=`rgba(255,255,255,${.8*(1-pr)})`; x.lineWidth=1.5*dpr; x.stroke(); }
     x.beginPath(); x.arc(b[0],b[1],4.2*dpr,0,7); x.fillStyle='#fff'; x.fill(); x.beginPath(); x.arc(b[0],b[1],2.2*dpr,0,7); x.fillStyle='#1a2e4a'; x.fill(); }
 }
-/* Other regions globe: slow replay of viewing angles that always keep Bangkok on the front; drag any angle, then glide back to Bangkok after 3 s idle */
-const GKF=[[100.75,14],[124,24],[100.75,14],[138,-14],[100.75,14],[74,14],[52,26],[74,14]], GMV=3600, GDW=1500, GCY=(GMV+GDW)*GKF.length;
+/* Other regions globe: slow replay of viewing angles that always keep Bangkok on the front; drag any angle, then glide back to the India view after 3 s idle */
+const GKF=[[74,14],[124,24],[74,14],[138,-14],[74,14],[52,26]], GMV=3600, GDW=3000, GCY=(GMV+GDW)*GKF.length;
 function gKfAt(T){ T=((T%GCY)+GCY)%GCY; const i=Math.floor(T/(GMV+GDW)), r=T-i*(GMV+GDW), a=GKF[i], b=GKF[(i+1)%GKF.length]; if(r<GDW) return a;
   const q=(r-GDW)/GMV, e=q<.5?2*q*q:1-Math.pow(-2*q+2,2)/2; let dl=b[0]-a[0]; dl=((dl+540)%360)-180; return [a[0]+dl*e,a[1]+(b[1]-a[1])*e]; }
 function gReplay(g,now){
-  const r=g.rp||(g.rp={m:'glide',t0:now,from:g.rot.slice(),off:0,idle:now,last:now}), dt=Math.min(100,now-r.last); r.last=now;
+  const r=g.rp||(g.rp={m:'glide',t0:now,from:g.rot.slice(),tg:0,idle:now,last:now}), dt=Math.min(100,now-r.last); r.last=now;
   if(g.drag){ r.m='free'; r.idle=now; return; }
-  if(r.m==='free'){ if(now-r.idle<3000) return; r.m='glide'; r.t0=now; r.from=g.rot.slice(); }
-  if(r.m==='glide'){ const q=Math.min(1,(now-r.t0)/1800), e=q<.5?4*q*q*q:1-Math.pow(-2*q+2,3)/2, to=[-GKF[0][0],-GKF[0][1]]; let dl=to[0]-r.from[0]; dl=((dl+540)%360)-180;
-    g.rot=[r.from[0]+dl*e, r.from[1]+(to[1]-r.from[1])*e]; if(q>=1){ r.m='play'; r.off=0; } return; }
+  if(r.m==='free'){ if(now-r.idle<3000) return; r.m='glide'; r.t0=now; r.from=g.rot.slice(); r.tg=0; }
+  if(r.m==='glide'){ const q=Math.min(1,(now-r.t0)/1800), e=q<.5?4*q*q*q:1-Math.pow(-2*q+2,3)/2, to=[-GKF[r.tg][0],-GKF[r.tg][1]]; let dl=to[0]-r.from[0]; dl=((dl+540)%360)-180;
+    g.rot=[r.from[0]+dl*e, r.from[1]+(to[1]-r.from[1])*e]; if(q>=1){ r.m='play'; r.off=r.tg*(GMV+GDW); } return; }
   r.off+=dt; const c=gKfAt(r.off); g.rot=[-c[0],-c[1]];
 }
 let gLast=0;
