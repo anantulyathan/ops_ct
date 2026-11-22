@@ -2539,8 +2539,11 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.85', APP_DATE='2026-11-22';
+const APP_VERSION='3.87', APP_DATE='2026-11-22';
 const APP_LOG=[
+  {v:'3.87',d:'2026-11-22',en:['The aeroplanes and helicopters on the globe animations are 20% smaller, with their wing lights, glow and strobe scaled to match.'],th:['เครื่องบินและเฮลิคอปเตอร์ในแอนิเมชันลูกโลกเล็กลง 20% โดยไฟปลายปีก แสงเรือง และไฟสโตรบปรับขนาดตามกัน']},
+  {v:'3.86',d:'2026-11-22',en:['The globe animations now show tiny aeroplanes flying along each route, instead of a moving dot. Each jetliner has blinking red and green wing lights, a white strobe, a soft fading light trail in the flight path colour, and grows slightly at the top of its arc. A blue glow and ring appear where it lands. On the helicopter globes a small helicopter flies the route with a spinning rotor, hovers over the helipad while the rotor slows, then lands with the same blue glow. With Reduce Motion on, the globes show a still arc and a landing dot as before.'],
+   th:['แอนิเมชันบนลูกโลกแสดงเครื่องบินลำเล็กบินตามเส้นทาง แทนจุดที่เคลื่อนที่ เครื่องบินมีไฟปลายปีกกะพริบสีแดงและเขียว ไฟสโตรบสีขาว และแสงเรืองจางตามหลังในสีเส้นทางบินที่เลือก และขยายใหญ่ขึ้นเล็กน้อยเมื่ออยู่สูงสุดของเส้นโค้ง เมื่อลงจอดจะมีแสงเรืองและวงแหวนสีน้ำเงินที่ปลายทาง บนลูกโลกของเฮลิคอปเตอร์จะมีเฮลิคอปเตอร์ลำเล็กบินตามเส้นทางพร้อมใบพัดหมุน ลอยนิ่งเหนือเฮลิพอร์ตขณะใบพัดค่อยๆ ช้าลง แล้วลงจอดพร้อมแสงเรืองสีน้ำเงินเช่นเดียวกัน เมื่อเปิดลดการเคลื่อนไหว ลูกโลกจะแสดงเส้นโค้งและจุดปลายทางแบบนิ่งเหมือนเดิม']},
   {v:'3.85',d:'2026-11-22',en:['The international globe no longer pauses on a Bangkok-centred view. The India view is now the main view: the replay returns to it between East Asia, Australia and the Middle East, and after being dragged and left alone for 3 seconds the globe glides back to it. Each view now holds 1.5 seconds longer.'],th:['ลูกโลกพื้นที่ปฏิบัติการต่างประเทศไม่หยุดที่มุมมองที่มีกรุงเทพฯ อยู่กลางอีกต่อไป มุมมองอินเดียเป็นมุมมองหลัก โดยจะกลับมาที่มุมมองนี้คั่นระหว่างเอเชียตะวันออก ออสเตรเลียและตะวันออกกลาง และเมื่อถูกลากแล้วปล่อยไว้ 3 วินาที ลูกโลกจะเลื่อนกลับมาที่มุมมองนี้ แต่ละมุมมองค้างนานขึ้น 1.5 วินาที']},
   {v:'3.84',d:'2026-11-22',en:['The international globe now opens on the India view (about 26 degrees from Bangkok) and the slow replay starts from there. After being dragged and left alone it still glides back to the Bangkok-centred view.'],th:['ลูกโลกพื้นที่ปฏิบัติการต่างประเทศเริ่มที่มุมมองอินเดีย (ห่างจากกรุงเทพฯ ประมาณ 26 องศา) และเล่นต่อจากจุดนั้น เมื่อถูกลากแล้วปล่อยไว้ ลูกโลกยังคงเลื่อนกลับมาที่มุมมองที่มีกรุงเทพฯ อยู่กลาง']},
   {v:'3.83',d:'2026-11-21',en:['The international globe now glides back to the Bangkok view after 3 seconds of being left alone (was 8 seconds).'],th:['ลูกโลกพื้นที่ปฏิบัติการต่างประเทศจะเลื่อนกลับมาที่มุมมองกรุงเทพฯ เมื่อไม่มีการสัมผัสนาน 3 วินาที (เดิม 8 วินาที)']},
@@ -2795,6 +2798,65 @@ function pcPick(gs){ const cur=PCOLS.find(c=>c[0]===S.pathColor)||PCOLS[0], dot=
   return `<div class="gpick${gs?' gs':''}"><button type="button" class="gp-t" data-act="pcopen" aria-haspopup="true" aria-expanded="false" aria-label="${L('Flight path colour','สีเส้นทางบิน')}: ${esc(L(cur[1],cur[2]))}">${dot(cur)}<span class="gp-n">${L('Flight path','เส้นทางบิน')}: <b>${esc(L(cur[1],cur[2]))}</b></span><svg class="gp-c" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4.2 6 8l4-3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="gp-r" role="radiogroup" aria-label="${L('Flight path colour','สีเส้นทางบิน')}">${PCOLS.map(c=>`<button type="button" class="gp-s${c[0]==='rainbow'?' rb':''}${c[0]===cur[0]?' on':''}" data-act="pcol" data-val="${c[0]}" role="radio" aria-checked="${c[0]===cur[0]}" aria-label="${esc(L(c[1],c[2]))}" title="${esc(L(c[1],c[2]))}" style="--pc:rgb(${c[3]||'255,255,255'})"></button>`).join('')}</div></div>`; }
 function skyT(now){ if(!MOTION()||!S.skyAt) return 1; return Math.min(1,Math.max(0,((now||performance.now())-S.skyAt)/500)); }
 function skyRun(){ const t0=performance.now(); (function f(n){ document.querySelectorAll('.globe[data-gk]').forEach(el=>{ const g=el._g; if(g&&!g.spin&&!g.anim) globeDraw(g,n); }); if(n-t0<560&&MOTION()) requestAnimationFrame(f); })(t0); }
+/* Flight animation: tiny jetliners (helicopters on helicopter globes) with a soft light trail, wing lights, strobe and a blue arrival glow */
+function fxGlow(x,gm,t,col,lit,dpr,i,T,L){ const n=14; for(let k=0;k<n;k++){ const a=Math.max(0,t-L*(1-k/n)), b=Math.max(0,t-L*(1-(k+1)/n)); fxSeg(x,gm,a,b,(1+2.2*k/n)*dpr,col,(.08+.8*(k/n)*(k/n))*lit); } }
+const FXHP=Math.PI/2, FXPI=Math.PI;
+function fxGeo(g,proj,ctr,cx,cy,d){
+  const ip=d3.geoInterpolate(BKK,d), gd=d3.geoDistance(BKK,d), H=.06+.2*Math.min(1,gd/2.6), HP=g.hp||FXHP;
+  const A0=proj(BKK), A1=proj(d), cl=Math.hypot(A1[0]-A0[0],A1[1]-A0[1])||1; let nx=-(A1[1]-A0[1])/cl, ny=(A1[0]-A0[0])/cl; if(ny>0){nx=-nx;ny=-ny;} const bw=gd<.6?.22*cl:0;
+  const at=(t,ground)=>{ t=Math.max(0,Math.min(1,t)); const p=ip(t); const dd=d3.geoDistance(p,ctr); if(dd>=HP) return null; const q=proj(p), s=Math.sin(FXPI*t);
+    if(ground) return [q[0],q[1],s]; const l=1+H*s*(g.hp?Math.max(0,Math.min(1,(HP-dd)/.5)):1); return [cx+(q[0]-cx)*l+nx*bw*s, cy+(q[1]-cy)*l+ny*bw*s, s]; };
+  return {at,gd,short:gd<.6};
+}
+/* tiny fxPlane silhouette, nose to +x */
+const FXPL=[{p:[[7,0],[2.4,.9],[-.4,5.8],[-2.2,5.8],[-1.4,1.0],[-4.2,.9],[-5.2,2.9],[-6.5,2.9],[-6,0]],l:[[-1.8,-5.6],[-1.8,5.6],[-6.2,0]]}];
+const fxAcol=(a,w)=>{ const c=[110,170,230].map(v=>Math.round(v+(255-v)*(w||0))); return `rgba(${c[0]},${c[1]},${c[2]},${a})`; };
+function fxPlane(x,px,py,ang,k,fill,al){ x.save(); x.translate(px,py); x.rotate(ang); x.scale(k,k); x.globalAlpha=al; x.fillStyle=fill; x.beginPath();
+  const PL=FXPL[0].p; PL.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])); for(let i=PL.length-2;i>0;i--) x.lineTo(PL[i][0],-PL[i][1]); x.closePath(); x.fill(); x.restore(); }
+function fxHead(gm,t){ const a=gm.at(t-.012), b=gm.at(t+.012); if(!a||!b) return null; return Math.atan2(b[1]-a[1],b[0]-a[0]); }
+const fxEase=q=>q<.5?2*q*q:1-Math.pow(-2*q+2,2)/2;
+function fxSeg(x,gm,t0,t1,w,col,a,dash){ x.save(); x.lineCap='round'; if(dash) x.setLineDash(dash); x.strokeStyle=col; x.globalAlpha=a; x.lineWidth=w; x.beginPath(); let pen=false; for(let t=t0;t<=t1+1e-6;t+=.02){ const q=gm.at(Math.min(t,t1)); if(!q){pen=false;continue;} if(pen) x.lineTo(q[0],q[1]); else {x.moveTo(q[0],q[1]);pen=true;} } x.stroke(); x.restore(); }
+const FXC=7.5, FXSZ=.8; /* aircraft size, 20% smaller than v3.86 */
+/* 1 Jetliner: one fxPlane, short solid trail, altitude scaling */
+function fxPlaneRoutes(g,x,proj,ctr,cx,cy,now,front,RT,lit){ const T=now/1000,N=RT.length,dpr=g.dpr;
+  RT.forEach((d,i)=>{ const gm=fxGeo(g,proj,ctr,cx,cy,d), ph=(T/FXC+i/N)%1, fp=Math.min(1,ph/.6), col=pcol(i,1);
+    fxSeg(x,gm,0,1,.9*dpr,col,.12*lit);
+    if(fp<1){ const t=fxEase(fp); fxGlow(x,gm,t,col,lit,dpr,i,T,.3);
+      const q=gm.at(t), h=fxHead(gm,t); if(q&&h!=null){ const k=(.66+.4*q[2])*dpr*(gm.short?.8:1)*FXSZ, al=Math.min(1,fp*10)*lit;
+        x.save(); x.globalCompositeOperation='lighter'; const gr=x.createRadialGradient(q[0],q[1],0,q[0],q[1],9*dpr*FXSZ); gr.addColorStop(0,'rgba(220,235,255,.26)'); gr.addColorStop(1,'rgba(220,235,255,0)'); x.fillStyle=gr; x.globalAlpha=al; x.beginPath(); x.arc(q[0],q[1],9*dpr*FXSZ,0,7); x.fill(); x.restore();
+        fxPlane(x,q[0],q[1],h,k,'rgb(226,236,248)',al); fxLights(x,q,h,k,al,T+i*.23,dpr*FXSZ,...FXPL[0].l); } }
+    fxLand(x,gm,d,i,proj,front,ph,dpr,lit,.6); }); }
+function fxLights(x,q,h,k,al,T,dpr,Lp,Rp,Tp){ const c=Math.cos(h), s=Math.sin(h), px=(a,b)=>[q[0]+(a*c-b*s)*k, q[1]+(a*s+b*c)*k], blink=(T%1)<.5;
+  const L=px(Lp[0],Lp[1]), R=px(Rp[0],Rp[1]); x.fillStyle='rgb(217,119,107)'; x.globalAlpha=al*(blink?1:.35); x.beginPath(); x.arc(L[0],L[1],1.3*dpr,0,7); x.fill();
+  x.fillStyle='rgb(111,181,143)'; x.beginPath(); x.arc(R[0],R[1],1.3*dpr,0,7); x.fill();
+  const st=((T*.9)%1); if(st<.14){ const Tl=px(Tp[0],Tp[1]); x.globalAlpha=al*(1-st/.14); x.fillStyle='#fff'; x.beginPath(); x.arc(Tl[0],Tl[1],(1.6+st*14)*dpr,0,7); x.fill(); } x.globalAlpha=1; }
+function fxLand(x,gm,d,i,proj,front,ph,dpr,lit,a0){ if(!front(d)) return; const e=proj(d), land=ph>=a0&&ph<a0+.28, pr=land?(ph-a0)/.28:0;
+  if(land){ x.save(); x.globalCompositeOperation='lighter'; const gr=x.createRadialGradient(e[0],e[1],0,e[0],e[1],(5+9*Math.sin(Math.PI*pr))*dpr); gr.addColorStop(0,fxAcol(.55)); gr.addColorStop(1,fxAcol(0)); x.fillStyle=gr; x.beginPath(); x.arc(e[0],e[1],14*dpr,0,7); x.fill(); x.restore();
+    x.beginPath(); x.arc(e[0],e[1],(3+10*pr)*dpr,0,7); x.strokeStyle=fxAcol(.6*(1-pr)); x.lineWidth=1.2*dpr; x.stroke(); }
+  x.beginPath(); x.arc(e[0],e[1],(land?3:2.2)*dpr,0,7); x.fillStyle=land?fxAcol(1,.4):fxAcol(.45,.4); x.fill(); }
+/* helicopter, top view, nose +x: body, tail boom + tail rotor, spinning main rotor */
+function fxHeli(x,px,py,ang,k,fill,al,rot,spin){ x.save(); x.translate(px,py); x.rotate(ang); x.scale(k,k); x.globalAlpha=al; x.fillStyle=fill; x.strokeStyle=fill;
+  x.beginPath(); x.ellipse(0,0,4.6,2.5,0,0,7); x.fill(); x.lineWidth=1.3; x.beginPath(); x.moveTo(-3,0); x.lineTo(-10,0); x.stroke(); x.lineWidth=1; x.beginPath(); x.moveTo(-10,-2.1); x.lineTo(-10,2.1); x.stroke();
+  x.beginPath(); x.moveTo(-8.2,0); x.lineTo(-10.2,-1.8); x.lineTo(-10.2,1.8); x.closePath(); x.fill();
+  x.restore(); x.save(); x.translate(px,py); x.scale(k,k); x.globalAlpha=al*.16*spin; x.fillStyle=fill; x.beginPath(); x.arc(0,0,8.6,0,7); x.fill();
+  x.globalAlpha=al*(.35+.5*spin); x.strokeStyle=fill; x.lineWidth=1.1; x.lineCap='round'; for(let b=0;b<2;b++){ const a=rot+b*Math.PI/2; x.beginPath(); x.moveTo(-Math.cos(a)*8.6,-Math.sin(a)*8.6); x.lineTo(Math.cos(a)*8.6,Math.sin(a)*8.6); x.stroke(); }
+  x.beginPath(); x.arc(0,0,1.2,0,7); x.fillStyle='#16314f'; x.globalAlpha=al; x.fill(); x.restore(); }
+function fxHeliRoutes(g,x,proj,ctr,cx,cy,now,front,RT,lit){ const T=now/1000,N=RT.length,dpr=g.dpr;
+  RT.forEach((d,i)=>{ const gm=fxGeo(g,proj,ctr,cx,cy,d), ph=(T/FXC+i/N)%1, fp=Math.min(1,ph/.62), col=pcol(i,1);
+    fxSeg(x,gm,0,1,.9*dpr,col,.12*lit);
+    const t=fp<1?fxEase(fp):1;
+    if(fp<1) fxGlow(x,gm,t,col,lit,dpr,i,T,.26);
+    const q=gm.at(t), h=fxHead(gm,t);
+    if(q&&h!=null&&ph<.92){ const hov=ph>=.62, al=Math.min(1,fp*10)*lit*(ph<.84?1:Math.max(0,1-(ph-.84)/.08)), bob=hov?Math.sin(T*5+i)*.4*dpr:0, k=(.62+.18*q[2])*dpr*(gm.short?.85:1)*FXSZ, spin=hov&&ph>.8?Math.max(.2,1-(ph-.8)/.12):1;
+      x.save(); x.globalCompositeOperation='lighter'; const gr=x.createRadialGradient(q[0],q[1],0,q[0],q[1],10*dpr*FXSZ); gr.addColorStop(0,'rgba(220,235,255,.2)'); gr.addColorStop(1,'rgba(220,235,255,0)'); x.fillStyle=gr; x.globalAlpha=al; x.beginPath(); x.arc(q[0],q[1],10*dpr*FXSZ,0,7); x.fill(); x.restore();
+      const hh=hov?h:h+Math.sin(T*2+i)*.06; fxHeli(x,q[0],q[1]+bob,hh,k,'rgb(226,236,248)',al,T*(hov?(spin<1?14*spin:22):22),spin);
+      fxLights(x,[q[0],q[1]+bob],hh,k,al,T+i*.19,dpr*FXSZ,[.4,-2.6],[.4,2.6],[-10.4,0]); }
+    fxLand(x,gm,d,i,proj,front,ph,dpr,lit,.62); }); }
+
+function fxStatic(g,x,proj,ctr,cx,cy,front,RT,lit){ const dpr=g.dpr;
+  RT.forEach((d,i)=>{ const gm=fxGeo(g,proj,ctr,cx,cy,d), sm=gm.short?.72:1, col=pcol(i,1);
+    fxSeg(x,gm,0,1,1*dpr,col,.2*lit); fxSeg(x,gm,0,1,4.5*sm*dpr,col,.2*lit); fxSeg(x,gm,0,1,1.7*sm*dpr,col,.92*lit);
+    if(front(d)){ const e=proj(d); x.beginPath(); x.arc(e[0],e[1],3.2*sm*dpr,0,7); x.fillStyle=fxAcol(1,.4); x.fill(); } }); }
 function globeDraw(g,now){
   const D=geoData(); if(!D) return; const cv=g.cv, x=g.ctx, W=cv.width, H=cv.height, cx=W/2, cy=H/2+H*.02, R=H*.4*g.sc;
   if(!(R>0.5)) return;
@@ -2831,22 +2893,7 @@ function globeDraw(g,now){
     tints.forEach(t=>{ if(t[0]<.01) return; gr=x.createRadialGradient(sX,sY,0,sX,sY,Math.hypot(sX-cx,sY-cy)+R*.9); gr.addColorStop(0,`rgba(${t[1]},${.2185*t[0]})`); gr.addColorStop(.6,`rgba(${t[2]},${.0575*t[0]})`); gr.addColorStop(1,`rgba(${t[3]},0)`); x.fillStyle=gr; x.fillRect(0,0,W,H); });
     x.restore(); }
   const dpr=g.dpr, front=p=>d3.geoDistance(p,ctr)<1.55;
-  const RT=gRT(g.cat,v); if(RT&&lit>0){ const mo=g.mot, T=(now||0)/1000, N=RT.length, CYC=7.5, HP=g.hp||Math.PI/2, P=Math.PI;
-    const line=(pts,a,w,ci)=>{ x.strokeStyle=pcol(ci,a); x.lineWidth=w; x.lineCap='round'; x.beginPath(); let pen=false; for(const q of pts){ if(!q){ pen=false; continue; } if(pen) x.lineTo(q[0],q[1]); else { x.moveTo(q[0],q[1]); pen=true; } } x.stroke(); };
-    RT.forEach((d,i)=>{
-      const ip=d3.geoInterpolate(BKK,d), H=.06+.2*Math.min(1,d3.geoDistance(BKK,d)/2.6);
-      const gd=d3.geoDistance(BKK,d), A0=proj(BKK), A1=proj(d), cl=Math.hypot(A1[0]-A0[0],A1[1]-A0[1])||1; let nx=-(A1[1]-A0[1])/cl, ny=(A1[0]-A0[0])/cl; if(ny>0){ nx=-nx; ny=-ny; } const bw=gd<.6?.22*cl:0;
-      const at=t=>{ const p=ip(t); if(d3.geoDistance(p,ctr)>=HP) return null; const dd=d3.geoDistance(p,ctr), q=proj(p), s=Math.sin(P*t), l=1+H*s*(g.hp?Math.max(0,Math.min(1,(HP-dd)/.5)):1); return [cx+(q[0]-cx)*l+nx*bw*s, cy+(q[1]-cy)*l+ny*bw*s]; };
-      const ph=mo?((T/CYC+i/N)%1):1, gp=mo?Math.min(1,ph/.4):1, fade=mo?(ph<.82?1:Math.max(.25,1-(ph-.82)/.18*.75)):1;
-      const arc=t1=>{ const a=[]; for(let t=0;t<=t1+1e-6;t+=.025) a.push(at(Math.min(t,t1))); return a; };
-      line(arc(1),.2*lit,1*dpr,i);
-      x.setLineDash([]);
-      const sm=gd<.6?.72:1; line(arc(gp),.2*lit*fade,4.5*sm*dpr,i); line(arc(gp),.92*lit*fade,1.7*sm*dpr,i);
-      if(mo&&gp<1){ const q=at(gp); if(q){ x.beginPath(); x.arc(q[0],q[1],5*sm*dpr,0,7); x.fillStyle=pcol(i,.25*lit); x.fill(); x.beginPath(); x.arc(q[0],q[1],2.6*sm*dpr,0,7); x.fillStyle=pcol(i,1); x.fill(); } }
-      if(front(d)){ const e=proj(d), arr=gp>=1;
-        if(mo&&arr&&ph<.7){ const pr=(ph-.4)/.3; x.beginPath(); x.arc(e[0],e[1],(3+11*pr)*sm*dpr,0,7); x.strokeStyle=pcol(i,.75*(1-pr)*lit); x.lineWidth=1.4*dpr; x.stroke(); }
-        x.beginPath(); x.arc(e[0],e[1],(arr?3.2:2.4)*sm*dpr,0,7); x.fillStyle=S.pathColor==='white'?(arr?'#7ff0de':'rgba(95,224,207,.55)'):pcol(i,arr?1:.55); x.fill(); }
-    }); }
+  { const RT=gRT(g.cat,v); if(RT&&lit>0){ if(!g.mot) fxStatic(g,x,proj,ctr,cx,cy,front,RT,lit); else (g.cat==='HELICOPTER'?fxHeliRoutes:fxPlaneRoutes)(g,x,proj,ctr,cx,cy,(now||0),front,RT,lit); } }
   if(front(BKK)){ const b=proj(BKK);
     if(g.spin||g.anim||g.mot){ const pr=((now||0)%1600)/1600; x.beginPath(); x.arc(b[0],b[1],(4+12*pr)*dpr,0,7); x.strokeStyle=`rgba(255,255,255,${.8*(1-pr)})`; x.lineWidth=1.5*dpr; x.stroke(); }
     x.beginPath(); x.arc(b[0],b[1],4.2*dpr,0,7); x.fillStyle='#fff'; x.fill(); x.beginPath(); x.arc(b[0],b[1],2.2*dpr,0,7); x.fillStyle='#1a2e4a'; x.fill(); }
