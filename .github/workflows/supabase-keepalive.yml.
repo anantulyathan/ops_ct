@@ -1,0 +1,37 @@
+# Keeps the free Supabase project from being paused for inactivity.
+# Once a day it calls the app's ack_ping function, which does a small real
+# database write (the same kind of request the app makes when someone opens it).
+#
+# Where to put it in the GitHub repository (ops_ct):
+#   .github/workflows/supabase-keepalive.yml
+#
+# Notes:
+# - The key below is the public "anon" key already used inside the app page; it is not a secret.
+# - GitHub switches scheduled workflows off after 60 days with no activity in the repository.
+#   If that happens: repository -> Actions tab -> select this workflow -> Enable workflow.
+#   (Any update to the app files also resets that 60-day clock.)
+# - You can test it any time: repository -> Actions -> "Supabase keep-alive" -> Run workflow.
+
+name: Supabase keep-alive
+
+on:
+  schedule:
+    - cron: '17 2 * * *'   # every day at 02:17 UTC (09:17 Bangkok time)
+  workflow_dispatch:        # allows a manual test run
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Call ack_ping
+        run: |
+          curl --fail --silent --show-error --retry 3 --retry-delay 10 \
+            -X POST 'https://xnauczzrkjupjfpolvzr.supabase.co/rest/v1/rpc/ack_ping' \
+            -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhuYXVjenpya2p1cGpmcG9sdnpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwOTk3OTIsImV4cCI6MjA5NjY3NTc5Mn0.qxyTGXF7DlqhxyR6xyi2inYPEVCgQBVkRM8Ca5zpd3s' \
+            -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhuYXVjenpya2p1cGpmcG9sdnpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwOTk3OTIsImV4cCI6MjA5NjY3NTc5Mn0.qxyTGXF7DlqhxyR6xyi2inYPEVCgQBVkRM8Ca5zpd3s' \
+            -H 'Content-Type: application/json' \
+            -d '{}'
+          echo
