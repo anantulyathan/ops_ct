@@ -2539,8 +2539,10 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.87', APP_DATE='2026-11-22';
+const APP_VERSION='3.89', APP_DATE='2026-11-22';
 const APP_LOG=[
+  {v:'3.89',d:'2026-11-22',en:['The aeroplanes and helicopters on the globe animations are a further 15% smaller (their lights and glow scale with them).'],th:['เครื่องบินและเฮลิคอปเตอร์ในแอนิเมชันลูกโลกเล็กลงอีก 15% (ไฟและแสงเรืองปรับขนาดตามกัน)']},
+  {v:'3.88',d:'2026-11-22',en:['Fixed: when the phone is turned to landscape (or the window is resized) the globes looked squeezed. The globe now redraws at the new size, so it stays round.'],th:['แก้ไข: เมื่อหมุนโทรศัพท์เป็นแนวนอน (หรือปรับขนาดหน้าต่าง) ลูกโลกดูแบนเบี้ยว ตอนนี้ลูกโลกวาดใหม่ตามขนาดใหม่และคงเป็นทรงกลม']},
   {v:'3.87',d:'2026-11-22',en:['The aeroplanes and helicopters on the globe animations are 20% smaller, with their wing lights, glow and strobe scaled to match.'],th:['เครื่องบินและเฮลิคอปเตอร์ในแอนิเมชันลูกโลกเล็กลง 20% โดยไฟปลายปีก แสงเรือง และไฟสโตรบปรับขนาดตามกัน']},
   {v:'3.86',d:'2026-11-22',en:['The globe animations now show tiny aeroplanes flying along each route, instead of a moving dot. Each jetliner has blinking red and green wing lights, a white strobe, a soft fading light trail in the flight path colour, and grows slightly at the top of its arc. A blue glow and ring appear where it lands. On the helicopter globes a small helicopter flies the route with a spinning rotor, hovers over the helipad while the rotor slows, then lands with the same blue glow. With Reduce Motion on, the globes show a still arc and a landing dot as before.'],
    th:['แอนิเมชันบนลูกโลกแสดงเครื่องบินลำเล็กบินตามเส้นทาง แทนจุดที่เคลื่อนที่ เครื่องบินมีไฟปลายปีกกะพริบสีแดงและเขียว ไฟสโตรบสีขาว และแสงเรืองจางตามหลังในสีเส้นทางบินที่เลือก และขยายใหญ่ขึ้นเล็กน้อยเมื่ออยู่สูงสุดของเส้นโค้ง เมื่อลงจอดจะมีแสงเรืองและวงแหวนสีน้ำเงินที่ปลายทาง บนลูกโลกของเฮลิคอปเตอร์จะมีเฮลิคอปเตอร์ลำเล็กบินตามเส้นทางพร้อมใบพัดหมุน ลอยนิ่งเหนือเฮลิพอร์ตขณะใบพัดค่อยๆ ช้าลง แล้วลงจอดพร้อมแสงเรืองสีน้ำเงินเช่นเดียวกัน เมื่อเปิดลดการเคลื่อนไหว ลูกโลกจะแสดงเส้นโค้งและจุดปลายทางแบบนิ่งเหมือนเดิม']},
@@ -2816,7 +2818,7 @@ function fxPlane(x,px,py,ang,k,fill,al){ x.save(); x.translate(px,py); x.rotate(
 function fxHead(gm,t){ const a=gm.at(t-.012), b=gm.at(t+.012); if(!a||!b) return null; return Math.atan2(b[1]-a[1],b[0]-a[0]); }
 const fxEase=q=>q<.5?2*q*q:1-Math.pow(-2*q+2,2)/2;
 function fxSeg(x,gm,t0,t1,w,col,a,dash){ x.save(); x.lineCap='round'; if(dash) x.setLineDash(dash); x.strokeStyle=col; x.globalAlpha=a; x.lineWidth=w; x.beginPath(); let pen=false; for(let t=t0;t<=t1+1e-6;t+=.02){ const q=gm.at(Math.min(t,t1)); if(!q){pen=false;continue;} if(pen) x.lineTo(q[0],q[1]); else {x.moveTo(q[0],q[1]);pen=true;} } x.stroke(); x.restore(); }
-const FXC=7.5, FXSZ=.8; /* aircraft size, 20% smaller than v3.86 */
+const FXC=7.5, FXSZ=.68; /* aircraft size: v3.86 x .8 x .85 */
 /* 1 Jetliner: one fxPlane, short solid trail, altitude scaling */
 function fxPlaneRoutes(g,x,proj,ctr,cx,cy,now,front,RT,lit){ const T=now/1000,N=RT.length,dpr=g.dpr;
   RT.forEach((d,i)=>{ const gm=fxGeo(g,proj,ctr,cx,cy,d), ph=(T/FXC+i/N)%1, fp=Math.min(1,ph/.6), col=pcol(i,1);
@@ -2926,6 +2928,9 @@ function mountGlobes(){
     const k=el.dataset.gk, val=el.dataset.val, cat=el.dataset.cat, T=GVIEW[val]||GVIEW[''], prev=GST[k], mot=MOTION();
     const g={el,cv,ctx:cv.getContext('2d'),dpr,k,cat,val,rot:T[0].slice(),sc:T[1],lit:val?1:0,spin:mot&&!!gRT(cat,val),still:val!=='INTL',hp:val==='INTL'?1.22:0,mot,vis:true,anim:false,drag:false};
     el._g=g; if(gIO) gIO.observe(el);
+    if(window.ResizeObserver){ /* keep the canvas pixel size in step with its box (rotating the phone), so the globe is never stretched */
+      new ResizeObserver(()=>{ if(!cv.isConnected) return; const w2=cv.clientWidth, h2=cv.clientHeight; if(!w2||!h2) return; const W2=Math.round(w2*g.dpr), H2=Math.round(h2*g.dpr);
+        if(cv.width===W2&&cv.height===H2) return; cv.width=W2; cv.height=H2; if(!g.spin&&!g.anim){ try{ globeDraw(g,performance.now()); }catch(e){} } }).observe(cv); }
     if(el.dataset.from!=null){ gMorph(g,el.dataset.from,val,mot); return; }
     const done=()=>{ g.anim=false; GST[k]={rot:g.rot.slice(),sc:g.sc,val}; if(g.spin){ GSPIN.add(g); if(!gLoop) gLoop=requestAnimationFrame(gTick); } else globeDraw(g,performance.now()); };
     if(mot&&prev&&prev.val!==val){
