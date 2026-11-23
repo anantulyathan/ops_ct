@@ -573,6 +573,74 @@ tr td:first-child{transition:box-shadow .2s}
   .remtip,.qs,.qsbox{background:#16293f;color:var(--grey-dark)}
   a{color:#8cb8ee}
 }
+/* ---------- OPS Terminal ---------- */
+.thero{position:relative;overflow:hidden;border-radius:24px;padding:24px 24px 0;margin-bottom:16px;color:#fff;background:linear-gradient(165deg,#0f1f34 0%,#16304f 55%,#1b4a73 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 24px 44px -22px rgba(10,24,44,.75)}
+.thero::before{content:'';position:absolute;inset:0;background:radial-gradient(520px 280px at 88% -10%,rgba(42,157,143,.45),transparent 70%),linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:auto,36px 36px,36px 36px;pointer-events:none}
+.thero>*{position:relative}
+.tht{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.theye{font-size:12px;letter-spacing:.22em;color:#8fd3ca;font-weight:600}
+.thero h2{margin:2px 0 4px;font-size:34px;line-height:1.1;letter-spacing:.03em;color:#fff;display:block} .thero h2::before{display:none}
+.thd{font-size:14px;color:#b9c8dc}
+.thck{text-align:right}
+.thc{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:500;letter-spacing:.04em;color:#f2f6fb}
+.thdt{font-size:12.5px;color:#b9c8dc}
+.thsigns{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 18px}
+.thsign{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border:0;border-radius:10px;font:inherit;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;background:#2a9d8f;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 6px 14px -6px rgba(0,0,0,.5);transition:.18s}
+.thsign.b{background:#1e4d8c} .thsign.g{background:#5f8f6f} .thsign.s{background:#566579}
+.thsign:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.thrun{position:relative;height:64px;margin:0 -24px;overflow:hidden;background:linear-gradient(180deg,#0e1a2b,#0a1422);border-top:2px solid #24405f}
+.thrun::before{content:'';position:absolute;left:0;right:0;top:36px;height:4px;background:repeating-linear-gradient(90deg,#c8d6e6 0 26px,transparent 26px 58px);background-size:58px 4px;animation:rundash 2.4s linear infinite;opacity:.85}
+.thrun::after{content:'';position:absolute;left:0;right:0;top:8px;height:3px;background:repeating-linear-gradient(90deg,#e3cf94 0 6px,transparent 6px 40px);opacity:.55}
+@keyframes rundash{to{background-position:-58px 0}}
+.thplane{position:absolute;top:12px;left:-8%;color:#e8eff8;transform:rotate(45deg);animation:planefly 22s linear infinite;filter:drop-shadow(0 4px 6px rgba(0,0,0,.5))}
+@keyframes planefly{from{left:-8%}to{left:108%}}
+/* boards */
+.tb{--tw:14px;--th:22px;background:linear-gradient(180deg,#0f1c2e,#0b1625);border:1px solid #1d3452;border-radius:20px;padding:16px 18px 14px;margin-bottom:16px;color:#e8eff8;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 22px 40px -24px rgba(10,24,44,.85)}
+.tbh{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.tbh b{font-size:16px;letter-spacing:.16em;text-transform:uppercase;color:#f2f6fb}
+html[lang=th] .tbh b{letter-spacing:.04em}
+.tbi{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:#2a9d8f;color:#fff}
+.tbn{font-size:12px;color:#8da1ba;margin-left:auto}
+.tbl{border:1px solid #2b4262;background:#14263d;color:#9fd8d0;border-radius:9px;padding:5px 11px;font:inherit;font-size:12px;cursor:pointer}
+.tbcols{display:flex;gap:18px;padding:0 6px 6px;border-bottom:1px solid #22395a}
+.cl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7f95b0;min-width:calc(var(--w) * (var(--tw) + 2px));flex:none}
+.tbr{display:flex;gap:18px;align-items:center;padding:7px 6px;border-bottom:1px solid #182c47;border-radius:6px;transition:background .2s}
+.tbr:last-child{border-bottom:0}
+.tbr.go{cursor:pointer} .tbr.go:hover{background:rgba(42,157,143,.14)}
+.tbr.empty{opacity:.55}
+.tbgo{margin-left:auto;color:#5f8f9a;display:grid;place-items:center;opacity:0} .tbr.go .tbgo{opacity:1}
+.cell{display:inline-flex;flex:none;min-width:calc(var(--w) * (var(--tw) + 2px))}
+.cell i{position:relative;display:inline-block;width:var(--tw);height:var(--th);line-height:var(--th);margin:0 1px;border-radius:3px;text-align:center;font-style:normal;font-family:'JetBrains Mono',monospace;font-size:calc(var(--th) * .66);font-weight:500;color:#f2f6fb;background:linear-gradient(180deg,#1b3453 0,#1b3453 49%,#132843 51%,#132843 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+.cell i::after{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(5,12,22,.75)}
+.cell.c-gate i{color:#e3cf94}
+.cell.s-prog i{color:#7fd6cb} .cell.s-over i{color:#f0a79e} .cell.s-done i{color:#9bd0ac} .cell.s-soon i{color:#e3cf94}
+.cell.plain{display:block;height:var(--th);line-height:var(--th);padding:0 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:calc(var(--th) * .62);color:#f2f6fb;background:#1b3453;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(var(--w) * (var(--tw) + 2px))}
+.fa{animation:flapA .16s ease-in-out} .fb{animation:flapB .16s ease-in-out}
+@keyframes flapA{0%{transform:rotateX(0)}50%{transform:rotateX(-82deg);filter:brightness(.6)}100%{transform:rotateX(0)}}
+@keyframes flapB{0%{transform:rotateX(0)}50%{transform:rotateX(-82deg);filter:brightness(.6)}100%{transform:rotateX(0)}}
+.tbtick{margin:-6px 0 16px;overflow:hidden;white-space:nowrap;border-radius:12px;padding:9px 0;background:#0b1625;border:1px solid #1d3452;color:#9fd8d0;font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.1em}
+.tbtick span{display:inline-block;padding-left:100%;animation:tickmarq 46s linear infinite}
+@keyframes tickmarq{to{transform:translateX(-100%)}}
+/* gates */
+.gates{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:16px}
+.gcard{display:flex;gap:14px;align-items:flex-start;margin-bottom:0}
+.gcard.off{opacity:.62}
+.gnum{width:54px;height:54px;border-radius:14px;flex:none;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:22px;color:#e3cf94;background:linear-gradient(180deg,#1b3453,#132843);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 8px 16px -8px rgba(10,24,44,.7)}
+.gn{font-weight:700;color:var(--navy);font-size:15.5px;line-height:1.3}
+@media (max-width:900px){.tb{--tw:11px;--th:19px}}
+@media (max-width:640px){
+  .tb{--tw:9px;--th:17px;padding:14px 12px 10px}
+  .tbcols{display:none}
+  .tbr{flex-wrap:wrap;gap:5px 12px;padding:9px 4px}
+  .cell.cm{order:-1;flex-basis:100%}
+  .hm{display:none}
+  .tbgo{display:none}
+  .thero{padding:18px 16px 0;border-radius:20px} .thrun{margin:0 -16px;height:54px} .thrun::before{top:30px}
+  .thero h2{font-size:26px} .thc{font-size:20px} .thck{text-align:left}
+  .tbn{display:none}
+}
+@media (prefers-reduced-motion:reduce){.thplane,.thrun::before,.tbtick span{animation:none}.tbtick span{padding-left:12px}.fa,.fb{animation:none}}
+@media (prefers-color-scheme:dark){.gn{color:var(--navy)}}
 </style>
 </head>
 <body data-sec="teal">
@@ -1119,6 +1187,7 @@ function render(){
   renderView();
   enhanceTables();
   stripeRows();
+  termSync();
   renderMini();
   if(!_animDone && pubLoaded){ _animDone = true; pulseAnim(); }
 }
@@ -1130,6 +1199,7 @@ function renderTabs(){
   }).join('') + '</div>';
 }
 function setTab(k){
+  if(k === 'terminal' && tab !== 'terminal') TERM.intro = true;
   tab = k; render(); pulseAnim(); window.scrollTo(0, 0);
   if((k === 'admin' || (k === 'overview' && ovTab === 'detailed')) && isCT() && !admin){ loadAdmin(true).then(render); }
 }
@@ -3044,7 +3114,7 @@ function receiptFromResult(){
 }
 
 /* ---------- Terminal tab (home for the other OPS apps, later) ---------- */
-function viewTerminal(){
+function viewTerminalOld(){
   return banner('grid', t('tm_eye'), t('tm_title'), t('tm_desc')) +
     '<div class="card center csoon"><div class="csi">' + ico('grid', 34) + '</div><h2 class="cst" style="justify-content:center">' + esc(t('tm_soon')) + '</h2><p class="muted" style="margin:0">' + esc(t('tm_sub')) + '</p></div>' + installCardHTML();
 }
@@ -3796,6 +3866,145 @@ function stripeRows(){
 }
 let _animDone = false, _animT = null;
 function pulseAnim(){ const v = $('view'); if(!v) return; v.classList.add('anim'); clearTimeout(_animT); _animT = setTimeout(function(){ v.classList.remove('anim'); }, 1500); }
+
+/* ====================== V3: OPS TERMINAL (departure-board home) ====================== */
+ICO.arrow = '<path d="M5 12h14M13 6l6 6-6 6"/>';
+ICO.plane = '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>';
+Object.assign(I.en, { tm_title:'OPS Terminal', tm_desc:'One central place for the OPS tools.', th_dep:'Departures', th_bul:'Bulletin status', th_gates:'Gates', th_inst:'Install', th_open:'Open', th_ext:'Opens in a new tab', th_soon:'Coming soon', th_a1:'Acknowledge bulletins and follow their progress.', th_a2:'Calculate AOC fees (CT / OPS).', th_sb:'More OPS tools will arrive at these gates.', th_counts:'Counts only. No names are shown.', th_overview:'Open overview', th_board_t:'Departures · OPS tools', th_board_b:'Bulletin status' });
+Object.assign(I.th, { tm_title:'OPS Terminal', tm_desc:'ศูนย์รวมเครื่องมือของ OPS', th_dep:'ขาออก', th_bul:'สถานะ Bulletin', th_gates:'ประตูทางออก', th_inst:'ติดตั้ง', th_open:'เปิด', th_ext:'เปิดในแท็บใหม่', th_soon:'เร็ว ๆ นี้', th_a1:'รับทราบ Bulletin และติดตามความคืบหน้า', th_a2:'คำนวณค่าธรรมเนียม AOC (CT / OPS)', th_sb:'เครื่องมือ OPS อื่น ๆ จะเพิ่มที่ประตูเหล่านี้', th_counts:'แสดงเฉพาะจำนวน ไม่แสดงชื่อบุคคล', th_overview:'เปิดภาพรวม', th_board_t:'ขาออก · เครื่องมือ OPS', th_board_b:'สถานะ Bulletin' });
+
+const TERM_TOOLS = [
+  { no: 'OPS 01', name: 'OPS BULLETIN ACKNOWLEDGEMENT', gate: 'A1', status: 'ONLINE', go: "setTab('ack')", d: 'th_a1' },
+  { no: 'OPS 02', name: 'AOC FEE CALCULATOR', gate: 'A2', status: 'ONLINE', url: 'https://anantulyathan.github.io/ops_ct/aoc-fee-calculator.html', d: 'th_a2' },
+  { no: 'OPS 03', name: 'COMING SOON', gate: 'B1', status: 'COMING SOON', d: 'th_sb' },
+  { no: 'OPS 04', name: 'COMING SOON', gate: 'B2', status: 'COMING SOON', d: 'th_sb' }
+];
+const TERM = { on: false, tick: null, clock: null, timers: [], anims: [], off: { tools: 0, bul: 0 }, pause: false, intro: false, reduce: false };
+const TERM_CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const TERM_ST = { 'IN PROGRESS': 's-prog', 'OVERDUE': 's-over', 'COMPLETED': 's-done', 'ONLINE': 's-done', 'COMING SOON': 's-soon' };
+function termDue(d){ try { return new Date(d + 'T00:00:00+07:00').toLocaleDateString('en-GB', { day: '2-digit', month: 'short', timeZone: 'Asia/Bangkok' }).toUpperCase(); } catch(e){ return ''; } }
+function termToolRows(){ return TERM_TOOLS.map(function(r){ return [r.no, r.name, r.gate, r.status]; }); }
+function termBulList(){
+  if(!pubLoaded || pubError || !pub || !pub.bulletins) return null;
+  const today = bkkToday();
+  const L = pub.bulletins.filter(function(b){ return Number(b.required) > 0 || Number(b.acked) > 0; }).map(function(b){ return { b: b, st: bulletinStatus(b.required, b.acked, b.deadline, today) }; });
+  const open = L.filter(function(x){ return x.st !== 'done' && !x.b.superseded_by; }).sort(function(a, b){ return a.b.deadline < b.b.deadline ? -1 : 1; });
+  const done = L.filter(function(x){ return x.st === 'done'; }).sort(function(a, b){ return a.b.created_at < b.b.created_at ? 1 : -1; });
+  return open.concat(done);
+}
+function termBulRows(){
+  const L = termBulList();
+  if(L === null) return [['', 'LOADING', '', '', '']];
+  if(!L.length) return [['', 'NO BULLETINS YET', '', '', '']];
+  return L.map(function(x){ const b = x.b; return [b.number, b.title, termDue(b.deadline), b.acked + '/' + b.required, x.st === 'done' ? 'COMPLETED' : (x.st === 'overdue' ? 'OVERDUE' : 'IN PROGRESS')]; });
+}
+const TB = {
+  tools: { cols: [6, 28, 4, 11], names: ['No.', 'Destination', 'Gate', 'Status'], main: 1, st: 3, vis: 4, rows: termToolRows, title: 'th_board_t', icon: 'plane' },
+  bul:   { cols: [8, 24, 6, 7, 11], names: ['Bulletin', 'Title', 'Due', 'Ack.', 'Status'], main: 1, st: 4, vis: 5, rows: termBulRows, title: 'th_board_b', icon: 'file', hide: 2 }
+};
+function termBoardHTML(k){
+  const B = TB[k];
+  const cl = B.cols.map(function(w, i){ return '<span class="cl' + (i === B.hide ? ' hm' : '') + (i === B.main ? ' cm' : '') + '" style="--w:' + w + '">' + esc(B.names[i]) + '</span>'; }).join('');
+  let rows = '';
+  for(let v = 0; v < B.vis; v++){
+    rows += '<div class="tbr" data-v="' + v + '"' + (k === 'tools' ? ' onclick="termRow(this)"' : '') + '>' + B.cols.map(function(w, i){
+      return '<span class="cell' + (i === B.main ? ' cm' : '') + (i === B.hide ? ' hm' : '') + (i === 2 && k === 'tools' ? ' c-gate' : '') + '" data-w="' + w + '" style="--w:' + w + '"></span>'; }).join('') + (k === 'tools' ? '<span class="tbgo">' + ico('arrow', 14) + '</span>' : '') + '</div>';
+  }
+  return '<div class="tb" id="tb_' + k + '" onmouseenter="TERM.pause=true" onmouseleave="TERM.pause=false" ontouchstart="termTouch()"><div class="tbh"><span class="tbi">' + ico(B.icon, 17) + '</span><b>' + esc(t(B.title)) + '</b>' +
+    (k === 'bul' ? '<span class="tbn">' + esc(t('th_counts')) + '</span><button class="tbl" onclick="setTab(\'overview\')">' + esc(t('th_overview')) + '</button>' : '') + '</div>' +
+    '<div class="tbcols">' + cl + '</div><div class="tbrows">' + rows + '</div></div>';
+}
+function termTickerText(){
+  const L = termBulList(); if(L === null) return 'OPS TERMINAL';
+  const o = L.filter(function(x){ return x.st !== 'done'; }), od = o.filter(function(x){ return x.st === 'overdue'; }).length;
+  return '     OPS TERMINAL     ///     OPEN BULLETINS ' + o.length + '     ///     OVERDUE ' + od + '     ///     COMPLETED ' + (L.length - o.length) + '     ///     PLEASE ACKNOWLEDGE BEFORE THE DEADLINE     ///     ';
+}
+function termHeroHTML(){
+  const s = function(icon, label, id, cls){ return '<button class="thsign ' + (cls || '') + '" onclick="termGo(\'' + id + '\')">' + ico(icon, 16) + esc(label) + '</button>'; };
+  return '<div class="thero"><div class="tht"><div><div class="theye">CT / OPS</div><h2>' + esc(t('tm_title')) + '</h2><div class="thd">' + esc(t('tm_desc')) + '</div></div>' +
+    '<div class="thck"><div class="thc" id="thClock">--:--:--</div><div class="thdt" id="thDate"></div></div></div>' +
+    '<div class="thsigns">' + s('plane', t('th_dep'), 'tb_tools', '') + s('file', t('th_bul'), 'tb_bul', 'b') + s('grid', t('th_gates'), 'thGates', 'g') + s('mobile', t('th_inst'), 'thInst', 's') + '</div>' +
+    '<div class="thrun"><span class="thplane">' + ico('plane', 22) + '</span></div></div>';
+}
+function termGatesHTML(){
+  return '<div class="gh" id="thGates"><div class="gi">' + ico('grid', 20) + '</div><div><div class="gt">' + esc(t('th_gates')) + '</div></div></div><div class="gates">' + TERM_TOOLS.map(function(r, i){
+    const live = !!(r.go || r.url);
+    return '<div class="card gcard' + (live ? '' : ' off') + '"><div class="gnum">' + r.gate + '</div><div class="gbd"><div class="gn">' + esc(live ? r.name.replace(/\b(\w)(\w*)/g, function(_, a, b){ return (a + b.toLowerCase()).replace(/^Aoc$/, 'AOC').replace(/^Ops$/, 'OPS'); }) : t('th_soon')) + '</div><div class="muted">' + esc(t(r.d)) + '</div>' +
+      (live ? '<div class="row" style="margin-top:10px"><button class="btn sm" onclick="termOpenTool(' + i + ')">' + ico(r.url ? 'ext' : 'check', 15) + esc(t('th_open')) + '</button>' + (r.url ? '<span class="muted" style="font-size:12px">' + esc(t('th_ext')) + '</span>' : '') + '</div>' : '') + '</div></div>';
+  }).join('') + '</div>';
+}
+function viewTerminal(){
+  return termHeroHTML() + termBoardHTML('tools') + termBoardHTML('bul') + '<div class="tbtick card0"><span id="thTick"></span></div>' + termGatesHTML() + '<div id="thInst">' + installCardHTML() + '</div>';
+}
+function termGo(id){ const e = $(id); if(e) e.scrollIntoView({ behavior: TERM.reduce ? 'auto' : 'smooth', block: 'start' }); }
+function termOpenTool(i){ const r = TERM_TOOLS[i]; if(!r) return; if(r.url) window.open(r.url, '_blank', 'noopener'); else if(r.go) (new Function(r.go))(); }
+function termRow(el){ const r = TERM_TOOLS[Number(el.dataset.k)]; if(r && (r.go || r.url)) termOpenTool(Number(el.dataset.k)); }
+function termTouch(){ TERM.pause = true; clearTimeout(TERM.tt); TERM.tt = setTimeout(function(){ TERM.pause = false; }, 7000); }
+function termCell(cell, text, anim, force){
+  const w = Number(cell.dataset.w); text = String(text == null ? '' : text).toUpperCase(); cell.dataset.t = text;
+  if(/[^\x20-\x7E]/.test(text)){ cell.dataset.mode = 'p'; cell.classList.add('plain'); cell.textContent = text; return; }
+  if(cell.dataset.mode !== 't' || cell.children.length !== w){ cell.dataset.mode = 't'; cell.classList.remove('plain'); cell.innerHTML = new Array(w + 1).join('<i> </i>'); }
+  text = text.slice(0, w); while(text.length < w) text += ' ';
+  const tiles = cell.children, now = Date.now();
+  for(let i = 0; i < w; i++){
+    const el = tiles[i], ch = text.charAt(i); el._ch = ch;
+    if(!anim || TERM.reduce){ if(el.textContent !== ch) el.textContent = ch; continue; }
+    if(el.textContent === ch && !force) continue;
+    TERM.anims.push({ el: el, at: now + i * 26 + Math.random() * 150, n: 3 + Math.floor(Math.random() * 5) });
+  }
+}
+function termFill(k, anim){
+  const B = TB[k], rows = B.rows(), n = rows.length, root = $('tb_' + k); if(!root) return;
+  Array.prototype.forEach.call(root.querySelectorAll('.tbr'), function(r){
+    const v = Number(r.dataset.v), has = n > 0 && (n > B.vis ? true : v < n), idx = has ? (TERM.off[k] + v) % n : -1, data = has ? rows[idx] : null;
+    r.classList.toggle('empty', !has); r.dataset.k = idx; r.classList.toggle('go', k === 'tools' && has && !!(TERM_TOOLS[idx].go || TERM_TOOLS[idx].url));
+    Array.prototype.forEach.call(r.querySelectorAll('.cell'), function(c, ci){
+      termCell(c, data ? data[ci] : '', anim);
+      if(ci === B.st){ c.classList.remove('s-prog', 's-over', 's-done', 's-soon'); const sc = data ? TERM_ST[String(data[ci]).toUpperCase()] : ''; if(sc) c.classList.add(sc); }
+    });
+  });
+}
+function termLater(fn, ms){ TERM.timers.push(setTimeout(function(){ if(TERM.on) fn(); }, ms)); }
+function termRand(a, b){ return a + Math.random() * (b - a); }
+function termAmbient(){
+  const k = Math.random() < .45 ? 'tools' : 'bul', rows = document.querySelectorAll('#tb_' + k + ' .tbr:not(.empty)');
+  if(rows.length){
+    const r = rows[Math.floor(Math.random() * rows.length)], cells = r.querySelectorAll('.cell'), c = cells[Math.random() < .65 ? TB[k].st : Math.floor(Math.random() * cells.length)];
+    if(c && c.dataset.mode === 't') termCell(c, c.dataset.t, true, true);
+  }
+  termLater(termAmbient, termRand(2200, 5200));
+}
+function termPage(){
+  const B = TB.bul, n = B.rows().length;
+  if(n > B.vis && !TERM.pause){ TERM.off.bul = (TERM.off.bul + 1 + (Math.random() < .35 ? 1 : 0)) % n; termFill('bul', true); }
+  termLater(termPage, termRand(6500, 12000));
+}
+function termClock(){
+  const a = $('thClock'), d = $('thDate'); if(!a) return;
+  a.textContent = 'BKK ' + new Date().toLocaleTimeString('en-GB', { timeZone: 'Asia/Bangkok', hour12: false });
+  if(d) d.textContent = new Date().toLocaleDateString(locOf(lang), { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Bangkok' });
+}
+function termTickFn(){
+  const now = Date.now(), a = TERM.anims;
+  for(let i = a.length - 1; i >= 0; i--){
+    const x = a[i]; if(now < x.at) continue;
+    if(x.n > 0){ x.el.textContent = TERM_CH.charAt(Math.floor(Math.random() * TERM_CH.length)); x.el.className = x.el.className === 'fa' ? 'fb' : 'fa'; x.n--; }
+    else { x.el.textContent = x.el._ch; a.splice(i, 1); }
+  }
+}
+function termStop(){
+  TERM.on = false; TERM.timers.forEach(clearTimeout); TERM.timers = []; clearInterval(TERM.tick); clearInterval(TERM.clock); TERM.anims = [];
+}
+function termStart(){
+  termStop(); TERM.on = true;
+  try { TERM.reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){ TERM.reduce = false; }
+  const intro = TERM.intro; TERM.intro = false;
+  termFill('tools', intro); termFill('bul', intro);
+  const tk = $('thTick'); if(tk) tk.textContent = termTickerText();
+  termClock(); TERM.clock = setInterval(termClock, 1000); TERM.tick = setInterval(termTickFn, 50);
+  termLater(termAmbient, 2500); termLater(termPage, 7000);
+}
+function termSync(){ if(tab === 'terminal') termStart(); else if(TERM.on) termStop(); }
 
 /* ====================== INIT ====================== */
 async function init(){
