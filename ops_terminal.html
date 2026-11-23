@@ -654,6 +654,67 @@ html[lang=th] .tbh b{letter-spacing:.04em}
 .gcard .gnum{align-self:flex-start}
 .gcard .gbd{display:flex;flex-direction:column;flex:1;min-width:0}
 .gcard .gbd>.row:last-child{margin-top:auto!important;padding-top:12px}
+
+/* terminal 2 */
+.tbr.empty{display:none}
+.tbmore{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;padding:10px 6px 0;border-top:1px dashed #22395a;font-size:12.5px;color:#9fb4cc}
+.tbmore[hidden]{display:none}
+.thwho{margin-top:6px;font-size:13px;color:#cfe0f2}
+.thwho .thwl{color:#9fb4cc;margin-right:2px}
+.thwho b{color:#fff;font-weight:700;letter-spacing:.02em}
+/* gate tiles: glow + shine */
+.gnum{position:relative;overflow:hidden;background:linear-gradient(180deg,#244264,#132843 72%);border:1px solid rgba(227,207,148,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -9px 14px -8px rgba(0,0,0,.5),0 0 18px -5px rgba(227,207,148,.4),0 8px 16px -8px rgba(10,24,44,.7)}
+.gnum span{position:relative;z-index:1;background:linear-gradient(180deg,#fff6d3 0%,#e8d598 48%,#b99f5c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:gglow 3.8s ease-in-out infinite}
+.gnum::after{content:'';position:absolute;top:-30%;bottom:-30%;left:-70%;width:45%;background:linear-gradient(100deg,transparent 0,rgba(255,250,230,.55) 50%,transparent 100%);transform:skewX(-20deg);animation:gshine 5s ease-in-out infinite}
+.gates .gcard:nth-child(2) .gnum::after,.gates .gcard:nth-child(2) .gnum span{animation-delay:1.1s}
+.gates .gcard:nth-child(3) .gnum::after,.gates .gcard:nth-child(3) .gnum span{animation-delay:2.2s}
+.gates .gcard:nth-child(4) .gnum::after,.gates .gcard:nth-child(4) .gnum span{animation-delay:3.3s}
+.gcard.off .gnum::after{display:none}
+.gcard.off .gnum span{animation:none;opacity:.7}
+@keyframes gglow{0%,100%{filter:drop-shadow(0 0 3px rgba(227,207,148,.45)) drop-shadow(0 0 8px rgba(227,207,148,.2))}50%{filter:drop-shadow(0 0 5px rgba(227,207,148,.85)) drop-shadow(0 0 14px rgba(227,207,148,.45))}}
+@keyframes gshine{0%,52%{left:-70%}100%{left:135%}}
+/* runway scene */
+.thrun{height:96px;margin:0 -24px;overflow:hidden;border-top:2px solid #24405f;background:radial-gradient(120% 100% at 50% 50%,rgba(70,96,132,.25),transparent 70%),linear-gradient(180deg,#17253b 0%,#0f1b2d 48%,#0b1524 100%)}
+.thrun::before{content:'';position:absolute;left:0;right:0;top:0;bottom:0;height:auto;animation:none;opacity:1;background:repeating-linear-gradient(90deg,rgba(0,0,0,.3) 0 1px,transparent 1px 170px),linear-gradient(180deg,transparent 34%,rgba(0,0,0,.22) 42% 58%,transparent 66%)}
+.thrun::after{content:none}
+.thrun .rw-e,.thrun .rw-c,.thrun .rw-pk,.thrun .rw-l,.thrun .rw-g,.thrun .rw-r{position:absolute;pointer-events:none}
+.rw-e{left:0;right:0;height:2px;background:rgba(214,224,238,.5)} .rw-e.t{top:12px} .rw-e.b{bottom:12px}
+.rw-c{left:0;right:0;top:50%;height:3px;margin-top:-1.5px;background:repeating-linear-gradient(90deg,rgba(214,224,238,.78) 0 30px,transparent 30px 66px);background-position:92px 0}
+.rw-pk{left:30px;top:18px;bottom:18px;width:38px;background:repeating-linear-gradient(180deg,rgba(214,224,238,.72) 0 5px,transparent 5px 10px)}
+.rw-l{left:0;right:0;height:8px;background:radial-gradient(circle at 50% 50%,rgba(245,231,189,.55) 0 1.5px,transparent 2.6px) 0 0/34px 8px repeat-x}
+.rw-l.t{top:3px} .rw-l.b{bottom:3px}
+.rw-l::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,#fff3cf 0 1.7px,rgba(255,243,207,.35) 2.4px,transparent 4px) 0 0/34px 8px repeat-x;-webkit-mask:linear-gradient(90deg,transparent,#000 50%,transparent) -30% 0/28% 100% no-repeat;mask:linear-gradient(90deg,transparent,#000 50%,transparent) -30% 0/28% 100% no-repeat;animation:rwchase 3.4s linear infinite}
+.rw-l.b::after{animation-delay:-1.7s}
+@keyframes rwchase{from{-webkit-mask-position:-30% 0;mask-position:-30% 0}to{-webkit-mask-position:130% 0;mask-position:130% 0}}
+.rw-g{left:12px;top:10px;bottom:10px;width:6px;background:radial-gradient(circle,#5ba884 0 2px,transparent 3.4px) 50% 0/6px 12px repeat-y;filter:drop-shadow(0 0 3px rgba(91,168,132,.6))}
+.rw-r{right:12px;top:10px;bottom:10px;width:6px;background:radial-gradient(circle,#cc6a63 0 2px,transparent 3.4px) 50% 0/6px 12px repeat-y;filter:drop-shadow(0 0 3px rgba(204,106,99,.6))}
+.acw{position:absolute;top:50%;left:84px;width:128px;height:80px;margin-top:-40px;animation:acroll 24s linear infinite}
+.acin{position:absolute;inset:0;transform-origin:50% 50%;animation:acscale 24s linear infinite}
+.acv,.acs{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.acs{opacity:.5;animation:acshadow 24s linear infinite}
+.acv{filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+.acbeam{animation:acbeam 24s linear infinite}
+.stb{animation:acstrobe 1.4s linear infinite}
+.bcn{animation:acbeacon 1.9s linear infinite}
+@keyframes acroll{0%{left:-190px;animation-timing-function:cubic-bezier(.2,.6,.3,1)}9%{left:84px}17%{left:84px;animation-timing-function:cubic-bezier(.42,0,.9,.7)}93%{left:calc(100% + 280px)}100%{left:calc(100% + 280px)}}
+@keyframes acscale{0%,50%{transform:scale(1);animation-timing-function:cubic-bezier(.45,0,.85,.65)}88%,100%{transform:scale(1.6)}}
+@keyframes acshadow{0%,50%{transform:translate(2px,3px);opacity:.5;filter:blur(1.5px);animation-timing-function:cubic-bezier(.45,0,.85,.65)}88%,100%{transform:translate(18px,28px);opacity:.14;filter:blur(6px)}}
+@keyframes acbeam{0%,11%{opacity:0}16%,88%{opacity:1}94%,100%{opacity:0}}
+@keyframes acstrobe{0%,100%{opacity:0}3%{opacity:1}7%{opacity:0}13%{opacity:1}17%{opacity:0}}
+@keyframes acbeacon{0%{opacity:0}6%,16%{opacity:1}26%,100%{opacity:0}}
+@media (max-width:640px){
+  .thrun{height:72px;margin:0 -16px}
+  .rw-e.t{top:9px} .rw-e.b{bottom:9px} .rw-l.t{top:1px} .rw-l.b{bottom:1px}
+  .rw-pk{top:14px;bottom:14px;width:26px;left:24px} .rw-g{left:8px;top:8px;bottom:8px} .rw-r{right:8px;top:8px;bottom:8px}
+  .acw{width:96px;height:60px;margin-top:-30px;left:60px}
+  .rw-c{background-position:60px 0}
+  @keyframes acroll{0%{left:-150px;animation-timing-function:cubic-bezier(.2,.6,.3,1)}9%{left:60px}17%{left:60px;animation-timing-function:cubic-bezier(.42,0,.9,.7)}93%{left:calc(100% + 210px)}100%{left:calc(100% + 210px)}}
+}
+@media (prefers-reduced-motion:reduce){
+  .acw,.acin,.acs,.acbeam,.stb,.bcn,.rw-l::after,.gnum span,.gnum::after{animation:none}
+  .acbeam{opacity:.9} .stb,.bcn{opacity:.9} .rw-l::after{display:none} .gnum::after{display:none}
+  .acs{transform:translate(2px,3px);filter:blur(1.5px)}
+}
 </style>
 </head>
 <body data-sec="teal">
@@ -3895,7 +3956,7 @@ const TERM_TOOLS = [
   { no: 'OPS 03', name: 'OPS NC CALCULATOR', gate: 'B1', status: 'ONLINE', url: 'https://anantulyathan.github.io/ops-nc-calculator/', d: 'th_a3' },
   { no: 'OPS 04', name: 'COMING SOON', gate: 'B2', status: 'COMING SOON', d: 'th_sb' }
 ];
-const TERM = { on: false, tick: null, clock: null, timers: [], anims: [], off: { tools: 0, bul: 0 }, pause: false, intro: false, reduce: false };
+const TERM = { on: false, tick: null, clock: null, timers: [], anims: [], off: { tools: 0, bul: 0 }, bulSrc: [], bulMore: 0, pause: false, intro: false, reduce: false };
 const TERM_CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const TERM_ST = { 'IN PROGRESS': 's-prog', 'OVERDUE': 's-over', 'COMPLETED': 's-done', 'ONLINE': 's-done', 'COMING SOON': 's-soon' };
 function termDue(d){ try { return new Date(d + 'T00:00:00+07:00').toLocaleDateString('en-GB', { day: '2-digit', month: 'short', timeZone: 'Asia/Bangkok' }).toUpperCase(); } catch(e){ return ''; } }
@@ -3917,19 +3978,19 @@ function termBulRowsPub(){
 }
 const TB = {
   tools: { cols: [6, 28, 4, 11], names: ['No.', 'Destination', 'Gate', 'Status'], main: 1, st: 3, vis: 4, rows: termToolRows, title: 'th_board_t', icon: 'plane' },
-  bul:   { cols: [8, 23, 6, 7, 12], names: ['Bulletin', 'Title', 'Due', 'Ack.', 'Status'], main: 1, st: 4, vis: 5, rows: termBulRows, title: 'th_board_b', icon: 'file', hide: 2 }
+  bul:   { cols: [8, 23, 6, 7, 12], names: ['Bulletin', 'Title', 'Due', 'Left', 'Status'], main: 1, st: 4, vis: 10, rows: termBulRows, title: 'th_board_b', icon: 'file', hide: 2 }
 };
 function termBoardHTML(k){
   const B = TB[k];
   const cl = B.cols.map(function(w, i){ return '<span class="cl' + (i === B.hide ? ' hm' : '') + (i === B.main ? ' cm' : '') + '" style="--w:' + w + '">' + esc(B.names[i]) + '</span>'; }).join('');
   let rows = '';
   for(let v = 0; v < B.vis; v++){
-    rows += '<div class="tbr" data-v="' + v + '"' + (k === 'tools' ? ' onclick="termRow(this)"' : '') + '>' + B.cols.map(function(w, i){
-      return '<span class="cell' + (i === B.main ? ' cm' : '') + (i === B.hide ? ' hm' : '') + (i === 2 && k === 'tools' ? ' c-gate' : '') + '" data-w="' + w + '" style="--w:' + w + '"></span>'; }).join('') + (k === 'tools' ? '<span class="tbgo">' + ico('arrow', 14) + '</span>' : '') + '</div>';
+    rows += '<div class="tbr" data-v="' + v + '"' + ' onclick="' + (k === 'tools' ? 'termRow(this)' : 'termBulGo(this)') + '">' + B.cols.map(function(w, i){
+      return '<span class="cell' + (i === B.main ? ' cm' : '') + (i === B.hide ? ' hm' : '') + (i === 2 && k === 'tools' ? ' c-gate' : '') + '" data-w="' + w + '" style="--w:' + w + '"></span>'; }).join('') + '<span class="tbgo">' + ico('arrow', 14) + '</span></div>';
   }
   return '<div class="tb" id="tb_' + k + '" onmouseenter="TERM.pause=true" onmouseleave="TERM.pause=false" ontouchstart="termTouch()"><div class="tbh"><span class="tbi">' + ico(B.icon, 17) + '</span><b>' + esc(t(B.title)) + '</b>' +
     (k === 'bul' ? '<span class="tbn">' + esc(t('th_counts')) + '</span><button class="tbl" onclick="setTab(\'ack\')">' + esc(t('th_overview')) + '</button>' : '') + '</div>' +
-    '<div class="tbcols">' + cl + '</div><div class="tbrows">' + rows + '</div></div>';
+    '<div class="tbcols">' + cl + '</div><div class="tbrows">' + rows + '</div>' + (k === 'bul' ? '<div class="tbmore" id="tbMore" hidden></div>' : '') + '</div>';
 }
 function termTickerTextPub(){
   const L = termBulListPub(); if(L === null) return 'OPS TERMINAL';
@@ -3939,19 +4000,19 @@ function termTickerTextPub(){
 function termHeroHTML(){
   const s = function(icon, label, id, cls){ return '<button class="thsign ' + (cls || '') + '" onclick="termGo(\'' + id + '\')">' + ico(icon, 16) + esc(label) + '</button>'; };
   return '<div class="thero"><div class="tht"><div><div class="theye">CT / OPS</div><h2>' + esc(t('tm_title')) + '</h2><div class="thd">' + esc(t('tm_desc')) + '</div></div>' +
-    '<div class="thck"><div class="thc" id="thClock">--:--:--</div><div class="thdt" id="thDate"></div></div></div>' +
-    '<div class="thsigns">' + s('file', t('th_bul'), 'tb_bul', 'b') + s('plane', t('th_dep'), 'tb_tools', '') + s('grid', t('th_gates'), 'thGates', 'g') + s('mobile', t('th_inst'), 'thInst', 's') + '</div>' +
-    '<div class="thrun"><span class="thplane">' + ico('plane', 22) + '</span></div></div>';
+    '<div class="thck"><div class="thc" id="thClock">--:--:--</div><div class="thdt" id="thDate"></div>' + termWhoTag() + '</div></div>' +
+    '<div class="thsigns">' + s('file', t('th_bul'), 'tb_bul', 'b') + s('grid', t('th_gates'), 'thGates', 'g') + s('mobile', t('th_inst'), 'thInst', 's') + '</div>' +
+    termRunwayHTML() + '</div>';
 }
 function termGatesHTML(){
   return '<div class="gh" id="thGates"><div class="gi">' + ico('grid', 20) + '</div><div><div class="gt">' + esc(t('th_gates')) + '</div></div></div><div class="gates">' + TERM_TOOLS.map(function(r, i){
     const live = !!(r.go || r.url);
-    return '<div class="card gcard' + (live ? '' : ' off') + '"><div class="gnum">' + r.gate + '</div><div class="gbd"><div class="gn">' + esc(live ? r.name.replace(/\b(\w)(\w*)/g, function(_, a, b){ return (a + b.toLowerCase()).replace(/^Aoc$/, 'AOC').replace(/^Ops$/, 'OPS').replace(/^Nc$/, 'NC'); }) : t('th_soon')) + '</div><div class="muted">' + esc(t(r.d)) + '</div>' +
+    return '<div class="card gcard' + (live ? '' : ' off') + '"><div class="gnum"><span>' + esc(r.gate) + '</span></div><div class="gbd"><div class="gn">' + esc(live ? r.name.replace(/\b(\w)(\w*)/g, function(_, a, b){ return (a + b.toLowerCase()).replace(/^Aoc$/, 'AOC').replace(/^Ops$/, 'OPS').replace(/^Nc$/, 'NC'); }) : t('th_soon')) + '</div><div class="muted">' + esc(t(r.d)) + '</div>' +
       (live ? '<div class="row" style="margin-top:10px"><button class="btn sm" onclick="termOpenTool(' + i + ')">' + ico(r.url ? 'ext' : 'check', 15) + esc(t('th_open')) + '</button>' + (r.url ? '<span class="muted" style="font-size:12px">' + esc(t('th_ext')) + '</span>' : '') + '</div>' : '') + '</div></div>';
   }).join('') + '</div>';
 }
 function viewTerminal(){
-  return termHeroHTML() + termBoardHTML('bul') + termBoardHTML('tools') + '<div class="tbtick card0"><span id="thTick"></span></div>' + termGatesHTML() + '<div id="thInst">' + installCardHTML() + '</div>';
+  return termHeroHTML() + termBoardHTML('bul') + '<div class="tbtick card0"><span id="thTick"></span></div>' + termGatesHTML() + '<div id="thInst">' + installCardHTML() + '</div>';
 }
 function termGo(id){ const e = $(id); if(e) e.scrollIntoView({ behavior: TERM.reduce ? 'auto' : 'smooth', block: 'start' }); }
 function termOpenTool(i){ const r = TERM_TOOLS[i]; if(!r) return; if(r.url) window.open(r.url, '_blank', 'noopener'); else if(r.go) (new Function(r.go))(); }
@@ -3970,11 +4031,11 @@ function termCell(cell, text, anim, force){
     TERM.anims.push({ el: el, at: now + i * 26 + Math.random() * 150, n: 3 + Math.floor(Math.random() * 5) });
   }
 }
-function termFill(k, anim){
+function termFill0(k, anim){
   const B = TB[k], rows = B.rows(), n = rows.length, root = $('tb_' + k); if(!root) return;
   Array.prototype.forEach.call(root.querySelectorAll('.tbr'), function(r){
     const v = Number(r.dataset.v), has = n > 0 && (n > B.vis ? true : v < n), idx = has ? (TERM.off[k] + v) % n : -1, data = has ? rows[idx] : null;
-    r.classList.toggle('empty', !has); r.dataset.k = idx; r.classList.toggle('go', k === 'tools' && has && !!(TERM_TOOLS[idx].go || TERM_TOOLS[idx].url));
+    r.classList.toggle('empty', !has); r.dataset.k = idx; r.classList.toggle('go', k === 'tools' ? (has && !!(TERM_TOOLS[idx].go || TERM_TOOLS[idx].url)) : (has && !!TERM.bulSrc[idx]));
     Array.prototype.forEach.call(r.querySelectorAll('.cell'), function(c, ci){
       termCell(c, data ? data[ci] : '', anim);
       if(ci === B.st){ c.classList.remove('s-prog', 's-over', 's-done', 's-soon'); const sc = data ? TERM_ST[String(data[ci]).toUpperCase()] : ''; if(sc) c.classList.add(sc); }
@@ -3984,7 +4045,7 @@ function termFill(k, anim){
 function termLater(fn, ms){ TERM.timers.push(setTimeout(function(){ if(TERM.on) fn(); }, ms)); }
 function termRand(a, b){ return a + Math.random() * (b - a); }
 function termAmbient(){
-  const k = Math.random() < .45 ? 'tools' : 'bul', rows = document.querySelectorAll('#tb_' + k + ' .tbr:not(.empty)');
+  const k = 'bul', rows = document.querySelectorAll('#tb_' + k + ' .tbr:not(.empty)');
   if(rows.length){
     const r = rows[Math.floor(Math.random() * rows.length)], cells = r.querySelectorAll('.cell'), c = cells[Math.random() < .65 ? TB[k].st : Math.floor(Math.random() * cells.length)];
     if(c && c.dataset.mode === 't') termCell(c, c.dataset.t, true, true);
@@ -4016,7 +4077,7 @@ function termStart(){
   termStop(); TERM.on = true;
   try { TERM.reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){ TERM.reduce = false; }
   const intro = TERM.intro; TERM.intro = false;
-  termFill('tools', intro); termFill('bul', intro);
+  termFill('bul', intro);
   const tk = $('thTick'); if(tk) tk.textContent = termTickerText();
   termClock(); TERM.clock = setInterval(termClock, 1000); TERM.tick = setInterval(termTickFn, 50);
   termLater(termAmbient, 2500); termLater(termPage, 7000);
@@ -4054,7 +4115,7 @@ Object.assign(I.en, { th_bul:'My bulletins', th_board_b:'My bulletin status', th
 Object.assign(I.th, { th_bul:'Bulletin ของฉัน', th_board_b:'สถานะ Bulletin ของฉัน', th_counts:'แสดงเฉพาะ Bulletin ของท่าน', th_overview:'เปิดรายการของฉัน' });
 TERM_ST['PENDING'] = 's-prog'; TERM_ST['ACKNOWLEDGED'] = 's-done';
 function termAckDay(ts){ try { return new Date(ts).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', timeZone: 'Asia/Bangkok' }).toUpperCase(); } catch(e){ return ''; } }
-function termBulList(){
+function termBulListAll(){
   if(!me || !me.list) return null;
   const today = bkkToday();
   const L = me.list.map(function(b){
@@ -4067,8 +4128,8 @@ function termBulList(){
   const sup = L.filter(function(x){ return x.st === 'superseded'; });
   return open.concat(done, sup);
 }
-function termBulRows(){
-  const L = termBulList();
+function termBulRowsAll(){
+  const L = termBulListAll();
   if(L === null) return [['', 'LOADING', '', '', '']];
   if(!L.length) return [['', 'NO BULLETINS FOR YOU YET', '', '', '']];
   return L.map(function(x){ const b = x.b;
@@ -4076,11 +4137,101 @@ function termBulRows(){
       x.st === 'done' ? 'ACKNOWLEDGED' : (x.st === 'overdue' ? 'OVERDUE' : (x.st === 'superseded' ? 'SUPERSEDED' : 'PENDING'))]; });
 }
 function termTickerText(){
-  const L = termBulList(); if(L === null) return 'OPS TERMINAL';
+  const L = termBulListAll(); if(L === null) return 'OPS TERMINAL';
   const o = L.filter(function(x){ return x.st === 'overdue' || x.st === 'progress'; }), od = o.filter(function(x){ return x.st === 'overdue'; }).length;
   const dn = L.filter(function(x){ return x.st === 'done'; }).length;
   return '     OPS TERMINAL     ///     YOUR PENDING BULLETINS ' + o.length + '     ///     OVERDUE ' + od + '     ///     ACKNOWLEDGED ' + dn + '     ///     ' +
     (o.length ? 'PLEASE ACKNOWLEDGE BEFORE THE DEADLINE' : 'ALL CAUGHT UP. THANK YOU') + '     ///     ';
+}
+
+
+/* ====================== TERMINAL 2: OPEN BULLETINS, WELCOME, RUNWAY ====================== */
+Object.assign(I.en, { th_counts:'Bulletins you have not yet acknowledged.', th_more:'+{n} more not yet acknowledged', th_welcome:'Welcome' });
+Object.assign(I.th, { th_counts:'Bulletin ที่ท่านยังไม่ได้รับทราบ', th_more:'และยังมีอีก {n} รายการที่ยังไม่ได้รับทราบ', th_welcome:'ยินดีต้อนรับ คุณ' });
+function termLeft(dl, today){
+  try {
+    const a = Date.parse(String(dl).slice(0, 10) + 'T00:00:00Z'), b = Date.parse(String(today).slice(0, 10) + 'T00:00:00Z'), d = Math.round((a - b) / 864e5);
+    if(isNaN(d)) return '';
+    if(d === 0) return 'TODAY';
+    if(d === 1) return '1 DAY';
+    if(d > 1) return (d > 99 ? '99+' : d) + ' DAYS';
+    return '-' + (d < -99 ? '99+' : Math.abs(d)) + (d === -1 ? ' DAY' : ' DAYS');
+  } catch(e){ return ''; }
+}
+function termBulList(){
+  const A = termBulListAll(); if(A === null) return null;
+  return A.filter(function(x){ return x.st === 'overdue' || x.st === 'progress'; });
+}
+function termBulRows(){
+  const L = termBulList(); TERM.bulSrc = []; TERM.bulMore = 0;
+  if(L === null) return [['', 'LOADING', '', '', '']];
+  if(!L.length) return [['', (me && me.list && me.list.length ? 'ALL CAUGHT UP' : 'NO BULLETINS FOR YOU YET'), '', '', (me && me.list && me.list.length ? 'COMPLETED' : '')]];
+  TERM.bulMore = Math.max(0, L.length - 10);
+  const today = bkkToday();
+  return L.slice(0, 10).map(function(x){ const b = x.b; TERM.bulSrc.push(b.id);
+    return [b.number, b.title, termDue(x.dl), termLeft(x.dl, today), x.st === 'overdue' ? 'OVERDUE' : 'PENDING']; });
+}
+function termBulGo(el){
+  const id = TERM.bulSrc && TERM.bulSrc[Number(el.dataset.k)]; if(!id) return;
+  tab = 'ack'; openMine(id); window.scrollTo(0, 0);
+}
+function termMore(){
+  const mo = $('tbMore'); if(!mo) return;
+  if(TERM.bulMore > 0){ mo.hidden = false; mo.innerHTML = '<span>' + esc(t('th_more').replace('{n}', TERM.bulMore)) + '</span><button class="tbl" onclick="setTab(\'ack\')">' + esc(t('th_overview')) + '</button>'; }
+  else { mo.hidden = true; mo.innerHTML = ''; }
+}
+function termFill(k, anim){ termFill0(k, anim); if(k === 'bul') termMore(); }
+function termWhoTag(){
+  return me ? '<div class="thwho"><span class="thwl">' + esc(t('th_welcome')) + ' </span><b>' + esc(me.name) + '</b></div>' : '';
+}
+function termRunwayHTML(){
+  const P = function(a){ return a.join(''); };
+  const defs = P([
+    '<defs>',
+    '<linearGradient id="acF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9b8cb"/><stop offset=".5" stop-color="#f4f8fc"/><stop offset="1" stop-color="#a3b3c7"/></linearGradient>',
+    '<linearGradient id="acW" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#cfd9e5"/><stop offset="1" stop-color="#e9eff6"/></linearGradient>',
+    '<linearGradient id="acE" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a6b80"/><stop offset=".5" stop-color="#b4c0cf"/><stop offset="1" stop-color="#55667b"/></linearGradient>',
+    '<radialGradient id="gR"><stop offset="0" stop-color="#e0675f" stop-opacity=".85"/><stop offset="1" stop-color="#e0675f" stop-opacity="0"/></radialGradient>',
+    '<radialGradient id="gG"><stop offset="0" stop-color="#3a9f6f" stop-opacity=".85"/><stop offset="1" stop-color="#3a9f6f" stop-opacity="0"/></radialGradient>',
+    '<radialGradient id="gW"><stop offset="0" stop-color="#fff7e2" stop-opacity=".95"/><stop offset="1" stop-color="#fff7e2" stop-opacity="0"/></radialGradient>',
+    '<radialGradient id="gL"><stop offset="0" stop-color="#ffeec2" stop-opacity=".7"/><stop offset="1" stop-color="#ffeec2" stop-opacity="0"/></radialGradient>',
+    '<linearGradient id="gB" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff3d2" stop-opacity=".55"/><stop offset="1" stop-color="#fff3d2" stop-opacity="0"/></linearGradient>',
+    '<path id="acFusP" d="M151 50C151 46.5 146 44.2 138 44.2L52 44.2C36 44.2 24 46.6 11 49.2L11 50.8C24 53.4 36 55.8 52 55.8L138 55.8C146 55.8 151 53.5 151 50Z"/>',
+    '<path id="acWgP" d="M98 44.6L74 8L65 8.6L70 44.6Z"/>',
+    '<path id="acTlP" d="M32 48.8L18 35.5L11.5 35.9L21 49Z"/>',
+    '<rect id="acEnP" x="72" y="23" width="25" height="7.2" rx="3.4"/>',
+    '<g id="acSilP"><use href="#acWgP"/><use href="#acTlP"/><use href="#acEnP"/></g>',
+    '<g id="acPort">',
+    '<use href="#acTlP" fill="url(#acW)" stroke="#8796ab" stroke-width=".35"/>',
+    '<use href="#acWgP" fill="url(#acW)" stroke="#8796ab" stroke-width=".4"/>',
+    '<path d="M71.6 41L66.8 12" stroke="#8d9db2" stroke-width=".45" fill="none"/><path d="M93.6 43.4L75.4 14.2" stroke="#a7b6c9" stroke-width=".35" fill="none"/>',
+    '<use href="#acEnP" fill="url(#acE)" stroke="#44566b" stroke-width=".3"/>',
+    '<rect x="88" y="23" width="1.6" height="7.2" fill="#2a9d8f" opacity=".9"/>',
+    '<ellipse cx="96.4" cy="26.6" rx="1.7" ry="3.3" fill="#243448"/><ellipse cx="96.4" cy="26.6" rx="1.7" ry="3.3" fill="none" stroke="#dbe4ee" stroke-width=".6"/>',
+    '<ellipse cx="72.4" cy="26.6" rx="1.2" ry="3" fill="#35465b"/>',
+    '</g>',
+    '</defs>'
+  ]);
+  const shadow = '<svg class="acs" viewBox="0 0 160 100" aria-hidden="true"><g fill="#02060c"><use href="#acFusP"/><use href="#acSilP"/><use href="#acSilP" transform="translate(0 100) scale(1 -1)"/></g></svg>';
+  const plane = P([
+    '<svg class="acv" viewBox="0 0 160 100" aria-hidden="true">', defs,
+    '<g class="acbeam"><path d="M96 38.5L250 14L250 50Z" fill="url(#gB)"/><path d="M96 61.5L250 50L250 86Z" fill="url(#gB)"/></g>',
+    '<use href="#acPort"/><use href="#acPort" transform="translate(0 100) scale(1 -1)"/>',
+    '<use href="#acFusP" fill="url(#acF)" stroke="#8796ab" stroke-width=".4"/>',
+    '<path d="M12 49.2L36 49.4L36 50.6L12 50.8Z" fill="#2a9d8f"/>',
+    '<path d="M138.4 46.2L146 48.4Q147.4 50 146 51.6L138.4 53.8Q140.2 50 138.4 46.2Z" fill="#20405f"/>',
+    '<path d="M60 50L136 50" stroke="#9fb0c4" stroke-width=".3" opacity=".55"/>',
+    '<circle cx="84" cy="40.6" r="6.5" fill="url(#gL)"/><circle cx="84" cy="59.4" r="6.5" fill="url(#gL)"/>',
+    '<circle cx="84" cy="40.6" r=".9" fill="#fff6dc"/><circle cx="84" cy="59.4" r=".9" fill="#fff6dc"/>',
+    '<g class="acbeam"><circle cx="96" cy="38.5" r="1.3" fill="#fff8e4"/><circle cx="96" cy="61.5" r="1.3" fill="#fff8e4"/><circle cx="96" cy="38.5" r="5" fill="url(#gW)"/><circle cx="96" cy="61.5" r="5" fill="url(#gW)"/></g>',
+    '<circle cx="73.2" cy="9.2" r="6" fill="url(#gR)"/><circle cx="73.2" cy="9.2" r="1.4" fill="#e4766e"/>',
+    '<circle cx="73.2" cy="90.8" r="6" fill="url(#gG)"/><circle cx="73.2" cy="90.8" r="1.4" fill="#33a272"/>',
+    '<g class="stb"><circle cx="65.6" cy="9" r="9" fill="url(#gW)"/><circle cx="65.6" cy="9" r="1.3" fill="#fff"/><circle cx="65.6" cy="91" r="9" fill="url(#gW)"/><circle cx="65.6" cy="91" r="1.3" fill="#fff"/><circle cx="11.4" cy="50" r="9" fill="url(#gW)"/><circle cx="11.4" cy="50" r="1.3" fill="#fff"/></g>',
+    '<g class="bcn"><circle cx="112" cy="50" r="7" fill="url(#gR)"/><circle cx="112" cy="50" r="1.6" fill="#e4766e"/></g>',
+    '</svg>'
+  ]);
+  return '<div class="thrun" aria-hidden="true"><span class="rw-e t"></span><span class="rw-e b"></span><span class="rw-c"></span><span class="rw-pk"></span><span class="rw-l t"></span><span class="rw-l b"></span><span class="rw-g"></span><span class="rw-r"></span>' +
+    '<div class="acw"><div class="acin">' + shadow + plane + '</div></div></div>';
 }
 
 /* ====================== INIT ====================== */
