@@ -649,6 +649,11 @@ html[lang=th] .tbh b{letter-spacing:.04em}
 .rpc.superseded{background:#e9edf2;color:#566579}
 @media (prefers-color-scheme:dark){.chip.superseded{background:#2a3d57;color:#b2c1d4}}
 .seg.wrapseg{flex-wrap:wrap;overflow:visible}
+
+.gcard{align-items:stretch}
+.gcard .gnum{align-self:flex-start}
+.gcard .gbd{display:flex;flex-direction:column;flex:1;min-width:0}
+.gcard .gbd>.row:last-child{margin-top:auto!important;padding-top:12px}
 </style>
 </head>
 <body data-sec="teal">
@@ -1201,7 +1206,7 @@ function render(){
   if(!_animDone && pubLoaded){ _animDone = true; pulseAnim(); }
 }
 function renderTabs(){
-  const items = [['ack', t('tab_ack'), 'check', 'teal'], ['overview', t('tab_overview'), 'chart', 'blue'], ['team', t('tab_team'), 'users', 'green'], ['admin', t('tab_admin'), 'lock', 'peri'], ['terminal', t('tab_terminal'), (me ? 'grid' : 'lock'), 'slate']];
+  const items = [['terminal', t('tab_terminal'), (me ? 'grid' : 'lock'), 'slate'], ['ack', t('tab_ack'), 'check', 'teal'], ['overview', t('tab_overview'), 'chart', 'blue'], ['team', t('tab_team'), 'users', 'green'], ['admin', t('tab_admin'), 'lock', 'peri']];
   $('nav').innerHTML = '<div class="navin">' + items.map(function(it){
     const p = PAL[it[3]];
     return '<button class="nt ' + (tab === it[0] ? 'on' : '') + '" style="--c1:' + p[0] + ';--c2:' + p[1] + '" onclick="setTab(\'' + it[0] + '\')"><span class="ni">' + ico(it[2], 20) + '</span><span class="nl">' + esc(it[1]) + '</span></button>';
@@ -3144,7 +3149,7 @@ function qsRun(){
   if(q && (isCT() || (me && me.roles && me.roles.head_of))){
     (staffList || []).filter(function(s){ return has(s.name + ' ' + s.division); }).slice(0, 6).forEach(function(s){ out.push({ g: 'search_p', ico: 'users', a: s.name, b: s.division, go: 'qsGoP(' + s.id + ')' }); });
   }
-  const pages = [['ack', t('tab_ack'), 'check'], ['overview', t('tab_overview'), 'chart'], ['team', t('tab_team'), 'users'], ['admin', t('tab_admin'), 'lock'], ['terminal', t('tab_terminal'), (me ? 'grid' : 'lock')]];
+  const pages = [['terminal', t('tab_terminal'), (me ? 'grid' : 'lock')], ['ack', t('tab_ack'), 'check'], ['overview', t('tab_overview'), 'chart'], ['team', t('tab_team'), 'users'], ['admin', t('tab_admin'), 'lock']];
   pages.filter(function(p){ return has(p[1]); }).forEach(function(p){ out.push({ g: 'search_pg', ico: p[2], a: p[1], b: '', go: 'qsGoT(\'' + p[0] + '\')' }); });
   qsItems = out; qsSel = 0; qsDraw();
 }
@@ -3895,7 +3900,7 @@ const TERM_CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const TERM_ST = { 'IN PROGRESS': 's-prog', 'OVERDUE': 's-over', 'COMPLETED': 's-done', 'ONLINE': 's-done', 'COMING SOON': 's-soon' };
 function termDue(d){ try { return new Date(d + 'T00:00:00+07:00').toLocaleDateString('en-GB', { day: '2-digit', month: 'short', timeZone: 'Asia/Bangkok' }).toUpperCase(); } catch(e){ return ''; } }
 function termToolRows(){ return TERM_TOOLS.map(function(r){ return [r.no, r.name, r.gate, r.status]; }); }
-function termBulList(){
+function termBulListPub(){
   if(!pubLoaded || pubError || !pub || !pub.bulletins) return null;
   const today = bkkToday();
   const L = pub.bulletins.filter(function(b){ return Number(b.required) > 0 || Number(b.acked) > 0; }).map(function(b){ return { b: b, st: bulletinStatus(b.required, b.acked, b.deadline, today, isSup(b)) }; });
@@ -3904,15 +3909,15 @@ function termBulList(){
   const sup = L.filter(function(x){ return x.st === 'superseded'; });
   return open.concat(done, sup);
 }
-function termBulRows(){
-  const L = termBulList();
+function termBulRowsPub(){
+  const L = termBulListPub();
   if(L === null) return [['', 'LOADING', '', '', '']];
   if(!L.length) return [['', 'NO BULLETINS YET', '', '', '']];
   return L.map(function(x){ const b = x.b; return [b.number, b.title, termDue(b.deadline), b.acked + '/' + b.required, x.st === 'superseded' ? 'SUPERSEDED' : (x.st === 'done' ? 'COMPLETED' : (x.st === 'overdue' ? 'OVERDUE' : 'IN PROGRESS'))]; });
 }
 const TB = {
   tools: { cols: [6, 28, 4, 11], names: ['No.', 'Destination', 'Gate', 'Status'], main: 1, st: 3, vis: 4, rows: termToolRows, title: 'th_board_t', icon: 'plane' },
-  bul:   { cols: [8, 24, 6, 7, 11], names: ['Bulletin', 'Title', 'Due', 'Ack.', 'Status'], main: 1, st: 4, vis: 5, rows: termBulRows, title: 'th_board_b', icon: 'file', hide: 2 }
+  bul:   { cols: [8, 23, 6, 7, 12], names: ['Bulletin', 'Title', 'Due', 'Ack.', 'Status'], main: 1, st: 4, vis: 5, rows: termBulRows, title: 'th_board_b', icon: 'file', hide: 2 }
 };
 function termBoardHTML(k){
   const B = TB[k];
@@ -3923,11 +3928,11 @@ function termBoardHTML(k){
       return '<span class="cell' + (i === B.main ? ' cm' : '') + (i === B.hide ? ' hm' : '') + (i === 2 && k === 'tools' ? ' c-gate' : '') + '" data-w="' + w + '" style="--w:' + w + '"></span>'; }).join('') + (k === 'tools' ? '<span class="tbgo">' + ico('arrow', 14) + '</span>' : '') + '</div>';
   }
   return '<div class="tb" id="tb_' + k + '" onmouseenter="TERM.pause=true" onmouseleave="TERM.pause=false" ontouchstart="termTouch()"><div class="tbh"><span class="tbi">' + ico(B.icon, 17) + '</span><b>' + esc(t(B.title)) + '</b>' +
-    (k === 'bul' ? '<span class="tbn">' + esc(t('th_counts')) + '</span><button class="tbl" onclick="setTab(\'overview\')">' + esc(t('th_overview')) + '</button>' : '') + '</div>' +
+    (k === 'bul' ? '<span class="tbn">' + esc(t('th_counts')) + '</span><button class="tbl" onclick="setTab(\'ack\')">' + esc(t('th_overview')) + '</button>' : '') + '</div>' +
     '<div class="tbcols">' + cl + '</div><div class="tbrows">' + rows + '</div></div>';
 }
-function termTickerText(){
-  const L = termBulList(); if(L === null) return 'OPS TERMINAL';
+function termTickerTextPub(){
+  const L = termBulListPub(); if(L === null) return 'OPS TERMINAL';
   const o = L.filter(function(x){ return x.st !== 'done'; }), od = o.filter(function(x){ return x.st === 'overdue'; }).length;
   return '     OPS TERMINAL     ///     OPEN BULLETINS ' + o.length + '     ///     OVERDUE ' + od + '     ///     COMPLETED ' + (L.length - o.length) + '     ///     PLEASE ACKNOWLEDGE BEFORE THE DEADLINE     ///     ';
 }
@@ -3935,7 +3940,7 @@ function termHeroHTML(){
   const s = function(icon, label, id, cls){ return '<button class="thsign ' + (cls || '') + '" onclick="termGo(\'' + id + '\')">' + ico(icon, 16) + esc(label) + '</button>'; };
   return '<div class="thero"><div class="tht"><div><div class="theye">CT / OPS</div><h2>' + esc(t('tm_title')) + '</h2><div class="thd">' + esc(t('tm_desc')) + '</div></div>' +
     '<div class="thck"><div class="thc" id="thClock">--:--:--</div><div class="thdt" id="thDate"></div></div></div>' +
-    '<div class="thsigns">' + s('plane', t('th_dep'), 'tb_tools', '') + s('file', t('th_bul'), 'tb_bul', 'b') + s('grid', t('th_gates'), 'thGates', 'g') + s('mobile', t('th_inst'), 'thInst', 's') + '</div>' +
+    '<div class="thsigns">' + s('file', t('th_bul'), 'tb_bul', 'b') + s('plane', t('th_dep'), 'tb_tools', '') + s('grid', t('th_gates'), 'thGates', 'g') + s('mobile', t('th_inst'), 'thInst', 's') + '</div>' +
     '<div class="thrun"><span class="thplane">' + ico('plane', 22) + '</span></div></div>';
 }
 function termGatesHTML(){
@@ -3946,7 +3951,7 @@ function termGatesHTML(){
   }).join('') + '</div>';
 }
 function viewTerminal(){
-  return termHeroHTML() + termBoardHTML('tools') + termBoardHTML('bul') + '<div class="tbtick card0"><span id="thTick"></span></div>' + termGatesHTML() + '<div id="thInst">' + installCardHTML() + '</div>';
+  return termHeroHTML() + termBoardHTML('bul') + termBoardHTML('tools') + '<div class="tbtick card0"><span id="thTick"></span></div>' + termGatesHTML() + '<div id="thInst">' + installCardHTML() + '</div>';
 }
 function termGo(id){ const e = $(id); if(e) e.scrollIntoView({ behavior: TERM.reduce ? 'auto' : 'smooth', block: 'start' }); }
 function termOpenTool(i){ const r = TERM_TOOLS[i]; if(!r) return; if(r.url) window.open(r.url, '_blank', 'noopener'); else if(r.go) (new Function(r.go))(); }
@@ -4042,6 +4047,41 @@ function supIds(){
 function isSup(b){ return !!(b && (b.superseded_by || supIds()[b.id])); }
 Object.assign(I.en, { st_superseded:'Superseded' });
 Object.assign(I.th, { st_superseded:'ถูกแทนที่แล้ว' });
+
+
+/* ====================== TERMINAL: MY BULLETIN STATUS (signed-in person only) ====================== */
+Object.assign(I.en, { th_bul:'My bulletins', th_board_b:'My bulletin status', th_counts:'Only your own bulletins are shown.', th_overview:'Open my bulletins' });
+Object.assign(I.th, { th_bul:'Bulletin ของฉัน', th_board_b:'สถานะ Bulletin ของฉัน', th_counts:'แสดงเฉพาะ Bulletin ของท่าน', th_overview:'เปิดรายการของฉัน' });
+TERM_ST['PENDING'] = 's-prog'; TERM_ST['ACKNOWLEDGED'] = 's-done';
+function termAckDay(ts){ try { return new Date(ts).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', timeZone: 'Asia/Bangkok' }).toUpperCase(); } catch(e){ return ''; } }
+function termBulList(){
+  if(!me || !me.list) return null;
+  const today = bkkToday();
+  const L = me.list.map(function(b){
+    const dl = b.eff_deadline || b.deadline, done = !!b.acknowledged_at;
+    const st = done ? 'done' : (b.superseded_by ? 'superseded' : bulletinStatus(1, 0, dl, today));
+    return { b: b, st: st, dl: dl };
+  });
+  const open = L.filter(function(x){ return x.st === 'overdue' || x.st === 'progress'; }).sort(function(a, b){ return a.dl < b.dl ? -1 : (a.dl > b.dl ? 1 : 0); });
+  const done = L.filter(function(x){ return x.st === 'done'; }).sort(function(a, b){ return a.b.acknowledged_at < b.b.acknowledged_at ? 1 : -1; });
+  const sup = L.filter(function(x){ return x.st === 'superseded'; });
+  return open.concat(done, sup);
+}
+function termBulRows(){
+  const L = termBulList();
+  if(L === null) return [['', 'LOADING', '', '', '']];
+  if(!L.length) return [['', 'NO BULLETINS FOR YOU YET', '', '', '']];
+  return L.map(function(x){ const b = x.b;
+    return [b.number, b.title, termDue(x.dl), b.acknowledged_at ? termAckDay(b.acknowledged_at) : '-',
+      x.st === 'done' ? 'ACKNOWLEDGED' : (x.st === 'overdue' ? 'OVERDUE' : (x.st === 'superseded' ? 'SUPERSEDED' : 'PENDING'))]; });
+}
+function termTickerText(){
+  const L = termBulList(); if(L === null) return 'OPS TERMINAL';
+  const o = L.filter(function(x){ return x.st === 'overdue' || x.st === 'progress'; }), od = o.filter(function(x){ return x.st === 'overdue'; }).length;
+  const dn = L.filter(function(x){ return x.st === 'done'; }).length;
+  return '     OPS TERMINAL     ///     YOUR PENDING BULLETINS ' + o.length + '     ///     OVERDUE ' + od + '     ///     ACKNOWLEDGED ' + dn + '     ///     ' +
+    (o.length ? 'PLEASE ACKNOWLEDGE BEFORE THE DEADLINE' : 'ALL CAUGHT UP. THANK YOU') + '     ///     ';
+}
 
 /* ====================== INIT ====================== */
 async function init(){
