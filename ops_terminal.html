@@ -688,6 +688,134 @@ html[lang=th] .tbh b{letter-spacing:.04em}
 .drlinks{margin:30px auto 8px;text-align:center;font-size:10.5px;color:#aab6c6}
 .drlinks button{display:inline;margin:0;padding:0 1px;font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .drlinks button:hover{color:var(--grey-soft)}
+
+/* v3.53 lean + medium weight */
+.muted,.hint{color:#4f647e}
+.sicard{padding-top:0}
+.sicard .sibn{margin:0 -22px 18px;padding:22px 22px}
+.sicard .sit{font-size:24px;font-weight:600;letter-spacing:-.01em;color:#fff}
+.sicard .stp{display:none}
+.sicard select,.sicard .pininput{font-weight:500}
+.sicard .lbl{font-weight:500}
+.banner h2,.card h2,.restrict .rt1{font-weight:600}
+.btn{font-weight:600}
+.lbl,.nl,.seg button,select,input,.chip{font-weight:500}
+.restrict.one{padding:16px 22px}
+#acctBtn{width:auto;padding:0 12px;gap:7px;display:inline-flex;align-items:center;max-width:150px}
+#acctBtn[hidden]{display:none}
+#acctBtn .an{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:500}
+.acctpop{position:fixed;top:64px;right:12px;z-index:60;min-width:170px;background:linear-gradient(180deg,#fff,#f1f5fa);border:1px solid #cfdae8;border-radius:14px;box-shadow:0 18px 32px -14px rgba(10,24,44,.5);padding:8px;font-family:inherit}
+.acctpop .ap-n{font-size:12.5px;font-weight:600;color:#1b3453;padding:6px 10px 8px;border-bottom:1px solid #dbe4ef;margin-bottom:4px}
+.acctpop button{display:block;width:100%;text-align:left;border:0;background:none;padding:9px 10px;border-radius:9px;font:inherit;font-size:14px;font-weight:500;color:#1b3453;cursor:pointer}
+.acctpop button:hover{background:#e6eef7}
+.tbn.cnt{display:inline-block!important;margin-left:auto;font-size:11.5px;font-weight:500;letter-spacing:.06em;color:#9fd8d0;background:rgba(42,157,143,.16);border:1px solid rgba(42,157,143,.35);padding:3px 10px;border-radius:12px}
+.tbn.cnt.over{color:#f0b3aa;background:rgba(217,138,126,.14);border-color:rgba(217,138,126,.4)}
+.tbl{margin-left:8px}
+@media (prefers-color-scheme:dark){
+  :where(:root:not([data-theme=light])) .acctpop{background:linear-gradient(180deg,#16304f,#0f2037);border-color:#22456b}
+  :where(:root:not([data-theme=light])) .acctpop .ap-n,:where(:root:not([data-theme=light])) .acctpop button{color:#e8eff8}
+  :where(:root:not([data-theme=light])) .acctpop button:hover{background:#1b3453}
+  :where(:root:not([data-theme=light])) .muted,:where(:root:not([data-theme=light])) .hint{color:#9fb4cc}
+}
+:where(:root[data-theme=dark]) .acctpop{background:linear-gradient(180deg,#16304f,#0f2037);border-color:#22456b}
+:where(:root[data-theme=dark]) .acctpop .ap-n,:where(:root[data-theme=dark]) .acctpop button{color:#e8eff8}
+:where(:root[data-theme=dark]) .acctpop button:hover{background:#1b3453}
+:where(:root[data-theme=dark]) .muted,:where(:root[data-theme=dark]) .hint{color:#9fb4cc}
+
+/* v3.53 lean 2 + cosmetics */
+.rmn{display:inline-block;vertical-align:middle;margin-left:4px}
+.rmn>summary{list-style:none;cursor:pointer;user-select:none}
+.rmn>summary::-webkit-details-marker{display:none}
+.rmn:not(.rpt)>summary{display:inline-flex;align-items:center;justify-content:center;width:34px;height:30px;border-radius:10px;font-size:18px;line-height:1;color:var(--grey-mid);background:var(--grey-pale);border:1px solid var(--grey-light)}
+.rmn[open]>summary{background:var(--grey-light)}
+.rmi{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.rmi button{border:1px solid var(--grey-light);background:#fff;color:#1b3453;border-radius:10px;padding:6px 12px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.rmi button:hover{background:#eef3f9}
+.rmi button.del{color:#a3433a}
+.rmn.rpt{margin-left:0}
+.rmn.rpt .rmi{margin-bottom:2px}
+.nt .rl{display:flex;justify-content:center;gap:3px;height:4px;margin-top:3px}
+.nt .rl i{width:4px;height:4px;border-radius:50%;background:transparent}
+.nt.on .rl i{background:#2a9d8f;animation:rnl 1.5s infinite}
+.nt.on .rl i:nth-child(2){animation-delay:.15s}.nt.on .rl i:nth-child(3){animation-delay:.3s}.nt.on .rl i:nth-child(4){animation-delay:.45s}
+@keyframes rnl{0%,100%{opacity:.25}50%{opacity:1}}
+.tb.ld .tbr{animation:tbsk 1.3s infinite}
+.tb.ld .tbr:nth-child(2){animation-delay:.25s}.tb.ld .tbr:nth-child(3){animation-delay:.5s}
+@keyframes tbsk{0%,100%{opacity:.35}50%{opacity:1}}
+.tbmore.caught{flex-direction:column;justify-content:center;text-align:center;gap:6px;border-top:0;padding:14px 6px 4px;color:#b7c9dd}
+.tbmore.caught .ckc{width:38px;height:38px;border-radius:50%;background:#1d3a35;color:#9bd0ac;display:grid;place-items:center}
+.tbmore.caught>svg{width:200px;height:12px}
+.tbmore.caught .ckc svg{width:20px;height:20px}
+.tbmore.caught>svg path{animation:ctr 1.4s linear infinite}
+@keyframes ctr{to{stroke-dashoffset:-18}}
+.resultbox{position:relative}
+.stamp{position:absolute;right:14px;top:14px;transform:rotate(-10deg);border:2px solid #5f8f6e;color:#3f6b4f;border-radius:8px;padding:4px 12px;text-align:center;font-family:'JetBrains Mono',monospace;line-height:1.2;animation:stp .7s ease-out both;background:rgba(255,255,255,.55)}
+.stamp b{display:block;font-size:14px;font-weight:600;letter-spacing:.14em}
+.stamp span{font-size:10.5px;font-weight:500}
+@keyframes stp{0%{transform:scale(1.9) rotate(-18deg);opacity:0}60%{opacity:1}100%{transform:scale(1) rotate(-10deg);opacity:1}}
+@media (max-width:520px){
+  #acctBtn .an{display:none}
+  #acctBtn{padding:0;width:44px;justify-content:center}
+  .ht h1,.ht .sub{white-space:nowrap}
+}
+@media (max-width:430px){.hin{gap:6px}.hin .langbtn{min-width:38px;height:38px;padding:0 8px}#searchBtn{width:38px;padding:0}#acctBtn{width:38px}#conn{max-width:28px;overflow:hidden}}
+@media (prefers-reduced-motion:reduce){.nt.on .rl i,.tb.ld .tbr,.tbmore.caught>svg path,.stamp{animation:none}}
+@media (prefers-color-scheme:dark){
+  :where(:root:not([data-theme=light])) .rmi button{background:#14253c;border-color:#22456b;color:#e8eff8}
+  :where(:root:not([data-theme=light])) .rmi button:hover{background:#1b3453}
+  :where(:root:not([data-theme=light])) .stamp{background:rgba(15,32,55,.6);color:#9bd0ac}
+}
+:where(:root[data-theme=dark]) .rmi button{background:#14253c;border-color:#22456b;color:#e8eff8}
+:where(:root[data-theme=dark]) .rmi button:hover{background:#1b3453}
+:where(:root[data-theme=dark]) .stamp{background:rgba(15,32,55,.6);color:#9bd0ac}
+
+/* v3.55 sky, gates, search sheet, OPS Manager */
+.thero[data-sky=night]{--sa:1;background:linear-gradient(165deg,#050c18 0%,#0b1a30 55%,#12365a 100%)}
+.thero[data-sky=dusk]{--sa:.7;background:linear-gradient(165deg,#0f1f34 0%,#25507c 62%,#a98466 100%)}
+.thero[data-sky=dawn]{--sa:.45;background:linear-gradient(165deg,#16304f 0%,#3b668f 58%,#c4a07e 100%)}
+.thero[data-sky=day]{--sa:0;background:linear-gradient(165deg,#1b4a73 0%,#2c6a9a 58%,#5f94bd 100%)}
+.thero>.thsky{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.thstars{position:absolute;inset:0;opacity:var(--sa,0);transition:opacity 1s}
+.thstars i{position:absolute;border-radius:50%;background:#eaf3ff;animation:thtw 3s ease-in-out infinite}
+@keyframes thtw{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.5)}}
+.thorb{position:absolute;width:22px;height:22px;border-radius:50%;top:16px;left:70%;transition:all 1s;opacity:.9}
+.thero[data-sky=night] .thorb{background:radial-gradient(circle at 35% 35%,#f1f6fb,#c3d1e3);box-shadow:0 0 18px rgba(223,233,244,.35);left:74%}
+.thero[data-sky=dawn] .thorb{background:#f1d9a8;box-shadow:0 0 20px rgba(241,217,168,.55);top:58px;left:68%}
+.thero[data-sky=day] .thorb{background:#f4f0d8;box-shadow:0 0 22px rgba(244,240,216,.5);top:12px;left:68%}
+.thero[data-sky=dusk] .thorb{background:#e6b98a;box-shadow:0 0 20px rgba(230,185,138,.5);top:56px;left:74%}
+.thss{position:absolute;width:72px;height:2px;border-radius:2px;background:linear-gradient(90deg,#fff,rgba(255,255,255,0));opacity:0;display:none;animation:thsh 13s linear infinite}
+.thero[data-sky=night] .thss,.thero[data-sky=dusk] .thss{display:block}
+.thss.s1{left:66%;top:9%;animation-delay:2s}
+.thss.s2{left:34%;top:20%;animation-duration:19s;animation-delay:8s}
+.thss.s3{left:88%;top:32%;animation-duration:27s;animation-delay:15s}
+@keyframes thsh{0%,94%{opacity:0;transform:translate(0,0) rotate(-27deg)}95%{opacity:1}100%{opacity:0;transform:translate(-190px,100px) rotate(-27deg)}}
+@media (prefers-reduced-motion:reduce){.thstars i{animation:none;opacity:.8}.thss{display:none!important}}
+/* gate tiles B1: flat navy with a turquoise top bar, no shine */
+.gcard .gnum{background:#17304f;border:1px solid #243f63;box-shadow:none;overflow:hidden}
+.gcard .gnum::after{content:'';position:absolute;left:0;right:0;top:0;bottom:auto;width:auto;height:5px;background:#2a9d8f;transform:none;animation:none;display:block}
+.gcard .gnum span{background:none;-webkit-text-fill-color:#eef4fb;color:#eef4fb;animation:none;filter:none}
+.gcard.off .gnum::after{display:block;background:#6b7f96}
+.gcard.off .gnum span{animation:none;opacity:.75}
+/* search sheet */
+.shgrip{display:none}
+@media (max-width:760px){
+  .qsmodal::before{display:none}
+  .shgrip{display:block;width:100%;height:26px;margin:-14px 0 4px;padding:0;border:0;background:none;cursor:pointer}
+  .shgrip i{display:block;width:42px;height:4px;border-radius:3px;background:#cbd5e1;margin:11px auto 0}
+  .qsmodal{touch-action:pan-y}
+}
+:where(:root[data-theme=dark]) .shgrip i{background:#3a5578}
+@media (prefers-color-scheme:dark){:where(:root:not([data-theme=light])) .shgrip i{background:#3a5578}}
+/* OPS Manager (view only) */
+.rodis{opacity:.5;cursor:not-allowed}
+.card.rolocked{opacity:.62}
+.rohint{display:flex;align-items:center;gap:8px;margin:0 0 12px;padding:9px 12px;border-radius:12px;font-size:13px;color:#44586f;background:#eaf0f7;border:1px solid #d3dfec}
+.rohint svg{flex:none}
+.mgv .row{gap:10px;align-items:center}
+.mgv .mgvl{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--navy)}
+.mgv select{max-width:200px}
+:where(:root[data-theme=dark]) .rohint{background:#12253b;border-color:#2b4262;color:#b2c1d4}
+@media (prefers-color-scheme:dark){:where(:root:not([data-theme=light])) .rohint{background:#12253b;border-color:#2b4262;color:#b2c1d4}}
 </style>
 </head>
 <body data-sec="teal">
@@ -696,16 +824,17 @@ html[lang=th] .tbh b{letter-spacing:.04em}
   <div class="gridbg"></div><div class="glow g1"></div><div class="glow g2"></div>
   <div class="hin">
     <div class="logo"><svg viewBox="0 0 100 100" width="44" height="44" role="img" aria-label="OPS Terminal"><rect width="100" height="100" rx="22" fill="#1a2e4a"/><path d="M0,-20 C2,-20 3,-17 3,-12 L3,-4 L20,6 L20,10 L3,5 L3,13 L8,17 L8,20 L0,18 L-8,20 L-8,17 L-3,13 L-3,5 L-20,10 L-20,6 L-3,-4 L-3,-12 C-3,-17 -2,-20 0,-20 Z" transform="translate(50,34) rotate(45) scale(0.95)" fill="#2a9d8f"/><path d="M26.7 82.33C33.33 82.33 38.46 77.8 38.46 69.65C38.46 61.48 33.33 56.93 26.7 56.93C20.05 56.93 14.92 61.48 14.92 69.65C14.92 77.77 20.05 82.33 26.7 82.33ZM26.7 77.19C23.1 77.19 20.91 74.53 20.91 69.65C20.91 64.75 23.1 62.08 26.7 62.08C30.29 62.08 32.48 64.73 32.48 69.65C32.48 74.53 30.29 77.19 26.7 77.19ZM42.76 82H48.62V74.28H52.72C58.4 74.28 61.9 70.91 61.9 65.81C61.9 60.75 58.47 57.26 52.89 57.26H42.76ZM48.62 69.65V62.01H51.64C54.4 62.01 55.83 63.49 55.83 65.81C55.83 68.1 54.4 69.65 51.66 69.65ZM75.47 82.33C81.6 82.33 85.25 79.53 85.25 74.83C85.25 70.88 82.48 68.49 77.7 67.44L75.55 66.94C73.35 66.44 71.9 65.71 71.9 64.19C71.9 62.81 73.11 61.8 75.45 61.8C77.81 61.8 79.12 62.84 79.29 64.63H84.92C84.85 60.05 81.2 56.93 75.47 56.93C69.86 56.93 65.84 60 65.84 64.58C65.84 68.3 68.43 70.45 72.7 71.42L75.32 72.04C78.03 72.65 79.32 73.4 79.32 74.81C79.32 76.39 77.83 77.47 75.4 77.47C72.73 77.47 70.96 76.24 70.82 73.83H65.19C65.29 79.54 69.28 82.33 75.47 82.33Z" fill="#e8eff8"/></svg></div>
-    <div class="ht"><h1 id="appTitle">OPS Terminal</h1><div class="sub">CT / OPS &middot; v3.52</div></div>
+    <div class="ht"><h1 id="appTitle">OPS Terminal</h1><div class="sub">CT / OPS &middot; v3.55</div></div>
     <span id="conn">...</span>
     <button class="langbtn" id="searchBtn" onclick="openSearch()" aria-label="Search" title="Search (Ctrl+K)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+    <button class="langbtn" id="acctBtn" onclick="acctMenu(event)" aria-label="Account" hidden></button>
     <button class="langbtn" id="themeBtn" onclick="toggleTheme()" aria-label="Light or dark mode" title="Light or dark mode"></button>
     <button class="langbtn" id="langBtn" onclick="toggleLang()">ไทย</button>
   </div>
 </header>
 <nav id="nav"></nav>
 <main class="wrap" id="view"></main>
-<footer class="appfoot">OPS Terminal &middot; v3.52</footer>
+<footer class="appfoot">OPS Terminal &middot; v3.55</footer>
 <div id="miniBar"></div>
 <div id="toasts"></div>
 <div id="modalRoot"></div>
@@ -723,7 +852,7 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-const APP_VERSION = '3.52';
+const APP_VERSION = '3.55';
 const CFG = {
   divOrder: ['Manager/FO','Sr. Flight Ops Expert','Specialist','CT','FO','CS','OM','FA','GA','DG'],
   // Signature blocks used in the reminder email and the PDF report (edit here if the official wording differs)
@@ -740,13 +869,13 @@ const PAL = { teal: ['#2a9d8f', '#3bbfb0'], blue: ['#1e4d8c', '#2f78c4'], steel:
 const I = {
 en:{
   app_title:'OPS Terminal', tab_ack:'Acknowledge', tab_overview:'Overview', tab_admin:'Settings (CT)', tab_team:'My Team',
-  b_ack_eye:'Step by step', b_ack_title:'Acknowledge a bulletin', b_ack_desc:'Choose your name, enter your PIN and confirm.', b_ack_desc_in:'Open the bulletin, then tap the button to acknowledge.',
-  b_ov_eye:'Overview', b_ov_title:'Bulletin progress', b_ov_desc:'Counts only. No names are shown on this page.',
+  b_ack_eye:'', b_ack_title:'Acknowledge', b_ack_desc:'', b_ack_desc_in:'',
+  b_ov_eye:'', b_ov_title:'Overview', b_ov_desc:'',
   choose_bulletin:'Select a bulletin to acknowledge', no_bulletins:'No bulletins yet.', deadline:'Deadline', issued:'Issued',
   days_left:'{n} day(s) left', overdue_by:'Overdue by {n} day(s)', due_today:'Due today',
   open_bulletin:'Open bulletin (SharePoint)', step_division:'Division', step_name:'Your name', step_pin:'Your PIN',
-  select_division:'Select your division first', select_name:'Select your name',
-  pin:'Enter your 4-digit PIN', create_pin:'Create a 4-digit PIN (use it for every bulletin)', confirm_pin:'Confirm PIN',
+  select_division:'Select your division first', select_name:'Name',
+  pin:'PIN', create_pin:'Create a 4-digit PIN (use it for every bulletin)', confirm_pin:'Confirm PIN',
   pin_mismatch:'PINs do not match', first_time_note:'First time here? Create a PIN and keep it to yourself.',
   ack_btn:'I have read and understood this bulletin', wait:'Please wait...',
   confirm_title:'Confirm acknowledgment', confirm_body:'Acknowledge {bulletin} as {name} ({division})?', cancel:'Cancel', confirm:'Confirm',
@@ -754,7 +883,7 @@ en:{
   already:'You already acknowledged {bulletin} on {time}.', late_note:'Recorded after the deadline.',
   err_wrong_pin:'Incorrect PIN. Please try again.',
   err_locked:'This PIN is locked after 10 wrong attempts. Please contact CT.',
-  si_title:'Sign in to see your bulletins', si_desc:'Choose your name and enter your PIN. Your list shows what you still need to acknowledge.', si_btn:'Continue',
+  si_title:'OPS Terminal', si_desc:'', si_btn:'Sign in',
   my_title:'My bulletins', f_pending:'Not yet acknowledged', f_done:'Acknowledged', f_all:'All', my_none_pending:'Nothing left to acknowledge. Thank you!', my_none:'No bulletins in this list.',
   hello:'Signed in as {name}', forgot_pin:'Forgot your PIN? Please contact CT.', change_pin:'Change PIN', old_pin:'Current PIN', new_pin:'New PIN', pin_changed:'PIN changed', code_label:'One-time code from CT', code_note:'CT has given you a one-time code. Enter it, then create your new PIN.', err_wrong_code:'The one-time code is not correct. Please check it with CT.', err_code_expired:'This one-time code has expired. Please ask CT for a new one.', ack_as:'You are acknowledging as', not_you:'Not you? Sign out', signout:'Sign out', acked_on:'Acknowledged on {time}',
   err_generic:'Something went wrong. Please try again.', err_already_set:'A PIN is already set for this name. Please enter it.',
@@ -770,13 +899,13 @@ en:{
 },
 th:{
   app_title:'OPS Terminal', tab_ack:'รับทราบ', tab_overview:'ภาพรวม', tab_admin:'ตั้งค่า (CT)', tab_team:'ทีมของฉัน',
-  b_ack_eye:'ทำตามขั้นตอน', b_ack_title:'รับทราบ Bulletin', b_ack_desc:'เลือกชื่อ กรอกรหัส PIN แล้วกดยืนยัน', b_ack_desc_in:'เปิดอ่าน Bulletin แล้วกดปุ่มเพื่อรับทราบ',
-  b_ov_eye:'ภาพรวม', b_ov_title:'ความคืบหน้าของ Bulletin', b_ov_desc:'แสดงเฉพาะจำนวน ไม่แสดงรายชื่อในหน้านี้',
+  b_ack_eye:'', b_ack_title:'รับทราบ', b_ack_desc:'', b_ack_desc_in:'',
+  b_ov_eye:'', b_ov_title:'ภาพรวม', b_ov_desc:'',
   choose_bulletin:'เลือก Bulletin ที่ต้องการรับทราบ', no_bulletins:'ยังไม่มี Bulletin', deadline:'กำหนดรับทราบ', issued:'ออกเมื่อ',
   days_left:'เหลืออีก {n} วัน', overdue_by:'เกินกำหนด {n} วัน', due_today:'ครบกำหนดวันนี้',
   open_bulletin:'เปิด Bulletin (SharePoint)', step_division:'Division', step_name:'ชื่อของท่าน', step_pin:'รหัส PIN',
-  select_division:'กรุณาเลือก Division ก่อน', select_name:'เลือกชื่อของท่าน',
-  pin:'กรอกรหัส PIN 4 หลักของท่าน', create_pin:'ตั้งรหัส PIN 4 หลัก (ใช้ซ้ำได้กับทุก Bulletin)', confirm_pin:'ยืนยันรหัส PIN',
+  select_division:'กรุณาเลือก Division ก่อน', select_name:'ชื่อ',
+  pin:'PIN', create_pin:'ตั้งรหัส PIN 4 หลัก (ใช้ซ้ำได้กับทุก Bulletin)', confirm_pin:'ยืนยันรหัส PIN',
   pin_mismatch:'รหัส PIN ไม่ตรงกัน', first_time_note:'ใช้งานครั้งแรก กรุณาตั้งรหัส PIN และไม่เปิดเผยแก่ผู้อื่น',
   ack_btn:'ข้าพเจ้าได้อ่านและเข้าใจ Bulletin ฉบับนี้แล้ว', wait:'กรุณารอสักครู่...',
   confirm_title:'ยืนยันการรับทราบ', confirm_body:'ยืนยันการรับทราบ {bulletin} ในนาม {name} ({division}) หรือไม่', cancel:'ยกเลิก', confirm:'ยืนยัน',
@@ -784,7 +913,7 @@ th:{
   already:'ท่านได้รับทราบ {bulletin} แล้วเมื่อ {time}', late_note:'บันทึกหลังพ้นกำหนด',
   err_locked:'รหัส PIN ถูกล็อกเนื่องจากใส่ผิดครบ 10 ครั้ง กรุณาติดต่อ CT',
   err_wrong_pin:'รหัส PIN ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง',
-  si_title:'เข้าสู่ระบบเพื่อดู Bulletin ของท่าน', si_desc:'เลือกชื่อและกรอกรหัส PIN ระบบจะแสดงรายการที่ท่านยังไม่ได้รับทราบ', si_btn:'ดำเนินการต่อ',
+  si_title:'OPS Terminal', si_desc:'', si_btn:'เข้าสู่ระบบ',
   my_title:'Bulletin ของท่าน', f_pending:'ยังไม่ได้รับทราบ', f_done:'รับทราบแล้ว', f_all:'ทั้งหมด', my_none_pending:'ไม่มี Bulletin ที่ค้างรับทราบ ขอบคุณ', my_none:'ไม่มีรายการในหมวดนี้',
   hello:'เข้าสู่ระบบในนาม {name}', forgot_pin:'ลืมรหัส PIN? กรุณาติดต่อ CT', change_pin:'เปลี่ยนรหัส PIN', old_pin:'รหัส PIN ปัจจุบัน', new_pin:'รหัส PIN ใหม่', pin_changed:'เปลี่ยนรหัส PIN แล้ว', code_label:'รหัสใช้ครั้งเดียวจาก CT', code_note:'CT ได้ให้รหัสใช้ครั้งเดียวแก่ท่านแล้ว กรุณากรอกรหัสนั้น แล้วตั้งรหัส PIN ใหม่', err_wrong_code:'รหัสใช้ครั้งเดียวไม่ถูกต้อง กรุณาตรวจสอบกับ CT', err_code_expired:'รหัสใช้ครั้งเดียวหมดอายุแล้ว กรุณาขอรหัสใหม่จาก CT', ack_as:'รับทราบในนาม', not_you:'ไม่ใช่ท่าน? ออกจากระบบ', signout:'ออกจากระบบ', acked_on:'รับทราบเมื่อ {time}',
   err_generic:'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง', err_already_set:'ชื่อนี้ตั้งรหัส PIN แล้ว กรุณากรอกรหัสเดิม',
@@ -846,7 +975,7 @@ let curB = null;
 let form = { div: '', staffId: '', pin: '', pin2: '', msg: null, busy: false };
 let result = null;
 let admin = null, comp = null, superData = null;
-function isCT(){ return !!(me && me.roles && (me.roles.ct || me.roles.super)); }
+function isCT(){ return !!(me && me.roles && (me.roles.ct || me.roles.super || me.roles.manager)); }
 function isSuper(){ return !!(me && me.roles && me.roles.super); }
 let aud = { add: { mode: 'all', ids: {}, q: '' }, ed: { mode: 'all', ids: {}, q: '' } };   // who must acknowledge (Add / Edit bulletin)
 let fltDiv = '', lastNewB = null, pdfBusy = false, ohSort = 'incidents';
@@ -956,11 +1085,11 @@ function divTag(d){ const c = divCol(d); return '<span class="dtag" style="backg
 function divBar(p, d){ const c = divCol(d); return '<div class="bar"><span style="width:' + Math.max(0, Math.min(100, p)) + '%;background:linear-gradient(90deg,' + c[2] + ',' + c[3] + ')"></span></div>'; }
 function kpi(n, l, cls, icon){ return '<div class="kpi ' + (cls || '') + '">' + (icon ? '<span class="ic">' + ico(icon, 16) + '</span>' : '') + '<div class="n">' + n + '</div><div class="l">' + esc(l) + '</div></div>'; }
 function grp(cls, icon, title, desc, inner){
-  return '<section class="grp ' + cls + '"><div class="gh"><span class="gi">' + ico(icon, 20) + '</span><div><div class="gt">' + esc(title) + '</div><div class="gd">' + esc(desc) + '</div></div></div>' + inner + '</section>';
+  return '<section class="grp ' + cls + '"><div class="gh"><span class="gi">' + ico(icon, 20) + '</span><div><div class="gt">' + esc(title) + '</div>' + (desc ? '<div class="gd">' + esc(desc) + '</div>' : '') + '</div></div>' + inner + '</section>';
 }
 function ch(icon, title, right){ return '<div class="row" style="margin-bottom:12px"><h2 class="hasic grow" style="margin:0"><span class="hic">' + ico(icon, 16) + '</span>' + esc(title) + '</h2>' + (right || '') + '</div>'; }
 function restrictHead(text, sub){
-  return '<div class="restrict"><div class="rl">' + ico('lock', 28) + '</div><div><div class="rt1">' + esc(text) + '</div><div class="rt2">' + esc(sub || '') + '</div></div></div>';
+  return '<div class="restrict' + (sub ? '' : ' one') + '"><div class="rl">' + ico('lock', 28) + '</div><div><div class="rt1">' + esc(text) + '</div>' + (sub ? '<div class="rt2">' + esc(sub) + '</div>' : '') + '</div></div>';
 }
 function unauthHTML(){
   return '<div class="unauth"><div class="ul">' + ico('lock', 26) + '</div><h2>' + esc(t('unauth')) + '</h2><p>' + esc(t('unauth_sub')) + '</p></div>';
@@ -1005,7 +1134,7 @@ function bulletinBarsHTML(bl, L){
   }).join('');
 }
 function banner(icon, eye, title, desc){
-  return '<div class="banner fade"><div class="orb">' + ico(icon, 26) + '</div><div class="bt"><div class="eyebrow">' + esc(eye) + '</div><h2>' + esc(title) + '</h2><p>' + esc(desc) + '</p></div></div>';
+  return '<div class="banner fade"><div class="orb">' + ico(icon, 26) + '</div><div class="bt">' + (eye ? '<div class="eyebrow">' + esc(eye) + '</div>' : '') + '<h2>' + esc(title) + '</h2>' + (desc ? '<p>' + esc(desc) + '</p>' : '') + '</div></div>';
 }
 function subseg(items, active, fn){
   return '<div class="seg col">' + items.map(function(it){
@@ -1045,7 +1174,7 @@ async function loadPublic(){
   pubLoaded = true;
   render();
 }
-function setAdmin(d){ admin = d; comp = computeAdmin(d, bkkToday()); }
+function setAdmin(d){ admin = d; comp = computeAdmin(d, bkkToday()); if(head && head.view && tmDivSel) mkViewHead(); }
 async function loadAdmin(silent){
   if(!isCT()) return false;
   const r = await rpc('ack_admin_data', { p_staff_id: me.id, p_pin: me.pin });
@@ -1072,7 +1201,7 @@ async function fetchAll(withStaff){
     jobs.push(rpc('ack_extra_data', { p_staff_id: me.id, p_pin: me.pin }).then(function(r){ o.extra = r; }));
     if(isCT()) jobs.push(rpc('ack_admin_data', { p_staff_id: me.id, p_pin: me.pin }).then(function(r){ o.admin = r; }));
     if(isSuper() && superData) jobs.push(rpc('ack_super_data', { p_staff_id: me.id, p_pin: me.pin }).then(function(r){ o.sup = r; }));
-    if(head) jobs.push(rpc('ack_head_data', { p_staff_id: head.id, p_pin: head.pin }).then(function(r){ o.head = r; }));
+    if(head && !head.view) jobs.push(rpc('ack_head_data', { p_staff_id: head.id, p_pin: head.pin }).then(function(r){ o.head = r; }));
   }
   await Promise.all(jobs);
   return o;
@@ -1121,7 +1250,7 @@ async function liveRefresh(){
 let liveTimer = null;
 function liveStart(){
   if(liveTimer) clearInterval(liveTimer);
-  liveTimer = setInterval(liveRefresh, 20000);
+  liveTimer = setInterval(liveRefresh, 40000);
   document.addEventListener('visibilitychange', function(){ if(document.visibilityState === 'visible') liveRefresh(); });
   window.addEventListener('focus', function(){ liveRefresh(); });
 }
@@ -1235,8 +1364,10 @@ function render(){
   $('appTitle').textContent = t('app_title');
   $('langBtn').textContent = lang === 'th' ? 'English' : 'ไทย';
   document.title = t('app_title');
+  acctSync();
   renderTabs();
   renderView();
+  roLock();
   enhanceTables();
   stripeRows();
   termSync();
@@ -1244,10 +1375,10 @@ function render(){
   if(!_animDone && pubLoaded){ _animDone = true; pulseAnim(); }
 }
 function renderTabs(){
-  const items = [['terminal', t('tab_terminal'), (me ? 'grid' : 'lock'), 'slate'], ['ack', t('tab_ack'), 'check', 'teal'], ['overview', t('tab_overview'), 'chart', 'blue'], ['team', t('tab_team'), 'users', 'green'], ['admin', t('tab_admin'), 'lock', 'peri']];
+  const items = [['terminal', t('tab_terminal'), (me ? 'grid' : 'lock'), 'slate'], ['ack', t('tab_ack'), 'check', 'teal'], ['overview', t('tab_overview'), 'chart', 'blue'], ['admin', t('tab_admin'), 'lock', 'peri']];
   $('nav').innerHTML = '<div class="navin">' + items.map(function(it){
     const p = PAL[it[3]];
-    return '<button class="nt ' + (tab === it[0] ? 'on' : '') + '" style="--c1:' + p[0] + ';--c2:' + p[1] + '" onclick="setTab(\'' + it[0] + '\')"><span class="ni">' + ico(it[2], 20) + '</span><span class="nl">' + esc(it[1]) + '</span></button>';
+    return '<button class="nt ' + (tab === it[0] || (it[0] === 'overview' && tab === 'team') ? 'on' : '') + '" style="--c1:' + p[0] + ';--c2:' + p[1] + '" onclick="setTab(\'' + it[0] + '\')"><span class="ni">' + ico(it[2], 20) + '</span><span class="nl">' + esc(it[1]) + '</span><span class="rl"><i></i><i></i><i></i><i></i></span></button>';
   }).join('') + '</div>';
 }
 function setTab(k){
@@ -1279,7 +1410,7 @@ function unavailableHTML(){
 function retryLoad(){ pubLoaded = false; render(); loadPublic(); }
 
 /* ====================== TAB: ACKNOWLEDGE ====================== */
-function ackBanner(){ return banner('check', t('b_ack_eye'), t('b_ack_title'), t(me && curB ? 'b_ack_desc_in' : 'b_ack_desc')); }
+function ackBanner(){ return banner('check', '', t('b_ack_title'), ''); }
 function viewAck(){
   if(!pubLoaded) return ackBanner() + spinner();
   if(pubError) return ackBanner() + unavailableHTML();
@@ -1326,7 +1457,7 @@ function identityHTML(st, h){
 }
 function signinHTML(note){
   return (note ? '<div class="msg error" style="margin-top:0">' + esc(note) + '</div>' : '') +
-    '<div class="card">' + signBanner() + '<h2>' + esc(t('si_title')) + '</h2><p class="muted" style="margin-top:-4px">' + esc(t('si_desc')) + '</p><div id="signinForm"></div></div>';
+    '<div class="card sicard"><div class="sibn"><div class="sit">' + esc(t('si_title')) + '</div></div><div id="signinForm"></div></div>';
 }
 function renderSignin(){
   const el = $('signinForm'); if(!el) return;
@@ -1391,7 +1522,7 @@ async function loadMine(){
   const r = await rpc('ack_my_bulletins', { p_staff_id: me.id, p_pin: me.pin });
   if(!r.error && r.data.ok){ me.list = r.data.bulletins; render(); }
 }
-function meSignOut(){ pinOpen = false; batch = { on: false, sel: {} }; setLeaves([]); me = null; head = null; headAuto = null; admin = null; comp = null; superData = null; signin = { div: '', staffId: '', pin: '', pin2: '', msg: null, busy: false }; render(); }
+function meSignOut(){ tmDivSel = ''; tmLoad = 0; pinOpen = false; batch = { on: false, sel: {} }; setLeaves([]); me = null; head = null; headAuto = null; admin = null; comp = null; superData = null; signin = { div: '', staffId: '', pin: '', pin2: '', msg: null, busy: false }; render(); }
 function setMyFilter(k){ myFilter = k; render(); }
 
 function mineHTML(note){
@@ -1415,8 +1546,7 @@ function mineHTML(note){
     return '<button class="' + (myFilter === x[0] ? 'on' : '') + '" onclick="setMyFilter(\'' + x[0] + '\')">' + esc(x[1]) + ' (' + x[2] + ')</button>';
   }).join('') + '</div>';
   let h = (note ? '<div class="msg error" style="margin-top:0">' + esc(note) + '</div>' : '') +
-    '<div class="card"><div class="row"><h2 class="grow" style="margin:0">' + esc(t('my_title')) + '</h2><button class="btn ghost sm" onclick="openChangePin()">' + esc(t('change_pin')) + '</button><button class="btn ghost sm" onclick="meSignOut()">' + ico('out', 14) + esc(t('signout')) + '</button></div>' +
-    '<p class="muted" style="margin:6px 0 14px">' + esc(t('hello', { name: me.name + ' (' + me.division + ')' })) + leaveChip(me.id) + '</p><div class="segrow" style="margin-bottom:6px">' + seg + yearSegHTML() + '</div><div style="margin-top:8px">';
+    '<div class="card">' + (leaveChip(me.id) ? '<p class="muted" style="margin:0 0 10px">' + leaveChip(me.id) + '</p>' : '') + '<div class="segrow" style="margin-bottom:6px">' + seg + yearSegHTML() + '</div><div style="margin-top:8px">';
   h += batchBarHTML() + lsBar('mine', { ph: t('ls_filter'), def: 'newest', sortLabel: t('ls_sort'), sorts: [['newest', t('s_newest')], ['oldest', t('s_oldest')], ['deadline', t('s_deadline')]] }) + '<div id="mine_body">' + LR.mine() + '</div>';
   return h + '</div></div>';
 }
@@ -1432,7 +1562,7 @@ function mineItem(b, today){
     const canSel = !isDone && (!b.quiz_required || qp);
     return '<div class="bitem"><div class="row">' + (batch.on && !isDone ? '<input type="checkbox" ' + (canSel ? '' : 'disabled ') + (batch.sel[b.id] ? 'checked ' : '') + 'onchange="batchPick(' + Number(b.id) + ',this.checked)">' : '') +
       '<div class="grow">' + bno(b, true) + chips + '<br><b>' + esc(b.title) + '</b>' +
-      '<div class="muted">' + esc(t('issued_on', { d: fmtShort(b.created_at) })) + ' &middot; ' + esc(t('deadline')) + ': ' + esc(fmtShort(dl)) + ' &middot; ' + esc(isDone ? t('acked_short', { d: fmtShort(b.acknowledged_at) }) : dueText(dl, today, lang)) + '</div>' + ext + '</div>' +
+      '<div class="muted">' + esc(isDone ? t('acked_short', { d: fmtShort(b.acknowledged_at) }) : dueLine(dl, today)) + '</div>' + ext + '</div>' +
       chip(st) + (isDone ? '<button class="btn ghost sm" onclick="receiptFromList(' + Number(b.id) + ')">' + esc(t('rc_save')) + '</button>' : (batch.on ? '' : '<button class="btn sm" onclick="openMine(' + Number(b.id) + ')">' + esc(t('tab_ack')) + '</button>')) + '</div></div>';
 }
 function batchBarHTML(){
@@ -1522,7 +1652,7 @@ function resultHTML(b){
   const r = result;
   const when = fmtTime(r.at);
   const body = r.kind === 'already' ? t('already', { bulletin: b.number, time: when }) : t('ok_body', { name: r.name, bulletin: b.number, time: when });
-  return '<div class="resultbox"><div class="orb">' + ico('check', 34) + '</div><h2 style="justify-content:center;font-size:20px">' + esc(t('ok_title')) + '</h2><p>' + esc(body) + '</p>' +
+  return '<div class="resultbox"><div class="stamp"><b>CLEARED</b><span>' + esc(fmtShort(r.at)) + '</span></div><div class="orb">' + ico('check', 34) + '</div><h2 style="justify-content:center;font-size:20px">' + esc(t('ok_title')) + '</h2><p>' + esc(body) + '</p>' +
     (r.late ? '<p class="muted">' + esc(t('late_note')) + '</p>' : '') +
     '<p><button class="btn ghost" onclick="receiptFromResult()">' + ico('file', 16) + esc(t('rc_save')) + '</button></p>' +
     '<p><button class="btn" onclick="clearBulletin()">' + esc(t('another')) + '</button></p></div>';
@@ -1574,12 +1704,13 @@ async function onAckClick(){
 /* ====================== TAB: OVERVIEW ====================== */
 
 function viewOverview(){
-  const seg = '<div class="segrow">' + subseg([['general', t('ov_general'), 'chart', 'blue'], ['detailed', t('ov_detailed'), 'lock', 'steel']], ovTab, 'setOv') + yearSegHTML() + '<button class="btn ghost sm" onclick="openWall()">' + ico('tv', 15) + esc(t('wall_btn')) + '</button></div>';
-  if(ovTab === 'general') return banner('chart', t('b_ov_eye'), t('b_ov_title'), t('b_ov_desc')) + seg + viewGeneral();
-  const head0 = restrictHead('For CT Admin Only', 'Names, statistics and trends for management.');
-  return head0 + seg + viewDetailed();
+  const seg = '<div class="segrow">' + ovSeg(ovTab) + yearSegHTML() + '<button class="btn ghost sm" onclick="openWall()">' + ico('tv', 15) + esc(t('wall_btn')) + '</button></div>';
+  if(ovTab === 'general') return banner('chart', '', t('b_ov_title'), '') + seg + viewGeneral();
+  return banner('chart', '', t('b_ov_title'), '') + seg + viewDetailed();
 }
 function setOv(k){
+  if(k === 'team'){ setTab('team'); return; }
+  if(tab === 'team') tab = 'overview';
   ovTab = k; render();
   if(k === 'detailed' && isCT() && !admin){ loadAdmin(true).then(render); }
 }
@@ -1599,18 +1730,17 @@ function viewGeneral(){
   const hero = '<div class="dark" style="margin-bottom:16px"><div class="hero"><div class="hl"><div class="eb">' + esc(t('ov_overall')) + '</div><div class="big">' + pct(sumAck, sumReq) + '%</div>' +
     '<div class="ds" style="margin-bottom:2px"><b>(' + esc(t('bulletins_done', { a: cnt('done'), r: blN })) + ')</b></div><div class="ds" style="margin:0">' + esc(t('acked_of', { a: sumAck, r: sumReq })) + '</div></div>' +
     '<div class="hdn">' + donutSegs([seg('done', sumAck), seg('prog', pendProg), seg('over', pendOver)], pct(sumAck, sumReq) + '%', '', 138) + '</div>' +
-    '<div class="hr">' + compBar(cnt('done'), cnt('progress'), cnt('overdue')) + legendHTML(cnt('done'), cnt('progress'), cnt('overdue')) + '</div></div></div>';
+    '<div class="hr">' + compBar(cnt('done'), cnt('progress'), cnt('overdue')) + '</div></div></div>';
   const kp = '<div class="kpis">' + kpi(blN, t('m_total'), 'blue', 'file') + kpi(cnt('done'), t('m_done'), 'done', 'check') + kpi(cnt('progress'), t('m_progress'), 'progress', 'refresh') + kpi(cnt('overdue'), t('m_overdue'), 'overdue', 'bell') + '</div>';
-  let h = grp('g-blue', 'chart', t('m_rate'), t('b_ov_desc'), hero + kp);
+  let h = grp('g-blue', 'chart', t('m_rate'), '', hero + kp);
   if(!bl.length){ return h + '<div class="card center muted">' + esc(t('no_bulletins')) + '</div>'; }
   function glItem(b, today){
     const mine = me && me.list ? me.list.find(function(x){ return Number(x.id) === Number(b.id); }) : null;
     return '<div class="bitem"><div class="row"><div class="grow">' + bno(b, true) + ' &middot; <b>' + esc(b.title) + '</b></div>' + chip(b.status) + '</div>' +
-      '<div class="muted">' + esc(t('issued_on', { d: fmtShort(b.created_at) })) + ' &middot; ' + esc(t('deadline')) + ': ' + esc(fmtShort(b.deadline)) + ' &middot; ' + esc(dueText(b.deadline, today, lang)) + '</div>' +
+      '<div class="muted">' + esc(dueLine(b.deadline, today)) + '</div>' +
       '<div style="margin:8px 0">' + bar(pct(b.acked, b.required), b.status) + '</div>' +
       '<div class="row"><span class="muted grow"><b>' + pct(b.acked, b.required) + '%</b> (' + b.acked + '/' + b.required + ')</span>' +
-      (mePending(b.id) ? '<button class="btn sm" onclick="openMine(' + Number(b.id) + ');setTab(\'ack\')">' + esc(t('tab_ack')) + '</button>' :
-        (mine && mine.acknowledged_at ? '<span class="chip done">' + ico('check', 11) + ' ' + esc(t('acked_short', { d: fmtShort(mine.acknowledged_at) })) + '</span>' : '')) + '</div></div>';
+      '</div></div>';
   }
   LR.gl = function(){
     const st = lsGet('gl', 'newest'), q = st.q.toLowerCase();
@@ -1625,7 +1755,7 @@ function viewGeneral(){
     if(!L.length) return '<div class="hint">' + esc(t('ls_none')) + '</div>';
     return L.map(function(b){ return glItem(b, today); }).join('');
   };
-  let list = '<div class="card">' + ch('file', t('m_total'), '<button class="btn ghost sm" onclick="retryLoad()">' + ico('refresh', 14) + esc(t('refresh')) + '</button>') + bulletinBarsHTML(bl) + '<div style="height:10px"></div>' +
+  let list = '<div class="card">' + '<div class="row" style="margin-bottom:10px"><span class="grow"></span><button class="btn ghost sm" onclick="retryLoad()">' + ico('refresh', 14) + esc(t('refresh')) + '</button></div>' +
     lsBar('gl', { ph: t('ls_filter'), def: 'newest', sortLabel: t('ls_sort'), sorts: [['newest', t('s_newest')], ['oldest', t('s_oldest')], ['deadline', t('s_deadline')], ['progress', t('s_progress')], ['status', t('s_status')]],
       filters: [{ key: 'status', label: t('f_status_all'), options: [['overdue', t('st_overdue')], ['progress', t('st_progress')], ['done', t('st_done')]] }] }) + '<div id="gl_body">' + LR.gl() + '</div>';
   h += grp('g-teal', 'file', t('m_total'), '', list + '</div>');
@@ -1694,7 +1824,7 @@ function remindBtns(id, scope){
     return '<button type="button" class="cpb" data-id="' + id + '" data-sc="' + scope + '" data-l="' + L + '" onclick="copyRemind(' + id + ',\'' + scope + '\',\'' + L + '\')" ' +
       'onmouseenter="remShow(this)" onmouseleave="remHide()" onfocus="remShow(this)" onblur="remHide()" title="">' + label + '</button>';
   };
-  return '<span class="cpgrp"><span class="cpl">' + ico('copy', 13) + 'Copy reminder</span>' + one('en', 'English') + one('th', 'ไทย') + '</span>';
+  return one(lang === 'th' ? 'th' : 'en', ico('copy', 13) + 'Copy reminder');
 }
 function remShow(el){
   const txt = remindFor(Number(el.dataset.id), el.dataset.sc, el.dataset.l); if(!txt) return;
@@ -1775,21 +1905,20 @@ function dashOverall(c, label, who){
   const hero = '<div class="dark" style="margin-bottom:16px"><div class="hero"><div class="hl"><div class="eb">' + esc(label) + '</div><div class="big">' + T.rate + '%</div>' +
     '<div class="ds" style="margin-bottom:2px"><b>(' + T.done + '/' + T.bulletins + ' Bulletins completed)</b></div><div class="ds" style="margin:0">' + T.sumAck + ' of ' + T.sumReq + ' acknowledgments</div></div>' +
     '<div class="hdn">' + donutSegs([seg('done', T.sumAck), seg('prog', pendProg), seg('over', pendOver)], T.rate + '%', '', 138) + '</div>' +
-    '<div class="hr">' + compBar(T.done, T.progress, T.overdue) + legendHTML(T.done, T.progress, T.overdue) + '</div></div></div>';
+    '<div class="hr">' + compBar(T.done, T.progress, T.overdue) + '</div></div></div>';
   const k1 = '<div class="kpis k7">' + kpi(T.bulletins, 'Bulletins', 'blue', 'file') + kpi(T.done, who === 'team' ? 'Completed by the team' : 'Completed', 'done', 'check') + kpi(T.progress, 'In progress', 'progress', 'refresh') + kpi(T.overdue, 'Overdue', 'overdue', 'bell') +
     kpi(fmtDur(T.avg), 'Avg. time to acknowledge', 'teal', 'chart') + kpi(T.late, 'Late acknowledgments', 'amber', 'bell') + kpi(T.staff, who === 'team' ? 'Team members' : 'Active staff', 'violet', 'users') + '</div>';
-  return grp('g-blue', 'chart', 'Overall picture', 'Where we stand' + (curYear() ? ' for ' + curYear() : ' across all years') + '.', hero + k1 + perfKpis(T));
+  return grp('g-blue', 'chart', 'Overall picture', (curYear() ? String(curYear()) : 'All years'), hero + k1 + perfKpis(T));
 }
 function dashBulletins(c, who){
-  let t1 = '<div class="card">' + ch('chart', 'Completion by bulletin') + (c.bullets.length ? bulletinBarsHTML(c.bullets.slice().reverse()) : '<div class="hint">No bulletins yet.</div>') + '</div>';
-  t1 += '<div class="card">' + ch('file', 'Bulletins') + '<div class="tablewrap"><table class="sf" data-tid="bul_' + who + '"><thead><tr><th>No.</th><th>Title</th><th>Issued</th><th>Deadline</th><th>Due</th><th>Progress</th><th>Status</th><th>Not yet acknowledged</th></tr></thead><tbody>';
+  let t1 = '<div class="card">' + '<div class="tablewrap"><table class="sf" data-tid="bul_' + who + '"><thead><tr><th>No.</th><th>Title</th><th>Issued</th><th>Deadline</th><th>Due</th><th>Progress</th><th>Status</th><th>Not yet acknowledged</th></tr></thead><tbody>';
   if(!c.bullets.length) t1 += '<tr><td colspan="8" class="muted">No bulletins yet.</td></tr>';
   c.bullets.forEach(function(b){
     t1 += '<tr><td>' + bno(b, true) + '</td><td>' + esc(b.title) + '</td><td>' + esc(fmtShort(b.created_at, 'en')) + '</td><td>' + esc(fmtShort(b.deadline, 'en')) + '</td><td>' + esc(dueText(b.deadline, c.today, 'en')) + '</td>' +
       '<td style="min-width:130px">' + bar(pct(b.acked, b.required), b.status) + '<div class="muted"><b>' + pct(b.acked, b.required) + '%</b> (' + b.acked + '/' + b.required + ')</div></td>' +
       '<td>' + chip(b.status) + '</td><td style="min-width:220px">' + (b.status === 'done' ? '<span class="muted">All acknowledged</span>' : (who === 'team' ? '<span class="dg"><b>Total (' + b.pendingIds.length + '):</b> ' + esc(b.pendingIds.map(function(id){ return c.staffById[id].name; }).sort().join(', ')) + '</span>' : groupsHTML(b.pendingIds, c.staffById))) + '</td></tr>';
   });
-  return grp('g-teal', 'file', 'Bulletins', 'Progress of each bulletin and who is still outstanding.', t1 + '</tbody></table></div></div>');
+  return grp('g-teal', 'file', 'Bulletins', '', t1 + '</tbody></table></div></div>');
 }
 function dashTime(c){
   const P = c.people, B = c.buckets, bt = B.h24 + B.d3 + B.d7 + B.over;
@@ -1800,7 +1929,7 @@ function dashTime(c){
     '<div class="dlg">' + [['done', 'Within 1 day', B.h24], ['prog', '1 - 3 days', B.d3], ['amber', '3 - 7 days', B.d7], ['over', 'Over 7 days', B.over]].map(function(x){ return '<div>' + statusDot(x[0]) + x[1] + ': <b>' + x[2] + '</b></div>'; }).join('') + '</div></div></div>';
   const months = Object.keys(c.monthly).sort().slice(-12);
   const d3 = '<div class="card">' + ch('chart', 'Acknowledgments per month') + (months.length ? colChart(months.map(function(m){ return { l: monthLabel(m), v: c.monthly[m] }; }), '#2a9d8f', '#8fd3ca') : '<span class="muted">No data yet</span>') + '</div>';
-  return grp('g-green', 'refresh', 'Timeliness', 'How quickly bulletins are acknowledged.', '<div class="cols">' + d1 + d2 + '</div>' + d3);
+  return grp('g-green', 'refresh', 'Timeliness', '', '<div class="cols">' + d1 + d2 + '</div>' + d3);
 }
 
 /* Division ranking: primary score = on-time rate (acknowledged by the deadline, or still overdue).
@@ -1831,9 +1960,7 @@ function divRankHTML(c){
 
 function dashDivisions(c){
   if(!c.divisions.length) return '';
-  let h = divRankHTML(c) + '<div class="card">' + ch('users', 'Acknowledgment rate by division') + c.divisions.map(function(d){
-    return '<div class="hbar"><span class="nm">' + divTag(d.division) + '</span>' + divBar(pct(d.acked, d.required), d.division) + '<span class="v"><b>' + pct(d.acked, d.required) + '%</b> (' + d.people + ')</span></div>';
-  }).join('') + '</div>';
+  let h = divRankHTML(c);
   h += '<div class="card">' + ch('chart', 'Division performance') + '<div class="tablewrap"><table class="sf" data-tid="divperf"><thead><tr><th>Division</th><th>People</th><th>Acknowledged</th><th>Rate</th><th>On time</th><th>Fully up to date</th><th>With overdue</th></tr></thead><tbody>';
   c.divisions.forEach(function(d){
     h += '<tr><td>' + divTag(d.division) + '</td><td>' + d.people + '</td><td>' + d.acked + ' / ' + d.required + '</td><td><b>' + pct(d.acked, d.required) + '%</b></td><td>' + (d.due ? pct(d.onTime, d.due) + '%' : '-') + '</td><td>' + d.upToDate + ' / ' + d.withReq + '</td><td>' + (d.overdueN ? '<span class="chip overdue">' + d.overdueN + '</span>' : '<span class="chip green">0</span>') + '</td></tr>';
@@ -1857,8 +1984,8 @@ function viewDetailed(){
   if(!admin) return spinner();
   const c = comp;
   const tb = function(icon, label, fn, extra){ return '<button class="btn ghost sm" onclick="' + fn + '"' + (extra || '') + '>' + ico(icon, 15) + label + '</button>'; };
-  let h = '<div class="card"><div class="row"><span class="grow muted">As of ' + esc(fmtDateL(c.today, 'en')) + ' &middot; Report language: <b>' + (lang === 'th' ? 'Thai' : 'English') + '</b> (follows the language switch)</span></div>' +
-    '<div class="row" style="margin-top:12px">' + tb('refresh', 'Refresh', 'refreshAdmin()') + reportBtns('ct') + tb('out', 'Sign out', 'meSignOut()') + '</div></div>';
+  let h = '<div class="card"><div class="row"><span class="grow muted">As of ' + esc(fmtDateL(c.today, 'en')) + '</span></div>' +
+    '<div class="row" style="margin-top:12px">' + tb('refresh', 'Refresh', 'refreshAdmin()') + reportBtns('ct') + '</div></div>';
   h += dashOverall(c, 'Overall acknowledgment rate', 'ct');
   h += dashBulletins(c, 'ct');
   h += dashTime(c);
@@ -1878,7 +2005,7 @@ function viewDetailed(){
   pp += '</tbody></table></div></div>';
   pp += pendingByMemberHTML(c, people, 'Not yet acknowledged - by person' + (fltDiv ? ' (' + fltDiv + ')' : ''), 'ct');
   pp += overdueHistoryHTML(c, people, true);
-  h += grp('g-amber', 'users', 'People', 'Who needs attention, with ready-to-send reminders.', pp);
+  h += grp('g-amber', 'users', 'People', '', pp);
   h += '<p class="muted">Counted per bulletin: people who acknowledged it, plus currently active staff who were already on the list when it was issued. Time to acknowledge is measured from the moment the bulletin was added to this app.</p>';
   return h;
 }
@@ -1895,13 +2022,13 @@ const AD_BANNER = {
   super: ['lock', 'Super Admin Only', 'Super Admin Only', 'Roles, PINs and corrections.']
 };
 function viewAdmin(){
-  const top = restrictHead('For CT Admin Only', 'Settings, staff, bulletins and the acknowledgment log.');
-  if(!me) return top + signinHTML('');
+  const top = '';
+  if(!me) return signinHTML('');
   if(!isCT()) return noAccessHTML();
   if(!admin) return top + spinner();
   if(adTab === 'super' && !isSuper()) adTab = 'reminder';
   const B = AD_BANNER[adTab];
-  let h = top + banner(B[0], B[1], B[2], B[3]) + '<div class="segrow">' + subseg([['reminder', 'Reminder', 'bell', 'peri'], ['bulletins', 'Manage Bulletins', 'file', 'green'], ['log', 'Log', 'chart', 'blue'], ['insights', 'Insights', 'trend', 'steel'], ['staff', 'Staff', 'users', 'slate']].concat(isSuper() ? [['super', 'Super Admin Only', 'lock', 'steel']] : []), adTab, 'setAd') + yearSegHTML() + '</div>';
+  let h = top + banner(B[0], '', B[2], '') + '<div class="segrow">' + subseg([['reminder', 'Reminder', 'bell', 'peri'], ['bulletins', 'Manage Bulletins', 'file', 'green'], ['log', 'Log', 'chart', 'blue'], ['insights', 'Insights', 'trend', 'steel'], ['staff', 'Staff', 'users', 'slate']].concat(isSuper() || isRO() ? [['super', 'Super Admin Only', 'lock', 'steel']] : []), adTab, 'setAd') + yearSegHTML() + '</div>';
   if(adTab === 'reminder') h += adReminderHTML();
   else if(adTab === 'bulletins') h += adBulletinsHTML();
   else if(adTab === 'log') h += adLogHTML();
@@ -2194,7 +2321,7 @@ function adBulletinsHTML(){
   if(!c.bullets.length) h += '<tr><td colspan="8" class="muted">No bulletins yet.</td></tr>';
   c.bullets.forEach(function(b){
     h += '<tr><td>' + bno(b, true) + '</td><td>' + esc(b.title) + bulletinChips(b) + '</td><td>' + esc(fmtShort(b.created_at, 'en')) + '</td><td>' + esc(fmtShort(b.deadline, 'en')) + '</td><td>' + audSummary(b) + '</td><td>' + b.acked + ' / ' + b.required + '</td><td>' + chip(b.status) + '</td>' +
-      '<td style="white-space:nowrap"><button class="btn sm c-teal" onclick="copyBulletinLink(' + b.id + ')">Copy link</button> <button class="btn sm c-violet" onclick="adQuiz(' + b.id + ')">Quiz</button> <button class="btn sm c-green" onclick="adQR(' + b.id + ')">QR</button> <button class="btn sm c-blue" onclick="adEditBulletin(' + b.id + ')">Edit</button> ' + (isSuper() ? '<button class="btn sm c-red" onclick="adDeleteBulletin(' + b.id + ')">Delete</button>' : '') + '</td></tr>';
+      '<td style="white-space:nowrap"><button class="btn sm c-blue" onclick="adEditBulletin(' + b.id + ')">Edit</button> ' + rmMenu([['Copy link', 'copyBulletinLink(' + b.id + ')'], ['Quiz', 'adQuiz(' + b.id + ')'], ['QR', 'adQR(' + b.id + ')']].concat(isSuper() ? [['Delete', 'adDeleteBulletin(' + b.id + ')', 'del']] : [])) + '</td></tr>';
   });
   setTimeout(function(){ audRefresh('add'); }, 0);
   return h + '</tbody></table></div></div>';
@@ -2256,10 +2383,10 @@ async function adDeleteBulletin(id){
 /* ---------- Staff ---------- */
 
 function setStSort(k){ stSort = { k: k, dir: stSort.k === k ? -stSort.dir : 1 }; render(); }
-function roleOf(s){ return s.is_super ? 'Super Admin' : (s.is_ct ? 'CT Admin' : 'Staff'); }
-function roleChip(s){ return s.is_super ? '<span class="chip violet">Super Admin</span>' : (s.is_ct ? '<span class="chip blue">CT Admin</span>' : '<span class="chip grey">Staff</span>'); }
+function roleOf(s){ return s.is_super ? 'Super Admin' : (s.is_ct ? 'CT Admin' : (s.is_manager ? 'OPS Manager' : 'Staff')); }
+function roleChip(s){ return s.is_super ? '<span class="chip violet">Super Admin</span>' : (s.is_ct ? '<span class="chip blue">CT Admin</span>' : (s.is_manager ? '<span class="chip teal">OPS Manager</span>' : '<span class="chip grey">Staff</span>')); }
 function staffCmp(a, b){
-  const k = stSort.k, rr = function(x){ return x.is_super ? 0 : (x.is_ct ? 1 : 2); }, pr = function(x){ return x.has_pin ? 0 : (x.code_pending ? 1 : 2); };
+  const k = stSort.k, rr = function(x){ return x.is_super ? 0 : (x.is_ct ? 1 : (x.is_manager ? 2 : 3)); }, pr = function(x){ return x.has_pin ? 0 : (x.code_pending ? 1 : 2); };
   let v = 0;
   if(k === 'name') v = a.name.localeCompare(b.name);
   else if(k === 'division') v = cmpDiv(a.division, b.division);
@@ -2275,7 +2402,7 @@ function staffRows(list, inactive){
       '<td>' + (s.head_of ? '<span class="chip teal">Head: ' + esc(s.head_of) + '</span>' : '<span class="muted">-</span>') + '</td>' +
       '<td>' + (s.active ? '<span class="chip green">Active</span>' : '<span class="chip red">Inactive</span>') + '</td>' +
       '<td>' + pinChip(s) + (s.locked ? ' <span class="chip red">locked</span>' : '') + '</td>' +
-      '<td style="white-space:nowrap"><button class="btn sm c-blue" onclick="adEditStaff(' + s.id + ')">Edit</button> <button class="btn sm c-green" onclick="adLeave(' + s.id + ')">Leave</button> ' + (s.locked && (isSuper() || !s.is_super) ? '<button class="btn sm c-teal" onclick="adUnlock(' + s.id + ')">Unlock</button> ' : '') + '<button class="btn sm ' + (s.has_pin ? 'c-amber' : 'c-violet') + '" onclick="adResetPin(' + s.id + ')">' + (s.has_pin ? 'Reset PIN' : 'Issue code') + '</button></td></tr>';
+      '<td style="white-space:nowrap"><button class="btn sm c-blue" onclick="adEditStaff(' + s.id + ')">Edit</button> ' + rmMenu([['Leave', 'adLeave(' + s.id + ')']].concat(s.locked && (isSuper() || !s.is_super) ? [['Unlock', 'adUnlock(' + s.id + ')']] : [], [[s.has_pin ? 'Reset PIN' : 'Issue code', 'adResetPin(' + s.id + ')']], (isSuper() && s.active && !s.is_super && !s.is_ct) ? [[s.is_manager ? 'Remove OPS Manager' : 'Make OPS Manager', 'adSetRole(' + s.id + ",'manager'," + (s.is_manager ? 'false' : 'true') + ')']] : [])) + '</td></tr>';
   }).join('');
 }
 function adStaffHTML(){
@@ -2294,7 +2421,7 @@ function adStaffHTML(){
   LR.stf = function(){
     const st = lsGet('stf', ''), q = st.q.toLowerCase();
     const ok = function(x){
-      const role = x.is_super ? 'super' : (x.is_ct ? 'ct' : 'staff'), pin = x.locked ? 'locked' : (x.has_pin ? 'set' : (x.code_pending ? 'code' : 'none'));
+      const role = x.is_super ? 'super' : (x.is_ct ? 'ct' : (x.is_manager ? 'manager' : 'staff')), pin = x.locked ? 'locked' : (x.has_pin ? 'set' : (x.code_pending ? 'code' : 'none'));
       return (!q || x.name.toLowerCase().indexOf(q) >= 0) && (!st.div || x.division === st.div) && (!st.role || role === st.role) && (!st.pin || pin === st.pin);
     };
     const act = admin.staff.filter(function(x){ return x.active && ok(x); }).sort(staffCmp), ina = admin.staff.filter(function(x){ return !x.active && ok(x); }).sort(staffCmp);
@@ -2307,7 +2434,7 @@ function adStaffHTML(){
   const sdivs = []; admin.staff.forEach(function(x){ if(sdivs.indexOf(x.division) < 0) sdivs.push(x.division); }); sdivs.sort(cmpDiv);
   h += '<div class="card">' + ch('users', 'Find staff') + lsBar('stf', { ph: 'Filter by name', filters: [
       { key: 'div', label: 'All divisions', options: sdivs.map(function(d){ return [d, d]; }) },
-      { key: 'role', label: 'All roles', options: [['super', 'Super admin'], ['ct', 'CT'], ['staff', 'Staff']] },
+      { key: 'role', label: 'All roles', options: [['super', 'Super admin'], ['ct', 'CT'], ['manager', 'OPS Manager'], ['staff', 'Staff']] },
       { key: 'pin', label: 'Any PIN state', options: [['locked', 'Locked'], ['set', 'PIN set'], ['code', 'Code pending'], ['none', 'No PIN']] }] }) + '</div><div id="stf_body">' + LR.stf() + '</div>';
   return h;
 }
@@ -2446,7 +2573,7 @@ function fmtBkkLocalInput(iso){
   const b = new Date(d.getTime() + 7 * 3600000);
   return b.getUTCFullYear() + '-' + p(b.getUTCMonth() + 1) + '-' + p(b.getUTCDate()) + 'T' + p(b.getUTCHours()) + ':' + p(b.getUTCMinutes());
 }
-const AUDIT_TXT = { set_deadline_days: 'Changed default deadline', delete_bulletin: 'Deleted bulletin', grant_ct: 'Gave CT access', revoke_ct: 'Removed CT access', grant_super: 'Made super admin', revoke_super: 'Removed super admin' };
+const AUDIT_TXT = { set_deadline_days: 'Changed default deadline', delete_bulletin: 'Deleted bulletin', grant_ct: 'Gave CT access', revoke_ct: 'Removed CT access', grant_super: 'Made super admin', revoke_super: 'Removed super admin', grant_manager: 'Made OPS Manager', revoke_manager: 'Removed OPS Manager' };
 function staffOptions(sel, filterFn){
   const by = {}; admin.staff.filter(function(s){ return s.active && (!filterFn || filterFn(s)); }).forEach(function(s){ (by[s.division] = by[s.division] || []).push(s); });
   return Object.keys(by).sort(cmpDiv).map(function(d){
@@ -2454,7 +2581,7 @@ function staffOptions(sel, filterFn){
   }).join('');
 }
 function roleCard(title, key, note){
-  const flag = key === 'super' ? 'is_super' : 'is_ct';
+  const flag = key === 'super' ? 'is_super' : (key === 'manager' ? 'is_manager' : 'is_ct');
   const list = admin.staff.filter(function(s){ return s.active && s[flag]; }).sort(function(a, b){ return cmpDiv(a.division, b.division) || a.name.localeCompare(b.name); });
   let h = '<div class="card"><h2>' + esc(title) + ' (' + list.length + ')</h2>' + (note ? '<p class="muted" style="margin-top:-4px">' + esc(note) + '</p>' : '');
   if(!list.length) h += '<div class="hint">Nobody yet.</div>';
@@ -2472,6 +2599,7 @@ function adSuperHTML(){
   const c = comp;
   let h = roleCard('Super admins', 'super', '');
   h += roleCard('CT access', 'ct', '');
+  h += roleCard('OPS Managers', 'manager', t('mgr_note'));
   h += deadlineCardHTML();
   h += backupCardHTML() + batchCardHTML();
   h += '<div class="card">' + ch('lock', 'Audit log') + '<p class="muted" style="margin-top:-4px">Role changes and deleted bulletins.</p>';
@@ -2585,12 +2713,12 @@ async function adSetRole(id, key, on){
   if(!id){ toast('Choose a person first', 'error'); return; }
   const p = admin.staff.find(function(x){ return String(x.id) === String(id); }); if(!p) return;
   if(!on){
-    const ok = await confirmDialog('Remove ' + (key === 'super' ? 'super admin' : 'CT access') + '?', 'Remove ' + (key === 'super' ? 'super admin rights' : 'CT access') + ' from <b>' + esc(p.name) + '</b> (' + esc(p.division) + ')?', 'Remove', 'Cancel');
+    const ok = await confirmDialog('Remove ' + (key === 'super' ? 'super admin' : (key === 'manager' ? 'OPS Manager' : 'CT access')) + '?', 'Remove ' + (key === 'super' ? 'super admin rights' : (key === 'manager' ? 'OPS Manager access' : 'CT access')) + ' from <b>' + esc(p.name) + '</b> (' + esc(p.division) + ')?', 'Remove', 'Cancel');
     if(!ok) return;
   }
   const r = await rpc('ack_super_set_role', { p_staff_id: me.id, p_pin: me.pin, p_target: Number(id), p_role: key, p_on: !!on });
   if(!adminOk(r)) return;
-  if(Number(id) === me.id && !on){ me.roles = Object.assign({}, me.roles, key === 'super' ? { super: false } : { ct: false }); }
+  if(Number(id) === me.id && !on){ me.roles = Object.assign({}, me.roles, key === 'super' ? { super: false } : (key === 'manager' ? { manager: false } : { ct: false })); }
   await reloadAll();
   if(r.data.code){
     openModal('<h2>One-time code for ' + esc(p.name) + '</h2><p class="muted">' + esc(p.name) + ' has no PIN yet. Give this code to them. They enter it once with a new PIN, so nobody else can claim the name first. It is shown only now and works for 3 days.</p>' +
@@ -2612,8 +2740,9 @@ async function adAmend(){
 /* ====================== TAB: MY TEAM (heads) ====================== */
 
 function viewTeam(){
+  const pv = viewTeamPick(); if(pv !== null) return pv;
   if(!head){
-    if(!me) return restrictHead('For Division Heads Only', 'Sign in with your name and PIN. Your team appears automatically.') + signinHTML('');
+    if(!me) return signinHTML('');
     if(headAuto === null){ headAuto = 'loading'; autoHead(); }
     if(headAuto === 'no') return noAccessHTML();
     if(headAuto === 'err') return '<div class="card"><p class="muted">Could not load the team dashboard.</p><p><button class="btn sm" onclick="headAuto=null;render()">Try again</button></p></div>';
@@ -2621,9 +2750,9 @@ function viewTeam(){
   }
   const c = head.comp, T = c.totals;
   const tb = function(icon, label, fn){ return '<button class="btn ghost sm" onclick="' + fn + '">' + ico(icon, 15) + label + '</button>'; };
-  let h = restrictHead('For Head of ' + head.division + ' View only', 'Status of the ' + head.division + ' team only.') + '<div class="segrow">' + yearSegHTML() + '</div>';
-  h += '<div class="card"><div class="row"><span class="grow muted">Signed in as <b>' + esc(head.name) + '</b> (Head, ' + esc(head.division) + ') &middot; As of ' + esc(fmtDateL(c.today, 'en')) + '</span>' +
-    tb('refresh', 'Refresh', 'headRefresh()') + tb('out', 'Sign out', 'meSignOut()') + '</div>' +
+  let h = banner('chart', '', t('b_ov_title'), '') + '<div class="segrow">' + ovSeg('team') + yearSegHTML() + '</div>';
+  h += divPickHTML() + '<div class="card"><div class="row"><span class="grow muted">' + esc(head.division) + ' team &middot; As of ' + esc(fmtDateL(c.today, 'en')) + '</span>' +
+    tb('refresh', 'Refresh', 'headRefresh()') + '</div>' +
     '<div class="row" style="margin-top:12px">' + reportBtns('team') + '</div></div>';
   h += dashOverall(c, 'Team acknowledgment rate', 'team');
   h += dashBulletins(c, 'team');
@@ -2678,6 +2807,7 @@ async function autoHead(){
 }
 async function headRefresh(){
   if(!head) return;
+  if(head.view){ loadAdmin(true).then(render); return; }
   const r = await rpc('ack_head_data', { p_staff_id: head.id, p_pin: head.pin });
   if(r.error){ toast(t('unavailable'), 'error'); return; }
   if(!r.data.ok){ meSignOut(); return; }
@@ -2743,9 +2873,9 @@ async function exportExcel(scope){
   toast('Excel file downloaded', 'success');
 }
 function reportBtns(scope){
-  const b = function(icon, label, fn, cls){ return '<button class="btn ' + (cls || 'ghost') + ' sm pdfb" onclick="' + fn + '">' + ico(icon, 15) + label + '</button>'; };
-  return b('eye', 'Preview', "previewReport('" + scope + "')", 'ghost').replace(' pdfb', '') + b('print', 'Print', "printReport('" + scope + "')") + b('download', 'Download PDF', "reportPDF('" + scope + "','download')") +
-    b('send', 'Send PDF', "reportPDF('" + scope + "','send')", '') + b('chart', 'Management report', "openMgmt('" + scope + "')") + b('download', scope === 'team' ? 'Download Excel' : 'Export database (Excel)', "exportExcel('" + scope + "')");
+  const b = function(icon, label, fn, cls){ return '<button class="btn ' + (cls || 'ghost') + ' sm pdfb" onclick="' + fn + ';this.closest(\'details\').open=false">' + ico(icon, 15) + label + '</button>'; };
+  return '<details class="rmn rpt"><summary class="btn ghost sm">' + ico('download', 15) + 'Report</summary><div class="rmi">' + b('eye', 'Preview', "previewReport('" + scope + "')", 'ghost').replace(' pdfb', '') + b('print', 'Print', "printReport('" + scope + "')") + b('download', 'Download PDF', "reportPDF('" + scope + "','download')") +
+    b('send', 'Send PDF', "reportPDF('" + scope + "','send')", '') + b('chart', 'Management report', "openMgmt('" + scope + "')") + b('download', scope === 'team' ? 'Download Excel' : 'Export database (Excel)', "exportExcel('" + scope + "')") + '</div></details>';
 }
 
 /* ====================== A4 REPORT (print + PDF) ====================== */
@@ -3180,7 +3310,7 @@ function viewTerminalOld(){
 /* ---------- quick search (Ctrl+K / the search button) ---------- */
 function openSearch(){
   openModal('<div class="qsbox">' + ico('search', 18) + '<input id="qsIn" type="text" autocomplete="off" placeholder="' + esc(t('search_ph')) + '" oninput="qsRun()" onkeydown="qsKey(event)"></div><div id="qsRes" class="qsres"></div>');
-  qsRun(); setTimeout(function(){ const e = $('qsIn'); if(e) e.focus(); }, 30);
+  qsSheet(); qsRun(); setTimeout(function(){ const e = $('qsIn'); if(e) e.focus(); }, 30);
 }
 let qsItems = [], qsSel = 0;
 function qsRun(){
@@ -3970,7 +4100,7 @@ function termBoardHTML(k){
       return '<span class="cell' + (i === B.main ? ' cm' : '') + (i === B.hide ? ' hm' : '') + (i === 2 && k === 'tools' ? ' c-gate' : '') + '" data-w="' + w + '" style="--w:' + w + '"></span>'; }).join('') + '<span class="tbgo">' + ico('arrow', 14) + '</span></div>';
   }
   return '<div class="tb" id="tb_' + k + '" onmouseenter="TERM.pause=true" onmouseleave="TERM.pause=false" ontouchstart="termTouch()"><div class="tbh"><span class="tbi">' + ico(B.icon, 17) + '</span><b>' + esc(t(B.title)) + '</b>' +
-    (k === 'bul' ? '<span class="tbn">' + esc(t('th_counts')) + '</span><button class="tbl" onclick="setTab(\'ack\')">' + esc(t('th_overview')) + '</button>' : '') + '</div>' +
+    (k === 'bul' ? '<span class="tbn cnt" id="tbCnt"></span><button class="tbl" onclick="setTab(\'ack\')">' + esc(t('th_overview')) + '</button>' : '') + '</div>' +
     '<div class="tbcols">' + cl + '</div><div class="tbrows">' + rows + '</div>' + (k === 'bul' ? '<div class="tbmore" id="tbMore" hidden></div>' : '') + '</div>';
 }
 function termTickerTextPub(){
@@ -3980,9 +4110,8 @@ function termTickerTextPub(){
 }
 function termHeroHTML(){
   const s = function(icon, label, id, cls){ return '<button class="thsign ' + (cls || '') + '" onclick="termGo(\'' + id + '\')">' + ico(icon, 16) + esc(label) + '</button>'; };
-  return '<div class="thero"><div class="tht"><div><div class="theye">CT / OPS</div><h2>' + esc(t('tm_title')) + '</h2><div class="thd">' + esc(t('tm_desc')) + '</div></div>' +
+  return '<div class="thero" data-sky="' + skyPhase() + '">' + skyLayerHTML() + '<div class="tht"><div><h2>' + esc(t('tm_title')) + '</h2></div>' +
     '<div class="thck"><div class="thc" id="thClock">--:--:--</div><div class="thdt" id="thDate"></div>' + termWhoTag() + '</div></div>' +
-    '<div class="thsigns">' + s('file', t('th_bul'), 'tb_bul', 'b') + s('grid', t('th_gates'), 'thGates', 'g') + s('mobile', t('th_inst'), 'thInst', 's') + '</div>' +
     termRunwayHTML2() + '</div>';
 }
 function termGatesHTML(){
@@ -4039,6 +4168,7 @@ function termPage(){
   termLater(termPage, termRand(6500, 12000));
 }
 function termClock(){
+  skySync();
   const a = $('thClock'), d = $('thDate'); if(!a) return;
   a.textContent = 'BKK ' + new Date().toLocaleTimeString('en-GB', { timeZone: 'Asia/Bangkok', hour12: false });
   if(d) d.textContent = new Date().toLocaleDateString(locOf(lang), { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Bangkok' });
@@ -4070,9 +4200,10 @@ function termSync(){ if(tab === 'terminal' && me) termStart(); else if(TERM.on) 
 Object.assign(I.en, { tm_lock_t:'OPS Terminal is for signed-in staff', tm_lock_s:'Choose your name and enter your PIN to open the OPS Terminal.', tm_lock_d:'Sign in to open the OPS tools.', tm_as:'Signed in as' });
 Object.assign(I.th, { tm_lock_t:'OPS Terminal สำหรับเจ้าหน้าที่ที่เข้าสู่ระบบแล้ว', tm_lock_s:'เลือกชื่อและกรอกรหัส PIN เพื่อเข้าใช้งาน OPS Terminal', tm_lock_d:'เข้าสู่ระบบเพื่อเปิดเครื่องมือของ OPS', tm_as:'เข้าสู่ระบบในชื่อ' });
 function termLockedHTML(){
-  return restrictHead(t('tm_lock_t'), t('tm_lock_s')) + signinHTML('');
+  return signinHTML('');
 }
 function termWho(){
+  return '';
   return '<p class="center muted" style="margin:14px 0 4px;font-size:12.5px">' + esc(t('tm_as')) + ' ' + esc(me.name) + ' &nbsp;<button class="btn ghost sm" onclick="meSignOut()">' + ico('out', 14) + esc(t('signout')) + '</button></p>';
 }
 
@@ -4121,8 +4252,7 @@ function termTickerText(){
   const L = termBulListAll(); if(L === null) return 'OPS TERMINAL';
   const o = L.filter(function(x){ return x.st === 'overdue' || x.st === 'progress'; }), od = o.filter(function(x){ return x.st === 'overdue'; }).length;
   const dn = L.filter(function(x){ return x.st === 'done'; }).length;
-  return '     OPS TERMINAL     ///     YOUR PENDING BULLETINS ' + o.length + '     ///     OVERDUE ' + od + '     ///     ACKNOWLEDGED ' + dn + '     ///     ' +
-    (o.length ? 'PLEASE ACKNOWLEDGE BEFORE THE DEADLINE' : 'ALL CAUGHT UP. THANK YOU') + '     ///     ';
+  return '     OPS TERMINAL     ///     ' + (o.length ? 'PLEASE ACKNOWLEDGE BEFORE THE DEADLINE' : 'ALL CAUGHT UP. THANK YOU') + '     ///     ';
 }
 
 
@@ -4144,9 +4274,9 @@ function termBulList(){
   return A.filter(function(x){ return x.st === 'overdue' || x.st === 'progress'; });
 }
 function termBulRows(){
-  const L = termBulList(); TERM.bulSrc = []; TERM.bulMore = 0;
-  if(L === null) return [['', 'LOADING', '', '', '']];
-  if(!L.length){ if(me && me.list && me.list.length) return [['', 'ALL CAUGHT UP', '', '', 'COMPLETED']]; return [['', 'NO BULLETINS FOR', '', '', ''], ['', 'YOU YET', '', '', '']]; }
+  const L = termBulList(); TERM.bulSrc = []; TERM.bulMore = 0; TERM.caught = 0; TERM.loading = (L === null);
+  if(L === null) return [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']];
+  if(!L.length){ if(me && me.list && me.list.length){ TERM.caught = me.list.length; return [['', 'ALL CAUGHT UP', '', '', 'COMPLETED']]; } return [['', 'NO BULLETINS FOR', '', '', ''], ['', 'YOU YET', '', '', '']]; }
   TERM.bulMore = Math.max(0, L.length - 10);
   const today = bkkToday();
   return L.slice(0, 10).map(function(x){ const b = x.b; TERM.bulSrc.push(b.id);
@@ -4157,11 +4287,12 @@ function termBulGo(el){
   tab = 'ack'; openMine(id); window.scrollTo(0, 0);
 }
 function termMore(){
-  const mo = $('tbMore'); if(!mo) return;
+  const mo = $('tbMore'); if(!mo) return; mo.className = 'tbmore';
   if(TERM.bulMore > 0){ mo.hidden = false; mo.innerHTML = '<span>' + esc(t('th_more').replace('{n}', TERM.bulMore)) + '</span><button class="tbl" onclick="setTab(\'ack\')">' + esc(t('th_overview')) + '</button>'; }
+  else if(TERM.caught){ mo.hidden = false; mo.className = 'tbmore caught'; mo.innerHTML = '<span class="ckc">' + ico('check', 20) + '</span><svg viewBox="0 0 200 12" aria-hidden="true"><path d="M2 7 Q60 2 198 5" stroke="#4a6a8c" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/></svg><span>Thank you. You have acknowledged all ' + TERM.caught + ' bulletins.</span>'; }
   else { mo.hidden = true; mo.innerHTML = ''; }
 }
-function termFill(k, anim){ termFill0(k, anim); if(k === 'bul') termMore(); }
+function termFill(k, anim){ termFill0(k, anim); if(k === 'bul'){ termMore(); termCnt(); const rt = $('tb_bul'); if(rt) rt.classList.toggle('ld', !!TERM.loading); } }
 function termWhoTag(){
   return me ? '<div class="thwho"><span class="thwl">' + esc(t('th_welcome')) + ' </span><b>' + esc(me.name) + '</b></div>' : '';
 }
@@ -4217,7 +4348,7 @@ function termRunwayHTML(){
 
 
 /* ====================== VERSION CHANGE LOG ====================== */
-const CHANGELOG = [{"v": "3.52", "date": "23 Nov 2026", "items": ["Terminal board: the empty message is no longer cut off (it now reads NO BULLETINS FOR YOU YET over two lines).", "Terminal board: bulletin codes with a revision (for example OPSM 11/25 R12) and long day counts (for example -99+ DAYS) now fit in full.", "Terminal board: a title that is too long for the board ends with a dot instead of being cut mid-word."]}, {"v": "3.51", "date": "23 Nov 2026", "items": ["Version numbers now count in smaller steps (3.51, 3.52, 3.53 ...) so every revision is easy to tell apart."]}, {"v": "3.5", "date": "23 Nov 2026", "items": ["PIN list on the Super Admin page is now a quiet link, shown as (Data Controls | Data Pins) at the bottom."]}, {"v": "3.4", "date": "23 Nov 2026", "items": ["Light / dark mode button added in the header. The choice is remembered on that device.", "Runway aircraft outline is now white.", "Terminal board shows bulletin codes as OPSM (for example OPSM 05/26).", "Default deadline (number of days) can now be set by a Super Admin under Settings > Super Admin. Default stays 7 days. Needs SQL update 5.", "Year filter now allows several years at once, or all years, on every page that shows dashboards and charts."]}, {"v": "3.3", "date": "23 Nov 2026", "items": ["Runway aircraft redrawn as a smooth outline jet, with wingtip, strobe, beacon, wing and landing lights kept."]}, {"v": "3.2", "date": "23 Nov 2026", "items": ["Runway aircraft made 30% smaller."]}, {"v": "3.1", "date": "23 Nov 2026", "items": ["OPS Terminal is now the first page on open, on phone and desktop. Links to a specific bulletin still open that bulletin.", "My bulletin status lists every open bulletin (up to 10) with days left. Click a row to acknowledge it. More than 10 shows a \"more\" note and the Open my bulletins button.", "Departures board removed. The Gates cards stay.", "Gate letters and numbers glow with a shine effect.", "Signed-in name and last-name initial shown under the date in the top banner.", "New runway scene with a detailed aircraft, runway lights, wing and aircraft lights.", "Version label now counts each revision automatically. Change log added to this page."]}, {"v": "3.0", "date": "Nov 2026", "items": ["Renamed to OPS Terminal with a new logo. File name is ops_terminal.html.", "OPS Terminal page opens only after PIN sign-in.", "New tab order: Terminal, Acknowledge, Overview, My Team, Settings.", "Quality-check fixes (SQL update 4): bulletin deletion is Super Admin only and written to the audit log; links must start with https; superseded bulletins no longer count in totals.", "Live demo page with sample data."]}];
+const CHANGELOG = [{"v": "3.55", "date": "23 Nov 2026", "items": ["New role: OPS Manager (view only). Can open Settings (CT) and Detailed (CT); everything that cannot be edited is greyed out; no Super Admin access. A Super Admin gives or removes it (Super Admin page or Staff list). Needs SQL update 6.", "My Team: an OPS Manager View picker lets an OPS Manager or Super Admin choose which division to see.", "Search: the bottom sheet can now be swiped down, tapped outside, or closed with its handle.", "Terminal: gate tiles are flat navy with a turquoise bar (no shine).", "Terminal: the hero sky follows Bangkok time (dawn, day, dusk, night) with twinkling stars and shooting stars after dark."]}, {"v": "3.54", "date": "23 Nov 2026", "items": ["Live refresh now runs every 40 seconds (was 20)."]}, {"v": "3.53", "date": "23 Nov 2026", "items": ["One simple sign-in card titled OPS Terminal (Name, PIN, Sign in). Page titles are one word.", "My Team now sits inside Overview (General | Detailed | My team). Sign out and Change PIN are in the header name button.", "Medium font weight and darker grey text.", "Leaner Terminal and Acknowledge pages: fewer repeated buttons and lines."]}, {"v": "3.52", "date": "23 Nov 2026", "items": ["Terminal board: the empty message is no longer cut off (it now reads NO BULLETINS FOR YOU YET over two lines).", "Terminal board: bulletin codes with a revision (for example OPSM 11/25 R12) and long day counts (for example -99+ DAYS) now fit in full.", "Terminal board: a title that is too long for the board ends with a dot instead of being cut mid-word."]}, {"v": "3.51", "date": "23 Nov 2026", "items": ["Version numbers now count in smaller steps (3.51, 3.52, 3.53 ...) so every revision is easy to tell apart."]}, {"v": "3.5", "date": "23 Nov 2026", "items": ["PIN list on the Super Admin page is now a quiet link, shown as (Data Controls | Data Pins) at the bottom."]}, {"v": "3.4", "date": "23 Nov 2026", "items": ["Light / dark mode button added in the header. The choice is remembered on that device.", "Runway aircraft outline is now white.", "Terminal board shows bulletin codes as OPSM (for example OPSM 05/26).", "Default deadline (number of days) can now be set by a Super Admin under Settings > Super Admin. Default stays 7 days. Needs SQL update 5.", "Year filter now allows several years at once, or all years, on every page that shows dashboards and charts."]}, {"v": "3.3", "date": "23 Nov 2026", "items": ["Runway aircraft redrawn as a smooth outline jet, with wingtip, strobe, beacon, wing and landing lights kept."]}, {"v": "3.2", "date": "23 Nov 2026", "items": ["Runway aircraft made 30% smaller."]}, {"v": "3.1", "date": "23 Nov 2026", "items": ["OPS Terminal is now the first page on open, on phone and desktop. Links to a specific bulletin still open that bulletin.", "My bulletin status lists every open bulletin (up to 10) with days left. Click a row to acknowledge it. More than 10 shows a \"more\" note and the Open my bulletins button.", "Departures board removed. The Gates cards stay.", "Gate letters and numbers glow with a shine effect.", "Signed-in name and last-name initial shown under the date in the top banner.", "New runway scene with a detailed aircraft, runway lights, wing and aircraft lights.", "Version label now counts each revision automatically. Change log added to this page."]}, {"v": "3.0", "date": "Nov 2026", "items": ["Renamed to OPS Terminal with a new logo. File name is ops_terminal.html.", "OPS Terminal page opens only after PIN sign-in.", "New tab order: Terminal, Acknowledge, Overview, My Team, Settings.", "Quality-check fixes (SQL update 4): bulletin deletion is Super Admin only and written to the audit log; links must start with https; superseded bulletins no longer count in totals.", "Live demo page with sample data."]}];
 function changelogHTML(){
   let h = '<div class="card">' + ch('file', 'Change log', '<span class="chip blue">Current v' + esc(APP_VERSION) + '</span>') + '<p class="muted" style="margin-top:-4px">What changed in each version, newest first.</p>';
   CHANGELOG.forEach(function(e){
@@ -4307,6 +4438,176 @@ function yearSel(){
   if(fltYears === null){ if(!pubLoaded) return []; const ys = yearsOf(pub.bulletins || []); fltYears = ys.length ? [ys[0]] : []; }
   return fltYears;
 }
+
+
+/* ====================== v3.53: LEAN ====================== */
+function ovSeg(active){
+  return subseg([['general', t('ov_general'), 'chart', 'blue'], ['detailed', t('ov_detailed'), 'lock', 'steel'], ['team', t('tab_team'), 'users', 'green']], active, 'setOv').replace('class="seg col"', 'class="seg col wrapseg"');
+}
+function acctSync(){
+  const b = $('acctBtn'); if(!b) return;
+  if(!me){ b.hidden = true; acctClose(); return; }
+  b.hidden = false; b.innerHTML = ico('users', 16) + '<span class="an">' + esc(me.name) + '</span>';
+}
+function acctClose(){ const p = $('acctPop'); if(p) p.remove(); }
+function acctMenu(ev){
+  if(ev) ev.stopPropagation();
+  if($('acctPop')){ acctClose(); return; }
+  if(!me) return;
+  const d = document.createElement('div'); d.id = 'acctPop'; d.className = 'acctpop';
+  d.innerHTML = '<div class="ap-n">' + esc(me.name) + '</div><button onclick="acctClose();openChangePin()">' + esc(t('change_pin')) + '</button><button onclick="acctClose();meSignOut()">' + esc(t('signout')) + '</button>';
+  document.body.appendChild(d);
+}
+document.addEventListener('click', function(e){ if(!(e.target.closest && e.target.closest('#acctPop,#acctBtn'))) acctClose(); });
+Object.assign(I.en, { d_left: '{n} days left', d_left1: '1 day left', d_late: '{n} days late', d_late1: '1 day late', d_today: 'Due today', due_w: 'Due' });
+Object.assign(I.th, { d_left: 'เหลือ {n} วัน', d_left1: 'เหลือ 1 วัน', d_late: 'เกินกำหนด {n} วัน', d_late1: 'เกินกำหนด 1 วัน', d_today: 'ครบกำหนดวันนี้', due_w: 'กำหนด' });
+function dueLine(dl, today){
+  try {
+    const n = Math.round((Date.parse(String(dl).slice(0, 10) + 'T00:00:00Z') - Date.parse(String(today).slice(0, 10) + 'T00:00:00Z')) / 864e5);
+    if(isNaN(n)) return t('due_w') + ' ' + fmtShort(dl);
+    if(n === 0) return t('d_today');
+    const a = Math.abs(n), k = n > 0 ? 'd_left' : 'd_late';
+    return t('due_w') + ' ' + fmtShort(dl) + ' · ' + (a === 1 ? t(k + '1') : t(k, { n: a }));
+  } catch(e){ return t('due_w') + ' ' + fmtShort(dl); }
+}
+function termCnt(){
+  const el = $('tbCnt'); if(!el) return;
+  const L = termBulList();
+  if(L === null){ el.textContent = ''; return; }
+  const o = L.filter(function(x){ return x.st === 'overdue'; }).length;
+  el.className = 'tbn cnt' + (o ? ' over' : '');
+  el.textContent = L.length ? (L.length + ' open' + (o ? ' · ' + o + ' overdue' : '')) : 'All caught up';
+}
+
+
+function rmMenu(items){
+  return '<details class="rmn"><summary aria-label="More">⋯</summary><div class="rmi">' + items.map(function(x){
+    return '<button type="button" class="' + (x[2] || '') + '" onclick="this.closest(\'details\').open=false;' + x[1] + '">' + esc(x[0]) + '</button>';
+  }).join('') + '</div></details>';
+}
+
+
+/* ====================== v3.55: SKY, OPS MANAGER, SEARCH SHEET ====================== */
+Object.assign(I.en, { mgr_view: 'OPS Manager View', ro_view: 'View only', ro_note: 'View only. Editing is for CT Admins.', mgr_note: 'View only. Can open Settings (CT) and Detailed (CT), and choose a division in My Team.' });
+Object.assign(I.th, { mgr_view: 'มุมมองผู้จัดการ OPS', ro_view: 'ดูได้อย่างเดียว', ro_note: 'ดูได้อย่างเดียว การแก้ไขเป็นสิทธิ์ของผู้ดูแล CT', mgr_note: 'ดูได้อย่างเดียว เปิดตั้งค่า (CT) และรายละเอียด (CT) ได้ และเลือก Division ใน ทีมของฉัน ได้' });
+
+/* ---- sky that follows Bangkok time (stars and shooting stars after dark) ---- */
+function skyPhase(){
+  const q = (String(location.search).match(/[?&]sky=(dawn|day|dusk|night)/) || [])[1]; if(q) return q;
+  const h = (new Date().getUTCHours() + 7) % 24;
+  return (h >= 21 || h < 5) ? 'night' : (h < 10 ? 'dawn' : (h < 17 ? 'day' : 'dusk'));
+}
+function skyLayerHTML(){
+  let seed = 7, st = '';
+  const r = function(){ seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+  for(let i = 0; i < 40; i++){
+    const z = r() < .2 ? 2.4 : (r() < .5 ? 1.6 : 1.1);
+    st += '<i style="left:' + (r() * 98).toFixed(1) + '%;top:' + (r() * 62).toFixed(1) + '%;width:' + z + 'px;height:' + z + 'px;animation-delay:-' + (r() * 6).toFixed(1) + 's;animation-duration:' + (2.4 + r() * 3.2).toFixed(1) + 's"></i>';
+  }
+  return '<div class="thsky" aria-hidden="true"><span class="thorb"></span><div class="thstars">' + st + '</div><i class="thss s1"></i><i class="thss s2"></i><i class="thss s3"></i></div>';
+}
+function skySync(){
+  const h = document.querySelector('.thero'); if(!h) return;
+  const p = skyPhase(); if(h.getAttribute('data-sky') !== p) h.setAttribute('data-sky', p);
+}
+
+/* ---- search sheet: swipe down, tap outside or press the handle to close ---- */
+function qsSheet(){
+  const ov = document.querySelector('#modalRoot .overlay'), md = ov && ov.querySelector('.modal'); if(!md) return;
+  md.classList.add('qsmodal');
+  md.insertAdjacentHTML('afterbegin', '<button type="button" class="shgrip" aria-label="Close" onclick="closeModal()"><i></i></button>');
+  ov.addEventListener('click', function(e){ if(e.target === ov) closeModal(); });
+  const res = md.querySelector('#qsRes');
+  let y0 = null, dy = 0, t0 = 0, drag = false;
+  md.addEventListener('touchstart', function(e){
+    if(res && res.contains(e.target) && res.scrollTop > 0){ y0 = null; return; }
+    y0 = e.touches[0].clientY; t0 = Date.now(); dy = 0; drag = false;
+  }, { passive: true });
+  md.addEventListener('touchmove', function(e){
+    if(y0 === null) return;
+    dy = e.touches[0].clientY - y0;
+    if(!drag){
+      if(dy > 10){ drag = true; md.style.animation = 'none'; md.style.transition = 'none'; const i = $('qsIn'); if(i) i.blur(); }
+      else if(dy < -10){ y0 = null; return; }
+    }
+    if(drag){ md.style.transform = 'translateY(' + Math.max(0, dy) + 'px)'; if(e.cancelable) e.preventDefault(); }
+  }, { passive: false });
+  const end = function(){
+    if(y0 === null || !drag){ y0 = null; return; }
+    const v = dy / Math.max(1, Date.now() - t0); y0 = null; drag = false;
+    md.style.transition = 'transform .2s ease';
+    if(dy > 90 || v > .6){ md.style.transform = 'translateY(100%)'; setTimeout(closeModal, 190); }
+    else md.style.transform = 'translateY(0)';
+  };
+  md.addEventListener('touchend', end); md.addEventListener('touchcancel', end);
+}
+
+/* ---- OPS Manager: view only ---- */
+function isRO(){ return !!(me && me.roles && me.roles.manager && !me.roles.ct && !me.roles.super); }
+function canPickDiv(){ return !!(me && me.roles && (me.roles.manager || me.roles.super)); }
+let tmDivSel = '', tmLoad = 0;
+function pickDivs(){
+  const d = [];
+  (admin ? admin.staff : []).forEach(function(x){ if(x.active && d.indexOf(x.division) < 0) d.push(x.division); });
+  return d.sort(cmpDiv);
+}
+function mkViewHead(){
+  const div = tmDivSel, st = admin.staff.filter(function(x){ return x.active && x.division === div; }), ids = {};
+  st.forEach(function(x){ ids[x.id] = 1; });
+  const raw = { ok: true, head: { id: me.id, name: me.name, division: div }, staff: st, bulletins: admin.bulletins,
+    acks: admin.acks.filter(function(a){ return ids[a.s]; }), required: admin.required.filter(function(r){ return ids[r[1]]; }), settings: admin.settings };
+  head = { id: me.id, name: me.name, division: div, pin: me.pin, raw: raw, comp: computeAdmin(raw, bkkToday()), view: true };
+}
+function setTeamDiv(v){ tmDivSel = v; if(admin) mkViewHead(); render(); }
+function viewTeamPick(){
+  if(!canPickDiv()) return null;
+  if(!admin){
+    if(!tmLoad){ tmLoad = 1; loadAdmin(true).then(function(ok){ tmLoad = ok ? 0 : 2; render(); }); return spinner(); }
+    if(tmLoad === 2) return '<div class="card"><p class="muted">Could not load the team dashboard.</p><p><button class="btn sm" onclick="tmLoad=0;render()">Try again</button></p></div>';
+    return spinner();
+  }
+  const divs = pickDivs();
+  if(!divs.length) return noAccessHTML();
+  if(!tmDivSel || divs.indexOf(tmDivSel) < 0) tmDivSel = (me.roles.head_of && divs.indexOf(me.roles.head_of) >= 0) ? me.roles.head_of : divs[0];
+  if(!head || !head.view || head.division !== tmDivSel) mkViewHead();
+  return null;
+}
+function divPickHTML(){
+  if(!canPickDiv() || !head || !head.view) return '';
+  return '<div class="card mgv"><div class="row"><span class="mgvl">' + ico('users', 17) + esc(t('mgr_view')) + '</span><select onchange="setTeamDiv(this.value)">' +
+    pickDivs().map(function(d){ return '<option value="' + esc(d) + '"' + (d === tmDivSel ? ' selected' : '') + '>' + esc(d) + '</option>'; }).join('') + '</select></div></div>';
+}
+const RO_SAFE = /copyBulletinLink|adQR\(/;
+let roObs = null;
+function roLock(){
+  if(roObs) roObs.disconnect();
+  const v = $('view');
+  if(!v || !isRO() || tab !== 'admin') return;
+  const sup = v.querySelector('.segrow .seg button[onclick*="\'super\'"]');
+  if(sup){ sup.disabled = true; sup.classList.add('rodis'); }
+  if(adTab === 'bulletins' || adTab === 'staff'){
+    if(!v.querySelector('.rohint')){
+      const sr = v.querySelector('.segrow');
+      if(sr) sr.insertAdjacentHTML('afterend', '<div class="rohint">' + ico('lock', 16) + esc(t('ro_note')) + '</div>');
+    }
+    v.querySelectorAll('button,input,select,textarea').forEach(function(el){
+      if(el.closest('.segrow,.sfbar,.rohint')) return;
+      if(el.tagName === 'BUTTON' && RO_SAFE.test(el.getAttribute('onclick') || '')) return;
+      if(el.disabled) return;
+      el.disabled = true; el.classList.add('rodis');
+    });
+    v.querySelectorAll('.card').forEach(function(cd){ if(cd.querySelector('input.rodis,select.rodis,textarea.rodis')) cd.classList.add('rolocked'); });
+  }
+  if(!roObs) roObs = new MutationObserver(function(){ roLock(); });
+  roObs.observe(v, { childList: true, subtree: true });
+}
+(function(){
+  ['adAddBulletin', 'adEditBulletin', 'adSaveBulletin', 'adDeleteBulletin', 'adAddStaff', 'adEditStaff', 'adSaveStaff', 'adUnlock', 'adResetPin',
+   'adSetExclude', 'adSetRole', 'adLeave', 'adLeaveAdd', 'adLeaveCancel', 'adQuiz', 'qeSave'].forEach(function(n){
+    const f = window[n]; if(typeof f !== 'function') return;
+    window[n] = function(){ if(isRO()){ toast(t('ro_view'), 'error'); return; } return f.apply(this, arguments); };
+  });
+})();
 
 /* ====================== INIT ====================== */
 async function init(){
