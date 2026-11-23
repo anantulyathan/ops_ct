@@ -816,6 +816,21 @@ html[lang=th] .tbh b{letter-spacing:.04em}
 .mgv select{max-width:200px}
 :where(:root[data-theme=dark]) .rohint{background:#12253b;border-color:#2b4262;color:#b2c1d4}
 @media (prefers-color-scheme:dark){:where(:root:not([data-theme=light])) .rohint{background:#12253b;border-color:#2b4262;color:#b2c1d4}}
+
+/* v3.56 side-view takeoff runway */
+.tkr{position:relative;height:130px;margin:0 -24px;overflow:hidden;border-top:2px solid #24405f;background:#0f1b2d}
+.tkr svg{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+.tkr svg.tkl{opacity:0;transition:opacity 1.6s ease}
+.tkr svg.tkl.on{opacity:1}
+.tkst,.tkfs,.tkwg,.tken{stroke:var(--ol,rgba(15,32,56,.35));stroke-width:.7}
+.tkst{fill:var(--tail)}.tkfs{fill:var(--fus)}.tkwg{fill:var(--wing)}.tken{fill:var(--eng)}
+.tkbl{fill:var(--belly)}.tkch{fill:var(--cheat,transparent)}.tkwn{stroke:var(--win)}.tkck{fill:#1b2f4a}
+.tkbk{animation:tkbk 1.3s ease-in-out infinite}
+.tkrl{animation:tkrl 1.2s linear infinite}
+@keyframes tkbk{0%,100%{opacity:1}50%{opacity:.1}}
+@keyframes tkrl{0%{opacity:1}50%{opacity:.25}100%{opacity:1}}
+@media (max-width:640px){.tkr{height:96px;margin:0 -16px}}
+@media (prefers-reduced-motion:reduce){.tkbk,.tkrl{animation:none}}
 </style>
 </head>
 <body data-sec="teal">
@@ -824,7 +839,7 @@ html[lang=th] .tbh b{letter-spacing:.04em}
   <div class="gridbg"></div><div class="glow g1"></div><div class="glow g2"></div>
   <div class="hin">
     <div class="logo"><svg viewBox="0 0 100 100" width="44" height="44" role="img" aria-label="OPS Terminal"><rect width="100" height="100" rx="22" fill="#1a2e4a"/><path d="M0,-20 C2,-20 3,-17 3,-12 L3,-4 L20,6 L20,10 L3,5 L3,13 L8,17 L8,20 L0,18 L-8,20 L-8,17 L-3,13 L-3,5 L-20,10 L-20,6 L-3,-4 L-3,-12 C-3,-17 -2,-20 0,-20 Z" transform="translate(50,34) rotate(45) scale(0.95)" fill="#2a9d8f"/><path d="M26.7 82.33C33.33 82.33 38.46 77.8 38.46 69.65C38.46 61.48 33.33 56.93 26.7 56.93C20.05 56.93 14.92 61.48 14.92 69.65C14.92 77.77 20.05 82.33 26.7 82.33ZM26.7 77.19C23.1 77.19 20.91 74.53 20.91 69.65C20.91 64.75 23.1 62.08 26.7 62.08C30.29 62.08 32.48 64.73 32.48 69.65C32.48 74.53 30.29 77.19 26.7 77.19ZM42.76 82H48.62V74.28H52.72C58.4 74.28 61.9 70.91 61.9 65.81C61.9 60.75 58.47 57.26 52.89 57.26H42.76ZM48.62 69.65V62.01H51.64C54.4 62.01 55.83 63.49 55.83 65.81C55.83 68.1 54.4 69.65 51.66 69.65ZM75.47 82.33C81.6 82.33 85.25 79.53 85.25 74.83C85.25 70.88 82.48 68.49 77.7 67.44L75.55 66.94C73.35 66.44 71.9 65.71 71.9 64.19C71.9 62.81 73.11 61.8 75.45 61.8C77.81 61.8 79.12 62.84 79.29 64.63H84.92C84.85 60.05 81.2 56.93 75.47 56.93C69.86 56.93 65.84 60 65.84 64.58C65.84 68.3 68.43 70.45 72.7 71.42L75.32 72.04C78.03 72.65 79.32 73.4 79.32 74.81C79.32 76.39 77.83 77.47 75.4 77.47C72.73 77.47 70.96 76.24 70.82 73.83H65.19C65.29 79.54 69.28 82.33 75.47 82.33Z" fill="#e8eff8"/></svg></div>
-    <div class="ht"><h1 id="appTitle">OPS Terminal</h1><div class="sub">CT / OPS &middot; v3.55</div></div>
+    <div class="ht"><h1 id="appTitle">OPS Terminal</h1><div class="sub">CT / OPS &middot; v3.56</div></div>
     <span id="conn">...</span>
     <button class="langbtn" id="searchBtn" onclick="openSearch()" aria-label="Search" title="Search (Ctrl+K)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
     <button class="langbtn" id="acctBtn" onclick="acctMenu(event)" aria-label="Account" hidden></button>
@@ -834,7 +849,7 @@ html[lang=th] .tbh b{letter-spacing:.04em}
 </header>
 <nav id="nav"></nav>
 <main class="wrap" id="view"></main>
-<footer class="appfoot">OPS Terminal &middot; v3.55</footer>
+<footer class="appfoot">OPS Terminal &middot; v3.56</footer>
 <div id="miniBar"></div>
 <div id="toasts"></div>
 <div id="modalRoot"></div>
@@ -852,7 +867,7 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-const APP_VERSION = '3.55';
+const APP_VERSION = '3.56';
 const CFG = {
   divOrder: ['Manager/FO','Sr. Flight Ops Expert','Specialist','CT','FO','CS','OM','FA','GA','DG'],
   // Signature blocks used in the reminder email and the PDF report (edit here if the official wording differs)
@@ -4112,7 +4127,7 @@ function termHeroHTML(){
   const s = function(icon, label, id, cls){ return '<button class="thsign ' + (cls || '') + '" onclick="termGo(\'' + id + '\')">' + ico(icon, 16) + esc(label) + '</button>'; };
   return '<div class="thero" data-sky="' + skyPhase() + '">' + skyLayerHTML() + '<div class="tht"><div><h2>' + esc(t('tm_title')) + '</h2></div>' +
     '<div class="thck"><div class="thc" id="thClock">--:--:--</div><div class="thdt" id="thDate"></div>' + termWhoTag() + '</div></div>' +
-    termRunwayHTML2() + '</div>';
+    termRunwayHTML3() + '</div>';
 }
 function termGatesHTML(){
   return '<div class="gh" id="thGates"><div class="gi">' + ico('grid', 20) + '</div><div><div class="gt">' + esc(t('th_gates')) + '</div></div></div><div class="gates">' + TERM_TOOLS.map(function(r, i){
@@ -4348,7 +4363,7 @@ function termRunwayHTML(){
 
 
 /* ====================== VERSION CHANGE LOG ====================== */
-const CHANGELOG = [{"v": "3.55", "date": "23 Nov 2026", "items": ["New role: OPS Manager (view only). Can open Settings (CT) and Detailed (CT); everything that cannot be edited is greyed out; no Super Admin access. A Super Admin gives or removes it (Super Admin page or Staff list). Needs SQL update 6.", "My Team: an OPS Manager View picker lets an OPS Manager or Super Admin choose which division to see.", "Search: the bottom sheet can now be swiped down, tapped outside, or closed with its handle.", "Terminal: gate tiles are flat navy with a turquoise bar (no shine).", "Terminal: the hero sky follows Bangkok time (dawn, day, dusk, night) with twinkling stars and shooting stars after dark."]}, {"v": "3.54", "date": "23 Nov 2026", "items": ["Live refresh now runs every 40 seconds (was 20)."]}, {"v": "3.53", "date": "23 Nov 2026", "items": ["One simple sign-in card titled OPS Terminal (Name, PIN, Sign in). Page titles are one word.", "My Team now sits inside Overview (General | Detailed | My team). Sign out and Change PIN are in the header name button.", "Medium font weight and darker grey text.", "Leaner Terminal and Acknowledge pages: fewer repeated buttons and lines."]}, {"v": "3.52", "date": "23 Nov 2026", "items": ["Terminal board: the empty message is no longer cut off (it now reads NO BULLETINS FOR YOU YET over two lines).", "Terminal board: bulletin codes with a revision (for example OPSM 11/25 R12) and long day counts (for example -99+ DAYS) now fit in full.", "Terminal board: a title that is too long for the board ends with a dot instead of being cut mid-word."]}, {"v": "3.51", "date": "23 Nov 2026", "items": ["Version numbers now count in smaller steps (3.51, 3.52, 3.53 ...) so every revision is easy to tell apart."]}, {"v": "3.5", "date": "23 Nov 2026", "items": ["PIN list on the Super Admin page is now a quiet link, shown as (Data Controls | Data Pins) at the bottom."]}, {"v": "3.4", "date": "23 Nov 2026", "items": ["Light / dark mode button added in the header. The choice is remembered on that device.", "Runway aircraft outline is now white.", "Terminal board shows bulletin codes as OPSM (for example OPSM 05/26).", "Default deadline (number of days) can now be set by a Super Admin under Settings > Super Admin. Default stays 7 days. Needs SQL update 5.", "Year filter now allows several years at once, or all years, on every page that shows dashboards and charts."]}, {"v": "3.3", "date": "23 Nov 2026", "items": ["Runway aircraft redrawn as a smooth outline jet, with wingtip, strobe, beacon, wing and landing lights kept."]}, {"v": "3.2", "date": "23 Nov 2026", "items": ["Runway aircraft made 30% smaller."]}, {"v": "3.1", "date": "23 Nov 2026", "items": ["OPS Terminal is now the first page on open, on phone and desktop. Links to a specific bulletin still open that bulletin.", "My bulletin status lists every open bulletin (up to 10) with days left. Click a row to acknowledge it. More than 10 shows a \"more\" note and the Open my bulletins button.", "Departures board removed. The Gates cards stay.", "Gate letters and numbers glow with a shine effect.", "Signed-in name and last-name initial shown under the date in the top banner.", "New runway scene with a detailed aircraft, runway lights, wing and aircraft lights.", "Version label now counts each revision automatically. Change log added to this page."]}, {"v": "3.0", "date": "Nov 2026", "items": ["Renamed to OPS Terminal with a new logo. File name is ops_terminal.html.", "OPS Terminal page opens only after PIN sign-in.", "New tab order: Terminal, Acknowledge, Overview, My Team, Settings.", "Quality-check fixes (SQL update 4): bulletin deletion is Super Admin only and written to the audit log; links must start with https; superseded bulletins no longer count in totals.", "Live demo page with sample data."]}];
+const CHANGELOG = [{"v": "3.56", "date": "23 Nov 2026", "items": ["Terminal: the runway is now a side view of a twin-engine airliner. Four different aircraft liveries take off one after another (taxi in, standby for clearance, takeoff roll, rotate, lift-off, climb). The runway scene changes through dawn, day, dusk and night every four takeoffs, and the order of the four aircraft is shuffled each time."]}, {"v": "3.55", "date": "23 Nov 2026", "items": ["New role: OPS Manager (view only). Can open Settings (CT) and Detailed (CT); everything that cannot be edited is greyed out; no Super Admin access. A Super Admin gives or removes it (Super Admin page or Staff list). Needs SQL update 6.", "My Team: an OPS Manager View picker lets an OPS Manager or Super Admin choose which division to see.", "Search: the bottom sheet can now be swiped down, tapped outside, or closed with its handle.", "Terminal: gate tiles are flat navy with a turquoise bar (no shine).", "Terminal: the hero sky follows Bangkok time (dawn, day, dusk, night) with twinkling stars and shooting stars after dark."]}, {"v": "3.54", "date": "23 Nov 2026", "items": ["Live refresh now runs every 40 seconds (was 20)."]}, {"v": "3.53", "date": "23 Nov 2026", "items": ["One simple sign-in card titled OPS Terminal (Name, PIN, Sign in). Page titles are one word.", "My Team now sits inside Overview (General | Detailed | My team). Sign out and Change PIN are in the header name button.", "Medium font weight and darker grey text.", "Leaner Terminal and Acknowledge pages: fewer repeated buttons and lines."]}, {"v": "3.52", "date": "23 Nov 2026", "items": ["Terminal board: the empty message is no longer cut off (it now reads NO BULLETINS FOR YOU YET over two lines).", "Terminal board: bulletin codes with a revision (for example OPSM 11/25 R12) and long day counts (for example -99+ DAYS) now fit in full.", "Terminal board: a title that is too long for the board ends with a dot instead of being cut mid-word."]}, {"v": "3.51", "date": "23 Nov 2026", "items": ["Version numbers now count in smaller steps (3.51, 3.52, 3.53 ...) so every revision is easy to tell apart."]}, {"v": "3.5", "date": "23 Nov 2026", "items": ["PIN list on the Super Admin page is now a quiet link, shown as (Data Controls | Data Pins) at the bottom."]}, {"v": "3.4", "date": "23 Nov 2026", "items": ["Light / dark mode button added in the header. The choice is remembered on that device.", "Runway aircraft outline is now white.", "Terminal board shows bulletin codes as OPSM (for example OPSM 05/26).", "Default deadline (number of days) can now be set by a Super Admin under Settings > Super Admin. Default stays 7 days. Needs SQL update 5.", "Year filter now allows several years at once, or all years, on every page that shows dashboards and charts."]}, {"v": "3.3", "date": "23 Nov 2026", "items": ["Runway aircraft redrawn as a smooth outline jet, with wingtip, strobe, beacon, wing and landing lights kept."]}, {"v": "3.2", "date": "23 Nov 2026", "items": ["Runway aircraft made 30% smaller."]}, {"v": "3.1", "date": "23 Nov 2026", "items": ["OPS Terminal is now the first page on open, on phone and desktop. Links to a specific bulletin still open that bulletin.", "My bulletin status lists every open bulletin (up to 10) with days left. Click a row to acknowledge it. More than 10 shows a \"more\" note and the Open my bulletins button.", "Departures board removed. The Gates cards stay.", "Gate letters and numbers glow with a shine effect.", "Signed-in name and last-name initial shown under the date in the top banner.", "New runway scene with a detailed aircraft, runway lights, wing and aircraft lights.", "Version label now counts each revision automatically. Change log added to this page."]}, {"v": "3.0", "date": "Nov 2026", "items": ["Renamed to OPS Terminal with a new logo. File name is ops_terminal.html.", "OPS Terminal page opens only after PIN sign-in.", "New tab order: Terminal, Acknowledge, Overview, My Team, Settings.", "Quality-check fixes (SQL update 4): bulletin deletion is Super Admin only and written to the audit log; links must start with https; superseded bulletins no longer count in totals.", "Live demo page with sample data."]}];
 function changelogHTML(){
   let h = '<div class="card">' + ch('file', 'Change log', '<span class="chip blue">Current v' + esc(APP_VERSION) + '</span>') + '<p class="muted" style="margin-top:-4px">What changed in each version, newest first.</p>';
   CHANGELOG.forEach(function(e){
@@ -4608,6 +4623,124 @@ function roLock(){
     window[n] = function(){ if(isRO()){ toast(t('ro_view'), 'error'); return; } return f.apply(this, arguments); };
   });
 })();
+
+
+/* ====================== v3.56: SIDE-VIEW TAKEOFF RUNWAY ====================== */
+const TK = { t0: 0, W: 0, sky0: -1, ord: {}, used: {}, gen: -1, lastLv: -1, run: false, last: -1, cur: -1, e: null, chk: 0 };
+const TK_SKIES = [
+  { k: 'dawn', c: ['#4d7ea8', '#e7c9a4'], sk: '#4f6b88', rw: '#3a4a5e', gr: '#5f8a6e', lights: 0, night: 0 },
+  { k: 'day', c: ['#cfe3f5', '#eaf2fa'], sk: '#9fb4cb', rw: '#46576c', gr: '#7fa98b', lights: 0, night: 0 },
+  { k: 'dusk', c: ['#1f3d63', '#c89a72'], sk: '#1a2f4d', rw: '#2b3a4f', gr: '#4a6f5b', lights: 1, night: 0 },
+  { k: 'night', c: ['#050c18', '#12365a'], sk: '#0b1828', rw: '#1a2638', gr: '#24402f', lights: 1, night: 1 }
+];
+const TK_LV = [
+  '--fus:#f4f7fb;--belly:#b9c8da;--tail:#1f4a73;--cheat:#2a9d8f;--win:#3b5a7d;--eng:#cfd9e6;--wing:#cfd9e6',
+  '--fus:#eef2f7;--belly:#8b97a8;--tail:#17304f;--cheat:transparent;--win:#44586f;--eng:#aebccd;--wing:#b6c3d3',
+  '--fus:#f1f4f8;--belly:#c6d3e2;--tail:#7fa98b;--cheat:#2c6a9a;--win:#2c4a6a;--eng:#d3dde9;--wing:#d3dde9',
+  '--fus:#aab6c5;--belly:#7d8da2;--tail:#5d7894;--cheat:#2a9d8f;--win:#223a55;--eng:#7d8da2;--wing:#8e9db0'
+];
+const TK_TAXI = 5000, TK_HOLD = 2200, TK_CLR = 900, TK_TO = 6500, TK_CYC = TK_TAXI + TK_HOLD + TK_CLR + TK_TO;
+function termRunwayHTML3(){ setTimeout(tkBoot, 0); return '<div class="tkr" id="tkr" aria-hidden="true"></div>'; }
+function tkBoot(){ if(TK.run) return; TK.run = true; if(!TK.t0) TK.t0 = performance.now(); requestAnimationFrame(tkLoop); }
+function tkShuffle(){ const r = [0, 1, 2, 3]; for(let i = 3; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)), x = r[i]; r[i] = r[j]; r[j] = x; } return r; }
+function tkOrder(g){
+  while(TK.gen < g){
+    const q = TK.gen + 1; if(q % 4 === 0) TK.used = {};
+    let r, n = 0; do { r = tkShuffle(); n++; } while((r[0] === TK.lastLv || TK.used[r.join('')]) && n < 200);
+    TK.used[r.join('')] = 1; TK.ord[q] = r; TK.lastLv = r[3]; TK.gen = q;
+  }
+  return TK.ord[g];
+}
+function tkScene(c, i, W){
+  let s = '<defs><linearGradient id="tksg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + c.c[0] + '"/><stop offset="1" stop-color="' + c.c[1] + '"/></linearGradient></defs>';
+  s += '<rect width="' + W + '" height="150" fill="url(#tksg' + i + ')"/>';
+  if(c.night){
+    let seed = 11; const r = function(){ seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    for(let k = 0; k < Math.round(W / 70); k++) s += '<circle cx="' + (r() * W).toFixed(0) + '" cy="' + (6 + r() * 44).toFixed(0) + '" r="1.1" fill="#eaf3ff"/>';
+    s += '<circle cx="' + Math.round(W * .88) + '" cy="30" r="9" fill="#e9f0f8" opacity=".85"/>';
+  } else if(c.k === 'day') s += '<circle cx="' + Math.round(W * .82) + '" cy="26" r="12" fill="#fff6dc" opacity=".9"/>';
+  else if(c.k === 'dawn') s += '<circle cx="' + Math.round(W * .88) + '" cy="86" r="14" fill="#f4e3c0" opacity=".85"/>';
+  else s += '<circle cx="' + Math.round(W * .14) + '" cy="84" r="13" fill="#e6b98a" opacity=".8"/>';
+  const tx = W - 60;
+  s += '<path d="M0 116L0 98L46 98L46 90L120 90L120 102L170 102L170 116Z" fill="' + c.sk + '"/><rect x="' + tx + '" y="70" width="6" height="46" fill="' + c.sk + '"/><path d="M' + (tx - 8) + ' 70L' + (tx + 14) + ' 70L' + (tx + 10) + ' 62L' + (tx - 4) + ' 62Z" fill="' + c.sk + '"/>';
+  if(c.lights){ [[56, 94], [72, 94], [90, 96], [108, 96], [132, 98], [148, 98], [tx + 3, 66]].forEach(function(p){ s += '<rect x="' + p[0] + '" y="' + p[1] + '" width="5" height="3" fill="#f1d9a8" opacity=".85"/>'; }); }
+  s += '<rect y="136" width="' + W + '" height="14" fill="' + c.gr + '"/><rect y="116" width="' + W + '" height="20" fill="' + c.rw + '"/>';
+  s += '<line x1="0" y1="116.5" x2="' + W + '" y2="116.5" stroke="#dfe8f1" stroke-width="1" opacity=".7"/><line x1="0" y1="135.5" x2="' + W + '" y2="135.5" stroke="#dfe8f1" stroke-width="1" opacity=".7"/>';
+  s += '<line x1="0" y1="126" x2="' + W + '" y2="126" stroke="#dfe8f1" stroke-width="1.6" stroke-dasharray="16 12" opacity=".8"/>';
+  if(c.lights){ for(let k = 0; k * 32 + 10 < W; k++) s += '<circle class="tkrl" cx="' + (k * 32 + 10) + '" cy="114.5" r="1.6" fill="#f1d9a8" style="animation-delay:' + (k * .06).toFixed(2) + 's"/>'; }
+  return '<svg class="tkl" viewBox="0 0 ' + W + ' 150" data-i="' + i + '">' + s + '</svg>';
+}
+function tkPlane(W){
+  const body = '<g transform="translate(0,8)">' +
+    '<path class="tkst" d="M56 35L40 41L46 43L72 38Z"/><path class="tkst" d="M108 25L72 -26L58 -26L66 25Z"/>' +
+    '<path class="tkfs" d="M44 32L64 24L250 24Q282 26 293 39Q289 47 268 50L86 50L66 46Q46 40 44 36Z"/>' +
+    '<g clip-path="url(#tkclip)"><rect class="tkbl" x="0" y="42" width="300" height="10"/><rect class="tkch" x="0" y="34.6" width="300" height="2.6"/></g>' +
+    '<line class="tkwn" x1="76" y1="32" x2="248" y2="32" stroke-width="2.1" stroke-dasharray="1.2 4.2" stroke-linecap="round"/>' +
+    '<path class="tkck" d="M270 28.5L281 29.5L285 33.5L275 32.5Z"/>' +
+    '<path class="tkwg" d="M198 47L130 57L102 56L112 53L162 46Z"/>' +
+    '<g transform="translate(0,-3)"><path class="tken" d="M150 54Q150 50 156 50L186 51L189 54L189 62L186 65L156 65Q150 65 150 61Z"/><ellipse cx="189.5" cy="58" rx="2.8" ry="7.2" fill="#18293f"/></g></g>';
+  return '<svg class="tkp" viewBox="0 0 ' + W + ' 150"><defs><clipPath id="tkclip"><path d="M44 32L64 24L250 24Q282 26 293 39Q289 47 268 50L86 50L66 46Q46 40 44 36Z"/></clipPath>' +
+    '<linearGradient id="tklc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f6e3b8" stop-opacity=".6"/><stop offset="1" stop-color="#f6e3b8" stop-opacity="0"/></linearGradient></defs>' +
+    '<g id="tksh"><ellipse cx="94" cy="130" rx="60" ry="2.4" fill="#000"/></g>' +
+    '<g id="tkmv"><g transform="translate(24 95) scale(.4675)"><g id="tkrt"><g id="tkpl">' +
+    '<g id="tknl" style="display:none"><polygon points="286,44 470,64 470,71 286,49" fill="url(#tklc)"/></g>' +
+    '<g id="tkgr"><rect x="128" y="58" width="2.4" height="9" fill="#566a82"/><rect x="253" y="58" width="2.2" height="9" fill="#566a82"/><g fill="#17283d"><circle cx="120" cy="67.2" r="3.4"/><circle cx="129" cy="67.2" r="3.4"/><circle cx="138" cy="67.2" r="3.4"/><circle cx="253" cy="67.4" r="3.2"/></g></g>' +
+    body +
+    '<line id="tkwi" x1="76" y1="40" x2="248" y2="40" stroke="#f1d9a8" stroke-width="4" stroke-dasharray="1.2 4.2" stroke-linecap="round" opacity=".35" style="display:none"/>' +
+    '<g id="tkli" style="display:none"><circle cx="104" cy="63.6" r="1.8" fill="#7fc79a"/><circle cx="150" cy="57" r="1.8" fill="#d9776e" class="tkbk"/><circle cx="63" cy="-16" r="1.8" fill="#fff" class="tkbk" style="animation-delay:.6s"/></g>' +
+    '</g></g></g></g></svg>';
+}
+function tkInit(el){
+  const W = Math.max(480, Math.round(el.clientWidth * 150 / Math.max(1, el.clientHeight)));
+  TK.W = W; let h = '';
+  TK_SKIES.forEach(function(c, i){ h += tkScene(c, i, W); });
+  el.innerHTML = h + tkPlane(W);
+  const g = function(id){ return el.querySelector('#' + id); };
+  TK.e = { el: el, lay: el.querySelectorAll('svg.tkl'), mv: g('tkmv'), rt: g('tkrt'), gr: g('tkgr'), sh: g('tksh'), pl: g('tkpl'), nl: g('tknl'), li: g('tkli'), wi: g('tkwi') };
+  if(TK.sky0 < 0){ const p = skyPhase(); TK.sky0 = Math.max(0, TK_SKIES.findIndex(function(x){ return x.k === p; })); }
+  TK.last = -1; TK.cur = -1; el._tk = 1;
+}
+function tkSetup(n){
+  const e = TK.e, g = Math.floor(n / 4), k = n % 4, ord = tkOrder(g), si = (TK.sky0 + g) % 4, c = TK_SKIES[si];
+  for(let i = 0; i < e.lay.length; i++) e.lay[i].setAttribute('class', 'tkl' + (i === si ? ' on' : ''));
+  e.li.style.display = c.lights ? '' : 'none'; e.wi.style.display = c.night ? '' : 'none';
+  e.pl.setAttribute('style', TK_LV[ord[k]]); TK.cur = -1; TK.night = c.night;
+}
+function tkFrame(t){
+  const e = TK.e, W = TK.W, X1 = .45 * W, XE = 2.5 * X1;
+  let ph, x = 0, y = 0, rot = 0, go = 1, so = 1;
+  if(t < TK_TAXI){ ph = 0; const s = t / TK_TAXI; x = -170 * (1 - s) * (1 - s); }
+  else if(t < TK_TAXI + TK_HOLD) ph = 1;
+  else if(t < TK_TAXI + TK_HOLD + TK_CLR) ph = 2;
+  else {
+    const u = (t - TK_TAXI - TK_HOLD - TK_CLR) / TK_TO, sm = function(a){ return a * a * (3 - 2 * a); };
+    x = u < .5 ? X1 * Math.pow(u / .5, 1.5) : X1 + (XE - X1) * ((u - .5) / .5);
+    if(u > .52){ const s2 = (u - .52) / .48; y = -95 * s2 * s2; }
+    if(u >= .44 && u < .56) rot = -9 * sm((u - .44) / .12); else if(u >= .56 && u < .72) rot = -9 - 4 * ((u - .56) / .16); else if(u >= .72) rot = -13 + (u - .72) / .28;
+    if(u > .58) go = Math.max(0, 1 - (u - .58) / .12);
+    if(u > .5) so = Math.max(0, 1 - (u < .62 ? .64 * ((u - .5) / .12) : .64 + .36 * ((u - .62) / .38)));
+    ph = 3;
+  }
+  e.mv.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ')');
+  e.rt.setAttribute('transform', 'rotate(' + rot.toFixed(2) + ' 129 70.6)');
+  e.gr.setAttribute('opacity', go.toFixed(2)); e.gr.setAttribute('transform', 'translate(0 ' + (-5 * (1 - go)).toFixed(1) + ')');
+  e.sh.setAttribute('transform', 'translate(' + x.toFixed(1) + ' 0)'); e.sh.setAttribute('opacity', so.toFixed(2));
+  if(ph !== TK.cur){ TK.cur = ph; e.nl.style.display = (TK.night && ph >= 2) ? '' : 'none'; }
+}
+function tkLoop(now){
+  const el = document.getElementById('tkr');
+  if(!el){ TK.run = false; return; }
+  if(!el._tk){ if(!el.clientWidth){ requestAnimationFrame(tkLoop); return; } tkInit(el); }
+  else if(now - TK.chk > 1500){
+    TK.chk = now; const W2 = Math.round(el.clientWidth * 150 / Math.max(1, el.clientHeight));
+    if(W2 > 0 && Math.abs(W2 - TK.W) > TK.W * .08) tkInit(el);
+  }
+  const t = now - TK.t0, n = Math.floor(t / TK_CYC);
+  if(n !== TK.last){ TK.last = n; tkSetup(n); }
+  tkFrame(t % TK_CYC);
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){ tkFrame(TK_TAXI + TK_HOLD + TK_CLR + TK_TO * .4); TK.run = false; return; }
+  requestAnimationFrame(tkLoop);
+}
 
 /* ====================== INIT ====================== */
 async function init(){
