@@ -409,6 +409,170 @@ table th.sortable:hover{color:var(--navy)}
   .seg button{padding:9px 11px;font-size:13.5px;gap:5px}
 }
 @keyframes sheet{from{transform:translateY(100%)}to{transform:none}}
+
+/* ---------- v3: understanding check, search, terminal ---------- */
+.chip.lv{background:#e7e1f3;color:#5b4a8a}
+.chip.quiz{background:#dfe9f6;color:#1e4d8c}
+.qzq{padding:12px 0;border-top:1px solid #e5ebf2}
+.qzq:first-of-type{border-top:0}
+.qzt{font-weight:600;color:var(--navy);margin-bottom:8px;display:flex;gap:10px;align-items:flex-start}
+.qzn{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--sec-soft);color:var(--sec-lt);font-size:12.5px;font-weight:700}
+.qzo{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid #d5dee9;border-radius:12px;margin:6px 0;cursor:pointer;background:#fff}
+.qzo.on{border-color:var(--sec);background:var(--sec-tint);box-shadow:0 0 0 3px var(--sec-soft)}
+.qzo input{margin:3px 0 0;flex:none;width:auto}
+.qsbox{display:flex;align-items:center;gap:10px;padding:2px 4px 10px;border-bottom:1px solid #e5ebf2;color:var(--grey-soft)}
+.qsbox input{border:0;box-shadow:none;background:transparent;padding:6px}
+.qsbox input:focus{box-shadow:none}
+.qsres{max-height:52vh;overflow:auto;margin-top:6px}
+.qsg{font-size:11.5px;font-weight:700;text-transform:uppercase;color:var(--grey-soft);padding:10px 6px 4px}
+.qsi{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:12px;cursor:pointer}
+.qsi:hover,.qsi.on{background:var(--sec-tint)}
+.qsi .muted{margin-left:auto;font-size:12px;max-width:50%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.csoon{padding:56px 22px}
+.csoon h2::before{display:none}
+.csi{width:76px;height:76px;margin:0 auto 14px;border-radius:24px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--sec),var(--sec-2));box-shadow:0 14px 28px -12px var(--sec-glow)}
+.cst{font-size:28px!important}
+#searchBtn{padding:7px 11px}
+
+.qeq{padding:12px;border:1px solid #d5dee9;border-radius:14px;margin:10px 0;background:linear-gradient(180deg,#fff,#f8fafc)}
+.qeo{display:flex;align-items:center;gap:8px;margin:6px 0}
+.qeo input[type=radio]{margin:0 4px;width:18px;height:18px}
+.qeo input[type=text]{flex:1}
+.modal.wide{max-width:640px}
+.batchdiv{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:12px;background:#f1f5f9}
+
+.award{display:flex;gap:12px;padding:12px;border-radius:14px;margin:8px 0;background:linear-gradient(180deg,#fff,var(--sec-tint));border:1px solid #e1e9f1}
+.award .ai{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#5f8f6f,#7fae8d);box-shadow:0 8px 16px -8px rgba(95,143,111,.7)}
+.award .at{font-weight:700;color:var(--navy)}
+.achip{display:inline-block;margin:3px 6px 3px 0;padding:4px 10px;border-radius:12px;background:#eef5f0;color:#2f5a40;font-size:13px}
+/* ---------- meeting mode ---------- */
+#wall{position:fixed;inset:0;z-index:500;overflow:auto;color:#fff;padding:26px 34px;background:radial-gradient(900px 600px at 85% -10%,rgba(42,157,143,.35),transparent 70%),linear-gradient(160deg,#0f1f34,#15263f 45%,#1a3a66)}
+.wtop{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+.wt1{font-size:30px;font-weight:700} .wt2{font-size:16px;color:#aebfd6}
+.wlive{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:#aebfd6} .wlive i{width:10px;height:10px;border-radius:50%;background:#5f8f6f;box-shadow:0 0 0 0 rgba(95,143,111,.7);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(95,143,111,0)}100%{box-shadow:0 0 0 0 rgba(95,143,111,0)}}
+.wbtn{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);color:#fff;padding:9px 18px;border-radius:12px;font:inherit;cursor:pointer}
+.wgrid{display:grid;grid-template-columns:300px minmax(0,1fr);gap:28px;align-items:start}
+.wside{text-align:center;padding:20px;border-radius:22px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+.wside .donut{display:block;margin:0 auto}
+.wk{display:grid;gap:10px;margin-top:16px} .wk div{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.08)}
+.wk b{font-size:26px} .wk span{font-size:14px;color:#c3d0e2} .wk .bad b{color:#f0a79e}
+.wmain{display:grid;gap:14px}
+.wcard{padding:18px 20px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-left:6px solid #2f78c4}
+.wcard.overdue{border-left-color:#d46a5d} .wcard.done{border-left-color:#5f8f6f}
+.wch{display:flex;justify-content:space-between;gap:14px;align-items:flex-start} .wch b{font-size:22px} .wct{font-size:15px;color:#c3d0e2;margin-top:2px}
+.wcp{font-size:44px;font-weight:700;line-height:1}
+.wbar{height:12px;border-radius:8px;background:rgba(255,255,255,.14);margin:12px 0 8px;overflow:hidden} .wbar span{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#2f78c4,#6aa6e0);transition:width .8s}
+.wcard.overdue .wbar span{background:linear-gradient(90deg,#b9483c,#df7d70)} .wcard.done .wbar span{background:linear-gradient(90deg,#5f8f6f,#8cbb9a)}
+.wcm{font-size:14px;color:#c3d0e2}
+.wdivs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px 18px;margin-top:12px}
+.wdv{display:flex;align-items:center;gap:8px;font-size:13px} .wdv>span{width:112px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:none} .wdb{flex:1;height:7px;border-radius:5px;background:rgba(255,255,255,.14);overflow:hidden} .wdb span{display:block;height:100%} .wdv em{font-style:normal;width:38px;text-align:right;color:#c3d0e2}
+.wempty{display:flex;flex-direction:column;align-items:center;gap:12px;padding:60px 20px;font-size:22px;color:#c3d0e2}
+.wdots{display:flex;gap:8px;justify-content:center;margin-top:18px} .wdots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.25)} .wdots i.on{background:#fff}
+@media (max-width:900px){#wall{padding:18px 14px}.wgrid{grid-template-columns:1fr}.wt1{font-size:22px}}
+.instrow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.inst{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:var(--sec-tint);border:1px solid #e1e9f1;color:var(--grey-dark)} .inst svg{flex:none;color:var(--sec)}
+.rpcover{height:1090px;position:relative;overflow:hidden;color:#fff;background:radial-gradient(520px 520px at 90% 8%,rgba(42,157,143,.55),transparent 70%),linear-gradient(165deg,#0f1f34 0%,#1a2e4a 55%,#1e4d8c 100%)}
+.rpcover .cvo{position:absolute;left:60px;top:60px} .rpcover .cvt{font-size:15px;font-weight:600;line-height:1.7} .rpcover .cvt.s{font-weight:400;color:#b9c8dc;font-size:13px}
+.rpcover .cvm{position:absolute;left:60px;right:60px;top:380px} .rpcover .cvk{font-size:16px;letter-spacing:.04em;color:#8fd3ca;margin-bottom:14px}
+.rpcover h1{font-size:50px;line-height:1.2;margin:0;color:#fff;font-weight:700} .rpcover .cvr{width:90px;height:5px;border-radius:3px;background:#2a9d8f;margin:30px 0 26px}
+.rpcover .cvp{font-size:14px;color:#b9c8dc} .rpcover .cvy{font-size:26px;font-weight:600;margin-top:4px}
+.rpcover .cvf{position:absolute;left:60px;right:60px;bottom:60px;display:flex;gap:46px;font-size:15px;border-top:1px solid rgba(255,255,255,.25);padding-top:18px} .rpcover .cvf span{display:block;font-size:11.5px;color:#9fb3cd;margin-bottom:3px}
+.rpul{margin:0;padding-left:20px;font-size:13px;line-height:1.75} .rpul li{margin-bottom:4px}
+.mgyrs{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px} .mgy{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid #d5dfeb;border-radius:12px;cursor:pointer;background:#f7fafc} .mgy input{width:17px;height:17px;accent-color:#2a9d8f}
+@media print{.rpcover{break-after:page;page-break-after:always}}
+/* ---------- cosmetics: numerals, shadows, icon chips ---------- */
+body{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1,'cv11' 1}
+.kpi .n,.big,.mp,.dn,td,th,.rpk .n,.wcp,.hbar .v,.rkv,.srow .sv{font-variant-numeric:tabular-nums}
+.card{border:1px solid rgba(26,46,74,.05)}
+.kpi{border:1px solid rgba(26,46,74,.05)}
+/* ---------- animations ---------- */
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes ringin{from{stroke-dasharray:0 400}}
+@keyframes popin{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
+@keyframes tick{to{stroke-dashoffset:0}}
+#view.anim .bar>span,#view.anim .comp>span,#view.anim .rkrow .bar>span{transform-origin:left center;animation:growx .9s cubic-bezier(.2,.8,.2,1) both}
+#view.anim .donut circle[stroke^=url]{animation:ringin 1.1s cubic-bezier(.2,.8,.2,1) both}
+.resultbox .orb{animation:popin .55s cubic-bezier(.2,.9,.3,1.2) both}
+.resultbox .orb svg path,.resultbox .orb svg polyline{stroke-dasharray:34;stroke-dashoffset:34;animation:tick .5s .25s ease-out forwards}
+.cutick{stroke-dasharray:60;stroke-dashoffset:60;animation:tick .7s .15s ease-out forwards}
+@media (prefers-reduced-motion:reduce){#view.anim .bar>span,#view.anim .comp>span,#view.anim .donut circle,.resultbox .orb,.resultbox .orb svg path,.cutick{animation:none!important;stroke-dashoffset:0!important}}
+/* ---------- skeletons ---------- */
+.sk{border-radius:12px;background:linear-gradient(90deg,#e3e9f1 0%,#f1f5fa 40%,#e3e9f1 80%);background-size:220% 100%;animation:shim 1.4s linear infinite}
+@keyframes shim{from{background-position:120% 0}to{background-position:-100% 0}}
+.skel{padding-top:2px}
+.sk-ban{height:88px;border-radius:22px;margin-bottom:16px}
+.sk-card{background:#fff;border-radius:20px;padding:22px;margin-bottom:16px;box-shadow:0 1px 2px rgba(26,46,74,.08)}
+.sk-h{height:20px;width:42%;margin-bottom:16px} .sk-l{height:14px;width:92%;margin-bottom:10px} .sk-l.s{width:64%}
+.sk-row{display:flex;gap:10px;margin-top:16px} .sk-b{height:52px;flex:1}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+/* ---------- all caught up ---------- */
+.caught{text-align:center;padding:26px 12px 18px}
+.cut1{font-size:19px;font-weight:700;color:var(--navy);margin-top:6px} .cut2{font-size:14px;color:var(--grey-soft);margin-top:2px}
+/* ---------- sign-in banner ---------- */
+.sibn{display:flex;align-items:center;gap:14px;margin:-22px -22px 18px;padding:16px 22px;color:#fff;background:linear-gradient(135deg,#14253d 0%,#1a2e4a 45%,#1e4d8c 120%);position:relative;overflow:hidden}
+.sibn::after{content:'';position:absolute;right:-40px;top:-60px;width:170px;height:170px;border-radius:50%;background:var(--sec-2);opacity:.35;filter:blur(36px)}
+.sibn>*{position:relative;z-index:1}
+.sio{width:42px;height:42px;border-radius:14px;flex:none;display:grid;place-items:center;background:rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+.sit{font-weight:700;font-size:15px} .sid{font-size:12.5px;color:#c3d0e2}
+.card:has(>.sibn)::before{display:none}
+/* ---------- division stripe tweak ---------- */
+tr td:first-child{transition:box-shadow .2s}
+/* ---------- bottom tab bar polish (phones) ---------- */
+@media (max-width:760px){
+  .navin{gap:2px;padding-left:6px;padding-right:6px}
+  .navin .nt{flex:1 1 0;min-width:0;flex-direction:column;gap:3px;padding:8px 2px;font-size:10.5px}
+  #conn.ok{font-size:0;padding:8px;min-width:0} #conn.ok::before{margin-right:0}
+  .hd h1{font-size:15px;line-height:1.2} .hd .hin{gap:8px}
+  .navin .nt .nl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .navin .nt.on{transform:translateY(-2px)}
+  .wrap{padding-bottom:120px}
+}
+/* ---------- dark mode (follows the phone / computer setting) ---------- */
+@media (prefers-color-scheme:dark){
+  :root{
+    --navy:#e8eff8; --blue:#8cb8ee; --blue-mid:#6aa6e0; --grey-dark:#dbe5f1; --grey-mid:#b2c1d4; --grey-soft:#8da1ba; --grey-light:#2b3f5a; --grey-pale:#0e1b2c;
+    --red-soft:#3b2222; --green-soft:#1c3a2c; --green-dk:#93cfa8; --blue-soft:#1b3557;
+  }
+  body[data-sec]{--sec-soft:#1d3a52;--sec-tint:#132338;--sec-lt:#6ad0c4;--sec-glow:rgba(42,157,143,.16)}
+  body[data-sec=blue]{--sec-lt:#7db0ec;--sec-soft:#1b3557} body[data-sec=steel]{--sec-lt:#8bb5d6} body[data-sec=peri]{--sec-lt:#9aabe8;--sec-soft:#26305a} body[data-sec=green]{--sec-lt:#8cc29c;--sec-soft:#1c3a2c} body[data-sec=slate]{--sec-lt:#a3b1c4;--sec-soft:#253447}
+  body{background:var(--grey-pale);color:var(--grey-dark);color-scheme:dark}
+  .card,.kpi,.unauth,.sk-card{background:linear-gradient(180deg,#16293f,#122134);border-color:rgba(255,255,255,.06);box-shadow:0 1px 2px rgba(0,0,0,.4),0 18px 36px -20px rgba(0,0,0,.7)}
+  .banner{background:linear-gradient(135deg,#183049,#13243a 92%);border-color:rgba(255,255,255,.06);box-shadow:0 14px 30px -16px rgba(0,0,0,.6)}
+  .banner h2,.card h2,.card h3,.modal h2,.gh .gt,.unauth h2,.cut1{color:var(--navy)}
+  .navin{background:linear-gradient(180deg,#182c45,#13243a);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 16px 34px -14px rgba(0,0,0,.7)}
+  .nt{color:var(--grey-mid)} .nt:hover{background:rgba(255,255,255,.06)}
+  select,input[type=text],input[type=password],input[type=date],input[type=datetime-local],input[type=url],textarea{background:linear-gradient(180deg,#0f1e31,#12243a);border-color:#2f4562;color:var(--grey-dark);box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
+  ::placeholder{color:#6f84a0}
+  .btn.ghost{background:linear-gradient(180deg,#1b3250,#16293f);color:var(--sec-lt);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 0 0 1px #2b4262,0 4px 10px -6px rgba(0,0,0,.6)}
+  .btn:disabled{background:linear-gradient(180deg,#22344c,#1c2d44);color:#7f93ac;box-shadow:0 0 0 1px #2b4262}
+  .tl{background:linear-gradient(180deg,#1b3250,#16293f);border-color:#2b4262;color:var(--grey-dark);box-shadow:0 4px 10px -6px rgba(0,0,0,.6)}
+  .seg{background:#0f1e31;box-shadow:inset 0 1px 3px rgba(0,0,0,.5)}
+  .seg button{color:var(--grey-mid)}
+  .seg button.on{background:linear-gradient(180deg,#22405f,#1b3350);color:#fff;box-shadow:0 4px 10px -3px rgba(0,0,0,.5)}
+  .modal{background:linear-gradient(180deg,#16293f,#122134);box-shadow:0 30px 60px -20px rgba(0,0,0,.8)}
+  .overlay{background:rgba(4,10,20,.72)}
+  th{border-bottom-color:#2b4262} td{border-bottom-color:#1f3350}
+  .bitem{border-top-color:#1f3350}
+  .bar,.comp.lt{background:#22344c;box-shadow:inset 0 1px 2px rgba(0,0,0,.4)}
+  .hint{background:rgba(255,255,255,.04);border-color:#34506f;color:var(--grey-soft)}
+  .preview,.aud,.audp{background:#0f1e31;border-color:#2b4262;color:var(--grey-dark)} .audp.on{background:#173a3f;border-color:#2a9d8f}
+  .chip.overdue,.msg.error,.kpi.overdue .n,.chip.red{color:#f2a79f} .chip.grey{background:#2a3d57;color:#b2c1d4}
+  .chip.amber{background:#3a2f17;color:#e6c27a} .chip.violet{background:#26305a;color:#aebcf0} .chip.teal{background:#17383a;color:#7fd6cb}
+  .kpi{background:linear-gradient(135deg,color-mix(in srgb,var(--k1,var(--sec)) 16%,#16293f),#122134 72%)}
+  .kpi .n{color:var(--k3,var(--navy))} .kpi.done{--k3:#93cfa8} .kpi.progress{--k3:#8cbbf0} .kpi.overdue{--k3:#f2a79f}
+  .donut.lt{color:var(--navy)}
+  .colchart text{fill:var(--grey-mid)}
+  .toast{background:linear-gradient(135deg,#223c5e,#2b4a72)}
+  .sk{background:linear-gradient(90deg,#1b2f48 0%,#243b58 40%,#1b2f48 80%);background-size:220% 100%}
+  .inst{background:#12253b;border-color:#2b4262;color:var(--grey-dark)}
+  .mgy{background:#12253b;border-color:#2b4262}
+  .appfoot{color:#6f84a0} .drlink{color:#4f6280}
+  .rkrow{border-top-color:#22344c}
+  .qzo,.qzq{background:#12253b!important;border-color:#2b4262!important;color:var(--grey-dark)}
+  .remtip,.qs,.qsbox{background:#16293f;color:var(--grey-dark)}
+  a{color:#8cb8ee}
+}
 </style>
 </head>
 <body data-sec="teal">
@@ -416,20 +580,24 @@ table th.sortable:hover{color:var(--navy)}
   <div class="gridbg"></div><div class="glow g1"></div><div class="glow g2"></div>
   <div class="hin">
     <div class="logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
-    <div class="ht"><h1 id="appTitle">OPS Bulletin Acknowledgement</h1><div class="sub">CT / OPS &middot; v1.0</div></div>
+    <div class="ht"><h1 id="appTitle">OPS Bulletin Acknowledgement</h1><div class="sub">CT / OPS &middot; v3.0</div></div>
     <span id="conn">...</span>
+    <button class="langbtn" id="searchBtn" onclick="openSearch()" aria-label="Search" title="Search (Ctrl+K)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
     <button class="langbtn" id="langBtn" onclick="toggleLang()">ไทย</button>
   </div>
 </header>
 <nav id="nav"></nav>
 <main class="wrap" id="view"></main>
-<footer class="appfoot">OPS Bulletin Acknowledgement &middot; v1.0</footer>
+<footer class="appfoot">OPS Bulletin Acknowledgement &middot; v3.0</footer>
 <div id="miniBar"></div>
 <div id="toasts"></div>
 <div id="modalRoot"></div>
 <div id="printArea"></div>
 <div id="pdfStage"></div>
 
+<script>/* qrcode-generator (MIT) (c) Kazuhiko Arase - http://www.d-project.com/ */
+var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1})},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(o*r,n*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(){var t=n("友");if(2!=t.length||38726!=(t[0]<<8|t[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}(function(){return qrcode});
+</script>
 <script>
 'use strict';
 /* ====================== CONFIG ====================== */
@@ -438,7 +606,7 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-const APP_VERSION = '1.0';
+const APP_VERSION = '3.0';
 const CFG = {
   divOrder: ['Manager/FO','Sr. Flight Ops Expert','Specialist','CT','FO','CS','OM','FA','GA','DG'],
   // Signature blocks used in the reminder email and the PDF report (edit here if the official wording differs)
@@ -569,9 +737,9 @@ let fltYear = null;                       // null = not chosen yet (latest year 
 let pinOpen = false;   // PIN list (super admin) is collapsed by default
 let stSort = { k: 'division', dir: 1 };   // staff list sorting
 let lg = { bulletin: '', division: '', status: '', q: '', sort: 'issued', dir: -1, limit: 100 };   // CT acknowledgment log
-let drOpen = false;                       // Data Review (super admin) shown or hidden
-let remOpt = { layout: 'bulletin', language: 'both', scope: 'all' };
-let head = null, headAuto = null, hdOpt = { layout: 'bulletin', language: 'both', scope: 'all' };
+let drOpen = false;                       // Data Controls (super admin) shown or hidden
+let remOpt = { layout: 'bulletin', language: 'both', scope: 'all', stage: 'all' };
+let head = null, headAuto = null, hdOpt = { layout: 'bulletin', language: 'both', scope: 'all', stage: 'all' };
 let me = null, myFilter = 'pending';   // signed-in staff (kept in memory only, never saved on the device)
 let signin = { div: '', staffId: '', pin: '', pin2: '', msg: null, busy: false };
 
@@ -635,7 +803,7 @@ function toast(msg, kind){
   $('toasts').appendChild(d); setTimeout(function(){ d.remove(); }, 3500);
 }
 function setStatus(s){ const c = $('conn'); if(!c) return; c.className = s === 'connected' ? 'ok' : (s === 'error' ? 'err' : ''); c.textContent = s === 'connected' ? 'Connected' : (s === 'error' ? 'Offline' : '...'); }
-function spinner(){ return '<div class="spinner"></div>'; }
+function spinner(){ return skeletonHTML(); }
 function bar(p, cls){ return '<div class="bar ' + (cls || '') + '"><span style="width:' + Math.max(0, Math.min(100, p)) + '%"></span></div>'; }
 function chip(status){ return '<span class="chip ' + status + '">' + esc(t('st_' + status)) + '</span>'; }
 function compBar(done, prog, over){
@@ -782,6 +950,7 @@ async function fetchAll(withStaff){
   if(withStaff || !me) jobs.push(rpc('ack_public_staff').then(function(r){ o.staff = r; }));
   if(me){
     jobs.push(rpc('ack_my_bulletins', { p_staff_id: me.id, p_pin: me.pin }).then(function(r){ o.mine = r; }));
+    jobs.push(rpc('ack_extra_data', { p_staff_id: me.id, p_pin: me.pin }).then(function(r){ o.extra = r; }));
     if(isCT()) jobs.push(rpc('ack_admin_data', { p_staff_id: me.id, p_pin: me.pin }).then(function(r){ o.admin = r; }));
     if(isSuper() && superData) jobs.push(rpc('ack_super_data', { p_staff_id: me.id, p_pin: me.pin }).then(function(r){ o.sup = r; }));
     if(head) jobs.push(rpc('ack_head_data', { p_staff_id: head.id, p_pin: head.pin }).then(function(r){ o.head = r; }));
@@ -789,10 +958,11 @@ async function fetchAll(withStaff){
   await Promise.all(jobs);
   return o;
 }
-function sigOf(o){ try { return JSON.stringify([o.pub && o.pub.data, o.mine && o.mine.data, o.admin && o.admin.data, o.sup && o.sup.data, o.head && o.head.data, o.staff && o.staff.data]); } catch(e){ return String(Math.random()); } }
+function sigOf(o){ try { return JSON.stringify([o.pub && o.pub.data, o.mine && o.mine.data, o.admin && o.admin.data, o.sup && o.sup.data, o.head && o.head.data, o.staff && o.staff.data, o.extra && o.extra.data]); } catch(e){ return String(Math.random()); } }
 function applyAll(o){
   if(o.pub){ if(o.pub.error) pubError = true; else { pub = o.pub.data; pubError = false; } pubLoaded = true; }
   if(o.staff && !o.staff.error) staffList = o.staff.data;
+  if(me && o.extra && !o.extra.error && o.extra.data && o.extra.data.ok){ me.extra = o.extra.data; setLeaves(o.extra.data.leaves); }
   if(me && o.mine && !o.mine.error && o.mine.data && o.mine.data.ok) me.list = o.mine.data.bulletins;
   if(me && o.admin && !o.admin.error && o.admin.data){
     if(o.admin.data.ok) setAdmin(o.admin.data);
@@ -865,9 +1035,9 @@ function computeAdminRaw(d, today){
       const D = divs[dv] = divs[dv] || { division: dv, required: 0, acked: 0, onTime: 0, due: 0, pp: {} };
       const pp = D.pp[sid] = D.pp[sid] || { pending: 0, overdue: 0 };
       D.required++;
-      const at0 = ackAt[b.id + '_' + sid];
-      if(at0){ D.acked++; D.due++; if(bkkDate(at0) <= b.deadline) D.onTime++; }
-      else { pp.pending++; if(b.deadline < today){ pp.overdue++; D.due++; } }
+      const at0 = ackAt[b.id + '_' + sid], edl = effDeadline(b, sid);
+      if(at0){ D.acked++; D.due++; if(bkkDate(at0) <= edl) D.onTime++; }
+      else { pp.pending++; if(edl < today){ pp.overdue++; D.due++; } }
       const st = stats[sid]; if(!st) return;
       st.required++;
       const at = ackAt[b.id + '_' + sid];
@@ -877,17 +1047,17 @@ function computeAdminRaw(d, today){
         st.times.push(days); allTimes.push(days);
         if(days <= 1){ st.fast++; }
         if(days <= 1) buckets.h24++; else if(days <= 3) buckets.d3++; else if(days <= 7) buckets.d7++; else buckets.over++;
-        if(bkkDate(at) > b.deadline){
+        if(bkkDate(at) > edl){
           late++; st.late++;
-          const dl = daysBetween(b.deadline, bkkDate(at)); if(dl > st.maxDelay) st.maxDelay = dl;
-          st.incidents.push({ number: b.number, title: b.title, deadline: b.deadline, kind: 'late', days: dl });
+          const dl = daysBetween(edl, bkkDate(at)); if(dl > st.maxDelay) st.maxDelay = dl;
+          st.incidents.push({ number: b.number, title: b.title, deadline: edl, kind: 'late', days: dl });
         } else st.onTime++;
         const m = bkkDate(at).slice(0, 7); monthly[m] = (monthly[m] || 0) + 1;
       } else {
         st.pending++;
-        const od = b.deadline < today, dd = od ? daysBetween(b.deadline, today) : 0;
-        if(od){ st.overdue++; if(dd > st.oldest) st.oldest = dd; if(dd > st.maxDelay) st.maxDelay = dd; st.incidents.push({ number: b.number, title: b.title, deadline: b.deadline, kind: 'overdue', days: dd }); }
-        st.pendingB.push({ id: b.id, number: b.number, title: b.title, deadline: b.deadline, created_at: b.created_at, overdue: od, daysOver: dd, daysLeft: daysBetween(today, b.deadline) });
+        const od = edl < today, dd = od ? daysBetween(edl, today) : 0;
+        if(od){ st.overdue++; if(dd > st.oldest) st.oldest = dd; if(dd > st.maxDelay) st.maxDelay = dd; st.incidents.push({ number: b.number, title: b.title, deadline: edl, kind: 'overdue', days: dd }); }
+        st.pendingB.push({ id: b.id, number: b.number, title: b.title, deadline: edl, created_at: b.created_at, overdue: od, daysOver: dd, daysLeft: daysBetween(today, edl) });
       }
     });
   });
@@ -936,7 +1106,8 @@ function secKey(){
   if(tab === 'ack') return 'teal';
   if(tab === 'overview') return ovTab === 'general' ? 'blue' : 'steel';
   if(tab === 'team') return 'green';
-  return ({ reminder: 'peri', bulletins: 'green', log: 'blue', staff: 'slate', super: 'steel' })[adTab] || 'peri';
+  if(tab === 'terminal') return 'slate';
+  return ({ reminder: 'peri', bulletins: 'green', log: 'blue', insights: 'steel', staff: 'slate', super: 'steel' })[adTab] || 'peri';
 }
 function render(){
   document.documentElement.lang = lang;
@@ -947,17 +1118,19 @@ function render(){
   renderTabs();
   renderView();
   enhanceTables();
+  stripeRows();
   renderMini();
+  if(!_animDone && pubLoaded){ _animDone = true; pulseAnim(); }
 }
 function renderTabs(){
-  const items = [['ack', t('tab_ack'), 'check', 'teal'], ['overview', t('tab_overview'), 'chart', 'blue'], ['team', t('tab_team'), 'users', 'green'], ['admin', t('tab_admin'), 'lock', 'peri']];
+  const items = [['ack', t('tab_ack'), 'check', 'teal'], ['overview', t('tab_overview'), 'chart', 'blue'], ['team', t('tab_team'), 'users', 'green'], ['admin', t('tab_admin'), 'lock', 'peri'], ['terminal', t('tab_terminal'), 'grid', 'slate']];
   $('nav').innerHTML = '<div class="navin">' + items.map(function(it){
     const p = PAL[it[3]];
     return '<button class="nt ' + (tab === it[0] ? 'on' : '') + '" style="--c1:' + p[0] + ';--c2:' + p[1] + '" onclick="setTab(\'' + it[0] + '\')"><span class="ni">' + ico(it[2], 20) + '</span><span class="nl">' + esc(it[1]) + '</span></button>';
   }).join('') + '</div>';
 }
 function setTab(k){
-  tab = k; render(); window.scrollTo(0, 0);
+  tab = k; render(); pulseAnim(); window.scrollTo(0, 0);
   if((k === 'admin' || (k === 'overview' && ovTab === 'detailed')) && isCT() && !admin){ loadAdmin(true).then(render); }
 }
 function toggleLang(){ lang = lang === 'th' ? 'en' : 'th'; try { localStorage.setItem('ackLang', lang); } catch(e) {} render(); }
@@ -965,8 +1138,9 @@ function renderView(){
   const v = $('view');
   if(tab === 'ack'){ v.innerHTML = '<div class="fade">' + viewAck() + '</div>'; if(pubLoaded && !pubError){ if(curB) renderAckForm(); else if(!me) renderSignin(); } }
   else if(tab === 'overview'){ v.innerHTML = '<div class="fade">' + viewOverview() + '</div>'; if(ovTab === 'detailed' && !me && pubLoaded && !pubError) renderSignin(); }
+  else if(tab === 'terminal'){ v.innerHTML = '<div class="fade">' + viewTerminal() + '</div>'; }
   else if(tab === 'team'){ v.innerHTML = '<div class="fade">' + viewTeam() + '</div>'; if(!head){ if(!me && pubLoaded && !pubError) renderSignin(); } else refreshTeamEmail(); }
-  else { v.innerHTML = '<div class="fade">' + viewAdmin() + '</div>'; if(!me && pubLoaded && !pubError) renderSignin(); if(isCT() && admin && adTab === 'reminder') refreshReminder(); }
+  else { v.innerHTML = '<div class="fade">' + viewAdmin() + '</div>'; if(!me && pubLoaded && !pubError) renderSignin(); if(isCT() && admin && adTab === 'reminder'){ refreshReminder(); refreshBrief(); } }
 }
 function renderMini(){
   const m = $('miniBar'); if(!m) return;
@@ -1030,7 +1204,7 @@ function identityHTML(st, h){
 }
 function signinHTML(note){
   return (note ? '<div class="msg error" style="margin-top:0">' + esc(note) + '</div>' : '') +
-    '<div class="card"><h2>' + esc(t('si_title')) + '</h2><p class="muted" style="margin-top:-4px">' + esc(t('si_desc')) + '</p><div id="signinForm"></div></div>';
+    '<div class="card">' + signBanner() + '<h2>' + esc(t('si_title')) + '</h2><p class="muted" style="margin-top:-4px">' + esc(t('si_desc')) + '</p><div id="signinForm"></div></div>';
 }
 function renderSignin(){
   const el = $('signinForm'); if(!el) return;
@@ -1084,6 +1258,7 @@ async function siGo(){
   }
   head = null; headAuto = null;
   me = { id: sel.id, name: sel.name, division: sel.division, pin: signin.pin, list: r.data.bulletins, roles: r.data.roles || {} };
+  await loadExtra();
   if(isCT()) await loadAdmin(true);
   signin = { div: '', staffId: '', pin: '', pin2: '', msg: null, busy: false };
   try { localStorage.setItem('ackStaff', String(sel.id)); } catch(e) {}
@@ -1094,7 +1269,7 @@ async function loadMine(){
   const r = await rpc('ack_my_bulletins', { p_staff_id: me.id, p_pin: me.pin });
   if(!r.error && r.data.ok){ me.list = r.data.bulletins; render(); }
 }
-function meSignOut(){ pinOpen = false; me = null; head = null; headAuto = null; admin = null; comp = null; superData = null; signin = { div: '', staffId: '', pin: '', pin2: '', msg: null, busy: false }; render(); }
+function meSignOut(){ pinOpen = false; batch = { on: false, sel: {} }; setLeaves([]); me = null; head = null; headAuto = null; admin = null; comp = null; superData = null; signin = { div: '', staffId: '', pin: '', pin2: '', msg: null, busy: false }; render(); }
 function setMyFilter(k){ myFilter = k; render(); }
 
 function mineHTML(note){
@@ -1110,7 +1285,7 @@ function mineHTML(note){
       return Date.parse(b.created_at) - Date.parse(a.created_at);
     });
     let o = '';
-    if(!shown.length){ o += '<div class="hint" style="margin-top:12px">' + esc(!base.length ? (myFilter === 'pending' ? t('my_none_pending') : t('my_none')) : t('ls_none')) + '</div>'; }
+    if(!shown.length){ o += (!base.length && myFilter === 'pending') ? caughtUpHTML() : '<div class="hint" style="margin-top:12px">' + esc(!base.length ? t('my_none') : t('ls_none')) + '</div>'; }
     shown.forEach(function(b){ o += mineItem(b, today); });
     return o;
   };
@@ -1119,16 +1294,30 @@ function mineHTML(note){
   }).join('') + '</div>';
   let h = (note ? '<div class="msg error" style="margin-top:0">' + esc(note) + '</div>' : '') +
     '<div class="card"><div class="row"><h2 class="grow" style="margin:0">' + esc(t('my_title')) + '</h2><button class="btn ghost sm" onclick="openChangePin()">' + esc(t('change_pin')) + '</button><button class="btn ghost sm" onclick="meSignOut()">' + ico('out', 14) + esc(t('signout')) + '</button></div>' +
-    '<p class="muted" style="margin:6px 0 14px">' + esc(t('hello', { name: me.name + ' (' + me.division + ')' })) + '</p><div class="segrow" style="margin-bottom:6px">' + seg + yearSegHTML() + '</div><div style="margin-top:8px">';
-  h += lsBar('mine', { ph: t('ls_filter'), def: 'newest', sortLabel: t('ls_sort'), sorts: [['newest', t('s_newest')], ['oldest', t('s_oldest')], ['deadline', t('s_deadline')]] }) + '<div id="mine_body">' + LR.mine() + '</div>';
+    '<p class="muted" style="margin:6px 0 14px">' + esc(t('hello', { name: me.name + ' (' + me.division + ')' })) + leaveChip(me.id) + '</p><div class="segrow" style="margin-bottom:6px">' + seg + yearSegHTML() + '</div><div style="margin-top:8px">';
+  h += batchBarHTML() + lsBar('mine', { ph: t('ls_filter'), def: 'newest', sortLabel: t('ls_sort'), sorts: [['newest', t('s_newest')], ['oldest', t('s_oldest')], ['deadline', t('s_deadline')]] }) + '<div id="mine_body">' + LR.mine() + '</div>';
   return h + '</div></div>';
 }
 function mineItem(b, today){
-    const isDone = !!b.acknowledged_at;
-    const st = isDone ? 'done' : bulletinStatus(1, 0, b.deadline, today);
-    return '<div class="bitem"><div class="row"><div class="grow">' + bno(b, true) + '<br><b>' + esc(b.title) + '</b>' +
-      '<div class="muted">' + esc(t('issued_on', { d: fmtShort(b.created_at) })) + ' &middot; ' + esc(t('deadline')) + ': ' + esc(fmtShort(b.deadline)) + ' &middot; ' + esc(isDone ? t('acked_short', { d: fmtShort(b.acknowledged_at) }) : dueText(b.deadline, today, lang)) + '</div></div>' +
-      chip(st) + (isDone ? '' : '<button class="btn sm" onclick="openMine(' + Number(b.id) + ')">' + esc(t('tab_ack')) + '</button>') + '</div></div>';
+    const isDone = !!b.acknowledged_at, dl = b.eff_deadline || b.deadline;
+    const st = isDone ? 'done' : bulletinStatus(1, 0, dl, today);
+    const qp = qzPassed(b.id, me.id);
+    let chips = '';
+    if(b.superseded_by) chips += ' <span class="chip grey">' + esc(t('rev_superseded')) + '</span>';
+    if(b.supersedes) chips += ' <span class="chip progress">' + esc(t('rev_revision')) + '</span>';
+    if(b.quiz_required) chips += qp ? ' <span class="chip done">' + esc(t('quiz_chip')) + (b.quiz_best != null ? ' ' + b.quiz_best + '%' : '') + '</span>' : ' <span class="chip quiz">' + esc(t('quiz_chip')) + '</span>';
+    const ext = dl !== b.deadline ? '<div class="muted">' + esc(t('lv_ext', { d: fmtShort(dl) })) + '</div>' : '';
+    const canSel = !isDone && (!b.quiz_required || qp);
+    return '<div class="bitem"><div class="row">' + (batch.on && !isDone ? '<input type="checkbox" ' + (canSel ? '' : 'disabled ') + (batch.sel[b.id] ? 'checked ' : '') + 'onchange="batchPick(' + Number(b.id) + ',this.checked)">' : '') +
+      '<div class="grow">' + bno(b, true) + chips + '<br><b>' + esc(b.title) + '</b>' +
+      '<div class="muted">' + esc(t('issued_on', { d: fmtShort(b.created_at) })) + ' &middot; ' + esc(t('deadline')) + ': ' + esc(fmtShort(dl)) + ' &middot; ' + esc(isDone ? t('acked_short', { d: fmtShort(b.acknowledged_at) }) : dueText(dl, today, lang)) + '</div>' + ext + '</div>' +
+      chip(st) + (isDone ? '<button class="btn ghost sm" onclick="receiptFromList(' + Number(b.id) + ')">' + esc(t('rc_save')) + '</button>' : (batch.on ? '' : '<button class="btn sm" onclick="openMine(' + Number(b.id) + ')">' + esc(t('tab_ack')) + '</button>')) + '</div></div>';
+}
+function batchBarHTML(){
+  if(!(me && me.roles && me.roles.batch)) return '';
+  const n = Object.keys(batch.sel).length;
+  return '<div class="row" style="margin:6px 0 10px"><button class="btn ghost sm" onclick="batchToggle()">' + ico('layers', 14) + esc(t(batch.on ? 'batch_off' : 'batch_on')) + '</button>' +
+    (batch.on ? '<button class="btn ghost sm" onclick="batchAll()">' + esc(t('batch_all')) + '</button><button class="btn sm" id="batchGo" onclick="batchGo()" ' + (n ? '' : 'disabled') + '>' + esc(t('batch_go', { n: n })) + '</button>' : '') + '</div>';
 }
 function openChangePin(){
   const f = function(id, lbl, first){ return '<label class="lbl"' + (first ? ' style="margin-top:0"' : '') + '>' + esc(lbl) + '</label><input class="pininput" id="' + id + '" type="password" inputmode="numeric" autocomplete="off" maxlength="4" oninput="this.value=this.value.replace(/\\D/g,\'\')">'; };
@@ -1177,13 +1366,14 @@ function renderAckForm(){
     form.div = me.division; form.staffId = String(me.id); form.pin = me.pin;
     let h2 = '<div class="eb" style="color:var(--grey-mid)">' + esc(t('ack_as')) + '</div><div style="font-size:18px;font-weight:700;margin:2px 0 4px">' + esc(me.name) + ' <span class="muted" style="font-weight:500">(' + esc(me.division) + ')</span></div>';
     if(form.msg){ h2 += '<div class="msg ' + form.msg.kind + '">' + esc(form.msg.text) + '</div>'; }
-    h2 += '<button class="btn wide" id="ackBtn" onclick="onAckClick()">' + esc(form.busy ? t('wait') : t('ack_btn')) + '</button>' +
+    h2 += quizNoteHTML(b, me.id) + '<button class="btn wide" id="ackBtn" onclick="onAckClick()">' + esc(form.busy ? t('wait') : (needsQuiz(b, me.id) ? t('quiz_take') : t('ack_btn'))) + '</button>' +
           '<p class="center" style="margin:10px 0 0"><button class="btn ghost sm" onclick="meSignOut()">' + esc(t('not_you')) + '</button></p>';
     el.innerHTML = h2; updateBtn(); return;
   }
   let h = identityHTML(form, { div: 'onDiv', name: 'onName', pin: 'onPin', enter: 'onAckClick', id: '' }).html;
   if(form.msg){ h += '<div class="msg ' + form.msg.kind + '">' + esc(form.msg.text) + '</div>'; }
-  h += '<button class="btn wide" id="ackBtn" onclick="onAckClick()" disabled>' + esc(form.busy ? t('wait') : t('ack_btn')) + '</button>';
+  const fsid = Number(form.staffId) || 0;
+  h += (fsid ? quizNoteHTML(b, fsid) : '') + '<button class="btn wide" id="ackBtn" onclick="onAckClick()" disabled>' + esc(form.busy ? t('wait') : (needsQuiz(b, fsid) ? t('quiz_take') : t('ack_btn'))) + '</button>';
   el.innerHTML = h;
   updateBtn();
 }
@@ -1212,6 +1402,7 @@ function resultHTML(b){
   const body = r.kind === 'already' ? t('already', { bulletin: b.number, time: when }) : t('ok_body', { name: r.name, bulletin: b.number, time: when });
   return '<div class="resultbox"><div class="orb">' + ico('check', 34) + '</div><h2 style="justify-content:center;font-size:20px">' + esc(t('ok_title')) + '</h2><p>' + esc(body) + '</p>' +
     (r.late ? '<p class="muted">' + esc(t('late_note')) + '</p>' : '') +
+    '<p><button class="btn ghost" onclick="receiptFromResult()">' + ico('file', 16) + esc(t('rc_save')) + '</button></p>' +
     '<p><button class="btn" onclick="clearBulletin()">' + esc(t('another')) + '</button></p></div>';
 }
 async function onAckClick(){
@@ -1219,7 +1410,8 @@ async function onAckClick(){
   const b = pub.bulletins.find(function(x){ return x.id === curB; });
   const sel = staffList.find(function(s){ return String(s.id) === String(form.staffId); });
   if(!b || !sel) return;
-  const ok = await confirmDialog(t('confirm_title'), esc(t('confirm_body', { bulletin: b.number, name: sel.name, division: sel.division })), t('confirm'), t('cancel'));
+  const quizFirst = needsQuiz(b, sel.id);
+  const ok = quizFirst ? true : await confirmDialog(t('confirm_title'), esc(t('confirm_body', { bulletin: b.number, name: sel.name, division: sel.division })), t('confirm'), t('cancel'));
   if(!ok) return;
   form.busy = true; form.msg = null; renderAckForm();
   if(!sel.has_pin){
@@ -1235,13 +1427,14 @@ async function onAckClick(){
     }
     sel.has_pin = true; sel.needs_code = false;
   }
+  if(quizFirst){ form.busy = false; renderAckForm(); await openQuiz(b, sel.id, form.pin); renderAckForm(); return; }
   const r = await rpc('ack_acknowledge', { p_bulletin_id: b.id, p_staff_id: sel.id, p_pin: form.pin });
   form.busy = false;
   if(r.error){ form.msg = { kind: 'error', text: t('unavailable') }; renderAckForm(); return; }
   const d = r.data;
   if(d.ok){
     try { localStorage.setItem('ackStaff', String(sel.id)); } catch(e) {}
-    result = { kind: d.already ? 'already' : 'ok', at: d.acknowledged_at, late: d.late, name: sel.name };
+    result = { kind: d.already ? 'already' : 'ok', at: d.acknowledged_at, late: d.late, name: sel.name, sid: sel.id, division: sel.division };
     renderAckForm(); renderMini();
     loadPublic();
     if(me && me.id === sel.id) loadMine();
@@ -1251,6 +1444,7 @@ async function onAckClick(){
   if(d.error === 'wrong_pin') form.msg = { kind: 'error', text: t('err_wrong_pin') };
   else if(d.error === 'locked') form.msg = { kind: 'error', text: t('err_locked') };
   else if(d.error === 'bulletin_not_found') form.msg = { kind: 'error', text: t('err_no_bulletin') };
+  else if(d.error === 'quiz_required'){ form.msg = { kind: 'error', text: t('quiz_req_err') }; renderAckForm(); await openQuiz(b, sel.id, form.pin); return; }
   else form.msg = { kind: 'error', text: t('err_generic') };
   renderAckForm();
 }
@@ -1258,7 +1452,7 @@ async function onAckClick(){
 /* ====================== TAB: OVERVIEW ====================== */
 
 function viewOverview(){
-  const seg = '<div class="segrow">' + subseg([['general', t('ov_general'), 'chart', 'blue'], ['detailed', t('ov_detailed'), 'lock', 'steel']], ovTab, 'setOv') + yearSegHTML() + '</div>';
+  const seg = '<div class="segrow">' + subseg([['general', t('ov_general'), 'chart', 'blue'], ['detailed', t('ov_detailed'), 'lock', 'steel']], ovTab, 'setOv') + yearSegHTML() + '<button class="btn ghost sm" onclick="openWall()">' + ico('tv', 15) + esc(t('wall_btn')) + '</button></div>';
   if(ovTab === 'general') return banner('chart', t('b_ov_eye'), t('b_ov_title'), t('b_ov_desc')) + seg + viewGeneral();
   const head0 = restrictHead('For CT Admin Only', 'Names, statistics and trends for management.');
   return head0 + seg + viewDetailed();
@@ -1574,6 +1768,7 @@ const AD_BANNER = {
   bulletins: ['file', 'Manage Bulletins', 'Manage Bulletins', 'Add a bulletin, copy its link for staff, edit or remove it.'],
   log: ['file', 'Log', 'Acknowledgment log', 'Who acknowledged which bulletin and when, with the issue date and overdue status, to trace back to the actual data.'],
   staff: ['users', 'Staff', 'Manage staff', 'Add people, deactivate leavers, reset PINs and choose each Division head.'],
+  insights: ['trend', 'Insights', 'Insights', 'Response times, understanding-check scores and quarterly recognition.'],
   super: ['lock', 'Super Admin Only', 'Super Admin Only', 'Roles, PINs and corrections.']
 };
 function viewAdmin(){
@@ -1583,10 +1778,11 @@ function viewAdmin(){
   if(!admin) return top + spinner();
   if(adTab === 'super' && !isSuper()) adTab = 'reminder';
   const B = AD_BANNER[adTab];
-  let h = top + banner(B[0], B[1], B[2], B[3]) + '<div class="segrow">' + subseg([['reminder', 'Reminder', 'bell', 'peri'], ['bulletins', 'Manage Bulletins', 'file', 'green'], ['log', 'Log', 'chart', 'blue'], ['staff', 'Staff', 'users', 'slate']].concat(isSuper() ? [['super', 'Super Admin Only', 'lock', 'steel']] : []), adTab, 'setAd') + yearSegHTML() + '</div>';
+  let h = top + banner(B[0], B[1], B[2], B[3]) + '<div class="segrow">' + subseg([['reminder', 'Reminder', 'bell', 'peri'], ['bulletins', 'Manage Bulletins', 'file', 'green'], ['log', 'Log', 'chart', 'blue'], ['insights', 'Insights', 'trend', 'steel'], ['staff', 'Staff', 'users', 'slate']].concat(isSuper() ? [['super', 'Super Admin Only', 'lock', 'steel']] : []), adTab, 'setAd') + yearSegHTML() + '</div>';
   if(adTab === 'reminder') h += adReminderHTML();
   else if(adTab === 'bulletins') h += adBulletinsHTML();
   else if(adTab === 'log') h += adLogHTML();
+  else if(adTab === 'insights') h += adInsightsHTML();
   else if(adTab === 'staff') h += adStaffHTML();
   else h += adSuperHTML();
   return h;
@@ -1605,17 +1801,20 @@ function setRem(key, v){
   if(g) Array.prototype.forEach.call(g.querySelectorAll('button'), function(b){ b.classList.toggle('on', b.getAttribute('data-v') === v); });
   refreshReminder();
 }
-function adReminderHTML(){
+function adReminderHTML(){ return adReminderHTML0() + adBriefHTML(); }
+function adReminderHTML0(){
   return '<div class="card"><h2>Reminder email (one consolidated email)</h2>' +
     '<div class="row" style="gap:18px 24px;align-items:flex-start"><div><label class="lbl" style="margin-top:0">Layout</label>' + remSeg('layout', [['bulletin', 'By bulletin'], ['person', 'By person']]) + '</div>' +
     '<div><label class="lbl" style="margin-top:0">Language</label>' + remSeg('language', [['both', 'Thai + English'], ['th', 'Thai'], ['en', 'English']]) + '</div>' +
-    '<div><label class="lbl" style="margin-top:0">Scope</label>' + remSeg('scope', [['all', 'All outstanding'], ['overdue', 'Overdue only']]) + '</div></div>' +
+    '<div><label class="lbl" style="margin-top:0">Scope</label>' + remSeg('scope', [['all', 'All outstanding'], ['overdue', 'Overdue only']]) + '</div>' +
+    '<div><label class="lbl" style="margin-top:0">Reminder stage</label>' + remSeg('stage', STAGES) + '</div></div>' +
     '<label class="lbl">Subject</label><div class="row"><input id="remSubject" type="text" class="grow" style="flex:1" readonly><button class="btn ghost sm" onclick="copySubject()">' + ico('copy', 15) + 'Copy subject</button></div>' +
     '<label class="lbl">Email body (you can edit it here before copying)</label><div id="remPrev" class="preview" contenteditable="true"></div>' +
     '<div class="row" style="margin-top:14px"><button class="btn" onclick="copyBody()">' + ico('copy', 16) + 'Copy email body</button><span class="muted">Paste into a new Outlook email with Ctrl+V. Formatting is kept.</span></div></div>';
 }
 function reminderBlock(L, list, today, c, opt, team){
   const D = L === 'th';
+  const sb = leaveNames(c, D);
   const F = 'font-family:Tahoma,Arial,sans-serif;font-size:14px;';
   const p = function(x){ return '<p style="' + F + 'margin:0 0 10px;">' + x + '</p>'; };
   const sig = (D ? CFG.sigTh : CFG.sigEn).map(esc).join('<br>');
@@ -1628,6 +1827,7 @@ function reminderBlock(L, list, today, c, opt, team){
     h += p(D ? 'กองรับรองผู้ดำเนินการเดินอากาศ (CT) ขอแจ้งรายการ Bulletin ที่ยังไม่ได้รับทราบ (Acknowledge) ณ วันที่ ' + esc(asOf) + ' ดังนี้'
              : 'The AOC Certification Division (CT) would like to remind you of the following OPS Bulletins that have not yet been acknowledged as of ' + esc(asOf) + '.');
   }
+  h += stageLine(L, opt.stage, team, p);
   const dueL = function(b){ return dueText(b.deadline, today, L); };
   if(opt.layout === 'bulletin'){
     list.forEach(function(b, i){
@@ -1636,17 +1836,17 @@ function reminderBlock(L, list, today, c, opt, team){
         (b.url ? (D ? 'ลิงก์ Bulletin: ' : 'Bulletin link: ') + '<a href="' + esc(b.url) + '">' + esc(b.url) + '</a><br>' : '') +
         (D ? 'ลิงก์รับทราบ: ' : 'Acknowledge here: ') + '<a href="' + esc(appBase() + '?b=' + b.id) + '">' + esc(appBase() + '?b=' + b.id) + '</a><br>' +
         (D ? 'ผู้ที่ยังไม่ได้รับทราบ (' + b.pendingIds.length + ' ราย):' : 'Not yet acknowledged (' + b.pendingIds.length + '):') + '<br>' +
-        (team ? '&nbsp;&nbsp;' + esc(b.pendingIds.map(function(id){ return c.staffById[id].name; }).sort().join(', '))
-              : namesGrouped(b.pendingIds, c.staffById).map(function(g){ return '&nbsp;&nbsp;<b>' + esc(g.division) + ' (' + g.names.length + ')</b>: ' + esc(g.names.join(', ')); }).join('<br>')) + '</p>';
+        (team ? '&nbsp;&nbsp;' + esc(b.pendingIds.map(function(id){ return sb[id].name; }).sort().join(', '))
+              : namesGrouped(b.pendingIds, sb).map(function(g){ return '&nbsp;&nbsp;<b>' + esc(g.division) + ' (' + g.names.length + ')</b>: ' + esc(g.names.join(', ')); }).join('<br>')) + '</p>';
     });
   } else {
     const per = {};
     list.forEach(function(b){ b.pendingIds.forEach(function(sid){ (per[sid] = per[sid] || []).push(b); }); });
-    const ids = Object.keys(per).map(Number).sort(function(a, z){ const x = c.staffById[a], y = c.staffById[z]; return cmpDiv(x.division, y.division) || x.name.localeCompare(y.name); });
+    const ids = Object.keys(per).map(Number).sort(function(a, z){ const x = sb[a], y = sb[z]; return cmpDiv(x.division, y.division) || x.name.localeCompare(y.name); });
     h += p('<b>' + (D ? 'รายชื่อและ Bulletin ที่ยังไม่ได้รับทราบ' : 'Outstanding acknowledgments by person') + '</b>');
     let lastDiv = null, items = '';
     ids.forEach(function(sid){
-      const s = c.staffById[sid];
+      const s = sb[sid];
       if(team && lastDiv === null){ items += '<ul style="' + F + 'margin:0 0 6px 18px;padding:0;">'; lastDiv = s.division; }
       if(!team && s.division !== lastDiv){ if(items) items += '</ul>'; items += '<p style="' + F + 'margin:8px 0 2px;"><b>' + esc(s.division) + '</b></p><ul style="' + F + 'margin:0 0 6px 18px;padding:0;">'; lastDiv = s.division; }
       items += '<li>' + esc(s.name) + ' - ' + per[sid].map(function(b){ return esc(b.number) + (b.status === 'overdue' ? (D ? ' (เกินกำหนด)' : ' (overdue)') : ''); }).join(', ') + '</li>';
@@ -1675,6 +1875,7 @@ function buildReminder(c, opt, team){
   const today = c.today;
   let list = c.bullets.filter(function(b){ return b.pendingIds.length > 0; });
   if(opt.scope === 'overdue') list = list.filter(function(b){ return b.status === 'overdue'; });
+  const sf = stageFilter(opt.stage); if(sf) list = list.filter(sf);
   list.sort(function(a, b){ return a.deadline < b.deadline ? -1 : (a.deadline > b.deadline ? 1 : 0); });
   const dEn = fmtDateL(today, 'en'), dTh = fmtDateL(today, 'th');
   let subject = '';
@@ -1685,7 +1886,8 @@ function buildReminder(c, opt, team){
   } else if(opt.language === 'th') subject = '[เตือน] การรับทราบ Bulletin ที่ยังไม่ดำเนินการ ณ วันที่ ' + dTh;
   else if(opt.language === 'en') subject = '[Reminder] Outstanding OPS Bulletin acknowledgments as of ' + dEn;
   else subject = '[Reminder / เตือน] Outstanding OPS Bulletin acknowledgments / การรับทราบ Bulletin ที่ยังไม่ดำเนินการ (' + dEn + ')';
-  if(!list.length) return { subject: subject, html: '<p style="font-family:Tahoma,Arial,sans-serif;font-size:14px;">No outstanding acknowledgments' + (opt.scope === 'overdue' ? ' (overdue)' : '') + ' right now.</p>', empty: true };
+  subject = stageSubject(subject, opt);
+  if(!list.length) return { subject: subject, html: '<p style="font-family:Tahoma,Arial,sans-serif;font-size:14px;">No outstanding acknowledgments' + (opt.scope === 'overdue' ? ' (overdue)' : '') + (opt.stage && opt.stage !== 'all' ? ' at this reminder stage' : '') + ' right now.</p>', empty: true };
   const langs = opt.language === 'both' ? (team ? ['en', 'th'] : ['th', 'en']) : [opt.language];
   let html = '';
   langs.forEach(function(L, i){
@@ -1858,17 +2060,18 @@ function adBulletinsHTML(){
   let h = '<div class="card"><h2>Add a bulletin</h2><div class="cols"><div><label class="lbl" style="margin-top:0">Number</label><input id="bNum" type="text" placeholder="e.g. OPS Bulletin 05/2026"></div>' +
     '<div><label class="lbl" style="margin-top:0">Deadline (default: 7 days)</label><input id="bDate" type="date" value="' + addDaysStr(bkkToday(), 7) + '"></div></div>' +
     '<label class="lbl">Title</label><input id="bTitle" type="text"><label class="lbl">SharePoint link (https://...)</label><input id="bUrl" type="url">' +
+    revFields('b', null, null, true) +
     '<div style="margin-top:14px">' + audPickerHTML('add') + '</div>' +
     '<p><button class="btn" onclick="adAddBulletin()">' + ico('plus', 16) + 'Add bulletin</button></p>';
   if(lastNewB){
     const link = appBase() + '?b=' + lastNewB;
-    h += '<div class="msg ok">Bulletin added. Link for staff:<br><span class="mono" style="word-break:break-all">' + esc(link) + '</span><br><button class="btn ghost sm" style="margin-top:8px" onclick="copyText(\'' + link.replace(/'/g, '') + '\',\'Link copied\')">' + ico('copy', 14) + 'Copy link</button></div>';
+    h += '<div class="msg ok">Bulletin added. Link for staff:<br><span class="mono" style="word-break:break-all">' + esc(link) + '</span><br><button class="btn ghost sm" style="margin-top:8px" onclick="copyText(\'' + link.replace(/'/g, '') + '\',\'Link copied\')">' + ico('copy', 14) + 'Copy link</button> <button class="btn ghost sm" style="margin-top:8px" onclick="adQuiz(' + lastNewB + ')">' + ico('help', 14) + 'Add understanding check</button> <button class="btn ghost sm" style="margin-top:8px" onclick="adQR(' + lastNewB + ')">' + ico('qr', 14) + 'QR code</button></div>';
   }
   h += '</div><div class="card">' + ch('file', 'All bulletins') + '<div class="tablewrap"><table class="sf" data-tid="allbul"><thead><tr><th>No.</th><th>Title</th><th>Issued</th><th>Deadline</th><th>Audience</th><th>Progress</th><th>Status</th><th></th></tr></thead><tbody>';
   if(!c.bullets.length) h += '<tr><td colspan="8" class="muted">No bulletins yet.</td></tr>';
   c.bullets.forEach(function(b){
-    h += '<tr><td>' + bno(b, true) + '</td><td>' + esc(b.title) + '</td><td>' + esc(fmtShort(b.created_at, 'en')) + '</td><td>' + esc(fmtShort(b.deadline, 'en')) + '</td><td>' + audSummary(b) + '</td><td>' + b.acked + ' / ' + b.required + '</td><td>' + chip(b.status) + '</td>' +
-      '<td style="white-space:nowrap"><button class="btn sm c-teal" onclick="copyBulletinLink(' + b.id + ')">Copy link</button> <button class="btn sm c-blue" onclick="adEditBulletin(' + b.id + ')">Edit</button> <button class="btn sm c-red" onclick="adDeleteBulletin(' + b.id + ')">Delete</button></td></tr>';
+    h += '<tr><td>' + bno(b, true) + '</td><td>' + esc(b.title) + bulletinChips(b) + '</td><td>' + esc(fmtShort(b.created_at, 'en')) + '</td><td>' + esc(fmtShort(b.deadline, 'en')) + '</td><td>' + audSummary(b) + '</td><td>' + b.acked + ' / ' + b.required + '</td><td>' + chip(b.status) + '</td>' +
+      '<td style="white-space:nowrap"><button class="btn sm c-teal" onclick="copyBulletinLink(' + b.id + ')">Copy link</button> <button class="btn sm c-violet" onclick="adQuiz(' + b.id + ')">Quiz</button> <button class="btn sm c-green" onclick="adQR(' + b.id + ')">QR</button> <button class="btn sm c-blue" onclick="adEditBulletin(' + b.id + ')">Edit</button> <button class="btn sm c-red" onclick="adDeleteBulletin(' + b.id + ')">Delete</button></td></tr>';
   });
   setTimeout(function(){ audRefresh('add'); }, 0);
   return h + '</tbody></table></div></div>';
@@ -1878,9 +2081,18 @@ async function adAddBulletin(){
   const n = val('bNum'), ti = val('bTitle'), u = val('bUrl'), d = val('bDate');
   if(!n || !ti || !d){ toast('Number, title and deadline are required', 'error'); return; }
   if(u && !/^https:\/\//i.test(u)){ toast('The link must start with https://', 'error'); return; }
-  if(!audValid('add')) return;
-  const r = await rpc('ack_admin_add_bulletin', { p_staff_id: me.id, p_pin: me.pin, p_number: n, p_title: ti, p_url: u || null, p_deadline: d, p_staff_ids: audIds('add') });
+  const rev = val('bRev') ? Number(val('bRev')) : null, reack = val('bReack') !== '0';
+  let ids = audIds('add');
+  if(rev && !reack){
+    ids = pendingOf(rev);
+    if(!ids.length){ toast('Everyone has already acknowledged the old bulletin. Choose "Everyone, again" or clear the revision.', 'error'); return; }
+  } else if(!audValid('add')) return;
+  const r = await rpc('ack_admin_add_bulletin', { p_staff_id: me.id, p_pin: me.pin, p_number: n, p_title: ti, p_url: u || null, p_deadline: d, p_staff_ids: ids });
   if(!adminOk(r)) return;
+  if(rev){
+    const r2 = await rpc('ack_admin_set_bulletin_options', { p_staff_id: me.id, p_pin: me.pin, p_id: r.data.id, p_supersedes: rev, p_reack: reack });
+    if(!adminOk(r2)) return;
+  }
   toast('Bulletin added', 'success');
   lastNewB = r.data.id; audInit('add', []);
   await reloadAll();
@@ -1892,6 +2104,7 @@ function adEditBulletin(id){
   openModal('<h2>Edit bulletin</h2><label class="lbl" style="margin-top:0">Number</label><input id="eNum" type="text" value="' + esc(b.number) + '">' +
     '<label class="lbl">Title</label><input id="eTitle" type="text" value="' + esc(b.title) + '"><label class="lbl">SharePoint link</label><input id="eUrl" type="url" value="' + esc(b.url || '') + '">' +
     '<label class="lbl">Deadline</label><input id="eDate" type="date" value="' + esc(b.deadline) + '">' +
+    revFields('e', id, b.supersedes || null, b.reack_required) +
     '<div style="margin-top:14px">' + audPickerHTML('ed') + '</div>' +
     '<div class="row" style="justify-content:flex-end;margin-top:18px"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="adSaveBulletin(' + id + ')">Save</button></div>');
 }
@@ -1902,6 +2115,9 @@ async function adSaveBulletin(id){
   if(!audValid('ed')) return;
   const r = await rpc('ack_admin_update_bulletin', { p_staff_id: me.id, p_pin: me.pin, p_id: id, p_number: n, p_title: ti, p_url: u || null, p_deadline: d, p_staff_ids: audIds('ed'), p_set_audience: true });
   if(!adminOk(r)) return;
+  const rv = val('eRev') ? Number(val('eRev')) : null;
+  const r3 = await rpc('ack_admin_set_bulletin_options', { p_staff_id: me.id, p_pin: me.pin, p_id: id, p_supersedes: rv, p_reack: val('eReack') !== '0' });
+  if(!adminOk(r3)) return;
   closeModal(); toast('Saved', 'success'); await reloadAll();
 }
 async function adDeleteBulletin(id){
@@ -1931,11 +2147,11 @@ function staffCmp(a, b){
 function sortTh(k, label){ return '<th class="sortable" onclick="setStSort(\'' + k + '\')">' + label + (stSort.k === k ? (stSort.dir > 0 ? ' &#9650;' : ' &#9660;') : '') + '</th>'; }
 function staffRows(list, inactive){
   return list.map(function(s){
-    return '<tr' + (inactive ? ' style="opacity:.8"' : '') + '><td><b>' + esc(s.name) + '</b></td><td>' + divTag(s.division) + (s.prev_divisions && s.prev_divisions.length ? '<div class="muted" style="font-size:11.5px">was ' + esc(s.prev_divisions.join(', ')) + '</div>' : '') + '</td><td>' + roleChip(s) + '</td>' +
+    return '<tr' + (inactive ? ' style="opacity:.8"' : '') + '><td><b>' + esc(s.name) + '</b>' + leaveChip(s.id) + '</td><td>' + divTag(s.division) + (s.prev_divisions && s.prev_divisions.length ? '<div class="muted" style="font-size:11.5px">was ' + esc(s.prev_divisions.join(', ')) + '</div>' : '') + '</td><td>' + roleChip(s) + '</td>' +
       '<td>' + (s.head_of ? '<span class="chip teal">Head: ' + esc(s.head_of) + '</span>' : '<span class="muted">-</span>') + '</td>' +
       '<td>' + (s.active ? '<span class="chip green">Active</span>' : '<span class="chip red">Inactive</span>') + '</td>' +
       '<td>' + pinChip(s) + (s.locked ? ' <span class="chip red">locked</span>' : '') + '</td>' +
-      '<td style="white-space:nowrap"><button class="btn sm c-blue" onclick="adEditStaff(' + s.id + ')">Edit</button> ' + (s.locked && (isSuper() || !s.is_super) ? '<button class="btn sm c-teal" onclick="adUnlock(' + s.id + ')">Unlock</button> ' : '') + '<button class="btn sm ' + (s.has_pin ? 'c-amber' : 'c-violet') + '" onclick="adResetPin(' + s.id + ')">' + (s.has_pin ? 'Reset PIN' : 'Issue code') + '</button></td></tr>';
+      '<td style="white-space:nowrap"><button class="btn sm c-blue" onclick="adEditStaff(' + s.id + ')">Edit</button> <button class="btn sm c-green" onclick="adLeave(' + s.id + ')">Leave</button> ' + (s.locked && (isSuper() || !s.is_super) ? '<button class="btn sm c-teal" onclick="adUnlock(' + s.id + ')">Unlock</button> ' : '') + '<button class="btn sm ' + (s.has_pin ? 'c-amber' : 'c-violet') + '" onclick="adResetPin(' + s.id + ')">' + (s.has_pin ? 'Reset PIN' : 'Issue code') + '</button></td></tr>';
   }).join('');
 }
 function adStaffHTML(){
@@ -1943,7 +2159,7 @@ function adStaffHTML(){
   const divs = c.divisions.map(function(d){ return d.division; });
   admin.staff.forEach(function(x){ if(divs.indexOf(x.division) < 0) divs.push(x.division); });
   CFG.divOrder.forEach(function(d){ if(divs.indexOf(d) < 0) divs.push(d); });
-  let h = '<div class="card">' + ch('plus', 'Add a person') + '<div class="cols"><div><label class="lbl" style="margin-top:0">Name (first name + initial of surname)</label><input id="sName" type="text" placeholder="e.g. Somchai K."></div>' +
+  let h = leaveCardHTML() + '<div class="card">' + ch('plus', 'Add a person') + '<div class="cols"><div><label class="lbl" style="margin-top:0">Name (first name + initial of surname)</label><input id="sName" type="text" placeholder="e.g. Somchai K."></div>' +
     '<div><label class="lbl" style="margin-top:0">Division</label><input id="sDiv" type="text" list="divList" placeholder="e.g. FO"><datalist id="divList">' + divs.map(function(d){ return '<option value="' + esc(d) + '">'; }).join('') + '</datalist></div></div>' +
     '<label class="lbl" style="font-weight:500"><input type="checkbox" id="sAll"> Also required for bulletins already issued (otherwise only for new bulletins)</label>' +
     '<p><button class="btn" onclick="adAddStaff()">' + ico('plus', 16) + 'Add person</button></p></div>';
@@ -2132,6 +2348,7 @@ function adSuperHTML(){
   const c = comp;
   let h = roleCard('Super admins', 'super', '');
   h += roleCard('CT access', 'ct', '');
+  h += backupCardHTML() + batchCardHTML();
   h += '<div class="card">' + ch('lock', 'Audit log') + '<p class="muted" style="margin-top:-4px">Role changes made on this page.</p>';
   if(!superData.audit.length) h += '<div class="hint">No changes yet.</div>';
   else {
@@ -2153,9 +2370,10 @@ function adSuperHTML(){
     }).join('') + '</tbody></table></div>';
   }
   h += '</div>';
-  h += '<button class="drlink" onclick="drOpen=!drOpen;render()">(Data Review)</button>';
+  h += '<button class="drlink" onclick="drOpen=!drOpen;render()">(Data Controls)</button>';
   if(drOpen){
-    h += '<div class="card">' + ch('file', 'Data Review') + '<p class="muted" style="margin-top:-4px">Set the date and time a person acknowledged a bulletin when the record needs correcting. The history and statistics follow the time set here. This is not written to the audit log.</p>' +
+    h += '<div class="card">' + ch('file', 'Data Controls') + '<p class="muted" style="margin-top:-4px">Find a record with the filters, then press Set time or Edit time to correct when a person acknowledged a bulletin. The history and statistics follow the time set here. This is not written to the audit log.</p>' + dcBarHTML() + '<div id="dc_body">' + LR.dc() + '</div></div>' +
+      '<div class="card" id="amForm">' + ch('file', 'Set acknowledgment time') +
       '<div class="cols"><div><label class="lbl" style="margin-top:0">Bulletin</label><select id="amB" onchange="amRefresh()"><option value="">Choose...</option>' + c.bullets.map(function(b){ return '<option value="' + b.id + '">' + esc(b.number) + ' - ' + esc(b.title) + '</option>'; }).join('') + '</select></div>' +
       '<div><label class="lbl" style="margin-top:0">Person</label><select id="amP" onchange="amRefresh()"><option value="">Choose...</option>' + staffOptions('') + '</select></div></div>' +
       '<div id="amInfo" class="muted" style="margin:10px 0"></div>' +
@@ -2180,6 +2398,52 @@ async function adAuditDelete(id){
   const r = await rpc('ack_super_delete_audit', { p_staff_id: me.id, p_pin: me.pin, p_audit: id });
   if(!adminOk(r)) return;
   toast('Removed'); await loadSuper(); render();
+}
+/* Data Controls: every required acknowledgment (bulletin x person) with filters */
+function dcBarHTML(){
+  const seen = {}, people = [];
+  admin.required.forEach(function(p){ if(seen[p[1]]) return; seen[p[1]] = 1; const x = admin.staff.find(function(y){ return y.id === p[1]; }); if(x) people.push(x); });
+  people.sort(function(a, b){ return cmpDiv(a.division, b.division) || a.name.localeCompare(b.name); });
+  const divs = []; admin.required.forEach(function(p){ if(divs.indexOf(p[2]) < 0) divs.push(p[2]); }); divs.sort(cmpDiv);
+  LR.dc = dcRows;
+  return lsBar('dc', { ph: 'Search person or bulletin', def: 'newest', sortLabel: 'Sort: ', sorts: [['newest', 'Newest bulletin'], ['person', 'Person'], ['division', 'Division'], ['status', 'Status']],
+    filters: [{ key: 'status', label: 'All', options: [['pending', 'Not acknowledged'], ['done', 'Acknowledged']] },
+      { key: 'div', label: 'All divisions', options: divs.map(function(d){ return [d, d]; }) },
+      { key: 'person', label: 'All persons', options: people.map(function(x){ return [String(x.id), x.name + ' (' + x.division + ')']; }) },
+      { key: 'bulletin', label: 'All bulletins', options: comp.bullets.map(function(b){ return [String(b.id), b.number]; }) }] });
+}
+function dcRows(){
+  const st = lsGet('dc', 'newest'), q = (st.q || '').toLowerCase();
+  const bmap = {}; comp.bullets.forEach(function(b){ bmap[b.id] = b; });
+  const smap = {}; admin.staff.forEach(function(x){ smap[x.id] = x; });
+  let rows = [];
+  admin.required.forEach(function(p){ const b = bmap[p[0]], x = smap[p[1]]; if(b && x) rows.push({ b: b, s: x, div: p[2], at: comp.ackAt[p[0] + '_' + p[1]] || null }); });
+  const total = rows.length;
+  rows = rows.filter(function(r){
+    return (!st.status || (st.status === 'done') === !!r.at) && (!st.div || r.div === st.div) && (!st.person || String(r.s.id) === st.person) && (!st.bulletin || String(r.b.id) === st.bulletin) &&
+      (!q || (r.s.name + ' ' + r.b.number + ' ' + r.b.title).toLowerCase().indexOf(q) >= 0);
+  });
+  const nb = function(a, b){ return Date.parse(b.b.created_at) - Date.parse(a.b.created_at); };
+  rows.sort(function(a, b){
+    if(st.sort === 'person') return a.s.name.localeCompare(b.s.name) || nb(a, b);
+    if(st.sort === 'division') return cmpDiv(a.div, b.div) || a.s.name.localeCompare(b.s.name) || nb(a, b);
+    if(st.sort === 'status') return ((a.at ? 1 : 0) - (b.at ? 1 : 0)) || nb(a, b) || a.s.name.localeCompare(b.s.name);
+    return nb(a, b) || cmpDiv(a.div, b.div) || a.s.name.localeCompare(b.s.name);
+  });
+  if(!rows.length) return '<div class="hint">No records match these filters.</div>';
+  const MAX = 200, shown = rows.slice(0, MAX);
+  return '<p class="muted" style="margin:0 0 6px">' + rows.length + (rows.length === total ? '' : ' of ' + total) + ' records' + (rows.length > MAX ? ' (first ' + MAX + ' shown - use the filters to narrow down)' : '') + '</p>' +
+    '<div class="tablewrap"><table><thead><tr><th>Bulletin</th><th>Person</th><th>Division</th><th>Status</th><th>Acknowledged on</th><th></th></tr></thead><tbody>' + shown.map(function(r){
+      return '<tr><td>' + bno(r.b, true) + '</td><td><b>' + esc(r.s.name) + '</b>' + (r.s.active ? '' : ' <span class="chip grey">left</span>') + '</td><td>' + divTag(r.div) + '</td><td>' +
+        (r.at ? '<span class="chip green">Acknowledged</span>' : '<span class="chip amber">Not acknowledged</span>') + '</td><td style="white-space:nowrap">' + (r.at ? esc(fmtBkk(r.at)) : '<span class="muted">-</span>') + '</td>' +
+        '<td><button class="btn sm c-blue" onclick="dcPick(' + r.b.id + ',' + r.s.id + ')">' + (r.at ? 'Edit time' : 'Set time') + '</button></td></tr>';
+    }).join('') + '</tbody></table></div>';
+}
+function dcPick(bid, sid){
+  const sb = $('amB'), sp = $('amP'); if(!sb || !sp) return;
+  if(!sp.querySelector('option[value="' + sid + '"]')){ const x = admin.staff.find(function(y){ return y.id === sid; }); if(x) sp.insertAdjacentHTML('beforeend', '<option value="' + sid + '">' + esc(x.name) + ' (left)</option>'); }
+  sb.value = String(bid); sp.value = String(sid); amRefresh();
+  const f = $('amForm'); if(f && f.scrollIntoView) f.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 function amRefresh(){
   const b = val('amB'), pn = val('amP'), info = $('amInfo'), at = $('amAt'); if(!info || !comp) return;
@@ -2247,10 +2511,12 @@ function viewTeam(){
   });
   pp += '</tbody></table></div></div>';
   h += grp('g-amber', 'users', 'My team', 'Who needs attention, with ready-to-send reminders.', pp);
+  h += respCardHTML(head.comp) + quizCardHTML(head.comp) + recogCardHTML(head.raw);
   h += '<div class="card">' + ch('send', 'Draft email to my team') + '<p class="muted" style="margin-top:-4px">Copy it, paste into a new Outlook email and add the recipients yourself.</p>' +
     '<div class="row" style="gap:18px 24px;align-items:flex-start"><div><label class="lbl" style="margin-top:0">Layout</label>' + tmSeg('layout', [['bulletin', 'By bulletin'], ['person', 'By person']]) + '</div>' +
     '<div><label class="lbl" style="margin-top:0">Language</label>' + tmSeg('language', [['both', 'English + Thai'], ['en', 'English'], ['th', 'Thai']]) + '</div>' +
-    '<div><label class="lbl" style="margin-top:0">Scope</label>' + tmSeg('scope', [['all', 'All outstanding'], ['overdue', 'Overdue only']]) + '</div></div>' +
+    '<div><label class="lbl" style="margin-top:0">Scope</label>' + tmSeg('scope', [['all', 'All outstanding'], ['overdue', 'Overdue only']]) + '</div>' +
+    '<div><label class="lbl" style="margin-top:0">Reminder stage</label>' + tmSeg('stage', STAGES) + '</div></div>' +
     '<label class="lbl">Subject</label><div class="row"><input id="tmSubject" type="text" class="grow" style="flex:1" readonly><button class="btn ghost sm" onclick="copySubject(\'tmSubject\')">' + ico('copy', 15) + 'Copy subject</button></div>' +
     '<label class="lbl">Email body (you can edit it here before copying)</label><div id="tmPrev" class="preview" contenteditable="true"></div>' +
     '<div class="row" style="margin-top:14px"><button class="btn" onclick="copyBody(\'tmPrev\')">' + ico('copy', 16) + 'Copy email body</button></div></div>';
@@ -2351,15 +2617,16 @@ async function exportExcel(scope){
 function reportBtns(scope){
   const b = function(icon, label, fn, cls){ return '<button class="btn ' + (cls || 'ghost') + ' sm pdfb" onclick="' + fn + '">' + ico(icon, 15) + label + '</button>'; };
   return b('eye', 'Preview', "previewReport('" + scope + "')", 'ghost').replace(' pdfb', '') + b('print', 'Print', "printReport('" + scope + "')") + b('download', 'Download PDF', "reportPDF('" + scope + "','download')") +
-    b('send', 'Send PDF', "reportPDF('" + scope + "','send')", '') + b('download', scope === 'team' ? 'Download Excel' : 'Export database (Excel)', "exportExcel('" + scope + "')");
+    b('send', 'Send PDF', "reportPDF('" + scope + "','send')", '') + b('chart', 'Management report', "openMgmt('" + scope + "')") + b('download', scope === 'team' ? 'Download Excel' : 'Export database (Excel)', "exportExcel('" + scope + "')");
 }
 
 /* ====================== A4 REPORT (print + PDF) ====================== */
 function chunk(arr, n){ const o = []; for(let i = 0; i < arr.length; i += n) o.push(arr.slice(i, i + n)); return o; }
 function rpChip(st, L){ return '<span class="rpc ' + st + '">' + esc(I[L]['st_' + st]) + '</span>'; }
 function rpBar(p, cls){ return '<div class="rpbar ' + (cls || '') + '"><span style="width:' + Math.max(0, Math.min(100, p)) + '%"></span></div>'; }
-function rpCtx(scope){ return scope === 'team' && head ? { c: head.comp, team: true, div: head.division } : { c: comp, team: false, div: '' }; }
+function rpCtx(scope){ if(String(scope).indexOf('mg:') === 0){ const x = rpCtx(scope.slice(3)); x.mg = true; return x; } return scope === 'team' && head ? { c: head.comp, team: true, div: head.division } : { c: comp, team: false, div: '' }; }
 function reportBlocks(L, scope){
+  if(String(scope).indexOf('mg:') === 0) return mgmtBlocks(L, scope.slice(3));
   const cx = rpCtx(scope), c = cx.c, T = c.totals, X = R[L];
   const sig = (L === 'th' ? CFG.sigTh : CFG.sigEn);
   const blocks = [];
@@ -2430,7 +2697,7 @@ function previewReport(scope, L){
 function pvDraw(){
   const st = pvState, cx = rpCtx(st.scope);
   const root = $('modalRoot');
-  root.innerHTML = '<div class="pv"><div class="pvbar"><b>Preview &middot; ' + (cx.team ? 'Team ' + esc(cx.div) : 'CT report') + '</b>' +
+  root.innerHTML = '<div class="pv"><div class="pvbar"><b>Preview &middot; ' + (cx.mg ? 'Management report' : (cx.team ? 'Team ' + esc(cx.div) : 'CT report')) + '</b>' +
     '<div class="seg"><button class="' + (st.L === 'en' ? 'on' : '') + '" onclick="pvLang(\'en\')">English</button><button class="' + (st.L === 'th' ? 'on' : '') + '" onclick="pvLang(\'th\')">ไทย</button></div>' +
     '<button class="btn sm pdfb" style="background:#fff;color:var(--navy)" onclick="printReport(\'' + st.scope + '\',\'' + st.L + '\')">' + ico('print', 15) + 'Print</button>' +
     '<button class="btn sm pdfb" style="background:#fff;color:var(--navy)" onclick="reportPDF(\'' + st.scope + '\',\'download\',\'' + st.L + '\')">' + ico('download', 15) + 'Download PDF</button>' +
@@ -2491,9 +2758,9 @@ async function reportPDF(scope, mode, L){
   catch(e){ toast('Could not create the PDF (' + (e && e.message ? e.message : 'error') + ')', 'error'); }
   setPdfBusy(false);
   if(!blob) return;
-  const name = 'OPS-Bulletin-Report-' + (cx.team ? 'Team-' + safeTag(cx.div) : 'CT') + '-' + cx.c.today + '.pdf';
+  const name = (cx.mg ? 'OPS-Bulletin-Management-Report-' + mgTag() + '-' : 'OPS-Bulletin-Report-') + (cx.team ? 'Team-' + safeTag(cx.div) : 'CT') + '-' + cx.c.today + '.pdf';
   if(mode === 'download'){ saveBlob(blob, name); toast('PDF downloaded', 'success'); return; }
-  const subject = R[L].title + (cx.team ? ' - ' + R[L].team + ' ' + cx.div : '') + ' - ' + fmtDateL(cx.c.today, L);
+  const subject = (cx.mg ? RM[L].title : R[L].title) + (cx.team ? ' - ' + R[L].team + ' ' + cx.div : '') + ' - ' + fmtDateL(cx.c.today, L);
   const bodyTxt = L === 'th' ? 'เรียน ผู้เกี่ยวข้อง\n\nขอส่งรายงานการรับทราบ OPS Bulletin ตามไฟล์ PDF ที่แนบ' : 'Dear all,\n\nPlease find attached the OPS Bulletin acknowledgment report (PDF).';
   const isApple = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   const file = new File([blob], name, { type: 'application/pdf' });
@@ -2505,6 +2772,1030 @@ async function reportPDF(scope, mode, L){
   toast('PDF downloaded. Attach it to the email that opens next.', 'success');
   setTimeout(function(){ location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(bodyTxt); }, 600);
 }
+
+/* ====================== V3: TEXT, ICONS, EXTRA DATA, LEAVE ====================== */
+const I3 = {
+en:{
+  tab_terminal:'Terminal', tm_eye:'Home', tm_title:'Terminal', tm_desc:'One place for the OPS tools.', tm_soon:'Coming Soon.', tm_sub:'Links to the other OPS apps will be added here.',
+  quiz_chip:'Understanding check', quiz_take:'Take the understanding check', quiz_note:'This bulletin has an understanding check ({n} questions, pass mark {p}%). You must pass it before you can acknowledge. You may try as many times as you need.',
+  quiz_passed:'Understanding check passed', quiz_title:'Understanding check', quiz_answered:'{a} of {n} answered', quiz_submit:'Submit answers',
+  quiz_score:'Your score: {s} of {n} ({p}%)', quiz_pass_msg:'Passed. You can now acknowledge the bulletin.', quiz_fail_msg:'Not passed yet (pass mark {p}%). Please review the bulletin and try again.',
+  quiz_wrong:'Questions to review: {l}', quiz_retry:'Try again', quiz_continue:'Continue', quiz_req_err:'Please complete the understanding check first.', quiz_best:'Best {p}%', quiz_pm:'Pass mark {p}%',
+  batch_on:'Select several', batch_off:'Cancel selection', batch_go:'Acknowledge selected ({n})', batch_done:'{n} acknowledged.', batch_skip:'{n} must be done one by one (understanding check).',
+  batch_confirm:'Acknowledge {n} bulletins as {name}?', batch_all:'Select all', batch_none:'Nothing selected.', batch_err_off:'Acknowledging several at once is not switched on for you.',
+  on_leave:'On leave', lv_ext:'Deadline extended to {d} (leave)',
+  rev_superseded:'Superseded', rev_revision:'Revision', rev_by:'Replaced by {n}', rev_of:'Revises {n}',
+  rc_save:'Save receipt', rc_img:'Image', rc_pdf:'PDF', rc_title:'Acknowledgement receipt', rc_ref:'Reference', rc_name:'Name', rc_bul:'Bulletin', rc_time:'Recorded', rc_foot:'Recorded in the OPS Bulletin Acknowledgement system (CT / OPS).', rc_late:'Recorded after the deadline', rc_ontime:'Recorded within the deadline',
+  search:'Search', search_ph:'Search bulletins, people, pages', search_none:'No results.', search_b:'Bulletins', search_p:'People', search_pg:'Pages',
+  err_quiz_required:'Please complete the understanding check first.'
+},
+th:{
+  tab_terminal:'Terminal', tm_eye:'หน้าหลัก', tm_title:'Terminal', tm_desc:'ศูนย์รวมเครื่องมือของ OPS', tm_soon:'Coming Soon.', tm_sub:'ลิงก์ไปยังแอปอื่นของ OPS จะเพิ่มในหน้านี้',
+  quiz_chip:'แบบทดสอบความเข้าใจ', quiz_take:'ทำแบบทดสอบความเข้าใจ', quiz_note:'Bulletin ฉบับนี้มีแบบทดสอบความเข้าใจ ({n} ข้อ เกณฑ์ผ่าน {p}%) ท่านต้องผ่านแบบทดสอบก่อนจึงจะรับทราบได้ และสามารถทำซ้ำได้โดยไม่จำกัดจำนวนครั้ง',
+  quiz_passed:'ผ่านแบบทดสอบความเข้าใจแล้ว', quiz_title:'แบบทดสอบความเข้าใจ', quiz_answered:'ตอบแล้ว {a} จาก {n} ข้อ', quiz_submit:'ส่งคำตอบ',
+  quiz_score:'คะแนนของท่าน: {s} จาก {n} ({p}%)', quiz_pass_msg:'ผ่านเกณฑ์ ท่านสามารถรับทราบ Bulletin ได้แล้ว', quiz_fail_msg:'ยังไม่ผ่านเกณฑ์ (เกณฑ์ผ่าน {p}%) กรุณาทบทวน Bulletin แล้วทำใหม่อีกครั้ง',
+  quiz_wrong:'ข้อที่ควรทบทวน: {l}', quiz_retry:'ทำใหม่อีกครั้ง', quiz_continue:'ดำเนินการต่อ', quiz_req_err:'กรุณาทำแบบทดสอบความเข้าใจให้ผ่านก่อน', quiz_best:'สูงสุด {p}%', quiz_pm:'เกณฑ์ผ่าน {p}%',
+  batch_on:'เลือกหลายรายการ', batch_off:'ยกเลิกการเลือก', batch_go:'รับทราบรายการที่เลือก ({n})', batch_done:'รับทราบแล้ว {n} รายการ', batch_skip:'{n} รายการต้องดำเนินการทีละรายการ (มีแบบทดสอบความเข้าใจ)',
+  batch_confirm:'ยืนยันการรับทราบ {n} รายการ ในนาม {name} หรือไม่', batch_all:'เลือกทั้งหมด', batch_none:'ยังไม่ได้เลือกรายการ', batch_err_off:'ท่านยังไม่ได้รับสิทธิ์รับทราบหลายรายการพร้อมกัน',
+  on_leave:'อยู่ระหว่างลา', lv_ext:'ขยายกำหนดเป็น {d} (อยู่ระหว่างลา)',
+  rev_superseded:'ถูกแทนที่แล้ว', rev_revision:'ฉบับแก้ไข', rev_by:'แทนที่โดย {n}', rev_of:'แก้ไขจาก {n}',
+  rc_save:'บันทึกใบรับทราบ', rc_img:'รูปภาพ', rc_pdf:'PDF', rc_title:'ใบรับทราบ', rc_ref:'เลขอ้างอิง', rc_name:'ชื่อ', rc_bul:'Bulletin', rc_time:'บันทึกเมื่อ', rc_foot:'บันทึกในระบบการรับทราบ OPS Bulletin (CT / OPS)', rc_late:'บันทึกหลังพ้นกำหนด', rc_ontime:'บันทึกภายในกำหนด',
+  search:'ค้นหา', search_ph:'ค้นหา Bulletin ชื่อบุคคล หรือหน้าต่าง ๆ', search_none:'ไม่พบรายการ', search_b:'Bulletin', search_p:'บุคลากร', search_pg:'หน้าต่าง ๆ',
+  err_quiz_required:'กรุณาทำแบบทดสอบความเข้าใจให้ผ่านก่อน'
+}};
+Object.assign(I.en, I3.en); Object.assign(I.th, I3.th);
+Object.assign(ICO, {
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+  help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 114 2c-.9.6-1.5 1.1-1.5 2.2M12 17.2v.1"/>',
+  cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  qr:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1"/>',
+  tv:'<rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
+  award:'<circle cx="12" cy="9" r="6"/><path d="M8.5 14.5L7 22l5-3 5 3-1.5-7.5"/>',
+  shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  layers:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
+  mobile:'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/>',
+  upload:'<path d="M12 21V9M7 14l5-5 5 5M4 3h16"/>',
+  trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+  edit:'<path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/>',
+  trend:'<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>'
+});
+
+/* ---------- leave windows: the deadline moves later by the leave days inside the bulletin period ---------- */
+let LEAVES = [], _edc = {};
+function setLeaves(list){ LEAVES = (list || []).filter(function(l){ return !l.cancelled; }); _edc = {}; }
+function effDeadline(b, sid){
+  const key = b.id + '_' + sid; if(_edc[key]) return _edc[key];
+  let ex = 0;
+  const ls = LEAVES.filter(function(l){ return l.s === sid; });
+  if(ls.length){
+    const start = bkkDate(b.created_at), days = {};
+    ls.forEach(function(l){
+      const a = l.from > start ? l.from : start, z = l.to < b.deadline ? l.to : b.deadline;
+      for(let d = a, n = 0; d <= z && n < 800; d = addDaysStr(d, 1), n++) days[d] = 1;
+    });
+    ex = Object.keys(days).length;
+  }
+  return (_edc[key] = ex ? addDaysStr(b.deadline, ex) : b.deadline);
+}
+function onLeaveToday(sid){ const d = bkkToday(); return LEAVES.some(function(l){ return l.s === sid && l.from <= d && l.to >= d; }); }
+function leaveChip(sid){ return onLeaveToday(sid) ? ' <span class="chip lv">' + esc(t('on_leave')) + '</span>' : ''; }
+
+/* ---------- extra data (quiz scores, leave windows, batch switch) ---------- */
+async function loadExtra(){
+  if(!me) return false;
+  const r = await rpc('ack_extra_data', { p_staff_id: me.id, p_pin: me.pin });
+  if(r.error || !r.data || !r.data.ok) return false;
+  me.extra = r.data; setLeaves(r.data.leaves); return true;
+}
+function extraAttempts(){ return (me && me.extra && me.extra.attempts) || []; }
+function extraBest(bid, sid){
+  let best = null;
+  extraAttempts().forEach(function(a){ if(a.b === bid && a.s === sid && (best === null || a.pct > best)) best = a.pct; });
+  return best;
+}
+
+/* ====================== V3: UNDERSTANDING CHECK (QUIZ) ====================== */
+const qz = { passed: {} };
+let QZ = null;
+function qzPassed(bid, sid){
+  if(qz.passed[bid + '_' + sid]) return true;
+  if(me && me.id === sid){ const x = (me.list || []).find(function(i){ return i.id === bid; }); if(x && x.quiz_passed) return true; }
+  return false;
+}
+function needsQuiz(b, sid){ return !!(b && b.quiz_required && sid && !qzPassed(b.id, sid)); }
+function shuffle(a){ const o = a.slice(); for(let i = o.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); const x = o[i]; o[i] = o[j]; o[j] = x; } return o; }
+function quizNoteHTML(b, sid){
+  if(!b || !b.quiz_required) return '';
+  if(sid && qzPassed(b.id, sid)) return '<div class="msg ok">' + ico('check', 15) + ' ' + esc(t('quiz_passed')) + '</div>';
+  const n = b.quiz_questions || (me && (me.list || []).find(function(i){ return i.id === b.id; }) || {}).quiz_questions || '';
+  const p = b.pass_mark || (me && (me.list || []).find(function(i){ return i.id === b.id; }) || {}).pass_mark || '';
+  return '<div class="msg info">' + ico('help', 15) + ' ' + esc(t('quiz_note', { n: n, p: p })) + '</div>';
+}
+async function openQuiz(b, sid, pin){
+  openModal('<h2>' + esc(t('quiz_title')) + '</h2>' + spinner());
+  const r = await rpc('ack_quiz_get', { p_staff_id: sid, p_pin: pin, p_bulletin: b.id });
+  if(r.error){ closeModal(); toast(t('unavailable'), 'error'); return false; }
+  const d = r.data;
+  if(!d.ok){ closeModal(); toast(d.error === 'wrong_pin' ? t('err_wrong_pin') : (d.error === 'locked' ? t('err_locked') : t('err_generic')), 'error'); return false; }
+  if(!d.questions.length){ closeModal(); qz.passed[b.id + '_' + sid] = true; return true; }
+  QZ = { b: b, sid: sid, pin: pin, pass: d.pass_mark, ans: {}, res: null, busy: false,
+         qs: d.questions.map(function(q, i){ return { i: i, q: q.q, opts: shuffle(q.options.map(function(o, j){ return { o: o, j: j }; })) }; }) };
+  renderQuiz(); return true;
+}
+function renderQuiz(){
+  if(!QZ) return;
+  const n = QZ.qs.length, a = Object.keys(QZ.ans).length;
+  let h = '<h2>' + esc(t('quiz_title')) + '</h2><div class="muted" style="margin:-4px 0 10px">' + esc(QZ.b.number) + ' &middot; ' + esc(t('quiz_pm', { p: QZ.pass })) + '</div>';
+  if(QZ.res){
+    const r = QZ.res;
+    h += '<div class="resultbox"><div class="orb" style="' + (r.passed ? '' : '--sec:#b9852f;--sec-2:#d6a85a;--sec-glow:rgba(185,133,47,.4)') + '">' + ico(r.passed ? 'check' : 'help', 34) + '</div>' +
+      '<h2 style="justify-content:center;font-size:20px">' + esc(t('quiz_score', { s: r.score, n: r.total, p: r.pct })) + '</h2>' +
+      '<p>' + esc(r.passed ? t('quiz_pass_msg') : t('quiz_fail_msg', { p: r.pass_mark })) + '</p>' +
+      (!r.passed && r.wrong && r.wrong.length ? '<p class="muted">' + esc(t('quiz_wrong', { l: r.wrong.join(', ') })) + '</p>' : '') +
+      '<p>' + (r.passed ? '<button class="btn" onclick="qzDone()">' + esc(t('quiz_continue')) + '</button>' :
+        '<button class="btn" onclick="qzRetry()">' + esc(t('quiz_retry')) + '</button> <button class="btn ghost" onclick="qzClose()">' + esc(t('cancel')) + '</button>') + '</p></div>';
+    openModal(h); return;
+  }
+  QZ.qs.forEach(function(q, qi){
+    h += '<div class="qzq"><div class="qzt"><span class="qzn">' + (qi + 1) + '</span>' + esc(q.q) + '</div>';
+    q.opts.forEach(function(o){
+      const on = QZ.ans[q.i] === o.j;
+      h += '<label class="qzo' + (on ? ' on' : '') + '"><input type="radio" name="qz' + q.i + '" ' + (on ? 'checked' : '') + ' onchange="qzPick(' + q.i + ',' + o.j + ')"><span>' + esc(o.o) + '</span></label>';
+    });
+    h += '</div>';
+  });
+  h += '<div class="row" style="margin-top:14px;justify-content:space-between"><span class="muted">' + esc(t('quiz_answered', { a: a, n: n })) + '</span><span class="row"><button class="btn ghost" onclick="qzClose()">' + esc(t('cancel')) + '</button><button class="btn" id="qzGo" onclick="qzSubmit()" ' + (a < n || QZ.busy ? 'disabled' : '') + '>' + esc(QZ.busy ? t('wait') : t('quiz_submit')) + '</button></span></div>';
+  const m = document.querySelector('#modalRoot .modal'), top = m ? m.scrollTop : 0;
+  openModal(h); const m2 = document.querySelector('#modalRoot .modal'); if(m2) m2.scrollTop = top;
+}
+function qzPick(i, j){ if(!QZ) return; QZ.ans[i] = j; renderQuiz(); }
+async function qzSubmit(){
+  if(!QZ || QZ.busy) return;
+  QZ.busy = true; renderQuiz();
+  const answers = QZ.qs.map(function(q){ return QZ.ans[q.i]; });
+  const r = await rpc('ack_quiz_submit', { p_staff_id: QZ.sid, p_pin: QZ.pin, p_bulletin: QZ.b.id, p_answers: answers });
+  QZ.busy = false;
+  if(r.error){ renderQuiz(); toast(t('unavailable'), 'error'); return; }
+  const d = r.data;
+  if(!d.ok){ renderQuiz(); toast(d.error === 'wrong_pin' ? t('err_wrong_pin') : t('err_generic'), 'error'); return; }
+  QZ.res = d;
+  if(d.passed) qz.passed[QZ.b.id + '_' + QZ.sid] = true;
+  renderQuiz();
+  if(me) loadExtra();
+}
+function qzRetry(){ const q = QZ; QZ = null; if(q) openQuiz(q.b, q.sid, q.pin); }
+function qzClose(){ QZ = null; closeModal(); }
+function qzDone(){
+  QZ = null; closeModal();
+  if(me) loadMine(); else renderAckForm();
+}
+
+/* ====================== V3: ACKNOWLEDGE SEVERAL, RECEIPT, TERMINAL, SEARCH ====================== */
+let batch = { on: false, sel: {} };
+function batchToggle(){ batch = { on: !batch.on, sel: {} }; render(); }
+function batchPick(id, on){ if(on) batch.sel[id] = true; else delete batch.sel[id]; const b = $('batchGo'); if(b) { const n = Object.keys(batch.sel).length; b.disabled = !n; b.textContent = t('batch_go', { n: n }); } }
+function batchAll(){
+  (me.list || []).filter(yearOk).forEach(function(b){ if(!b.acknowledged_at && (!b.quiz_required || qzPassed(b.id, me.id))) batch.sel[b.id] = true; });
+  render();
+}
+async function batchGo(){
+  const ids = Object.keys(batch.sel).map(Number);
+  if(!ids.length){ toast(t('batch_none')); return; }
+  const ok = await confirmDialog(t('confirm_title'), esc(t('batch_confirm', { n: ids.length, name: me.name })), t('confirm'), t('cancel'));
+  if(!ok) return;
+  const r = await rpc('ack_acknowledge_many', { p_staff_id: me.id, p_pin: me.pin, p_ids: ids });
+  if(r.error){ toast(t('unavailable'), 'error'); return; }
+  const d = r.data;
+  if(!d.ok){ toast(d.error === 'batch_off' ? t('batch_err_off') : (d.error === 'wrong_pin' ? t('err_wrong_pin') : t('err_generic')), 'error'); return; }
+  batch = { on: false, sel: {} };
+  toast(t('batch_done', { n: d.done.length }) + (d.skipped.length ? ' ' + t('batch_skip', { n: d.skipped.length }) : ''), d.done.length ? 'success' : '');
+  await loadMine(); loadPublic();
+}
+
+/* ---------- receipt (image / PDF) ---------- */
+function receiptRef(bid, sid, at){ return 'OB-' + bid + '-' + sid + '-' + Math.floor(Date.parse(at) / 1000).toString(36).toUpperCase(); }
+function wrapText(g, text, x, y, maxW, lh, maxLines){
+  const words = String(text).split(/\s+/), lines = []; let cur = '';
+  words.forEach(function(w){
+    const test = cur ? cur + ' ' + w : w;
+    if(g.measureText(test).width > maxW && cur){ lines.push(cur); cur = w; } else cur = test;
+  });
+  if(cur) lines.push(cur);
+  if(maxLines && lines.length > maxLines){ lines.length = maxLines; lines[maxLines - 1] = lines[maxLines - 1].replace(/.{0,3}$/, '...'); }
+  lines.forEach(function(l, i){ g.fillText(l, x, y + i * lh); });
+  return lines.length;
+}
+async function receiptCanvas(R){
+  try { if(document.fonts && document.fonts.load){ await Promise.all([document.fonts.load('600 30px "Noto Sans Thai"'), document.fonts.load('600 30px Inter'), document.fonts.load('500 24px "JetBrains Mono"')]); } } catch(e) {}
+  const W = 1200, H = 800, c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d'), F = "'Inter','Noto Sans Thai',system-ui,sans-serif";
+  g.fillStyle = '#eef3f8'; g.fillRect(0, 0, W, H);
+  const rr = function(x, y, w, h, r){ g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); };
+  g.save(); g.shadowColor = 'rgba(26,46,74,.22)'; g.shadowBlur = 40; g.shadowOffsetY = 14; g.fillStyle = '#fff'; rr(50, 40, W - 100, H - 80, 28); g.fill(); g.restore();
+  g.save(); rr(50, 40, W - 100, H - 80, 28); g.clip();
+  const gr = g.createLinearGradient(50, 40, W - 50, 220); gr.addColorStop(0, '#15263f'); gr.addColorStop(1, '#1e4d8c');
+  g.fillStyle = gr; g.fillRect(50, 40, W - 100, 180);
+  g.fillStyle = '#2a9d8f'; g.fillRect(50, 216, W - 100, 6);
+  g.restore();
+  g.fillStyle = '#2a9d8f'; g.beginPath(); g.arc(138, 130, 42, 0, Math.PI * 2); g.fill();
+  g.strokeStyle = '#fff'; g.lineWidth = 8; g.lineCap = 'round'; g.lineJoin = 'round'; g.beginPath(); g.moveTo(118, 132); g.lineTo(134, 148); g.lineTo(162, 114); g.stroke();
+  g.fillStyle = '#fff'; g.textBaseline = 'alphabetic';
+  g.font = '700 46px ' + F; g.fillText(t('rc_title'), 206, 128);
+  g.font = '500 24px ' + F; g.fillStyle = '#c3d0e2'; g.fillText('OPS Bulletin Acknowledgement', 206, 170);
+  let y = 292;
+  const lab = function(txt, yy){ g.font = '600 20px ' + F; g.fillStyle = '#6b7a90'; g.fillText(txt.toUpperCase(), 100, yy); };
+  lab(t('rc_bul'), y);
+  g.font = '700 40px ' + F; g.fillStyle = '#1a2e4a'; g.fillText(R.number, 100, y + 46);
+  g.font = '500 28px ' + F; g.fillStyle = '#374558';
+  const nl = wrapText(g, R.title, 100, y + 90, W - 200, 38, 2);
+  y = y + 90 + nl * 38 + 28;
+  lab(t('rc_name'), y);
+  g.font = '700 34px ' + F; g.fillStyle = '#1a2e4a'; g.fillText(R.name + '  (' + R.division + ')', 100, y + 44);
+  y += 98;
+  lab(t('rc_time'), y);
+  g.font = '600 30px ' + F; g.fillStyle = '#1a2e4a'; g.fillText(fmtTime(R.at) + ' (GMT+7)', 100, y + 42);
+  g.font = '600 22px ' + F; g.fillStyle = R.late ? '#a3392f' : '#3f6b50'; g.fillText(R.late ? t('rc_late') : t('rc_ontime'), 100, y + 78);
+  g.font = '600 20px ' + F; g.fillStyle = '#6b7a90'; g.textAlign = 'right'; g.fillText(t('rc_ref').toUpperCase(), W - 100, 292);
+  g.font = '500 30px "JetBrains Mono",monospace'; g.fillStyle = '#1a2e4a'; g.fillText(receiptRef(R.bid, R.sid, R.at), W - 100, 336); g.textAlign = 'left';
+  g.strokeStyle = '#d5dee9'; g.lineWidth = 2; g.beginPath(); g.moveTo(100, H - 120); g.lineTo(W - 100, H - 120); g.stroke();
+  g.font = '500 20px ' + F; g.fillStyle = '#6b7a90'; g.fillText(t('rc_foot'), 100, H - 84);
+  return c;
+}
+let RC = {};
+async function openReceipt(R){
+  RC = R;
+  openModal('<h2>' + esc(t('rc_title')) + '</h2>' + spinner());
+  const c = await receiptCanvas(R);
+  RC.canvas = c;
+  openModal('<h2>' + esc(t('rc_title')) + '</h2><img alt="" style="width:100%;border-radius:12px;border:1px solid #d5dee9" src="' + c.toDataURL('image/png') + '">' +
+    '<div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn ghost" onclick="closeModal()">' + esc(t('cancel')) + '</button>' +
+    '<button class="btn ghost" onclick="saveReceipt(\'pdf\')">' + ico('file', 16) + esc(t('rc_pdf')) + '</button>' +
+    '<button class="btn" onclick="saveReceipt(\'png\')">' + ico('download', 16) + esc(t('rc_img')) + '</button></div>');
+}
+function receiptName(ext){ return 'OPS-Bulletin-Receipt-' + safeTag(RC.number) + '.' + ext; }
+async function saveReceipt(kind){
+  if(!RC || !RC.canvas) return;
+  let blob, name = receiptName(kind);
+  if(kind === 'png'){
+    blob = await new Promise(function(res){ RC.canvas.toBlob(res, 'image/png'); });
+  } else {
+    try { await loadPdfLibs(); } catch(e){ toast(t('unavailable'), 'error'); return; }
+    const jsPDF = window.jspdf.jsPDF, w = RC.canvas.width / 2, h = RC.canvas.height / 2;
+    const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [w, h], compress: true });
+    pdf.addImage(RC.canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, w, h);
+    blob = pdf.output('blob');
+  }
+  const file = new File([blob], name, { type: blob.type });
+  if(navigator.canShare && navigator.canShare({ files: [file] })){
+    try { await navigator.share({ files: [file], title: name }); return; } catch(e){ if(e && e.name === 'AbortError') return; }
+  }
+  saveBlob(blob, name);
+}
+function receiptFromList(id){
+  const b = (me.list || []).find(function(x){ return x.id === id; }); if(!b || !b.acknowledged_at) return;
+  const dl = b.eff_deadline || b.deadline;
+  openReceipt({ bid: b.id, sid: me.id, number: b.number, title: b.title, name: me.name, division: me.division, at: b.acknowledged_at, late: bkkDate(b.acknowledged_at) > dl });
+}
+function receiptFromResult(){
+  const b = pub.bulletins.find(function(x){ return x.id === curB; }); if(!b || !result) return;
+  openReceipt({ bid: b.id, sid: result.sid, number: b.number, title: b.title, name: result.name, division: result.division || '', at: result.at, late: !!result.late });
+}
+
+/* ---------- Terminal tab (home for the other OPS apps, later) ---------- */
+function viewTerminal(){
+  return banner('grid', t('tm_eye'), t('tm_title'), t('tm_desc')) +
+    '<div class="card center csoon"><div class="csi">' + ico('grid', 34) + '</div><h2 class="cst" style="justify-content:center">' + esc(t('tm_soon')) + '</h2><p class="muted" style="margin:0">' + esc(t('tm_sub')) + '</p></div>' + installCardHTML();
+}
+
+/* ---------- quick search (Ctrl+K / the search button) ---------- */
+function openSearch(){
+  openModal('<div class="qsbox">' + ico('search', 18) + '<input id="qsIn" type="text" autocomplete="off" placeholder="' + esc(t('search_ph')) + '" oninput="qsRun()" onkeydown="qsKey(event)"></div><div id="qsRes" class="qsres"></div>');
+  qsRun(); setTimeout(function(){ const e = $('qsIn'); if(e) e.focus(); }, 30);
+}
+let qsItems = [], qsSel = 0;
+function qsRun(){
+  const q = (($('qsIn') || {}).value || '').trim().toLowerCase(), out = [];
+  const has = function(s){ return !q || String(s).toLowerCase().indexOf(q) >= 0; };
+  const bl = (pub.bulletins || []).filter(function(b){ return has(b.number + ' ' + b.title); }).slice(0, 8);
+  bl.forEach(function(b){ out.push({ g: 'search_b', ico: 'file', a: b.number, b: b.title, go: 'qsGoB(' + b.id + ')' }); });
+  if(q && (isCT() || (me && me.roles && me.roles.head_of))){
+    (staffList || []).filter(function(s){ return has(s.name + ' ' + s.division); }).slice(0, 6).forEach(function(s){ out.push({ g: 'search_p', ico: 'users', a: s.name, b: s.division, go: 'qsGoP(' + s.id + ')' }); });
+  }
+  const pages = [['ack', t('tab_ack'), 'check'], ['overview', t('tab_overview'), 'chart'], ['team', t('tab_team'), 'users'], ['admin', t('tab_admin'), 'lock'], ['terminal', t('tab_terminal'), 'grid']];
+  pages.filter(function(p){ return has(p[1]); }).forEach(function(p){ out.push({ g: 'search_pg', ico: p[2], a: p[1], b: '', go: 'qsGoT(\'' + p[0] + '\')' }); });
+  qsItems = out; qsSel = 0; qsDraw();
+}
+function qsDraw(){
+  const el = $('qsRes'); if(!el) return;
+  if(!qsItems.length){ el.innerHTML = '<div class="hint">' + esc(t('search_none')) + '</div>'; return; }
+  let h = '', last = '';
+  qsItems.forEach(function(it, i){
+    if(it.g !== last){ h += '<div class="qsg">' + esc(t(it.g)) + '</div>'; last = it.g; }
+    h += '<div class="qsi' + (i === qsSel ? ' on' : '') + '" onclick="' + it.go + '">' + ico(it.ico, 16) + '<b>' + esc(it.a) + '</b><span class="muted">' + esc(it.b) + '</span></div>';
+  });
+  el.innerHTML = h;
+}
+function qsKey(e){
+  if(e.key === 'ArrowDown'){ e.preventDefault(); qsSel = Math.min(qsItems.length - 1, qsSel + 1); qsDraw(); }
+  else if(e.key === 'ArrowUp'){ e.preventDefault(); qsSel = Math.max(0, qsSel - 1); qsDraw(); }
+  else if(e.key === 'Enter'){ e.preventDefault(); const it = qsItems[qsSel]; if(it) new Function(it.go)(); }
+  else if(e.key === 'Escape') closeModal();
+}
+function qsGoB(id){ closeModal(); tab = 'ack'; selectBulletin(id); if(me) openMine(id); window.scrollTo(0, 0); }
+function qsGoT(k){ closeModal(); setTab(k); }
+function qsGoP(id){
+  closeModal(); const s = (staffList || []).find(function(x){ return x.id === id; });
+  tab = 'admin'; adTab = 'staff'; if(s){ lsGet('stf', '').q = s.name; }
+  setTab('admin');
+}
+document.addEventListener('keydown', function(e){
+  if((e.ctrlKey || e.metaKey) && String(e.key).toLowerCase() === 'k'){ e.preventDefault(); openSearch(); }
+});
+
+/* ====================== V3: CT SCREENS (quiz editor, QR, revised bulletins, leave, backup, batch) ====================== */
+function adBulletinById(id){ return (admin && admin.bulletins || []).find(function(x){ return x.id === id; }); }
+function pendingOf(bid){
+  const acked = {}; admin.acks.forEach(function(a){ if(a.b === bid) acked[a.s] = true; });
+  return admin.required.filter(function(p){ return p[0] === bid && !acked[p[1]]; }).map(function(p){ return p[1]; });
+}
+function revOptions(selfId, cur){
+  return (admin.bulletins || []).filter(function(b){ return b.id !== selfId; }).map(function(b){
+    return '<option value="' + b.id + '"' + (cur === b.id ? ' selected' : '') + '>' + esc(b.number) + ' - ' + esc(b.title.slice(0, 60)) + '</option>';
+  }).join('');
+}
+function revFields(p, selfId, cur, reack){
+  return '<div class="cols" style="margin-top:14px"><div><label class="lbl" style="margin-top:0">Revises an earlier bulletin (optional)</label><select id="' + p + 'Rev" onchange="revToggle(\'' + p + '\')"><option value="">Not a revision</option>' + revOptions(selfId, cur) + '</select></div>' +
+    '<div id="' + p + 'ReackBox" style="display:' + (cur ? 'block' : 'none') + '"><label class="lbl" style="margin-top:0">Who must acknowledge the revision?</label><select id="' + p + 'Reack"><option value="1"' + (reack !== false ? ' selected' : '') + '>Everyone, again</option><option value="0"' + (reack === false ? ' selected' : '') + '>Only people who have not acknowledged the old one</option></select></div></div>' +
+    '<div class="muted" style="margin-top:6px;font-size:12.5px">The old bulletin is marked "Superseded" and is no longer asked of anyone who had not acknowledged it. Acknowledgments already recorded stay in the history.</div>';
+}
+function revToggle(p){ const b = $(p + 'ReackBox'); if(b) b.style.display = val(p + 'Rev') ? 'block' : 'none'; }
+function bulletinChips(b){
+  let o = '';
+  if(b.supersedes){ const old = adBulletinById(b.supersedes); o += ' <span class="chip blue">Revises ' + esc(old ? old.number : '#' + b.supersedes) + '</span>'; }
+  const nb = (admin.bulletins || []).find(function(x){ return x.supersedes === b.id; });
+  if(nb) o += ' <span class="chip grey">Superseded by ' + esc(nb.number) + '</span>';
+  if(b.quiz_required) o += ' <span class="chip violet">Understanding check ' + (b.pass_mark || 80) + '%</span>';
+  return o;
+}
+
+/* ---------- understanding check editor ---------- */
+let QE = null;
+async function adQuiz(id){
+  const b = adBulletinById(id); if(!b) return;
+  openModal('<h2>Understanding check</h2>' + spinner());
+  const r = await rpc('ack_admin_get_quiz', { p_staff_id: me.id, p_pin: me.pin, p_bulletin: id });
+  if(!adminOk(r)){ closeModal(); return; }
+  const d = r.data;
+  QE = { id: id, number: b.number, enabled: !!d.enabled, pass: d.pass_mark || 80,
+         qs: (d.questions || []).map(function(q){ return { q: q.q, opts: q.options.slice(), correct: q.correct }; }) };
+  if(!QE.qs.length) QE.qs.push({ q: '', opts: ['', ''], correct: 0 });
+  qeRender();
+}
+function qeRender(){
+  if(!QE) return;
+  const m = document.querySelector('#modalRoot .modal'), top = m ? m.scrollTop : 0;
+  let h = '<h2>Understanding check</h2><div class="muted" style="margin:-4px 0 10px">' + esc(QE.number) + '</div>' +
+    '<label class="swrow"><input type="checkbox" ' + (QE.enabled ? 'checked' : '') + ' onchange="QE.enabled=this.checked"><span><b>Require this check before staff can acknowledge</b><br><span class="muted">Staff must reach the pass mark. They can try as many times as they need. Every attempt and score is kept.</span></span></label>' +
+    '<div class="cols" style="margin-top:12px"><div><label class="lbl" style="margin-top:0">Pass mark (%)</label><input type="number" min="1" max="100" value="' + QE.pass + '" oninput="QE.pass=Number(this.value)"></div><div></div></div>';
+  QE.qs.forEach(function(q, i){
+    h += '<div class="qeq"><div class="row"><b class="grow">Question ' + (i + 1) + '</b><button class="btn sm c-red" onclick="qeDelQ(' + i + ')">Remove</button></div>' +
+      '<input type="text" placeholder="Question" value="' + esc(q.q) + '" oninput="QE.qs[' + i + '].q=this.value" style="margin-top:6px">';
+    q.opts.forEach(function(o, j){
+      h += '<div class="qeo"><label title="Right answer"><input type="radio" name="qec' + i + '" ' + (q.correct === j ? 'checked' : '') + ' onchange="QE.qs[' + i + '].correct=' + j + '"></label>' +
+        '<input type="text" placeholder="Answer ' + (j + 1) + '" value="' + esc(o) + '" oninput="QE.qs[' + i + '].opts[' + j + ']=this.value">' +
+        (q.opts.length > 2 ? '<button class="btn sm ghost" onclick="qeDelOpt(' + i + ',' + j + ')">&times;</button>' : '') + '</div>';
+    });
+    h += '<div class="muted" style="font-size:12.5px;margin:4px 0 6px">Tick the circle next to the right answer.</div>' + (q.opts.length < 5 ? '<button class="btn sm ghost" onclick="qeAddOpt(' + i + ')">' + ico('plus', 13) + 'Add answer</button>' : '') + '</div>';
+  });
+  h += '<div class="row" style="margin-top:12px">' + (QE.qs.length < 20 ? '<button class="btn ghost sm" onclick="qeAddQ()">' + ico('plus', 14) + 'Add question (' + QE.qs.length + ' of 20)</button>' : '<span class="muted">20 of 20 questions</span>') + '</div>' +
+    '<div class="row" style="justify-content:flex-end;margin-top:16px"><button class="btn ghost" onclick="QE=null;closeModal()">Cancel</button><button class="btn" onclick="qeSave()">Save</button></div>';
+  openModal(h);
+  const m2 = document.querySelector('#modalRoot .modal'); if(m2){ m2.classList.add('wide'); m2.scrollTop = top; }
+}
+function qeAddQ(){ if(QE.qs.length < 20){ QE.qs.push({ q: '', opts: ['', ''], correct: 0 }); qeRender(); const m = document.querySelector('#modalRoot .modal'); if(m) m.scrollTop = m.scrollHeight; } }
+function qeDelQ(i){ QE.qs.splice(i, 1); if(!QE.qs.length) QE.qs.push({ q: '', opts: ['', ''], correct: 0 }); qeRender(); }
+function qeAddOpt(i){ if(QE.qs[i].opts.length < 5){ QE.qs[i].opts.push(''); qeRender(); } }
+function qeDelOpt(i, j){ const q = QE.qs[i]; if(q.opts.length > 2){ q.opts.splice(j, 1); if(q.correct === j) q.correct = 0; else if(q.correct > j) q.correct--; qeRender(); } }
+async function qeSave(){
+  const qs = QE.qs.filter(function(q){ return q.q.trim() || q.opts.some(function(o){ return o.trim(); }); });
+  for(let i = 0; i < qs.length; i++){
+    if(!qs[i].q.trim() || qs[i].opts.some(function(o){ return !o.trim(); })){ toast('Question ' + (i + 1) + ': fill in the question and every answer (or remove the empty answer)', 'error'); return; }
+  }
+  if(QE.enabled && !qs.length){ toast('Add at least one question, or untick the requirement', 'error'); return; }
+  if(!(QE.pass >= 1 && QE.pass <= 100)){ toast('Pass mark must be between 1 and 100', 'error'); return; }
+  const r = await rpc('ack_admin_save_quiz', { p_staff_id: me.id, p_pin: me.pin, p_bulletin: QE.id, p_enabled: QE.enabled, p_pass_mark: QE.pass,
+    p_questions: qs.map(function(q){ return { q: q.q.trim(), options: q.opts.map(function(o){ return o.trim(); }), correct: q.correct }; }) });
+  if(!adminOk(r)) return;
+  QE = null; closeModal(); toast('Saved', 'success'); await reloadAll();
+}
+
+/* ---------- QR code per bulletin ---------- */
+function qrLink(id){ return appBase() + '?b=' + id; }
+function qrMatrix(url){ const q = qrcode(0, 'M'); q.addData(url); q.make(); return q; }
+function qrSvg(url, px){
+  const q = qrMatrix(url), n = q.getModuleCount(), m = 3, size = n + m * 2; let d = '';
+  for(let r = 0; r < n; r++) for(let c = 0; c < n; c++) if(q.isDark(r, c)) d += 'M' + (c + m) + ' ' + (r + m) + 'h1v1h-1z';
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + size + ' ' + size + '" width="' + px + '" height="' + px + '" shape-rendering="crispEdges"><rect width="' + size + '" height="' + size + '" fill="#fff"/><path d="' + d + '" fill="#10223a"/></svg>';
+}
+function qrCanvas(url, px){
+  const q = qrMatrix(url), n = q.getModuleCount(), m = 3, size = n + m * 2, cell = Math.floor(px / size), c = document.createElement('canvas');
+  c.width = c.height = cell * size; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.fillStyle = '#10223a';
+  for(let r = 0; r < n; r++) for(let k = 0; k < n; k++) if(q.isDark(r, k)) g.fillRect((k + m) * cell, (r + m) * cell, cell, cell);
+  return c;
+}
+function adQR(id){
+  const b = adBulletinById(id); if(!b) return;
+  const link = qrLink(id);
+  openModal('<h2>QR code</h2><div class="center">' + qrSvg(link, 240) + '</div><div class="center" style="margin-top:8px"><b>' + esc(b.number) + '</b><div class="muted">' + esc(b.title) + '</div></div>' +
+    '<div class="mono muted center" style="word-break:break-all;font-size:12px;margin-top:8px">' + esc(link) + '</div>' +
+    '<p class="muted" style="font-size:12.5px;margin:10px 0 0">The code points to the address above. If you later move the app to a new web address, print new codes.</p>' +
+    '<div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn ghost" onclick="closeModal()">Close</button><button class="btn ghost" onclick="qrPoster(' + id + ')">' + ico('print', 15) + 'Print poster</button><button class="btn" onclick="qrPng(' + id + ')">' + ico('download', 15) + 'Save image</button></div>');
+}
+function qrPng(id){
+  const b = adBulletinById(id); if(!b) return;
+  qrCanvas(qrLink(id), 900).toBlob(function(blob){ saveBlob(blob, 'QR-' + safeTag(b.number) + '.png'); });
+}
+function qrPoster(id){
+  const b = adBulletinById(id); if(!b) return;
+  const link = qrLink(id), F = 'font-family:Tahoma,Arial,sans-serif;';
+  $('printArea').innerHTML = '<div style="' + F + 'width:210mm;height:297mm;box-sizing:border-box;padding:22mm 18mm;text-align:center;color:#1a2e4a;background:#fff">' +
+    '<div style="font-size:13px;color:#5c6b80">' + esc(CFG.sigTh[0]) + ' &middot; ' + esc(CFG.sigTh[1]) + '</div><div style="font-size:12px;color:#5c6b80">' + esc(CFG.sigEn[0]) + ' &middot; ' + esc(CFG.sigEn[1]) + '</div>' +
+    '<div style="height:8px;margin:18px auto 26px;width:120px;border-radius:5px;background:linear-gradient(90deg,#1e4d8c,#2a9d8f)"></div>' +
+    '<div style="font-size:34px;font-weight:700">สแกนเพื่อรับทราบ</div><div style="font-size:30px;font-weight:700;margin-bottom:22px">Scan to acknowledge</div>' +
+    '<div style="display:inline-block;padding:10px;border:3px solid #1a2e4a;border-radius:18px">' + qrSvg(link, 420) + '</div>' +
+    '<div style="font-size:28px;font-weight:700;margin-top:26px">' + esc(b.number) + '</div><div style="font-size:19px;margin:6px 0 14px">' + esc(b.title) + '</div>' +
+    '<div style="font-size:16px;color:#374558">กำหนดรับทราบ / Deadline: <b>' + esc(fmtDateL(b.deadline, 'th')) + ' / ' + esc(fmtDateL(b.deadline, 'en')) + '</b></div>' +
+    '<div style="font-size:12px;color:#5c6b80;margin-top:24px;word-break:break-all">' + esc(link) + '</div></div>';
+  closeModal(); setTimeout(function(){ window.print(); }, 80);
+}
+
+/* ---------- leave windows ---------- */
+async function afterLeave(){
+  await loadExtra();
+  if(admin) comp = computeAdmin(admin, bkkToday());
+  if(head && head.raw) head.comp = computeAdmin(head.raw, bkkToday());
+  render();
+}
+function adLeave(sid){
+  const s = admin.staff.find(function(x){ return x.id === sid; }); if(!s) return;
+  const ls = ((me.extra && me.extra.leaves) || []).filter(function(l){ return l.s === sid; });
+  let h = '<h2>Leave - ' + esc(s.name) + '</h2><p class="muted" style="margin-top:-4px">While someone is on leave, their deadline moves later by the leave days that fall between the issue date and the original deadline. They show an "On leave" label.</p>';
+  if(ls.length){
+    h += '<div class="tablewrap"><table><thead><tr><th>From</th><th>To</th><th>Note</th><th></th></tr></thead><tbody>' + ls.map(function(l){
+      return '<tr' + (l.cancelled ? ' style="opacity:.55"' : '') + '><td>' + esc(fmtShort(l.from, 'en')) + '</td><td>' + esc(fmtShort(l.to, 'en')) + '</td><td>' + esc(l.note || '') + (l.cancelled ? ' <span class="chip grey">cancelled</span>' : '') + '</td><td>' + (l.cancelled ? '' : '<button class="btn sm c-red" onclick="adLeaveCancel(' + l.id + ',' + sid + ')">Cancel</button>') + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+  }
+  h += '<div class="cols"><div><label class="lbl">From</label><input id="lvFrom" type="date" value="' + bkkToday() + '"></div><div><label class="lbl">To</label><input id="lvTo" type="date" value="' + bkkToday() + '"></div></div>' +
+    '<label class="lbl">Note (optional)</label><input id="lvNote" type="text" placeholder="e.g. Annual leave">' +
+    '<div class="row" style="justify-content:flex-end;margin-top:16px"><button class="btn ghost" onclick="closeModal()">Close</button><button class="btn" onclick="adLeaveAdd(' + sid + ')">Add leave</button></div>';
+  openModal(h);
+}
+async function adLeaveAdd(sid){
+  const f = val('lvFrom'), t2 = val('lvTo');
+  if(!f || !t2 || t2 < f){ toast('Check the dates', 'error'); return; }
+  const r = await rpc('ack_admin_add_leave', { p_staff_id: me.id, p_pin: me.pin, p_target: sid, p_from: f, p_to: t2, p_note: val('lvNote') || null });
+  if(!adminOk(r)) return;
+  closeModal(); toast('Leave added', 'success'); await afterLeave();
+}
+async function adLeaveCancel(id, sid){
+  const r = await rpc('ack_admin_cancel_leave', { p_staff_id: me.id, p_pin: me.pin, p_leave: id });
+  if(!adminOk(r)) return;
+  toast('Leave cancelled'); await afterLeave(); adLeave(sid);
+}
+function leaveCardHTML(){
+  const today = bkkToday(), ls = ((me.extra && me.extra.leaves) || []).filter(function(l){ return !l.cancelled && l.to >= today; }).sort(function(a, b){ return a.from < b.from ? -1 : 1; });
+  let h = '<div class="card">' + ch('cal', 'Leave windows (current and upcoming)');
+  if(!ls.length) return h + '<div class="hint">Nobody has leave recorded. Use the Leave button on a person below.</div></div>';
+  h += '<div class="tablewrap"><table><thead><tr><th>Name</th><th>From</th><th>To</th><th>Note</th><th></th></tr></thead><tbody>' + ls.map(function(l){
+    const s = admin.staff.find(function(x){ return x.id === l.s; }) || { name: '#' + l.s, division: '' };
+    return '<tr><td><b>' + esc(s.name) + '</b> ' + divTag(s.division) + (l.from <= today ? ' <span class="chip lv">On leave</span>' : '') + '</td><td>' + esc(fmtShort(l.from, 'en')) + '</td><td>' + esc(fmtShort(l.to, 'en')) + '</td><td>' + esc(l.note || '') + '</td><td><button class="btn sm c-red" onclick="adLeaveCancel(' + l.id + ',' + l.s + ')">Cancel</button></td></tr>';
+  }).join('') + '</tbody></table></div></div>';
+  return h;
+}
+
+/* ---------- Super Admin: backup + acknowledge-several switch ---------- */
+function backupCardHTML(){
+  return '<div class="card">' + ch('shield', 'Backup') + '<p class="muted" style="margin-top:-4px">Downloads ALL data in one file: staff, bulletins, acknowledgments, understanding checks, leave and the audit log. <b>The file includes every PIN in readable form</b>, so keep it private (do not email it or put it in a shared folder). Give the file to Claude to rebuild the same data; the restore only adds missing rows and never deletes or overwrites.</p>' +
+    '<p><button class="btn" id="bkBtn" onclick="adBackup()">' + ico('download', 16) + 'Download backup</button></p><div id="bkMsg"></div></div>';
+}
+async function adBackup(){
+  if(!isSuper()) return;
+  const ok = await confirmDialog('Download backup?', 'The file contains every PIN in readable form. Store it somewhere private.', 'Download', 'Cancel');
+  if(!ok) return;
+  const b = $('bkBtn'); if(b) b.disabled = true;
+  const r = await rpc('ack_super_backup', { p_staff_id: me.id, p_pin: me.pin });
+  if(b) b.disabled = false;
+  if(!adminOk(r)) return;
+  const d = r.data, T = d.tables || {};
+  const name = 'ops-bulletin-backup-' + bkkToday() + '.json';
+  saveBlob(new Blob([JSON.stringify(d)], { type: 'application/json' }), name);
+  const rows = Object.keys(T).map(function(k){ return k.replace('ack_', '') + ': ' + (T[k] || []).length; }).join(' &middot; ');
+  const m = $('bkMsg'); if(m) m.innerHTML = '<div class="msg ok">Saved ' + esc(name) + '<br><span class="muted">' + rows + '</span></div>';
+  toast('Backup downloaded', 'success');
+}
+function batchCardHTML(){
+  const on = {}; ((me.extra && me.extra.batch_ids) || []).forEach(function(i){ on[i] = true; });
+  const act = admin.staff.filter(function(x){ return x.active; }).sort(function(a, b){ return cmpDiv(a.division, b.division) || a.name.localeCompare(b.name); });
+  const divs = []; act.forEach(function(x){ if(divs.indexOf(x.division) < 0) divs.push(x.division); });
+  let h = '<div class="card">' + ch('layers', 'Acknowledge several at once') + '<p class="muted" style="margin-top:-4px">Switch on for the people who may select several bulletins and acknowledge them in one go. It is off for everyone by default. Bulletins with an understanding check are always done one by one.</p>' +
+    '<div class="row" style="margin-bottom:10px">' + divs.map(function(d){
+      const m = act.filter(function(x){ return x.division === d; }), n = m.filter(function(x){ return on[x.id]; }).length;
+      return '<span class="batchdiv">' + divTag(d) + ' <span class="muted">' + n + '/' + m.length + '</span> <button class="btn sm ghost" data-d="' + esc(d) + '" onclick="adBatchDiv(this.dataset.d,true)">On</button><button class="btn sm ghost" data-d="' + esc(d) + '" onclick="adBatchDiv(this.dataset.d,false)">Off</button></span>';
+    }).join('') + '</div><div class="tablewrap"><table><thead><tr><th>Name</th><th>Division</th><th>Several at once</th></tr></thead><tbody>' +
+    act.map(function(x){ return '<tr><td><b>' + esc(x.name) + '</b></td><td>' + divTag(x.division) + '</td><td><label class="swrow" style="margin:0"><input type="checkbox" ' + (on[x.id] ? 'checked' : '') + ' onchange="adBatchSet([' + x.id + '],this.checked)"><span>' + (on[x.id] ? 'On' : 'Off') + '</span></label></td></tr>'; }).join('') + '</tbody></table></div></div>';
+  return h;
+}
+async function adBatchSet(ids, on){
+  const r = await rpc('ack_super_set_batch', { p_staff_id: me.id, p_pin: me.pin, p_targets: ids, p_on: !!on });
+  if(!adminOk(r)){ await loadExtra(); render(); return; }
+  await loadExtra(); render(); toast(on ? 'Switched on' : 'Switched off', 'success');
+}
+function adBatchDiv(d, on){
+  const ids = admin.staff.filter(function(x){ return x.active && x.division === d; }).map(function(x){ return x.id; });
+  adBatchSet(ids, on);
+}
+
+/* ====================== V3: INSIGHTS (response time, understanding checks, recognition, Monday brief) ====================== */
+function mean(a){ return a.length ? a.reduce(function(x, y){ return x + y; }, 0) / a.length : null; }
+function median(a){ if(!a.length) return null; const s = a.slice().sort(function(x, y){ return x - y; }), m = Math.floor(s.length / 2); return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; }
+function hrs(days){ return days === null || days === undefined ? '-' : (days < 1 ? (days * 24).toFixed(1) + ' h' : days.toFixed(1) + ' d'); }
+
+/* ---------- response-time analytics ---------- */
+function respData(c){
+  const all = [], byDiv = {}, byB = [], hours = new Array(24).fill(0), dow = new Array(7).fill(0);
+  c.bullets.forEach(function(b){
+    const bt = [];
+    b.ackedIds.forEach(function(sid){
+      const at = c.ackAt[b.id + '_' + sid], days = (Date.parse(at) - Date.parse(b.created_at)) / 86400000;
+      if(!(days >= 0)) return;
+      all.push(days); bt.push(days);
+      const dv = c.divAt[b.id + '_' + sid] || '-'; (byDiv[dv] = byDiv[dv] || []).push(days);
+      hours[Number(new Date(at).toLocaleString('en-GB', { timeZone: 'Asia/Bangkok', hour: '2-digit', hour12: false })) % 24]++;
+      dow[new Date(bkkDate(at) + 'T00:00:00Z').getUTCDay()]++;
+    });
+    byB.push({ b: b, n: bt.length, avg: mean(bt), med: median(bt) });
+  });
+  return { all: all, byDiv: byDiv, byB: byB, hours: hours, dow: dow };
+}
+function respCardHTML(c){
+  const d = respData(c);
+  if(!d.all.length) return '<div class="card">' + ch('clock', 'Response-time analytics') + '<div class="hint">No acknowledgments in this period yet.</div></div>';
+  const within = function(x){ return pct(d.all.filter(function(v){ return v <= x; }).length, d.all.length); };
+  let h = '<div class="card">' + ch('clock', 'Response-time analytics') + '<p class="muted" style="margin-top:-4px">How quickly people acknowledge, counted from the moment a bulletin is added. ' + d.all.length + ' acknowledgments.</p>' +
+    '<div class="kpis">' + kpi(hrs(median(d.all)), 'Median time', 'progress', 'clock') + kpi(hrs(mean(d.all)), 'Average time', '', 'clock') + kpi(within(1) + '%', 'Within 24 hours', 'done', 'check') + kpi(within(3) + '%', 'Within 3 days', 'done', 'check') + kpi(within(7) + '%', 'Within 7 days', '', 'check') + '</div>';
+  const divs = Object.keys(d.byDiv).sort(cmpDiv);
+  h += '<h3>By division</h3><div class="tablewrap"><table><thead><tr><th>Division</th><th>Acknowledgments</th><th>Median</th><th>Average</th><th>Within 24 h</th></tr></thead><tbody>' + divs.map(function(k){
+    const a = d.byDiv[k]; return '<tr><td>' + divTag(k) + '</td><td>' + a.length + '</td><td>' + hrs(median(a)) + '</td><td>' + hrs(mean(a)) + '</td><td>' + pct(a.filter(function(v){ return v <= 1; }).length, a.length) + '%</td></tr>';
+  }).join('') + '</tbody></table></div>';
+  h += '<h3>Time of day (Bangkok time)</h3>' + colChart(d.hours.map(function(v, i){ return { v: v, l: i % 3 === 0 ? String(i).padStart(2, '0') : '' }; }), '#1e4d8c', '#6aa6e0');
+  h += '<h3>Day of the week</h3>' + colChart(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(function(l, i){ return { v: d.dow[i], l: l }; }), '#2a9d8f', '#6cc9bd');
+  const rows = d.byB.filter(function(x){ return x.n; }).sort(function(a, b){ return a.b.created_at < b.b.created_at ? 1 : -1; }).slice(0, 12);
+  h += '<h3>Latest bulletins</h3><div class="tablewrap"><table><thead><tr><th>Bulletin</th><th>Acknowledged</th><th>Median</th><th>Average</th></tr></thead><tbody>' + rows.map(function(x){
+    return '<tr><td>' + bno(x.b, false) + '</td><td>' + x.n + ' / ' + x.b.required + '</td><td>' + hrs(x.med) + '</td><td>' + hrs(x.avg) + '</td></tr>'; }).join('') + '</tbody></table></div></div>';
+  return h;
+}
+
+/* ---------- understanding checks: summary + score log ---------- */
+function quizCardHTML(c){
+  const att = extraAttempts().filter(function(a){ return c.bullets.some(function(b){ return b.id === a.b; }); });
+  const qb = c.bullets.filter(function(b){ return b.quiz_required || att.some(function(a){ return a.b === b.id; }); });
+  let h = '<div class="card">' + ch('help', 'Understanding checks');
+  if(!qb.length) return h + '<div class="hint">No bulletin in this period has an understanding check.</div></div>';
+  h += '<div class="tablewrap"><table><thead><tr><th>Bulletin</th><th>Pass mark</th><th>People tried</th><th>Passed</th><th>Attempts</th><th>Avg. best score</th></tr></thead><tbody>' + qb.map(function(b){
+    const A = att.filter(function(a){ return a.b === b.id; }), ppl = {}; A.forEach(function(a){ (ppl[a.s] = ppl[a.s] || []).push(a); });
+    const ids = Object.keys(ppl), passed = ids.filter(function(i){ return ppl[i].some(function(a){ return a.passed; }); }).length;
+    const best = ids.map(function(i){ return Math.max.apply(null, ppl[i].map(function(a){ return a.pct; })); });
+    return '<tr><td>' + bno(b, false) + '</td><td>' + (b.pass_mark || '-') + '%</td><td>' + ids.length + ' / ' + b.required + '</td><td>' + passed + '</td><td>' + A.length + '</td><td>' + (best.length ? Math.round(mean(best)) + '%' : '-') + '</td></tr>';
+  }).join('') + '</tbody></table></div>';
+  LR.qlog = function(){
+    const st = lsGet('qlog', ''), q = (st.q || '').toLowerCase();
+    const rows = att.filter(function(a){
+      const s = c.staffById[a.s] || { name: '#' + a.s, division: '' };
+      return (!q || s.name.toLowerCase().indexOf(q) >= 0) && (!st.bulletin || String(a.b) === st.bulletin) && (!st.result || (st.result === 'pass') === !!a.passed);
+    }).slice(0, 80);
+    if(!rows.length) return '<div class="hint">No attempts match.</div>';
+    return '<div class="tablewrap"><table><thead><tr><th>When</th><th>Name</th><th>Bulletin</th><th>Score</th><th>Result</th></tr></thead><tbody>' + rows.map(function(a){
+      const s = c.staffById[a.s] || { name: '#' + a.s, division: '' }, b = c.bullets.find(function(x){ return x.id === a.b; });
+      return '<tr><td style="white-space:nowrap">' + esc(fmtDT(a.at, 'en')) + '</td><td>' + esc(s.name) + ' ' + divTag(s.division) + '</td><td>' + esc(b ? b.number : '#' + a.b) + '</td><td>' + a.score + '/' + a.total + ' (' + a.pct + '%)</td><td>' + (a.passed ? '<span class="chip done">Passed</span>' : '<span class="chip amber">Not yet</span>') + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+  };
+  h += '<h3>Score log</h3>' + lsBar('qlog', { ph: 'Filter by name', filters: [
+      { key: 'bulletin', label: 'All bulletins', options: qb.map(function(b){ return [String(b.id), b.number]; }) },
+      { key: 'result', label: 'All results', options: [['pass', 'Passed'], ['fail', 'Not passed']] }] }) + '<div id="qlog_body">' + LR.qlog() + '</div></div>';
+  return h;
+}
+
+/* ---------- quarterly recognition (positive only) ---------- */
+let rg = { q: null };
+function qKeyOf(iso){ const d = bkkDate(iso); return d.slice(0, 4) + '-Q' + (Math.floor((Number(d.slice(5, 7)) - 1) / 3) + 1); }
+function qLabel(k){ return k.replace('-', ' '); }
+function prevQ(k){ let y = Number(k.slice(0, 4)), q = Number(k.slice(6)); q--; if(q < 1){ q = 4; y--; } return y + '-Q' + q; }
+function recogCompute(d, qk){
+  return addPerf(computeAdminRaw(Object.assign({}, d, { bulletins: d.bulletins.filter(function(b){ return qKeyOf(b.created_at) === qk; }) }), bkkToday()));
+}
+function recogAwards(d, qk){
+  const c = recogCompute(d, qk), prev = recogCompute(d, prevQ(qk)), out = { c: c, perfect: [], fastest: [], day: [], improved: [], div: [] };
+  const P = c.people.filter(function(p){ return p.required > 0; });
+  out.perfect = P.filter(function(p){ return p.due >= 2 && p.late === 0 && p.overdue === 0; }).sort(function(a, b){ return b.due - a.due || a.name.localeCompare(b.name); });
+  out.day = P.filter(function(p){ return p.acked >= 2 && p.fast === p.acked; });
+  out.fastest = P.filter(function(p){ return p.times.length >= 2 && p.avg !== null; }).sort(function(a, b){ return a.avg - b.avg; }).slice(0, 5);
+  const pm = {}; prev.people.forEach(function(p){ pm[p.id] = p; });
+  out.improved = P.filter(function(p){ const o = pm[p.id]; return p.due >= 2 && o && o.due >= 2 && p.onTimeRate !== null && o.onTimeRate !== null && p.onTimeRate - o.onTimeRate >= 20; }).sort(function(a, b){ return (b.onTimeRate - pm[b.id].onTimeRate) - (a.onTimeRate - pm[a.id].onTimeRate); }).slice(0, 5);
+  const ds = c.divisions.filter(function(x){ return x.due >= 3; }).map(function(x){ return { d: x, r: pct(x.onTime, x.due) }; }).sort(function(a, b){ return b.r - a.r; });
+  out.div = ds.length ? ds.filter(function(x){ return x.r === ds[0].r && x.r > 0; }) : [];
+  return out;
+}
+function recogMsg(a, qk){
+  const nm = function(l){ return l.map(function(p){ return p.name; }).join(', '); };
+  let en = '*Quarterly recognition ' + qLabel(qk) + '*\nThank you to everyone who kept up with OPS Bulletins this quarter.\n', th = '*การยกย่องประจำไตรมาส ' + qLabel(qk) + '*\nขอขอบคุณทุกท่านที่ดำเนินการรับทราบ OPS Bulletin ได้อย่างดีเยี่ยมในไตรมาสนี้\n';
+  if(a.perfect.length){ en += '\n- Every bulletin on time: ' + nm(a.perfect); th += '\n- รับทราบทุกฉบับภายในกำหนด: ' + nm(a.perfect); }
+  if(a.fastest.length){ en += '\n- Fastest responders: ' + a.fastest.map(function(p){ return p.name + ' (' + hrs(p.avg) + ')'; }).join(', '); th += '\n- รับทราบรวดเร็วที่สุด: ' + a.fastest.map(function(p){ return p.name + ' (' + hrs(p.avg) + ')'; }).join(', '); }
+  if(a.day.length){ en += '\n- Always within 24 hours: ' + nm(a.day); th += '\n- รับทราบภายใน 24 ชั่วโมงทุกฉบับ: ' + nm(a.day); }
+  if(a.improved.length){ en += '\n- Most improved: ' + nm(a.improved); th += '\n- พัฒนาขึ้นมากที่สุด: ' + nm(a.improved); }
+  if(a.div.length){ en += '\n- Division of the quarter: ' + a.div.map(function(x){ return x.d.division; }).join(', '); th += '\n- Division ที่ดีเด่นประจำไตรมาส: ' + a.div.map(function(x){ return x.d.division; }).join(', '); }
+  return th + '\n\n' + en;
+}
+function recogCardHTML(d){
+  const qs = []; d.bulletins.forEach(function(b){ const k = qKeyOf(b.created_at); if(qs.indexOf(k) < 0) qs.push(k); }); qs.sort().reverse();
+  let h = '<div class="card">' + ch('award', 'Quarterly recognition');
+  if(!qs.length) return h + '<div class="hint">Recognition appears once bulletins have been issued.</div></div>';
+  if(!rg.q || qs.indexOf(rg.q) < 0) rg.q = qs[0];
+  const a = recogAwards(d, rg.q);
+  const sect = function(icon, title, desc, items, fmt){
+    if(!items.length) return '';
+    return '<div class="award"><div class="ai">' + ico(icon, 20) + '</div><div><div class="at">' + esc(title) + '</div><div class="muted" style="font-size:12.5px">' + esc(desc) + '</div><div style="margin-top:6px">' + items.map(function(x){ return '<span class="achip">' + fmt(x) + '</span>'; }).join('') + '</div></div></div>';
+  };
+  const nmf = function(p){ return esc(p.name) + ' ' + divTag(p.division); };
+  const body = sect('check', 'Every bulletin on time', 'Acknowledged all bulletins within the deadline (at least 2).', a.perfect, nmf) +
+    sect('clock', 'Fastest responders', 'Shortest average time to acknowledge.', a.fastest, function(p){ return nmf(p) + ' <span class="muted">' + esc(hrs(p.avg)) + '</span>'; }) +
+    sect('award', 'Always within 24 hours', 'Every bulletin acknowledged within a day.', a.day, nmf) +
+    sect('trend', 'Most improved', 'On-time rate up by 20 points or more compared with the previous quarter.', a.improved, nmf) +
+    sect('users', 'Division of the quarter', 'Highest on-time rate.', a.div, function(x){ return divTag(x.d.division) + ' <span class="muted">' + pct(x.d.onTime, x.d.due) + '% on time</span>'; });
+  h += '<div class="row" style="margin:-2px 0 10px"><span class="muted">Quarter</span><div class="seg">' + qs.slice(0, 6).map(function(k){ return '<button class="' + (k === rg.q ? 'on' : '') + '" onclick="setRg(\'' + k + '\')">' + esc(qLabel(k)) + '</button>'; }).join('') + '</div></div>';
+  h += body || '<div class="hint">No awards for ' + esc(qLabel(rg.q)) + ' yet. They appear as people acknowledge on time.</div>';
+  if(body) h += '<p style="margin-top:14px"><button class="btn ghost sm" onclick="copyRecog()">' + ico('copy', 14) + 'Copy as a message (Thai + English)</button></p>';
+  return h + '</div>';
+}
+function setRg(k){ rg.q = k; render(); }
+function copyRecog(){
+  const d = head && tab === 'team' ? head.raw : admin; if(!d) return;
+  copyText(recogMsg(recogAwards(d, rg.q), rg.q), 'Message copied');
+}
+
+/* ---------- Insights tab (CT) ---------- */
+function adInsightsHTML(){
+  return respCardHTML(comp) + quizCardHTML(comp) + recogCardHTML(admin);
+}
+
+/* ---------- Monday brief ---------- */
+let bf = { language: 'both', names: true };
+function bfSeg(key, opts){
+  return '<div class="seg" id="bseg_' + key + '">' + opts.map(function(o){ return '<button class="' + (String(bf[key]) === o[0] ? 'on' : '') + '" data-v="' + o[0] + '" onclick="setBf(\'' + key + '\',\'' + o[0] + '\')">' + o[1] + '</button>'; }).join('') + '</div>';
+}
+function setBf(k, v){ bf[k] = k === 'names' ? v === 'true' : v; const g = $('bseg_' + k); if(g) Array.prototype.forEach.call(g.querySelectorAll('button'), function(b){ b.classList.toggle('on', b.getAttribute('data-v') === String(bf[k])); }); refreshBrief(); }
+function adBriefHTML(){
+  return '<div class="card">' + ch('cal', 'Monday brief') + '<p class="muted" style="margin-top:-4px">A short summary for the start of the week: what is due, what is overdue, who to follow up. Edit it here, then copy it into LINE or an email.</p>' +
+    '<div class="row" style="gap:18px 24px;align-items:flex-start"><div><label class="lbl" style="margin-top:0">Language</label>' + bfSeg('language', [['both', 'Thai + English'], ['th', 'Thai'], ['en', 'English']]) + '</div>' +
+    '<div><label class="lbl" style="margin-top:0">Names</label>' + bfSeg('names', [['true', 'Show names'], ['false', 'Counts only']]) + '</div></div>' +
+    '<div id="bfPrev" class="preview" contenteditable="true" style="margin-top:12px"></div>' +
+    '<div class="row" style="margin-top:14px"><button class="btn" onclick="copyBody(\'bfPrev\')">' + ico('copy', 16) + 'Copy brief</button></div></div>';
+}
+function refreshBrief(){ const p = $('bfPrev'); if(p && admin) p.innerHTML = briefHTML(); }
+function briefHTML(){
+  const today = bkkToday(), c = addPerf(computeAdminRaw(admin, today));
+  const langs = bf.language === 'both' ? ['th', 'en'] : [bf.language];
+  return langs.map(function(L, i){ return (i ? '<hr style="border:0;border-top:1px solid #999;margin:14px 0">' : '') + briefBlock(L, c, today); }).join('');
+}
+function briefBlock(L, c, today){
+  const D = L === 'th', F = 'font-family:Tahoma,Arial,sans-serif;font-size:14px;';
+  const p = function(x){ return '<p style="' + F + 'margin:0 0 8px;">' + x + '</p>'; };
+  const nm = function(ids){ return ids.map(function(id){ const s = c.staffById[id]; return s ? s.name + (onLeaveToday(id) ? (D ? ' (อยู่ระหว่างลา)' : ' (on leave)') : '') : ''; }).filter(Boolean).sort().join(', '); };
+  const open = c.bullets.filter(function(b){ return b.pendingIds.length > 0; });
+  const week = open.filter(function(b){ return b.deadline >= today && b.daysLeft <= 7; }).sort(function(a, b){ return a.deadline < b.deadline ? -1 : 1; });
+  const over = open.filter(function(b){ return b.deadline < today; }).sort(function(a, b){ return a.deadline < b.deadline ? -1 : 1; });
+  let h = p('<b>' + (D ? 'สรุปประจำวันจันทร์: การรับทราบ OPS Bulletin' : 'Monday brief: OPS Bulletin acknowledgments') + ' - ' + esc(fmtDateL(today, L)) + '</b>');
+  h += p(D ? 'ภาพรวม: ยังไม่ได้รับทราบ ' + open.length + ' ฉบับ (ครบกำหนดภายใน 7 วัน ' + week.length + ' ฉบับ, เกินกำหนด ' + over.length + ' ฉบับ) อัตราการรับทราบรวม ' + c.totals.rate + '%'
+           : 'Overall: ' + open.length + ' bulletin(s) still open (' + week.length + ' due within 7 days, ' + over.length + ' overdue). Overall acknowledgment rate ' + c.totals.rate + '%.');
+  const line = function(b){
+    return '<li>' + esc(b.number) + ' - ' + esc(b.title) + ' (' + esc(dueText(b.deadline, today, L)) + '; ' + b.acked + '/' + b.required + ')' +
+      (bf.names ? '<br>&nbsp;&nbsp;' + (D ? 'ค้าง: ' : 'Pending: ') + esc(nm(b.pendingIds.slice(0, 40))) : (D ? ' - ค้าง ' + b.pendingIds.length + ' ราย' : ' - ' + b.pendingIds.length + ' pending')) + '</li>';
+  };
+  if(week.length) h += p('<b>' + (D ? 'ครบกำหนดภายใน 7 วัน' : 'Due within 7 days') + '</b>') + '<ul style="' + F + 'margin:0 0 8px 18px;padding:0;">' + week.map(line).join('') + '</ul>';
+  if(over.length) h += p('<b>' + (D ? 'เกินกำหนด' : 'Overdue') + '</b>') + '<ul style="' + F + 'margin:0 0 8px 18px;padding:0;">' + over.map(line).join('') + '</ul>';
+  const dv = c.divisions.filter(function(x){ return x.overdueN > 0; }).sort(function(a, b){ return b.overdueN - a.overdueN; });
+  if(dv.length) h += p((D ? '<b>Division ที่ควรติดตาม</b>: ' : '<b>Divisions to follow up</b>: ') + dv.map(function(x){ return esc(x.division) + ' (' + x.overdueN + ')'; }).join(', '));
+  const lv = c.people.filter(function(x){ return onLeaveToday(x.id); });
+  if(lv.length && bf.names) h += p((D ? '<b>อยู่ระหว่างลา</b>: ' : '<b>On leave now</b>: ') + esc(lv.map(function(x){ return x.name; }).sort().join(', ')));
+  if(!open.length) h += p(D ? 'ขณะนี้ไม่มี Bulletin ที่ค้างรับทราบ ขอบคุณทุกท่าน' : 'Nothing is outstanding right now. Thank you, everyone.');
+  return h;
+}
+
+/* ====================== V3: MEETING MODE, INSTALL, REMINDER STAGES ====================== */
+Object.assign(I.en, { wall_btn:'Meeting mode', wall_title:'OPS Bulletin Acknowledgement', wall_open:'Open bulletins', wall_overdue:'Overdue', wall_done:'Completed', wall_exit:'Exit', wall_all_done:'All bulletins are fully acknowledged.', wall_overall:'acknowledged', wall_live:'Live',
+  inst_title:'Install on your phone', inst_ios:'iPhone: open this page in Safari, tap Share, then "Add to Home Screen".', inst_and:'Android: open the browser menu, then choose "Install app" or "Add to Home screen".', inst_btn:'Install', inst_done:'This app is installed on this device.', inst_note:'It then opens full screen like an app, from its own icon.' });
+Object.assign(I.th, { wall_btn:'โหมดประชุม', wall_title:'การรับทราบ OPS Bulletin', wall_open:'Bulletin ที่เปิดอยู่', wall_overdue:'เกินกำหนด', wall_done:'ครบถ้วนแล้ว', wall_exit:'ออก', wall_all_done:'Bulletin ทุกฉบับได้รับทราบครบถ้วนแล้ว', wall_overall:'รับทราบแล้ว', wall_live:'สด',
+  inst_title:'ติดตั้งบนโทรศัพท์', inst_ios:'iPhone: เปิดหน้านี้ใน Safari แตะปุ่มแชร์ แล้วเลือก "เพิ่มไปยังหน้าจอโฮม" (Add to Home Screen)', inst_and:'Android: เปิดเมนูของเบราว์เซอร์ แล้วเลือก "ติดตั้งแอป" หรือ "เพิ่มลงในหน้าจอหลัก"', inst_btn:'ติดตั้ง', inst_done:'ติดตั้งแอปนี้บนอุปกรณ์เครื่องนี้แล้ว', inst_note:'หลังติดตั้งจะเปิดเต็มหน้าจอเหมือนแอป จากไอคอนของตัวเอง' });
+
+/* ---------- wall board ---------- */
+let WALL = null;
+function wallClock(){ return new Date().toLocaleString(locOf(lang), { timeZone: 'Asia/Bangkok', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+function openWall(){
+  if(!pubLoaded || pubError || WALL) return;
+  const d = document.createElement('div'); d.id = 'wall'; document.body.appendChild(d);
+  WALL = { el: d, page: 0, t1: null, t2: null, t3: null };
+  try { if(d.requestFullscreen) d.requestFullscreen().catch(function(){}); } catch(e) {}
+  wallDraw();
+  WALL.t1 = setInterval(function(){ const e = $('wallClock'); if(e) e.textContent = wallClock(); }, 15000);
+  WALL.t2 = setInterval(async function(){ const r = await rpc('ack_public_overview'); if(r && !r.error && WALL){ pub = r.data; wallDraw(); } }, 30000);
+  WALL.t3 = setInterval(function(){ if(WALL){ WALL.page++; wallDraw(); } }, 12000);
+  document.addEventListener('keydown', wallKey);
+}
+function wallKey(e){ if(e.key === 'Escape') closeWall(); }
+function closeWall(){
+  if(!WALL) return;
+  [WALL.t1, WALL.t2, WALL.t3].forEach(function(x){ if(x) clearInterval(x); });
+  document.removeEventListener('keydown', wallKey);
+  try { if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen(); } catch(e) {}
+  WALL.el.remove(); WALL = null;
+}
+function wallDraw(){
+  if(!WALL) return;
+  const today = bkkToday(), bl = (pub.bulletins || []).filter(function(b){ return Number(b.required) > 0 || Number(b.acked) > 0; }).map(function(b){ return Object.assign({}, b, { status: bulletinStatus(b.required, b.acked, b.deadline, today) }); });
+  const open = bl.filter(function(b){ return b.status !== 'done' && !b.superseded_by; }).sort(function(a, b){ return a.deadline < b.deadline ? -1 : 1; });
+  const done = bl.filter(function(b){ return b.status === 'done'; }).length, over = open.filter(function(b){ return b.status === 'overdue'; }).length;
+  const req = open.reduce(function(a, b){ return a + Number(b.required); }, 0), ack = open.reduce(function(a, b){ return a + Number(b.acked); }, 0);
+  const per = 4, pages = Math.max(1, Math.ceil(open.length / per)), pg = WALL.page % pages, show = open.slice(pg * per, pg * per + per);
+  const divsOf = function(id){ return (pub.divisions || []).filter(function(x){ return x.bulletin_id === id; }).sort(function(a, b){ return cmpDiv(a.division, b.division); }); };
+  let h = '<div class="wtop"><div><div class="wt1">' + esc(t('wall_title')) + '</div><div class="wt2" id="wallClock">' + esc(wallClock()) + '</div></div><div class="row"><span class="wlive"><i></i>' + esc(t('wall_live')) + '</span><button class="wbtn" onclick="closeWall()">' + esc(t('wall_exit')) + '</button></div></div>';
+  h += '<div class="wgrid"><div class="wside">' + donutSegs([seg('done', ack), seg('prog', Math.max(0, req - ack))], pct(ack, req) + '%', t('wall_overall'), 230) +
+    '<div class="wk"><div><b>' + open.length + '</b><span>' + esc(t('wall_open')) + '</span></div><div class="' + (over ? 'bad' : '') + '"><b>' + over + '</b><span>' + esc(t('wall_overdue')) + '</span></div><div><b>' + done + '</b><span>' + esc(t('wall_done')) + '</span></div></div></div>';
+  h += '<div class="wmain">';
+  if(!open.length) h += '<div class="wempty">' + ico('check', 54) + '<div>' + esc(t('wall_all_done')) + '</div></div>';
+  show.forEach(function(b){
+    const p = pct(b.acked, b.required), st = b.status;
+    h += '<div class="wcard ' + st + '"><div class="wch"><div><b>' + esc(b.number) + '</b><div class="wct">' + esc(b.title) + '</div></div><div class="wcp">' + p + '%</div></div>' +
+      '<div class="wbar"><span style="width:' + p + '%"></span></div><div class="wcm">' + esc(t('deadline')) + ' ' + esc(fmtShort(b.deadline)) + ' &middot; ' + esc(dueText(b.deadline, today, lang)) + ' &middot; ' + b.acked + '/' + b.required + '</div>' +
+      '<div class="wdivs">' + divsOf(b.id).map(function(x){ const c = divCol(x.division), q = pct(x.acked, x.required); return '<div class="wdv"><span style="color:' + c[3] + '">' + esc(x.division) + '</span><div class="wdb"><span style="width:' + q + '%;background:linear-gradient(90deg,' + c[2] + ',' + c[3] + ')"></span></div><em>' + q + '%</em></div>'; }).join('') + '</div></div>';
+  });
+  h += '</div></div>' + (pages > 1 ? '<div class="wdots">' + Array.apply(null, Array(pages)).map(function(_, i){ return '<i class="' + (i === pg ? 'on' : '') + '"></i>'; }).join('') + '</div>' : '');
+  WALL.el.innerHTML = h;
+}
+
+/* ---------- install on phone ---------- */
+let deferredInstall = null;
+window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferredInstall = e; if(tab === 'terminal') render(); });
+window.addEventListener('appinstalled', function(){ deferredInstall = null; if(tab === 'terminal') render(); });
+function isStandalone(){ try { return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true; } catch(e){ return false; } }
+function installCardHTML(){
+  let h = '<div class="card"><h2>' + esc(t('inst_title')) + '</h2>';
+  if(isStandalone()) return h + '<div class="msg ok" style="margin-top:0">' + ico('check', 15) + ' ' + esc(t('inst_done')) + '</div></div>';
+  h += '<p class="muted" style="margin-top:-4px">' + esc(t('inst_note')) + '</p><div class="instrow"><div class="inst">' + ico('mobile', 20) + '<span>' + esc(t('inst_ios')) + '</span></div><div class="inst">' + ico('mobile', 20) + '<span>' + esc(t('inst_and')) + '</span></div></div>';
+  if(deferredInstall) h += '<p><button class="btn" onclick="doInstall()">' + ico('download', 16) + esc(t('inst_btn')) + '</button></p>';
+  return h + '</div>';
+}
+async function doInstall(){ if(!deferredInstall) return; deferredInstall.prompt(); try { await deferredInstall.userChoice; } catch(e) {} deferredInstall = null; render(); }
+(function(){
+  try {
+    const icon = (document.querySelector('link[rel="apple-touch-icon"]') || {}).href;
+    const base = appBase(), m = { name: 'OPS Bulletin Acknowledgement', short_name: 'OPS Bulletin', start_url: base, scope: base.replace(/[^\/]*$/, ''), display: 'standalone', background_color: '#15263f', theme_color: '#1a2e4a', icons: icon ? [{ src: icon, sizes: '180x180', type: 'image/png', purpose: 'any' }] : [] };
+    const l = document.createElement('link'); l.rel = 'manifest'; l.href = 'data:application/manifest+json,' + encodeURIComponent(JSON.stringify(m)); document.head.appendChild(l);
+  } catch(e) {}
+})();
+
+/* ---------- reminder stages (merged into the existing CT and Head email templates) ---------- */
+const STAGES = [['all', 'Standard'], ['before3', '3 days before'], ['due', 'Due today'], ['late3', '3 days late'], ['late7', '7 days late']];
+function stageFilter(st){
+  if(st === 'before3') return function(b){ return b.daysLeft >= 1 && b.daysLeft <= 3; };
+  if(st === 'due') return function(b){ return b.daysLeft === 0; };
+  if(st === 'late3') return function(b){ return b.daysLeft <= -3 && b.daysLeft >= -6; };
+  if(st === 'late7') return function(b){ return b.daysLeft <= -7; };
+  return null;
+}
+const STAGE_TAG = {
+  en: { before3: '[Reminder - due within 3 days]', due: '[Reminder - due today]', late3: '[Reminder - 3+ days overdue]', late7: '[Urgent reminder - 7+ days overdue]' },
+  th: { before3: '[เตือน - ครบกำหนดภายใน 3 วัน]', due: '[เตือน - ครบกำหนดวันนี้]', late3: '[เตือน - เกินกำหนด 3 วันขึ้นไป]', late7: '[เตือนเร่งด่วน - เกินกำหนด 7 วันขึ้นไป]' }
+};
+function stageSubject(subject, opt){
+  const st = opt.stage; if(!st || st === 'all') return subject;
+  const tag = opt.language === 'th' ? STAGE_TAG.th[st] : (opt.language === 'en' ? STAGE_TAG.en[st] : STAGE_TAG.en[st] + ' / ' + STAGE_TAG.th[st]);
+  return subject.replace(/^\[[^\]]*\]/, tag);
+}
+function stageLine(L, st, team, p){
+  if(!st || st === 'all') return '';
+  const T = {
+    en: { before3: 'Reminder (3 days before the deadline): the bulletins below are due within the next 3 days.', due: 'Reminder (due today): the bulletins below are due for acknowledgment today.', late3: 'Follow-up (3 or more days overdue): the bulletins below are 3 or more days past the deadline.', late7: 'Final reminder (7 or more days overdue): the bulletins below are 7 or more days past the deadline. Please acknowledge them as soon as possible.' },
+    th: { before3: 'แจ้งเตือนล่วงหน้า 3 วัน: Bulletin ตามรายการด้านล่างจะครบกำหนดรับทราบภายใน 3 วัน', due: 'แจ้งเตือนครบกำหนด: Bulletin ตามรายการด้านล่างครบกำหนดรับทราบในวันนี้', late3: 'ติดตามเกินกำหนด 3 วันขึ้นไป: Bulletin ตามรายการด้านล่างเกินกำหนดรับทราบตั้งแต่ 3 วันขึ้นไป', late7: 'ติดตามครั้งสุดท้าย (เกินกำหนด 7 วันขึ้นไป): Bulletin ตามรายการด้านล่างเกินกำหนดรับทราบตั้งแต่ 7 วันขึ้นไป โปรดดำเนินการโดยเร็วที่สุด' }
+  };
+  return p('<b>' + esc(T[L][st]) + '</b>');
+}
+function leaveNames(c, D){
+  const o = {};
+  Object.keys(c.staffById).forEach(function(k){ const s = c.staffById[k]; o[k] = Object.assign({}, s, { name: s.name + (onLeaveToday(s.id) ? (D ? ' (อยู่ระหว่างลา)' : ' (on leave)') : '') }); });
+  return o;
+}
+
+/* ====================== V3: MANAGEMENT REPORT ====================== */
+const RM = {
+en:{ title:'Management Report', sub:'Bulletin Acknowledgement Performance', period:'Reporting period', allyears:'All years', as_of:'Data as of', scope_ct:'All divisions', scope_tm:'Team', prep:'Prepared by', rev:'Reviewed by', sign:'Signature', name:'Name and position', date:'Date',
+  h_exec:'1. Executive summary', h_trend:'2. Year-by-year trend', h_div:'3. Division performance', h_ind:'4. Individual performance', h_bul:'5. Bulletins in this period', h_out:'6. Outstanding acknowledgments', h_quiz:'7. Understanding checks', cont:'(continued)',
+  k_b:'Bulletins issued', k_req:'Acknowledgments required', k_ack:'Acknowledged', k_rate:'Acknowledgment rate', k_ot:'On-time rate', k_avg:'Avg. time to acknowledge', k_ov:'Overdue bulletins now', k_st:'Staff in scope',
+  c_year:'Year', c_rank:'Rank', c_div:'Division', c_staff:'Staff', c_req:'Required', c_ack:'Ack.', c_rate:'Rate', c_ot:'On time', c_avg:'Avg. time', c_ov:'Overdue', c_name:'Name', c_quiz:'Quiz avg.', c_no:'No.', c_title:'Title', c_iss:'Issued', c_dl:'Deadline', c_prog:'Progress', c_st:'Status', c_pend:'Pending bulletins', c_att:'Attempts', c_tried:'People tried', c_pass:'Passed', c_best:'Avg. best score', c_pm:'Pass mark', c_bul:'Bulletin',
+  none_b:'No bulletins were issued in this period.', none_out:'No outstanding acknowledgments.', none_q:'No bulletin in this period has an understanding check.', overdue:'overdue',
+  n1:'During {p}, {b} bulletin(s) were issued, requiring {r} acknowledgments from {s} staff. {a} acknowledgments ({rate}%) have been recorded.',
+  n2:'Of the acknowledgments that have fallen due, {ot}% were completed by the deadline. The average time from issue to acknowledgment was {avg}.',
+  n3:'Highest on-time rate by division: {d}.', n4:'{o} bulletin(s) are currently overdue, and {w} staff member(s) have at least one overdue item.', n5:'No bulletin is currently overdue.',
+  fn:'On-time rate = acknowledgments completed by the deadline divided by acknowledgments that have fallen due. Deadlines include leave extensions. Average time is counted from the issue date. Quiz average = each person\'s best score per bulletin, averaged.' },
+th:{ title:'รายงานเพื่อการบริหาร', sub:'ผลการรับทราบ OPS Bulletin', period:'ช่วงเวลาของรายงาน', allyears:'ทุกปี', as_of:'ข้อมูล ณ วันที่', scope_ct:'ทุก Division', scope_tm:'ทีม', prep:'ผู้จัดทำ', rev:'ผู้ตรวจสอบ', sign:'ลายมือชื่อ', name:'ชื่อและตำแหน่ง', date:'วันที่',
+  h_exec:'1. สรุปสำหรับผู้บริหาร', h_trend:'2. แนวโน้มรายปี', h_div:'3. ผลการดำเนินงานรายหน่วยงาน (Division)', h_ind:'4. ผลการดำเนินงานรายบุคคล', h_bul:'5. Bulletin ในช่วงเวลานี้', h_out:'6. รายการที่ยังไม่ได้รับทราบ', h_quiz:'7. แบบทดสอบความเข้าใจ', cont:'(ต่อ)',
+  k_b:'จำนวน Bulletin ที่ออก', k_req:'จำนวนที่ต้องรับทราบ', k_ack:'รับทราบแล้ว', k_rate:'อัตราการรับทราบ', k_ot:'รับทราบภายในกำหนด', k_avg:'เวลาเฉลี่ยในการรับทราบ', k_ov:'Bulletin ที่เกินกำหนดขณะนี้', k_st:'จำนวนเจ้าหน้าที่',
+  c_year:'ปี', c_rank:'อันดับ', c_div:'Division', c_staff:'จำนวนคน', c_req:'ต้องรับทราบ', c_ack:'รับทราบ', c_rate:'อัตรา', c_ot:'ภายในกำหนด', c_avg:'เวลาเฉลี่ย', c_ov:'เกินกำหนด', c_name:'ชื่อ', c_quiz:'คะแนนทดสอบเฉลี่ย', c_no:'เลขที่', c_title:'เรื่อง', c_iss:'วันที่ออก', c_dl:'กำหนดรับทราบ', c_prog:'ความคืบหน้า', c_st:'สถานะ', c_pend:'Bulletin ที่ค้างอยู่', c_att:'จำนวนครั้ง', c_tried:'ผู้ทำแบบทดสอบ', c_pass:'ผ่าน', c_best:'คะแนนสูงสุดเฉลี่ย', c_pm:'เกณฑ์ผ่าน', c_bul:'Bulletin',
+  none_b:'ไม่มี Bulletin ที่ออกในช่วงเวลานี้', none_out:'ไม่มีรายการที่ค้างรับทราบ', none_q:'ไม่มี Bulletin ในช่วงเวลานี้ที่มีแบบทดสอบความเข้าใจ', overdue:'เกินกำหนด',
+  n1:'ในช่วง {p} มี Bulletin ที่ออกทั้งสิ้น {b} ฉบับ ต้องรับทราบรวม {r} รายการ จากเจ้าหน้าที่ {s} คน บันทึกการรับทราบแล้ว {a} รายการ ({rate}%)',
+  n2:'ในจำนวนรายการที่ถึงกำหนดแล้ว รับทราบภายในกำหนดร้อยละ {ot} และใช้เวลาเฉลี่ยตั้งแต่วันที่ออก Bulletin จนถึงวันที่รับทราบ {avg}',
+  n3:'Division ที่มีอัตราการรับทราบภายในกำหนดสูงสุด: {d}', n4:'ขณะนี้มี Bulletin เกินกำหนด {o} ฉบับ และมีเจ้าหน้าที่ {w} คนที่มีรายการเกินกำหนดอย่างน้อย 1 รายการ', n5:'ขณะนี้ไม่มี Bulletin ที่เกินกำหนด',
+  fn:'อัตราการรับทราบภายในกำหนด = จำนวนที่รับทราบภายในกำหนด หารด้วยจำนวนรายการที่ถึงกำหนดแล้ว กำหนดรับทราบรวมการขยายเวลาจากการลาแล้ว เวลาเฉลี่ยนับจากวันที่ออก Bulletin คะแนนทดสอบเฉลี่ยคำนวณจากคะแนนสูงสุดของแต่ละบุคคลต่อ Bulletin' }
+};
+const MG = { years: [] };
+function mgYLabel(y, L){ return L === 'th' ? String(Number(y) + 543) : y; }
+function mgPeriod(sel, all, L){
+  const R2 = RM[L];
+  if(!sel.length) return '-';
+  const lab = sel.map(function(y){ return mgYLabel(y, L); });
+  if(sel.length === all.length && all.length > 1) return R2.allyears + ' (' + lab[0] + ' - ' + lab[lab.length - 1] + ')';
+  return lab.join(', ');
+}
+function mgData(scope){
+  const raw = scope === 'team' && head ? head.raw : admin; if(!raw) return null;
+  const today = bkkToday(), all = yearsOf(raw.bulletins).sort();
+  const sel = (MG.years.length ? all.filter(function(y){ return MG.years.indexOf(y) >= 0; }) : all);
+  const mk = function(ys){ return addPerf(computeAdminRaw(Object.assign({}, raw, { bulletins: raw.bulletins.filter(function(b){ return ys.indexOf(bYear(b)) >= 0; }) }), today)); };
+  const c = mk(sel), yearly = sel.map(function(y){ return { y: y, c: mk([y]) }; });
+  const dv = {};
+  c.bullets.forEach(function(b){ b.reqIds.forEach(function(sid){
+    const d = c.divAt[b.id + '_' + sid] || (c.staffById[sid] || {}).division || '-', o = dv[d] = dv[d] || { times: [], items: 0 }, at = c.ackAt[b.id + '_' + sid];
+    if(at) o.times.push((Date.parse(at) - Date.parse(b.created_at)) / 86400000); else if(effDeadline(b, sid) < today) o.items++;
+  }); });
+  const att = extraAttempts(), inSel = {}; c.bullets.forEach(function(b){ inSel[b.id] = b; });
+  const best = {}; att.forEach(function(a){ if(!inSel[a.b]) return; const k = a.b + '_' + a.s; if(best[k] === undefined || a.pct > best[k]) best[k] = a.pct; });
+  const qpp = {}; Object.keys(best).forEach(function(k){ const s = k.split('_')[1]; (qpp[s] = qpp[s] || []).push(best[k]); });
+  const people = c.people.filter(function(p){ return p.required > 0; }).sort(function(a, b){ return cmpDiv(a.division, b.division) || a.name.localeCompare(b.name); });
+  const overdueItems = c.bullets.reduce(function(a, b){ return a + (b.status === 'overdue' ? 1 : 0); }, 0);
+  return { raw: raw, today: today, all: all, sel: sel, c: c, yearly: yearly, dv: dv, att: att, best: best, qpp: qpp, people: people, overdueItems: overdueItems, team: scope === 'team' };
+}
+function mgDur(d, L){ const s = fmtDur(d); return L === 'th' ? s.replace(/ d$/, ' วัน').replace(/ h$/, ' ชม.') : s; }
+function mgQuizAvg(M, sid){ const a = M.qpp[sid]; return a && a.length ? Math.round(mean(a)) : null; }
+function mgPersonAvg(p){ return p.avg; }
+function mgDivAvg(M, d){ const o = M.dv[d]; return o && o.times.length ? mean(o.times) : null; }
+function mgSummary(M, L){
+  const R2 = RM[L], c = M.c, T = c.totals, rk = divRanking(c).filter(function(x){ return x.rank === 1; });
+  const rep = function(s, o){ return s.replace(/\{(\w+)\}/g, function(_, k){ return o[k]; }); };
+  const lines = [rep(R2.n1, { p: mgPeriod(M.sel, M.all, L), b: T.bulletins, r: T.sumReq, s: T.withReq, a: T.sumAck, rate: T.rate }),
+    rep(R2.n2, { ot: T.onTimeRate === null ? '-' : T.onTimeRate, avg: mgDur(T.avg, L) })];
+  if(!M.team && rk.length && rk[0].ot !== null) lines.push(rep(R2.n3, { d: rk.map(function(x){ return x.d.division; }).join(', ') + ' (' + Math.round(rk[0].ot * 100) + '%)' }));
+  lines.push(M.overdueItems ? rep(R2.n4, { o: M.overdueItems, w: T.withOverdue }) : R2.n5);
+  return lines;
+}
+function mgmtBlocks(L, scope){
+  const M = mgData(scope), R2 = RM[L], sig = (L === 'th' ? CFG.sigTh : CFG.sigEn), c = M.c, T = c.totals, blocks = [];
+  const who = M.team ? R2.scope_tm + ' ' + head.division : R2.scope_ct, period = mgPeriod(M.sel, M.all, L);
+  // cover
+  blocks.push('<section class="rpb nopad rpcover"><div class="cvo"><div class="cvt">' + esc(sig[0]) + '</div><div class="cvt s">' + esc(sig[1]) + '</div><div class="cvt s">' + esc(sig[2]) + '</div></div>' +
+    '<div class="cvm"><div class="cvk">' + esc(R2.sub) + '</div><h1>' + esc(R2.title) + '</h1><div class="cvr"></div><div class="cvp">' + esc(R2.period) + '</div><div class="cvy">' + esc(period) + '</div></div>' +
+    '<div class="cvf"><div><span>' + esc(L === 'th' ? 'ขอบเขต' : 'Scope') + '</span>' + esc(who) + '</div><div><span>' + esc(R2.as_of) + '</span>' + esc(fmtDateL(M.today, L)) + '</div></div></section>');
+  // 1. executive summary
+  blocks.push('<section class="rpb"><div class="rph">' + esc(R2.h_exec) + '</div><div class="rpkpis" style="padding:0 0 10px">' +
+    [[T.bulletins, R2.k_b, ''], [T.sumReq, R2.k_req, ''], [T.sumAck, R2.k_ack, 'g'], [T.rate + '%', R2.k_rate, 't']].map(function(k){ return '<div class="rpk ' + k[2] + '"><div class="n">' + k[0] + '</div><div class="l">' + esc(k[1]) + '</div></div>'; }).join('') + '</div>' +
+    '<div class="rpkpis" style="padding:0 0 14px">' +
+    [[rt(T.onTimeRate), R2.k_ot, 'g'], [mgDur(T.avg, L), R2.k_avg, 'b'], [M.overdueItems, R2.k_ov, 'r'], [T.withReq, R2.k_st, '']].map(function(k){ return '<div class="rpk ' + k[2] + '"><div class="n">' + k[0] + '</div><div class="l">' + esc(k[1]) + '</div></div>'; }).join('') + '</div>' +
+    '<ul class="rpul">' + mgSummary(M, L).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></section>');
+  // 2. trend
+  if(M.yearly.length > 1){
+    let h = '<section class="rpb"><div class="rph">' + esc(R2.h_trend) + '</div><table class="rpt"><thead><tr><th>' + esc(R2.c_year) + '</th><th>' + esc(R2.k_b) + '</th><th>' + esc(R2.c_req) + '</th><th>' + esc(R2.c_ack) + '</th><th>' + esc(R2.c_rate) + '</th><th>' + esc(R2.c_ot) + '</th><th>' + esc(R2.c_avg) + '</th><th>' + esc(R2.c_ov) + '</th></tr></thead><tbody>';
+    M.yearly.forEach(function(Y){ const t2 = Y.c.totals, od = Y.c.bullets.filter(function(b){ return b.status === 'overdue'; }).length;
+      h += '<tr><td><b>' + esc(mgYLabel(Y.y, L)) + '</b></td><td>' + t2.bulletins + '</td><td>' + t2.sumReq + '</td><td>' + t2.sumAck + '</td><td>' + t2.rate + '%</td><td>' + rt(t2.onTimeRate) + '</td><td>' + esc(mgDur(t2.avg, L)) + '</td><td>' + od + '</td></tr>'; });
+    h += '</tbody></table><div style="margin-top:14px">' + M.yearly.map(function(Y){ return '<div class="rpd"><span class="nm"><b>' + esc(mgYLabel(Y.y, L)) + '</b></span>' + rpBar(Y.c.totals.rate) + '<span class="v">' + Y.c.totals.rate + '%</span></div>'; }).join('') + '</div></section>';
+    blocks.push(h);
+  }
+  // 3. divisions
+  if(!M.team && c.divisions.length){
+    let h = '<section class="rpb"><div class="rph">' + esc(R2.h_div) + '</div><table class="rpt"><thead><tr><th>' + esc(R2.c_rank) + '</th><th>' + esc(R2.c_div) + '</th><th>' + esc(R2.c_staff) + '</th><th>' + esc(R2.c_req) + '</th><th>' + esc(R2.c_ack) + '</th><th>' + esc(R2.c_rate) + '</th><th>' + esc(R2.c_ot) + '</th><th>' + esc(R2.c_avg) + '</th><th>' + esc(R2.c_ov) + '</th></tr></thead><tbody>';
+    divRanking(c).forEach(function(x){ const d = x.d, o = M.dv[d.division] || { items: 0 };
+      h += '<tr><td><b>' + (x.rank === null ? '-' : x.rank) + '</b></td><td>' + esc(d.division) + '</td><td>' + d.people + '</td><td>' + d.required + '</td><td>' + d.acked + '</td><td>' + pct(d.acked, d.required) + '%</td><td>' + (x.ot === null ? '-' : Math.round(x.ot * 100) + '%') + '</td><td>' + esc(mgDur(mgDivAvg(M, d.division), L)) + '</td><td>' + o.items + '</td></tr>'; });
+    blocks.push(h + '</tbody></table></section>');
+  }
+  // 4. individuals
+  if(M.people.length){
+    chunk(M.people, 14).forEach(function(part, i){
+      let h = '<section class="rpb"><div class="rph">' + esc(R2.h_ind) + (i ? ' ' + esc(R2.cont) : '') + '</div><table class="rpt"><thead><tr><th>' + esc(R2.c_name) + '</th><th>' + esc(R2.c_div) + '</th><th>' + esc(R2.c_req) + '</th><th>' + esc(R2.c_ack) + '</th><th>' + esc(R2.c_ot) + '</th><th>' + esc(R2.c_avg) + '</th><th>' + esc(R2.c_ov) + '</th><th>' + esc(R2.c_quiz) + '</th></tr></thead><tbody>';
+      part.forEach(function(p){ const q = mgQuizAvg(M, p.id);
+        h += '<tr><td>' + esc(p.name) + '</td><td>' + esc(p.division) + '</td><td>' + p.required + '</td><td>' + p.acked + ' (' + p.rate + '%)</td><td>' + rt(p.onTimeRate) + '</td><td>' + esc(mgDur(p.avg, L)) + '</td><td>' + (p.overdue ? '<span style="color:#a3392f">' + p.overdue + '</span>' : '0') + '</td><td>' + (q === null ? '-' : q + '%') + '</td></tr>'; });
+      blocks.push(h + '</tbody></table></section>');
+    });
+  }
+  // 5. bulletins
+  if(!c.bullets.length) blocks.push('<section class="rpb"><div class="rph">' + esc(R2.h_bul) + '</div><div>' + esc(R2.none_b) + '</div></section>');
+  else chunk(c.bullets.slice().sort(function(a, b){ return a.created_at < b.created_at ? -1 : 1; }), 7).forEach(function(part, i){
+    let h = '<section class="rpb"><div class="rph">' + esc(R2.h_bul) + (i ? ' ' + esc(R2.cont) : '') + '</div><table class="rpt"><thead><tr><th>' + esc(R2.c_no) + '</th><th>' + esc(R2.c_title) + '</th><th>' + esc(R2.c_iss) + '</th><th>' + esc(R2.c_dl) + '</th><th>' + esc(R2.c_prog) + '</th><th>' + esc(R2.c_st) + '</th></tr></thead><tbody>';
+    part.forEach(function(b){ h += '<tr><td>' + esc(b.number) + '</td><td>' + esc(b.title) + '</td><td>' + esc(fmtDateL(bkkDate(b.created_at), L)) + '</td><td>' + esc(fmtDateL(b.deadline, L)) + '</td><td>' + rpBar(pct(b.acked, b.required), b.status) + '<div style="font-size:10.5px;color:#5c6b80;margin-top:3px">' + b.acked + ' / ' + b.required + ' (' + pct(b.acked, b.required) + '%)</div></td><td>' + rpChip(b.status, L) + '</td></tr>'; });
+    blocks.push(h + '</tbody></table></section>');
+  });
+  // 6. outstanding
+  const per = {}; c.bullets.forEach(function(b){ b.pendingIds.forEach(function(sid){ (per[sid] = per[sid] || []).push(b); }); });
+  const ids = Object.keys(per).map(Number).filter(function(s){ return c.staffById[s]; }).sort(function(a, b){ const x = c.staffById[a], y = c.staffById[b]; return cmpDiv(x.division, y.division) || x.name.localeCompare(y.name); });
+  if(!ids.length) blocks.push('<section class="rpb"><div class="rph">' + esc(R2.h_out) + '</div><div>' + esc(R2.none_out) + '</div></section>');
+  else chunk(ids, 12).forEach(function(part, i){
+    let h = '<section class="rpb"><div class="rph">' + esc(R2.h_out) + (i ? ' ' + esc(R2.cont) : '') + '</div><table class="rpt"><thead><tr><th>' + esc(R2.c_name) + '</th><th>' + esc(R2.c_div) + '</th><th>' + esc(R2.c_pend) + '</th></tr></thead><tbody>';
+    part.forEach(function(sid){ const s = c.staffById[sid]; h += '<tr><td>' + esc(s.name) + '</td><td>' + esc(s.division) + '</td><td>' + per[sid].map(function(b){ return esc(b.number) + (b.status === 'overdue' ? ' <span style="color:#a3392f">(' + esc(R2.overdue) + ')</span>' : ''); }).join(', ') + '</td></tr>'; });
+    blocks.push(h + '</tbody></table></section>');
+  });
+  // 7. quiz summary
+  const qb = c.bullets.filter(function(b){ return b.quiz_required || M.att.some(function(a){ return a.b === b.id; }); });
+  {
+    let h = '<section class="rpb"><div class="rph">' + esc(R2.h_quiz) + '</div>';
+    if(!qb.length) h += '<div>' + esc(R2.none_q) + '</div>';
+    else {
+      h += '<table class="rpt"><thead><tr><th>' + esc(R2.c_bul) + '</th><th>' + esc(R2.c_pm) + '</th><th>' + esc(R2.c_tried) + '</th><th>' + esc(R2.c_pass) + '</th><th>' + esc(R2.c_att) + '</th><th>' + esc(R2.c_best) + '</th></tr></thead><tbody>';
+      qb.forEach(function(b){ const A = M.att.filter(function(a){ return a.b === b.id; }), ppl = {}; A.forEach(function(a){ (ppl[a.s] = ppl[a.s] || []).push(a); });
+        const pid = Object.keys(ppl), ps = pid.filter(function(i){ return ppl[i].some(function(a){ return a.passed; }); }).length, bs = pid.map(function(i){ return Math.max.apply(null, ppl[i].map(function(a){ return a.pct; })); });
+        h += '<tr><td>' + esc(b.number) + '</td><td>' + (b.pass_mark || '-') + '%</td><td>' + pid.length + ' / ' + b.required + '</td><td>' + ps + '</td><td>' + A.length + '</td><td>' + (bs.length ? Math.round(mean(bs)) + '%' : '-') + '</td></tr>'; });
+      h += '</tbody></table>';
+    }
+    blocks.push(h + '</section>');
+  }
+  // footnote + signature
+  blocks.push('<section class="rpb"><p class="rpnote">' + esc(R2.fn) + '</p><div class="rpsig">' +
+    ['prep', 'rev'].map(function(k){ return '<div><div class="t">' + esc(R2[k]) + '</div><div class="ln">' + esc(R2.sign) + '</div><div class="ln">' + esc(R2.name) + '</div><div class="ln">' + esc(R2.date) + '</div></div>'; }).join('') +
+    '</div><div class="rporg">' + esc(sig[0]) + ' / ' + esc(sig[1]) + ' / ' + esc(sig[2]) + ' &middot; v' + APP_VERSION + '</div></section>');
+  return blocks;
+}
+function mgTag(){ const M = mgData(MGS.scope); return M ? (M.sel.length > 1 ? M.sel[0] + '-' + M.sel[M.sel.length - 1] : (M.sel[0] || 'none')) : 'x'; }
+
+/* ---------- dialog ---------- */
+const MGS = { scope: 'ct' };
+function openMgmt(scope){
+  MGS.scope = scope;
+  const raw = scope === 'team' && head ? head.raw : admin; if(!raw) return;
+  const all = yearsOf(raw.bulletins).sort().reverse(), none = !MG.years.length;
+  openModal('<h2>' + esc('Management report') + '</h2><p class="muted">Choose the reporting period. The report covers the summary, year-by-year trend, division and individual performance, bulletins, outstanding items and understanding checks.</p>' +
+    '<div class="mgyrs"><label class="mgy"><input type="checkbox" id="mgAll"' + (none ? ' checked' : '') + ' onchange="mgPick(\'\')"><span>All years</span></label>' +
+    all.map(function(y){ return '<label class="mgy"><input type="checkbox" class="mgyc" value="' + y + '"' + (MG.years.indexOf(y) >= 0 ? ' checked' : '') + ' onchange="mgPick(\'' + y + '\')"><span>' + y + '</span></label>'; }).join('') + '</div>' +
+    '<div class="row" style="margin-top:16px">' + mgBtns(scope) + '</div><div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn ghost" onclick="closeModal()">Close</button></div>');
+}
+function mgBtns(scope){
+  const b = function(icon, label, fn, cls){ return '<button class="btn ' + (cls || 'ghost') + ' sm pdfb" onclick="' + fn + '">' + ico(icon, 15) + label + '</button>'; };
+  const s = 'mg:' + scope;
+  return b('eye', 'Preview', "previewReport('" + s + "')", '') + b('print', 'Print', "printReport('" + s + "')") + b('download', 'Download PDF', "reportPDF('" + s + "','download')") + b('send', 'Send PDF', "reportPDF('" + s + "','send')") + b('download', 'Download Excel', "exportMgmtExcel('" + scope + "')");
+}
+function mgPick(y){
+  if(y === ''){ MG.years = []; } else {
+    const i = MG.years.indexOf(y); if(i >= 0) MG.years.splice(i, 1); else MG.years.push(y);
+    MG.years.sort();
+  }
+  const raw = MGS.scope === 'team' && head ? head.raw : admin, all = yearsOf(raw.bulletins);
+  if(MG.years.length && MG.years.length === all.length) MG.years = [];
+  Array.prototype.forEach.call(document.querySelectorAll('.mgyc'), function(e){ e.checked = MG.years.indexOf(e.value) >= 0; });
+  const a = $('mgAll'); if(a) a.checked = !MG.years.length;
+}
+
+/* ---------- Excel ---------- */
+async function exportMgmtExcel(scope){
+  const M = mgData(scope); if(!M) return;
+  try { if(!window.XLSX) await loadScript(XLSX_SRC); } catch(e){ toast('Could not load the Excel library. Please check your connection.', 'error'); return; }
+  const c = M.c, T = c.totals, L = 'en';
+  const sum = [['OPS Bulletin Acknowledgement - Management report'], ['Scope', M.team ? 'Team ' + head.division : 'All divisions'], ['Period', mgPeriod(M.sel, M.all, 'en')], ['Data as of (Bangkok)', M.today], ['Note', 'PINs are never exported.'], [],
+    ['Bulletins issued', T.bulletins], ['Acknowledgments required', T.sumReq], ['Acknowledged', T.sumAck], ['Acknowledgment rate %', T.rate], ['On-time rate %', T.onTimeRate === null ? '' : T.onTimeRate], ['Avg. days to acknowledge', T.avg === null ? '' : Math.round(T.avg * 100) / 100], ['Overdue bulletins now', M.overdueItems], ['Staff with requirements', T.withReq], [], ['Summary']].concat(mgSummary(M, L).map(function(x){ return [x]; }));
+  const yr = [['Year', 'Bulletins', 'Required', 'Acknowledged', 'Rate %', 'On-time rate %', 'Avg. days to acknowledge', 'Overdue bulletins now']];
+  M.yearly.forEach(function(Y){ const t = Y.c.totals; yr.push([Y.y, t.bulletins, t.sumReq, t.sumAck, t.rate, t.onTimeRate === null ? '' : t.onTimeRate, t.avg === null ? '' : Math.round(t.avg * 100) / 100, Y.c.bullets.filter(function(b){ return b.status === 'overdue'; }).length]); });
+  const dvs = [['Rank', 'Division', 'Staff', 'Required', 'Acknowledged', 'Rate %', 'On-time rate %', 'Avg. days to acknowledge', 'Overdue items (pending)', 'People with overdue']];
+  divRanking(c).forEach(function(x){ const d = x.d, o = M.dv[d.division] || { items: 0 }, av = mgDivAvg(M, d.division); dvs.push([x.rank === null ? '' : x.rank, d.division, d.people, d.required, d.acked, pct(d.acked, d.required), x.ot === null ? '' : Math.round(x.ot * 100), av === null ? '' : Math.round(av * 100) / 100, o.items, d.overdueN]); });
+  const ind = [['Name', 'Division', 'Required', 'Acknowledged', 'Rate %', 'On time', 'Late', 'On-time rate %', 'Avg. days to acknowledge', 'Within 24 h', 'Overdue now', 'Quiz average %']];
+  M.people.forEach(function(p){ const q = mgQuizAvg(M, p.id); ind.push([p.name, p.division, p.required, p.acked, p.rate, p.onTime, p.late, p.onTimeRate === null ? '' : p.onTimeRate, p.avg === null ? '' : Math.round(p.avg * 100) / 100, p.fast, p.overdue, q === null ? '' : q]); });
+  const bul = [['Number', 'Title', 'Issued (Bangkok)', 'Deadline', 'Required', 'Acknowledged', 'Pending', 'Rate %', 'Status']];
+  c.bullets.slice().sort(function(a, b){ return a.created_at < b.created_at ? -1 : 1; }).forEach(function(b){ bul.push([b.number, b.title, fmtBkk(b.created_at), b.deadline, b.required, b.acked, b.required - b.acked, pct(b.acked, b.required), b.status]); });
+  const out = [['Name', 'Division', 'Bulletin', 'Title', 'Deadline', 'Status', 'Days overdue']];
+  M.people.forEach(function(p){ p.pendingB.forEach(function(b){ out.push([p.name, p.division, b.number, b.title, b.deadline, b.overdue ? 'OVERDUE' : 'Pending', b.daysOver]); }); });
+  const qz = [['Bulletin', 'Name', 'Division', 'Attempts', 'Best score %', 'Passed']];
+  const grp2 = {}; M.att.forEach(function(a){ const b = c.bullets.find(function(x){ return x.id === a.b; }); if(!b) return; const k = a.b + '_' + a.s; const g = grp2[k] = grp2[k] || { b: b, s: a.s, n: 0, best: 0, pass: false }; g.n++; g.best = Math.max(g.best, a.pct); if(a.passed) g.pass = true; });
+  Object.keys(grp2).map(function(k){ return grp2[k]; }).sort(function(x, y){ return x.b.number.localeCompare(y.b.number); }).forEach(function(g){ const s = c.staffById[g.s] || {}; qz.push([g.b.number, s.name || '', s.division || '', g.n, g.best, g.pass ? 'Yes' : 'No']); });
+  const wb = XLSX.utils.book_new();
+  [['Summary', sum], ['Yearly trend', yr], ['Divisions', dvs], ['Individuals', ind], ['Bulletins', bul], ['Outstanding', out], ['Quiz scores', qz]].forEach(function(x){
+    const ws = XLSX.utils.aoa_to_sheet(x[1]), w = [];
+    x[1].forEach(function(r){ r.forEach(function(v, i){ w[i] = Math.min(60, Math.max(w[i] || 8, String(v === null || v === undefined ? '' : v).length + 2)); }); });
+    ws['!cols'] = w.map(function(n){ return { wch: n }; }); XLSX.utils.book_append_sheet(wb, ws, x[0]);
+  });
+  const name = 'OPS-Bulletin-Management-Report-' + (M.team ? 'Team-' + safeTag(head.division) + '-' : '') + (M.sel.length > 1 ? M.sel[0] + '-' + M.sel[M.sel.length - 1] : (M.sel[0] || 'none')) + '-' + M.today + '.xlsx';
+  saveBlob(new Blob([XLSX.write(wb, { bookType: 'xlsx', type: 'array' })], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), name);
+  toast('Excel file downloaded', 'success');
+}
+
+/* ====================== V3: COSMETICS ====================== */
+Object.assign(I.en, { my_caught: 'All caught up', si_tag: 'Sign in with your own PIN. Please do not share it with anyone.', si_secure: 'Secure sign-in' });
+Object.assign(I.th, { my_caught: 'ครบถ้วนแล้ว', si_tag: 'ใช้ PIN ของท่านเอง และไม่เปิดเผยให้ผู้อื่นทราบ', si_secure: 'เข้าสู่ระบบอย่างปลอดภัย' });
+function skeletonHTML(){
+  return '<div class="skel" role="status" aria-label="Loading"><div class="sk sk-ban"></div><div class="sk-card"><div class="sk sk-h"></div><div class="sk sk-l"></div><div class="sk sk-l s"></div><div class="sk-row"><div class="sk sk-b"></div><div class="sk sk-b"></div><div class="sk sk-b"></div></div></div><div class="sk-card"><div class="sk sk-h"></div><div class="sk sk-l"></div><div class="sk sk-l s"></div></div></div>';
+}
+function caughtUpHTML(){
+  return '<div class="caught"><svg width="132" height="104" viewBox="0 0 132 104" fill="none" aria-hidden="true"><defs><linearGradient id="cuG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fae8d"/><stop offset="1" stop-color="#2a9d8f"/></linearGradient></defs>' +
+    '<circle cx="66" cy="54" r="38" fill="url(#cuG)" opacity=".16"/><circle cx="66" cy="54" r="29" fill="url(#cuG)"/><path class="cutick" d="M52 55l10 10 19-21" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '<circle cx="18" cy="30" r="4" fill="#5b8fb6" opacity=".7"/><circle cx="112" cy="22" r="5" fill="#7fae8d" opacity=".8"/><circle cx="104" cy="84" r="3.5" fill="#2a9d8f" opacity=".7"/><circle cx="26" cy="82" r="5" fill="#1e4d8c" opacity=".45"/><rect x="112" y="56" width="9" height="9" rx="2" transform="rotate(20 116 60)" fill="#5b8fb6" opacity=".6"/><rect x="8" y="54" width="8" height="8" rx="2" transform="rotate(-18 12 58)" fill="#7fae8d" opacity=".7"/></svg>' +
+    '<div class="cut1">' + esc(t('my_caught')) + '</div><div class="cut2">' + esc(t('my_none_pending')) + '</div></div>';
+}
+function signBanner(){
+  return '<div class="sibn"><span class="sio">' + ico('lock', 20) + '</span><div><div class="sit">' + esc(t('si_secure')) + '</div><div class="sid">' + esc(t('si_tag')) + '</div></div></div>';
+}
+function stripeRows(){
+  Array.prototype.forEach.call(document.querySelectorAll('#view tbody tr'), function(tr){
+    const tg = tr.querySelector('.dtag'); if(!tg || !tr.cells.length) return;
+    tr.cells[0].style.boxShadow = 'inset 4px 0 0 ' + divCol(tg.textContent.trim())[3];
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('#view .rkrow'), function(r){
+    const tg = r.querySelector('.dtag'); if(tg) r.style.boxShadow = 'inset 4px 0 0 ' + divCol(tg.textContent.trim())[3];
+  });
+}
+let _animDone = false, _animT = null;
+function pulseAnim(){ const v = $('view'); if(!v) return; v.classList.add('anim'); clearTimeout(_animT); _animT = setTimeout(function(){ v.classList.remove('anim'); }, 1500); }
 
 /* ====================== INIT ====================== */
 async function init(){
