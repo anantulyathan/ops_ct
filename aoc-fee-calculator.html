@@ -410,7 +410,7 @@ body.dsc-open{overflow:hidden}
 .dslot:empty,.mpslot:empty{display:none}
 .mp-row{display:flex;flex-direction:column;gap:6px;margin:8px 0 2px}
 .mp-btn{align-self:flex-start;border:1.5px solid var(--sec-2);background:#fff;color:var(--sec-2);border-radius:10px;padding:8px 14px;font-size:13.5px;font-weight:600;cursor:pointer;min-height:40px}
-.mp-btn:disabled,.mp-btn.off{border-color:#c4ccd6;color:#8b96a5;background:#eef1f5;cursor:not-allowed}
+.mp-btn:disabled{border-color:#c4ccd6;color:#8b96a5;background:#eef1f5;cursor:not-allowed}
 .mp-note{font-size:11.5px;line-height:1.45;color:var(--grey-soft)}
 
 /* operator bar */
@@ -1682,7 +1682,7 @@ html.night .tglass b{color:#e6eef8}html.night .tglass span{color:#a9bbd1}
 @media print{ .ctl{display:none!important} }
 body[data-view="simple"] .opbar .fleetline:not(.muted) > svg,body[data-view="simple"] .opbar .fleetline:not(.muted) > span,body[data-view="simple"] .hero #heroSub,body[data-view="simple"] .hero .grid,body[data-view="simple"] .hero .aur{display:none}
 body[data-view="simple"] #shell .card .sub,body[data-view="simple"] #shell .sechead p,body[data-view="simple"] #shell .sechead .ey,body[data-view="simple"] #shell .eyebrow,
-body[data-view="simple"] #shell .afmnote,body[data-view="simple"] #shell .autochip,body[data-view="simple"] #shell .mp-note,body[data-view="simple"] #shell .mp-row:not(:has(> .mp-btn)),body[data-view="simple"] #shell .fleetline:not(:has(> button)),body[data-view="simple"] #shell .fleetline:has(> button) > :not(button),
+body[data-view="simple"] #shell .afmnote,body[data-view="simple"] #shell .autochip,body[data-view="simple"] #shell .mp-note,body[data-view="simple"] #shell .fleetline:not(:has(> button)),body[data-view="simple"] #shell .fleetline:has(> button) > :not(button),
 body[data-view="simple"] #shell .note.n-info,body[data-view="simple"] #shell .note.n-warn,body[data-view="simple"] #shell .dcx,body[data-view="simple"] #shell .foot,
 body[data-view="simple"] #shell .pnote,body[data-view="simple"] #shell .globe .gnote,body[data-view="simple"] #shell .dflag,body[data-view="simple"] #shell .line .t .ref,
 body[data-view="simple"] #shell .sechead .orb,body[data-view="simple"] #shell .fxring,body[data-view="simple"] #shell .opt.vw > span > .thai{display:none!important}
@@ -2482,7 +2482,7 @@ function fleetCards(op){
 }
 function loadFleet(op,silent){
   const f=FLEET[op]; if(!f) return false;
-  S.types=fleetCards(op);
+  S.types=fleetCards(op); autoPrincipal(true);
   S.loadedSig=typesSig(); S.fleetFrom=op;
   if(!silent) toast(L(`Loaded ${f.length} aircraft type${f.length>1?'s':''} from the Ops Spec list`,`โหลดแบบอากาศยาน ${f.length} แบบจากรายการข้อกำหนดการปฏิบัติการแล้ว`));
   return true;
@@ -2539,12 +2539,8 @@ function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').r
 let uid=0; const nid=()=> 't'+(++uid);
 /* ---------- Version (major.minor): change APP_VERSION and APP_DATE, and add an entry to APP_LOG, for every release.
    Minor (1.0 > 1.1) = small change or fix. Major (1.1 > 2.0) = new feature or a rate change. ---------- */
-const APP_VERSION='3.92', APP_DATE='2026-11-22';
+const APP_VERSION='3.89', APP_DATE='2026-11-22';
 const APP_LOG=[
-  {v:'3.92',d:'2026-11-22',en:['Certificate: when the principal card is not first, it now has a “Move to top” button (nothing moves unless tapped). The “Make principal” button is now labelled “Make principal and move to top”.'],th:['ใบรับรอง: เมื่อการ์ดแบบหลักไม่ได้อยู่บนสุด จะมีปุ่ม “ย้ายขึ้นบนสุด” (จะไม่มีการย้ายหากไม่ได้แตะ) และปุ่ม “ตั้งเป็นแบบหลัก” เปลี่ยนเป็น “ตั้งเป็นแบบหลักและย้ายขึ้นบนสุด”']},
-  {v:'3.91',d:'2026-11-22',en:['Simple view: the principal note on a card is hidden together with its empty box, so no blank gap is left on the Certificate page.'],th:['มุมมองแบบง่าย: ซ่อนข้อความแบบหลักบนการ์ดพร้อมกรอบที่ว่างเปล่า เพื่อไม่ให้เหลือช่องว่างในหน้าใบรับรอง']},
-  {v:'3.90',d:'2026-11-22',en:['Certificate: cards no longer move by themselves when you change an area, weight, category or aircraft, or when a fleet is loaded. The principal is still the card with the highest certificate fee, wherever it sits; its Principal badge shows it, and a short note on that card explains it. “Make principal” still works only on a card with the same fee as the principal and moves it to the top; tapping it on a lower-fee card shows a warning. The Summary table and the printed report list the principal first (type numbers are unchanged). Fees are unchanged.'],
-   th:['ใบรับรอง: การ์ดจะไม่ย้ายตำแหน่งเองเมื่อเปลี่ยนพื้นที่ น้ำหนัก ประเภท หรือแบบอากาศยาน หรือเมื่อโหลดฝูงบิน แบบหลักยังคงเป็นการ์ดที่มีค่าใบรับรองสูงสุดไม่ว่าอยู่ตำแหน่งใด โดยมีป้ายแบบหลักและข้อความสั้นๆ บนการ์ดนั้นอธิบายไว้ ปุ่ม “ตั้งเป็นแบบหลัก” ยังใช้ได้เฉพาะการ์ดที่มีค่าเท่ากับแบบหลักและจะย้ายขึ้นด้านบนสุด หากแตะบนการ์ดที่ค่าต่ำกว่าจะแสดงคำเตือน ตารางสรุปและรายงานที่พิมพ์จะแสดงแบบหลักเป็นแถวแรก (เลขลำดับแบบไม่เปลี่ยน) ค่าธรรมเนียมไม่เปลี่ยนแปลง']},
   {v:'3.89',d:'2026-11-22',en:['The aeroplanes and helicopters on the globe animations are a further 15% smaller (their lights and glow scale with them).'],th:['เครื่องบินและเฮลิคอปเตอร์ในแอนิเมชันลูกโลกเล็กลงอีก 15% (ไฟและแสงเรืองปรับขนาดตามกัน)']},
   {v:'3.88',d:'2026-11-22',en:['Fixed: when the phone is turned to landscape (or the window is resized) the globes looked squeezed. The globe now redraws at the new size, so it stays round.'],th:['แก้ไข: เมื่อหมุนโทรศัพท์เป็นแนวนอน (หรือปรับขนาดหน้าต่าง) ลูกโลกดูแบนเบี้ยว ตอนนี้ลูกโลกวาดใหม่ตามขนาดใหม่และคงเป็นทรงกลม']},
   {v:'3.87',d:'2026-11-22',en:['The aeroplanes and helicopters on the globe animations are 20% smaller, with their wing lights, glow and strobe scaled to match.'],th:['เครื่องบินและเฮลิคอปเตอร์ในแอนิเมชันลูกโลกเล็กลง 20% โดยไฟปลายปีก แสงเรือง และไฟสโตรบปรับขนาดตามกัน']},
@@ -3126,13 +3122,20 @@ function dupHTML(i){ const j=dupOf(i); if(j<0) return '';
   return note('err',L(`Same aircraft type as A/C Type ${j+1}. Enter each approved type once: change or remove one of the two. No fee is shown until this is fixed.`,`แบบอากาศยานซ้ำกับแบบอากาศยานที่ ${j+1} กรุณาระบุแบบที่ได้รับอนุมัติเพียงครั้งเดียว โดยเปลี่ยนหรือลบหนึ่งรายการ ระบบจะไม่แสดงค่าธรรมเนียมจนกว่าจะแก้ไข`)); }
 const ruleCite=res=>`ประกาศ กพท. 2561 ข้อ 3(1)(${SEC[res.legacy]||'ก'}) 2) (ข้อความ “ทั้งนี้”)`;
 function mpHTML(res,i){
-  if(S.types.length<2||res.total==null||(res.flags||[]).includes('MIXED_CATEGORY')||!res.Cby) return '';
-  if(isMainT(res,i)) return i>0?`<div class="mp-row"><button type="button" class="mp-btn" data-act="makePrincipal" data-id="${S.types[i].id}">${L('Move to top','ย้ายขึ้นบนสุด')}</button><div class="mp-note">${L('This is the principal type: it has the highest certificate fee, so the first-type rate is applied to it. The card keeps its position.','แบบนี้เป็นแบบหลัก เนื่องจากมีค่าใบรับรองสูงสุด จึงคิดอัตราแบบแรกตามแบบนี้ ทั้งนี้ ลำดับของการ์ดจะไม่ถูกเปลี่ยนโดยอัตโนมัติ')}</div></div>`:'';
+  if(S.types.length<2||res.total==null||(res.flags||[]).includes('MIXED_CATEGORY')||!res.Cby||isMainT(res,i)) return '';
   const t=S.types[i], ok=res.Cby[i]===res.Cby[res.principalIdx];
-  if(ok) return `<div class="mp-row"><button type="button" class="mp-btn" data-act="makePrincipal" data-id="${t.id}">${L('Make principal and move to top','ตั้งเป็นแบบหลักและย้ายขึ้นบนสุด')}</button><div class="mp-note">${L('Same certificate fee as the principal, so either can be principal. The card moves to the top.','ค่าใบรับรองเท่ากับแบบหลัก จึงเลือกได้ทั้งสองแบบ การ์ดจะย้ายไปไว้ด้านบนสุด')}</div></div>`;
-  return `<div class="mp-row"><button type="button" class="mp-btn off" data-act="makePrincipal" data-id="${t.id}" aria-disabled="true">${L('Make principal and move to top','ตั้งเป็นแบบหลักและย้ายขึ้นบนสุด')}</button><div class="mp-note">${esc(L(`Not available: this type has a lower certificate fee (฿ ${fmt(res.Cby[i])}) than the principal (฿ ${fmt(res.Cby[res.principalIdx])}). The first type is charged at the highest rate: ${ruleCite(res)}. The Announcement refers to the highest area rate; this calculator compares the full certificate fee (area and weight class).`,`ไม่สามารถใช้ได้: ค่าใบรับรองของแบบนี้ (฿ ${fmt(res.Cby[i])}) ต่ำกว่าแบบหลัก (฿ ${fmt(res.Cby[res.principalIdx])}) แบบแรกคิดตามอัตราสูงสุด: ${ruleCite(res)} ประกาศกล่าวถึงอัตราพื้นที่ปฏิบัติการที่สูงที่สุด ส่วนระบบนี้เปรียบเทียบค่าใบรับรองเต็มจำนวน (พื้นที่และช่วงน้ำหนัก)`))}</div></div>`;
+  if(ok) return `<div class="mp-row"><button type="button" class="mp-btn" data-act="makePrincipal" data-id="${t.id}">${L('Make principal','ตั้งเป็นแบบหลัก')}</button><div class="mp-note">${L('Same certificate fee as the principal, so either can be principal. The card moves to the top.','ค่าใบรับรองเท่ากับแบบหลัก จึงเลือกได้ทั้งสองแบบ การ์ดจะย้ายไปไว้ด้านบนสุด')}</div></div>`;
+  return `<div class="mp-row"><button type="button" class="mp-btn" disabled aria-disabled="true">${L('Make principal','ตั้งเป็นแบบหลัก')}</button><div class="mp-note">${esc(L(`Not available: this type has a lower certificate fee (฿ ${fmt(res.Cby[i])}) than the principal (฿ ${fmt(res.Cby[res.principalIdx])}). The first type is charged at the highest rate: ${ruleCite(res)}. The Announcement refers to the highest area rate; this calculator compares the full certificate fee (area and weight class).`,`ไม่สามารถใช้ได้: ค่าใบรับรองของแบบนี้ (฿ ${fmt(res.Cby[i])}) ต่ำกว่าแบบหลัก (฿ ${fmt(res.Cby[res.principalIdx])}) แบบแรกคิดตามอัตราสูงสุด: ${ruleCite(res)} ประกาศกล่าวถึงอัตราพื้นที่ปฏิบัติการที่สูงที่สุด ส่วนระบบนี้เปรียบเทียบค่าใบรับรองเต็มจำนวน (พื้นที่และช่วงน้ำหนัก)`))}</div></div>`;
 }
-/* v3.90: cards are never re-ordered automatically. The principal is the card with the highest certificate fee wherever it sits; "Make principal" (equal fee only) moves a card to the top. */
+/* Principal always sits at the top. After an edit, if another card now has the strictly highest certificate fee it moves up. */
+function autoPrincipal(quiet){
+  if(S.types.length<2) return false;
+  const res=calcCertificate(S.types,S.tx);
+  if(res.total==null||(res.flags||[]).includes('MIXED_CATEGORY')||!(res.principalIdx>0)) return false;
+  const t=S.types.splice(res.principalIdx,1)[0]; S.types.unshift(t);
+  if(!quiet) toast(L(`${t.name||'This type'} now has the highest certificate fee and moved to the top as the principal`,`${t.name||'แบบนี้'} มีค่าใบรับรองสูงสุด จึงย้ายขึ้นด้านบนเป็นแบบหลัก`));
+  return true;
+}
 const isMainT=(res,i)=>res.principalIdxs?res.principalIdxs.includes(i):res.principalIdx===i;
 function pillKey(res,i){ return res.total==null?'':(isMainT(res,i)?'p':'a'); }
 /* v3.79 role badge: one light sweep when a card becomes the principal. */
@@ -3210,7 +3213,7 @@ function renderCert(){
       <button type="button" class="tile ${S.tx==='initial'?'on':''}" data-act="tx" data-val="initial"><span class="ic">${ICON.cert}</span><span><b>${L('First issue','การออกครั้งแรก')}</b><span class="thai">${L('การออกครั้งแรก','Initial certification')}</span></span></button>
       <button type="button" class="tile ${S.tx==='renewal'?'on':''}" data-act="tx" data-val="renewal"><span class="ic">${ICON.change}</span><span><b>${L('Renewal','การต่ออายุ')}</b><span class="thai">${L('การต่ออายุ','Renewal')}</span></span></button>
     </div>${initWarnHTML()}</div>`;
-  h+=`<div class="card"><div class="stephd"><span class="stepno" aria-hidden="true">2</span><div class="steptx"><div class="stepey">${L('Step 2','ขั้นตอนที่ 2')}</div><h2>${L('Approved aircraft types','แบบอากาศยานที่ได้รับอนุมัติ')}</h2></div></div><p class="sub">${L('One card per approved type in the Ops Specs, not per registration. The type with the highest certificate fee is the principal, wherever its card sits. Cards are not moved automatically.','ระบุหนึ่งรายการต่อแบบอากาศยานในข้อกำหนดการปฏิบัติการ (Operations Specifications) มิใช่ต่อทะเบียน แบบที่มีค่าใบรับรองสูงสุดเป็นแบบหลักไม่ว่าการ์ดจะอยู่ตำแหน่งใด ทั้งนี้ ระบบจะไม่ย้ายการ์ดโดยอัตโนมัติ')}</p>`;
+  h+=`<div class="card"><div class="stephd"><span class="stepno" aria-hidden="true">2</span><div class="steptx"><div class="stepey">${L('Step 2','ขั้นตอนที่ 2')}</div><h2>${L('Approved aircraft types','แบบอากาศยานที่ได้รับอนุมัติ')}</h2></div></div><p class="sub">${L('One card per approved type in the Ops Specs, not per registration. The highest-rated type becomes the principal and moves to the top automatically.','ระบุหนึ่งรายการต่อแบบอากาศยานในข้อกำหนดการปฏิบัติการ (Operations Specifications) มิใช่ต่อทะเบียน ระบบจะกำหนดแบบที่มีอัตราสูงสุดเป็นแบบหลักและย้ายไปไว้ด้านบนสุดโดยอัตโนมัติ')}</p>`;
   S.types.forEach((t,i)=>{
     const isP = res.total!=null && isMainT(res,i);
     const wl=weightLabels(t.cat);
@@ -4022,7 +4025,7 @@ function typeRows(c){
     const ac=acById(t.ac);
     const full=(t.models&&t.models.length>1)?t.models.map(id=>(acById(id)||{n:id}).n).join(' + '):(ac?ac.n:'');
     return {i, name:(t.name||'').trim()||L(`Type ${i+1}`,`แบบที่ ${i+1}`), codes:codeSpan(t), full, cat:CATNAME()[t.cat], cls, area:areaL(t.area)||'', line:l, count:t.count};
-  }).sort((a,b)=>((b.line&&b.line.kind==='C')?1:0)-((a.line&&a.line.kind==='C')?1:0)); /* principal row first; numbers keep the card order */
+  });
 }
 /* Fee composition blocks for Simple mode (screen and print). */
 function compBlocks(s){
@@ -5077,7 +5080,7 @@ document.addEventListener('click',e=>{
     case 'tx': if(v==='initial' && S.tx!=='initial' && certifiedInfo(S.operator)){ confirmInitial(()=>{ S.tx='initial'; S.txAuto=false; persistSoon(); rerenderKeepScroll(); }); return; }
       S.tx=v; S.txAuto=false; break;
     case 'makePrincipal': { const r=calcCertificate(S.types,S.tx); const i=S.types.findIndex(x=>x.id===id);
-      if(i<1||r.total==null||!r.Cby||r.Cby[i]!==r.Cby[r.principalIdx]||(r.flags||[]).includes('MIXED_CATEGORY')){ toast(L('Warning: this type cannot be the principal because its certificate fee is lower than the principal’s.','คำเตือน: แบบนี้ไม่สามารถเป็นแบบหลักได้ เนื่องจากค่าใบรับรองต่ำกว่าแบบหลัก')); return; }
+      if(i<1||r.total==null||!r.Cby||r.Cby[i]!==r.Cby[r.principalIdx]||(r.flags||[]).includes('MIXED_CATEGORY')){ toast(L('This type cannot be principal: its certificate fee is lower than the principal’s.','แบบนี้เป็นแบบหลักไม่ได้ เพราะค่าใบรับรองต่ำกว่าแบบหลัก')); return; }
       const order=S.types.map(x=>x.id), nm=S.types[i].name||L('Type','แบบ'); const mv=S.types.splice(i,1)[0]; S.types.unshift(mv);
       withFlip(()=>{ rerenderKeepScroll(); }); persistSoon();
       { const nc=document.querySelector('.type'); if(nc) setTimeout(()=>window.scrollTo({top:Math.max(0,nc.getBoundingClientRect().top+window.scrollY-70),behavior:MOTION()?'smooth':'auto'}),150); }
@@ -5185,7 +5188,7 @@ document.addEventListener('click',e=>{
     case 'copy': needAck('copy',doCopy); return;
     default: return;
   }
-  withFlip(()=>{ rerenderKeepScroll(); });
+  withFlip(()=>{ if(['tcat','theavy','tarea','tlegacy','useRef','showMtow','hideMtow','splitType'].includes(act)) autoPrincipal(); rerenderKeepScroll(); });
 });
 document.addEventListener('input',e=>{
   persistSoon();
@@ -5212,7 +5215,7 @@ document.addEventListener('change',e=>{
   persistSoon();
   const b=e.target.dataset.bind;
   if(b==='survB'){ const n=toNum(e.target.value); if(n!=null&&!isNaN(n)) e.target.value=fmt(n); return; }
-  if(b==='mtow'){ rerenderKeepScroll(); return; }
+  if(b==='mtow'){ withFlip(()=>{ if(autoPrincipal()) rerenderKeepScroll(); }); return; }
   if(b==='acsel'){
     const t=findT(e.target.dataset.id), v=e.target.value;
     if(v==='OTHER'){ t.ac='OTHER'; t.name=''; t.models=[]; }
@@ -5220,7 +5223,7 @@ document.addEventListener('change',e=>{
     else { const a=acById(v); t.ac=v; t.name=cnOf(a.id); t.models=[v]; t.chk=false; const cat=acCat(a); if(t.cat!==cat){ t.cat=cat; t.area=''; }
       if(t.area && !AREAS_FOR[t.cat].includes(t.area)) t.area='';
       t.heavy=acHeavy(a); t.showMtow=false; t.mtow=''; t.legacyConfirm=null; }
-    withFlip(()=>{ rerenderKeepScroll(); }); return;
+    withFlip(()=>{ autoPrincipal(); rerenderKeepScroll(); }); return;
   }
   if(b==='opsel'){
     const v=e.target.value;
