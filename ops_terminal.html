@@ -1177,6 +1177,103 @@ textarea.hota{width:100%;min-height:110px;resize:vertical}
 .aufl{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:8px 0 10px}
 @media (max-width:760px){.mydr{padding:9px 10px}.acnl{margin:10px 6px 0}}
 
+/* ---- v3.76: welcome card (navy), week strip, login finder, gate colour control, acting list ---- */
+.wc{position:relative;overflow:hidden;margin:0 0 16px;border-radius:20px;padding:18px 18px 14px;color:#e6edf6;background:#1a2e4a;border:.5px solid rgba(125,180,255,.22)}
+.wc::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(420px 220px at 100% -20%,var(--hglow,rgba(42,157,143,.32)),transparent 70%)}
+.wc>*{position:relative}
+.wc h2{margin:0;color:#fff;font-size:21px;font-weight:700;line-height:1.25}
+.wc h2::before{display:none}
+.wc .wcd0{margin:2px 0 0;font-size:13px;color:#b9c8dc}
+.wcwk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:14px}
+.wcd{appearance:none;border:0;font:inherit;color:inherit;cursor:pointer;text-align:center;border-radius:12px;padding:6px 0 7px;background:#233b5c;position:relative;min-width:0}
+.wcd:hover{background:#2a4469}
+.wcd:focus-visible{outline:2px solid #7fe0cf;outline-offset:2px}
+.wcd .n{display:block;font-size:10.5px;color:#9db1cb}
+.wcd .dt{display:block;font-size:12.5px;color:#e6edf6;margin:1px 0 4px}
+.wcd .in{display:inline-flex;width:26px;height:26px;border-radius:50%;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;background:var(--c1,#2f72ba);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}
+.wcd .em{display:inline-block;width:26px;height:26px;line-height:24px;font-size:12px;color:#6f86a6}
+.wcd.td{outline:1.5px solid #fff;outline-offset:-1.5px}
+.wcd .me{position:absolute;top:4px;right:5px;width:6px;height:6px;border-radius:50%;background:#fff}
+.wclg{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:9px;font-size:12px;color:#b9c8dc}
+.wclg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:-1px;background:var(--c1,#2f72ba)}
+.wcline{margin-top:14px;font-size:15px;color:#fff;line-height:1.4}
+.wcnote{margin-top:4px;font-size:13px;color:#b9c8dc}
+.wclk{display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:0;border:0;background:none;font:inherit;font-size:13.5px;font-weight:600;color:#7fe0cf;cursor:pointer}
+.wclk:hover{color:#bff3ea}
+.wclk:focus-visible{outline:2px solid #7fe0cf;outline-offset:3px;border-radius:4px}
+.wcp{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.wcpill{appearance:none;border:0;font:inherit;font-size:12.5px;padding:5px 11px;border-radius:99px;cursor:pointer;white-space:nowrap}
+.wcpill.a{background:#4a3d1c;color:#f5c84b}
+.wcpill.r{background:#5a2420;color:#ffb4ac}
+.wcpill.g{background:#2a4a2a;color:#b4e29c}
+.wcpill.t{background:#16463f;color:#7fe0cf}
+.wcft{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;flex-wrap:wrap}
+.wc .mydu{margin:0;padding:4px 0;color:#9db1cb;background:none;border:0;font-size:12px;cursor:pointer}
+.wc .wcsc{appearance:none;border:.5px solid rgba(255,255,255,.3);background:transparent;color:#e6edf6;font:inherit;font-size:12px;padding:5px 11px;border-radius:99px;cursor:pointer}
+.wc .wcsc:hover{background:rgba(255,255,255,.1)}
+.gbnw{margin:0 0 14px}
+.gbnw .gbn{margin:0}
+/* login finder */
+.sirem{display:flex;flex-direction:column;gap:10px}
+.sirb{appearance:none;display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;border-radius:16px;padding:12px 14px;background:#1a2e4a;color:#fff;font:inherit;cursor:pointer}
+.sirb:hover{background:#21395c}
+.sirb:focus-visible{outline:2px solid var(--sec,#2563a8);outline-offset:3px}
+.sirb .sav,.sipk .sav{width:40px;height:40px;border-radius:50%;background:#3bbfb0;color:#0d1f35;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.sirb b{display:block;font-size:16px;font-weight:700}
+.sirb span.s{font-size:12.5px;color:#b9c8dc}
+.silk{appearance:none;border:0;background:none;color:var(--sec,#2563a8);font:inherit;font-size:14px;font-weight:600;cursor:pointer;padding:4px 0;align-self:center}
+.siwb{font-size:13px;color:var(--grey-mid);margin:0 0 -2px;text-align:center}
+.sipk{display:flex;align-items:center;gap:12px;border:1px solid var(--lo-bd,#d5dde8);border-radius:14px;padding:10px 12px;background:var(--lo-row,#fff)}
+.sipk b{display:block;font-weight:700}
+.sipk span.s{font-size:12.5px;color:var(--grey-mid)}
+.sipk .silk{margin-left:auto}
+.sich{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.sich button{appearance:none;border:1px solid var(--lo-bd,#d5dde8);background:var(--lo-row,#fff);color:var(--navy);font:inherit;font-size:13px;padding:5px 12px;border-radius:99px;cursor:pointer}
+.sich button.on{background:#1a2e4a;border-color:#1a2e4a;color:#fff}
+.sil{max-height:240px;overflow:auto;border:1px solid var(--lo-bd,#d5dde8);border-radius:14px;background:var(--lo-row,#fff)}
+.sir{appearance:none;display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;text-align:left;border:0;border-bottom:1px solid var(--lo-bd,#d5dde8);background:transparent;color:var(--navy);font:inherit;font-size:15px;padding:11px 14px;cursor:pointer}
+.sir:last-child{border-bottom:0}
+.sir:hover,.sir:focus-visible{background:var(--sec-soft,#e6eef9)}
+.sir span{font-size:12.5px;color:var(--grey-mid);white-space:nowrap}
+.sil .sin{padding:12px 14px;font-size:14px;color:var(--grey-mid)}
+/* gate colour control: one dot, palette on hold (phone) or click (computer) */
+.gsdots{position:relative;gap:0;padding:0 4px}
+.gscur{appearance:none;width:30px;height:30px;border-radius:50%;border:2px solid rgba(128,140,160,.75);background:var(--c);padding:0;margin:0;cursor:pointer;flex:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:manipulation;box-shadow:0 0 0 2px var(--lo-row),0 0 0 3.5px var(--c)}
+.gscur:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.gspal{position:absolute;left:0;top:calc(100% + 2px);display:flex;align-items:center;gap:11px;padding:8px 14px;border-radius:99px;background:var(--lo-row);border:1px solid var(--lo-bd);box-shadow:0 8px 24px -10px rgba(10,24,40,.35);z-index:6}
+.gspal[hidden]{display:none}
+.gspal .gsd{width:20px;height:20px}
+.gsk{white-space:nowrap}
+@media(max-width:520px){.gspal{gap:9px;padding:8px 11px}.gspal .gsd{width:22px;height:22px}}
+/* acting list (Super Admin) */
+.acl2 .swrow{margin:0}
+.bsw.off{opacity:.55;cursor:not-allowed}
+.bsw.off input{cursor:not-allowed}
+.hcs{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.hcs .chips{display:flex;gap:6px;flex-wrap:wrap}
+/* page colour follows the gate text colour (Terminal only) */
+body[data-sec=ink-0]{--sec:#22796f;--sec-2:#2a9d8f;--sec-lt:#165a52;--sec-soft:#d8efec;--sec-tint:#f1f9f8;--sec-glow:rgba(34,121,111,.28)}
+body[data-sec=ink-1]{--sec:#9a6b22;--sec-2:#c18f3a;--sec-lt:#7a5214;--sec-soft:#f4e8cf;--sec-tint:#fbf7ee;--sec-glow:rgba(154,107,34,.26)}
+body[data-sec=ink-2]{--sec:#566579;--sec-2:#7a889b;--sec-lt:#3f4b5b;--sec-soft:#e2e7ed;--sec-tint:#f5f7f9;--sec-glow:rgba(86,101,121,.26)}
+body[data-sec=ink-3]{--sec:#2563a8;--sec-2:#2f78c4;--sec-lt:#1b4a85;--sec-soft:#d9e7f8;--sec-tint:#f2f7fd;--sec-glow:rgba(37,99,168,.30)}
+body[data-sec=ink-4]{--sec:#a05a4f;--sec-2:#bf7a6e;--sec-lt:#7e4036;--sec-soft:#f3e0dc;--sec-tint:#fbf4f2;--sec-glow:rgba(160,90,79,.26)}
+body[data-sec=ink-5]{--sec:#4f7e5d;--sec-2:#7fae8d;--sec-lt:#46704f;--sec-soft:#dfece4;--sec-tint:#f4f9f5;--sec-glow:rgba(95,143,111,.28)}
+:root[data-theme=dark] body[data-sec=ink-0]{--sec-lt:#7fd3c8;--sec-soft:#16393a;--sec-tint:#11262b}
+:root[data-theme=dark] body[data-sec=ink-1]{--sec-lt:#e6c27a;--sec-soft:#3a2f17;--sec-tint:#1f2a2a}
+:root[data-theme=dark] body[data-sec=ink-2]{--sec-lt:#a3b1c4;--sec-soft:#253447;--sec-tint:#12233b}
+:root[data-theme=dark] body[data-sec=ink-3]{--sec-lt:#8cb8ee;--sec-soft:#1b3557;--sec-tint:#12233b}
+:root[data-theme=dark] body[data-sec=ink-4]{--sec-lt:#e3a79d;--sec-soft:#3b2623;--sec-tint:#1f2330}
+:root[data-theme=dark] body[data-sec=ink-5]{--sec-lt:#8cc29c;--sec-soft:#1c3a2c;--sec-tint:#12263a}
+@media(prefers-color-scheme:dark){
+:root:not([data-theme=light]) body[data-sec=ink-0]{--sec-lt:#7fd3c8;--sec-soft:#16393a;--sec-tint:#11262b}
+:root:not([data-theme=light]) body[data-sec=ink-1]{--sec-lt:#e6c27a;--sec-soft:#3a2f17;--sec-tint:#1f2a2a}
+:root:not([data-theme=light]) body[data-sec=ink-2]{--sec-lt:#a3b1c4;--sec-soft:#253447;--sec-tint:#12233b}
+:root:not([data-theme=light]) body[data-sec=ink-3]{--sec-lt:#8cb8ee;--sec-soft:#1b3557;--sec-tint:#12233b}
+:root:not([data-theme=light]) body[data-sec=ink-4]{--sec-lt:#e3a79d;--sec-soft:#3b2623;--sec-tint:#1f2330}
+:root:not([data-theme=light]) body[data-sec=ink-5]{--sec-lt:#8cc29c;--sec-soft:#1c3a2c;--sec-tint:#12263a}
+}
+.gbnw .gbn{background:#1a2e4a;border-color:rgba(125,180,255,.22);min-height:52px}
+
 </style>
 </head>
 <body data-sec="teal">
@@ -1185,7 +1282,7 @@ textarea.hota{width:100%;min-height:110px;resize:vertical}
   <div class="gridbg"></div><div class="glow g1"></div><div class="glow g2"></div>
   <div class="hin">
     <div class="logo"><svg viewBox="0 0 100 100" width="44" height="44" role="img" aria-label="OPS Terminal"><rect width="100" height="100" rx="22" fill="#1a2e4a"/><path d="M0,-20 C2,-20 3,-17 3,-12 L3,-4 L20,6 L20,10 L3,5 L3,13 L8,17 L8,20 L0,18 L-8,20 L-8,17 L-3,13 L-3,5 L-20,10 L-20,6 L-3,-4 L-3,-12 C-3,-17 -2,-20 0,-20 Z" transform="translate(50,34) rotate(45) scale(0.95)" fill="#2a9d8f"/><path d="M26.7 82.33C33.33 82.33 38.46 77.8 38.46 69.65C38.46 61.48 33.33 56.93 26.7 56.93C20.05 56.93 14.92 61.48 14.92 69.65C14.92 77.77 20.05 82.33 26.7 82.33ZM26.7 77.19C23.1 77.19 20.91 74.53 20.91 69.65C20.91 64.75 23.1 62.08 26.7 62.08C30.29 62.08 32.48 64.73 32.48 69.65C32.48 74.53 30.29 77.19 26.7 77.19ZM42.76 82H48.62V74.28H52.72C58.4 74.28 61.9 70.91 61.9 65.81C61.9 60.75 58.47 57.26 52.89 57.26H42.76ZM48.62 69.65V62.01H51.64C54.4 62.01 55.83 63.49 55.83 65.81C55.83 68.1 54.4 69.65 51.66 69.65ZM75.47 82.33C81.6 82.33 85.25 79.53 85.25 74.83C85.25 70.88 82.48 68.49 77.7 67.44L75.55 66.94C73.35 66.44 71.9 65.71 71.9 64.19C71.9 62.81 73.11 61.8 75.45 61.8C77.81 61.8 79.12 62.84 79.29 64.63H84.92C84.85 60.05 81.2 56.93 75.47 56.93C69.86 56.93 65.84 60 65.84 64.58C65.84 68.3 68.43 70.45 72.7 71.42L75.32 72.04C78.03 72.65 79.32 73.4 79.32 74.81C79.32 76.39 77.83 77.47 75.4 77.47C72.73 77.47 70.96 76.24 70.82 73.83H65.19C65.29 79.54 69.28 82.33 75.47 82.33Z" fill="#e8eff8"/></svg></div>
-    <div class="ht"><h1 id="appTitle">OPS Terminal</h1><div class="sub">CT / OPS &middot; v3.75</div></div>
+    <div class="ht"><h1 id="appTitle">OPS Terminal</h1><div class="sub">CT / OPS &middot; v3.76</div></div>
     <span id="conn">...</span>
     <button class="langbtn" id="searchBtn" onclick="openSearch()" aria-label="Search" title="Search (Ctrl+K)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
     <button class="langbtn" id="acctBtn" onclick="acctMenu(event)" aria-label="Account" hidden></button>
@@ -1195,7 +1292,7 @@ textarea.hota{width:100%;min-height:110px;resize:vertical}
 </header>
 <nav id="nav"></nav>
 <main class="wrap" id="view"></main>
-<footer class="appfoot">OPS Terminal &middot; v3.75</footer>
+<footer class="appfoot">OPS Terminal &middot; v3.76</footer>
 <div id="miniBar"></div>
 <div id="toasts"></div>
 <div id="modalRoot"></div>
@@ -1213,7 +1310,7 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-const APP_VERSION = '3.75';
+const APP_VERSION = '3.76';
 const CFG = {
   divOrder: ['Manager/FO','Sr. Flight Ops Expert','Specialist','CT','FO','CS','OM','FA','GA','DG'],
   // Signature blocks used in the reminder email and the PDF report (edit here if the official wording differs)
@@ -1767,7 +1864,7 @@ function secKey(){
   if(tab === 'ack') return 'teal';
   if(tab === 'overview') return ovTab === 'general' ? 'blue' : 'steel';
   if(tab === 'team') return 'green';
-  if(tab === 'terminal') return 'slate';
+  if(tab === 'terminal') return 'ink-' + gsInkIdx();
   if(tab === 'loa' || tab === 'acting') return 'blue';
   return ({ reminder: 'peri', bulletins: 'green', log: 'blue', insights: 'steel', staff: 'green', super: 'steel', operators: 'steel' })[adTab] || 'peri';
 }
@@ -1858,7 +1955,7 @@ function viewAck(){
 function identityHTML(st, h){
   const all = staffList.slice().sort(function(a, c){ return a.name.localeCompare(c.name); });
   const sel = staffList.find(function(x){ return String(x.id) === String(st.staffId); });
-  let o = '<div class="stp"><span class="sn">1</span>' + esc(t('step_name')) + '</div>' +
+  let o = h.nameHTML ? h.nameHTML(st, sel) : '<div class="stp"><span class="sn">1</span>' + esc(t('step_name')) + '</div>' +
     '<select id="' + h.id + 'sel" onchange="' + h.name + '(this.value)"><option value="">' + esc(t('select_name')) + '</option>' +
     all.map(function(x){ return '<option value="' + x.id + '"' + (String(x.id) === String(st.staffId) ? ' selected' : '') + '>' + esc(x.name) + ' (' + esc(x.division) + ')</option>'; }).join('') + '</select>';
   if(sel){
@@ -1881,7 +1978,7 @@ function signinHTML(note){
 }
 function renderSignin(){
   const el = $('signinForm'); if(!el) return;
-  const idn = identityHTML(signin, { div: 'siDiv', name: 'siName', pin: 'siPin', enter: 'siGo', id: 'si' });
+  const idn = identityHTML(signin, { div: 'siDiv', name: 'siName', pin: 'siPin', enter: 'siGo', id: 'si', nameHTML: siNameHTML });
   let h = idn.html;
   if(signin.msg) h += '<div class="msg ' + signin.msg.kind + '">' + esc(signin.msg.text) + '</div>';
   h += '<button class="btn wide" id="siBtn" onclick="siGo()" disabled>' + esc(signin.busy ? t('wait') : t('si_btn')) + '</button>';
@@ -1890,7 +1987,7 @@ function renderSignin(){
 }
 function siDiv(v){ signin.div = v; signin.staffId = ''; signin.pin = ''; signin.pin2 = ''; signin.code = ''; signin.msg = null; renderSignin(); }
 function siName(v){
-  signin.staffId = v; signin.pin = ''; signin.pin2 = ''; signin.code = ''; signin.msg = null; renderSignin();
+  signin.staffId = v; signin.pin = ''; signin.pin2 = ''; signin.code = ''; signin.msg = null; renderSignin(); siFocusPin();
   const pb = $('pinBlock'); if(pb && pb.scrollIntoView){ try { pb.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch(e) {} }
 }
 function siPin(inp, which){
@@ -2833,12 +2930,13 @@ function staffCmp(a, b){
 }
 function sortTh(k, label){ return '<th class="sortable" onclick="setStSort(\'' + k + '\')">' + label + (stSort.k === k ? (stSort.dir > 0 ? ' &#9650;' : ' &#9660;') : '') + '</th>'; }
 function staffRows(list, inactive){
+  const bOn = batchOnMap();
   return list.map(function(s){
     return '<tr' + (inactive ? ' style="opacity:.8"' : '') + '><td><b>' + esc(s.name) + '</b>' + leaveChip(s.id) + '</td><td>' + divTag(s.division) + (s.prev_divisions && s.prev_divisions.length ? '<div class="muted" style="font-size:11.5px">was ' + esc(s.prev_divisions.join(', ')) + '</div>' : '') + '</td><td>' + roleChip(s) + '</td>' +
       '<td>' + (s.head_of ? '<span class="chip teal">Head: ' + esc(s.head_of) + '</span>' : '<span class="muted">-</span>') + '</td>' +
       '<td>' + (s.active ? '<span class="chip green">Active</span>' : '<span class="chip red">Inactive</span>') + '</td>' +
       '<td>' + pinChip(s) + (s.locked ? ' <span class="chip red">locked</span>' : '') + '</td>' +
-      '<td style="white-space:nowrap"><button class="btn sm c-blue" onclick="adEditStaff(' + s.id + ')">Edit</button> ' + rmMenu([['Leave', 'adLeave(' + s.id + ')']].concat(s.locked && (isSuper() || !s.is_super) ? [['Unlock', 'adUnlock(' + s.id + ')']] : [], [[s.has_pin ? 'Reset PIN' : 'Issue code', 'adResetPin(' + s.id + ')']], (isSuper() && s.active && !s.is_super && !s.is_ct) ? [[s.is_manager ? 'Remove OPS Manager' : 'Make OPS Manager', 'adSetRole(' + s.id + ",'manager'," + (s.is_manager ? 'false' : 'true') + ')']] : [])) + '</td></tr>';
+      batchTd(s, bOn) + '<td style="white-space:nowrap"><button class="btn sm c-blue" onclick="adEditStaff(' + s.id + ')">Edit</button> ' + rmMenu([['Leave', 'adLeave(' + s.id + ')']].concat(s.locked && (isSuper() || !s.is_super) ? [['Unlock', 'adUnlock(' + s.id + ')']] : [], [[s.has_pin ? 'Reset PIN' : 'Issue code', 'adResetPin(' + s.id + ')']], (isSuper() && s.active && !s.is_super && !s.is_ct) ? [[s.is_manager ? 'Remove OPS Manager' : 'Make OPS Manager', 'adSetRole(' + s.id + ",'manager'," + (s.is_manager ? 'false' : 'true') + ')']] : [])) + '</td></tr>';
   }).join('');
 }
 function adStaffHTML(){
@@ -2853,7 +2951,7 @@ function adStaffHTML(){
   const exOn = !!(admin.settings && admin.settings.exclude_prev_division);
   h += '<div class="card">' + ch('refresh', 'Division changes') + '<label class="swrow"><input type="checkbox" id="exPrev"' + (exOn ? ' checked' : '') + ' onchange="adSetExclude(this.checked)"><span><b>Exclude previous-division statistics for staff who changed division</b><br>' +
     '<span class="muted">Off (default): a person\'s history stays under the division they belonged to when each bulletin was issued, and counts there. On: bulletins issued before a person\'s latest move are left out, so scores show only the new division. Nothing is deleted either way.</span></span></label></div>';
-  const head0 = '<thead><tr>' + sortTh('name', 'Name') + sortTh('division', 'Division') + sortTh('role', 'Role') + sortTh('head', 'Head of') + '<th>Status</th>' + sortTh('pin', 'PIN') + '<th></th></tr></thead>';
+  const head0 = '<thead><tr>' + sortTh('name', 'Name') + sortTh('division', 'Division') + sortTh('role', 'Role') + sortTh('head', 'Head of') + '<th>Status</th>' + sortTh('pin', 'PIN') + '<th>Several at once</th><th></th></tr></thead>';
   LR.stf = function(){
     const st = lsGet('stf', ''), q = st.q.toLowerCase();
     const ok = function(x){
@@ -2871,7 +2969,7 @@ function adStaffHTML(){
   h += '<div class="card">' + ch('users', 'Find staff') + lsBar('stf', { ph: 'Filter by name', filters: [
       { key: 'div', label: 'All divisions', options: sdivs.map(function(d){ return [d, d]; }) },
       { key: 'role', label: 'All roles', options: [['super', 'Super admin'], ['ct', 'CT'], ['manager', 'OPS Manager'], ['staff', 'Staff']] },
-      { key: 'pin', label: 'Any PIN state', options: [['locked', 'Locked'], ['set', 'PIN set'], ['code', 'Code pending'], ['none', 'No PIN']] }] }) + '</div><div id="stf_body">' + LR.stf() + '</div>';
+      { key: 'pin', label: 'Any PIN state', options: [['locked', 'Locked'], ['set', 'PIN set'], ['code', 'Code pending'], ['none', 'No PIN']] }] }) + '</div>' + batchSetCardHTML() + '<div id="stf_body">' + LR.stf() + '</div>';
   return h;
 }
 async function adSetExclude(on){
@@ -3040,7 +3138,7 @@ function adSuperHTML(){
   h += deadlineCardHTML();
   h += gatePosCardHTML();
   h += gatesCardHTML();
-  h += bannerCardHTML() + healthCardHTML() + backup2HTML() + batchCardHTML();
+  h += actEligCardHTML() + bannerCardHTML() + healthCardHTML() + backup2HTML();
   h += auditCardHTML();
   h += '<div class="drlinks">(<button onclick="drOpen=!drOpen;render()">Data Controls</button> | <button onclick="pinOpen=!pinOpen;render()">Data Pins</button>)</div>';
   if(pinOpen){
@@ -3943,18 +4041,6 @@ function leaveCardHTML(){
 }
 
 /* ---------- Super Admin: backup + acknowledge-several switch ---------- */
-function batchCardHTML(){
-  const on = {}; ((me.extra && me.extra.batch_ids) || []).forEach(function(i){ on[i] = true; });
-  const act = admin.staff.filter(function(x){ return x.active; }).sort(function(a, b){ return cmpDiv(a.division, b.division) || a.name.localeCompare(b.name); });
-  const divs = []; act.forEach(function(x){ if(divs.indexOf(x.division) < 0) divs.push(x.division); });
-  let h = '<div class="card">' + ch('layers', 'Acknowledge several at once') + '<p class="muted" style="margin-top:-4px">Switch on for the people who may select several bulletins and acknowledge them in one go. It is off for everyone by default. Bulletins with an understanding check are always done one by one.</p>' +
-    '<div class="row" style="margin-bottom:10px">' + divs.map(function(d){
-      const m = act.filter(function(x){ return x.division === d; }), n = m.filter(function(x){ return on[x.id]; }).length;
-      return '<span class="batchdiv">' + divTag(d) + ' <span class="muted">' + n + '/' + m.length + '</span> <button class="btn sm ghost" data-d="' + esc(d) + '" onclick="adBatchDiv(this.dataset.d,true)">On</button><button class="btn sm ghost" data-d="' + esc(d) + '" onclick="adBatchDiv(this.dataset.d,false)">Off</button></span>';
-    }).join('') + '</div><div class="tablewrap"><table><thead><tr><th>Name</th><th>Division</th><th>Several at once</th></tr></thead><tbody>' +
-    act.map(function(x){ return '<tr><td><b>' + esc(x.name) + '</b></td><td>' + divTag(x.division) + '</td><td><label class="swrow" style="margin:0"><input type="checkbox" ' + (on[x.id] ? 'checked' : '') + ' onchange="adBatchSet([' + x.id + '],this.checked)"><span>' + (on[x.id] ? 'On' : 'Off') + '</span></label></td></tr>'; }).join('') + '</tbody></table></div></div>';
-  return h;
-}
 async function adBatchSet(ids, on){
   const r = await rpc('ack_super_set_batch', { p_staff_id: me.id, p_pin: me.pin, p_targets: ids, p_on: !!on });
   if(!adminOk(r)){ await loadExtra(); render(); return; }
@@ -4527,7 +4613,7 @@ function termGatesHTML(){
     (!GATES.length ? '<p class="muted center" style="margin:-6px 0 16px">' + esc(t('th_sb')) + '</p>' : '');
 }
 function viewTerminal(){
-  return termHeroHTML() + myDayHTML() + termBoardHTML('bul') + '<div class="tbtick card0"><span id="thTick"></span></div>' + termGatesHTML() + actWidgetHTML() + '<div id="thInst">' + installCardHTML() + '</div>';
+  return termHeroHTML() + wcBannerHTML() + myDayHTML() + termBoardHTML('bul') + '<div class="tbtick card0"><span id="thTick"></span></div>' + termGatesHTML() + '<div id="thInst">' + installCardHTML() + '</div>';
 }
 function termGo(id){ const e = $(id); if(e) e.scrollIntoView({ behavior: TERM.reduce ? 'auto' : 'smooth', block: 'start' }); }
 function termOpenTool(i){ const r = TERM_TOOLS[i]; if(!r) return; if(r.url) window.open(r.url, '_blank', 'noopener'); else if(r.go) (new Function(r.go))(); }
@@ -4753,7 +4839,7 @@ function termRunwayHTML(){
 
 
 /* ====================== VERSION CHANGE LOG ====================== */
-const CHANGELOG = [{"v": "3.75", "date": "27 Nov 2026", "items": ["Terminal: a My day card (bulletins due, when you are acting, LOA reservations you hold) and a last-updated time. Pull down on a phone to refresh.","Shortcut links (Terminal, Acknowledge, Acting OPS Manager, LOA) that can be added to the phone home screen.","Acting OPS Manager: hand-over notes on acting days (needs SQL update 10).","Sign board: occasion banner with 8 animations, set by Super Admin (needs SQL update 10).","Super Admin: audit log filters and Excel download, health check, and a universal backup (JSON and Excel)."]}, {"v": "3.74", "date": "27 Nov 2026", "items": ["Acting OPS Manager page: the \"Someone else...\" button is now \"Assign Acting OPS Manager\"."]}, {"v": "3.73", "date": "27 Nov 2026", "items": ["The red for the Gate text colour is now a true red instead of a pink-looking red. If you had picked the old red, it switches to the new one automatically.", "Dark mode is now the default for everyone who has not chosen a theme yet. The sun/moon button still switches to light, and your choice is remembered on that device."]}, {"v": "3.72", "date": "27 Nov 2026", "items": ["New page: Acting OPS Manager (a new gate on the Terminal). A calendar shows this month and the next 12 months, with each person who acts on behalf of the OPS Manager in their own colour. Everyone signed in can look at it.", "New group: GO. Members of GO (and Super Admins) can edit the calendar: tap days to select them (on a computer you can also drag across days or hold Shift to select a range), then choose who is acting. A Super Admin gives or removes GO under Settings (Super Admin).", "Terminal: a new box under the Gates shows who is acting for the next 7 days. Tap it to open the calendar.", "Terminal: the Text colour drop-down is now a row of small dots. Move the mouse over a dot and it grows while the sign board below shows that colour at once. Click or tap to keep it.", "Dark mode: the main buttons (for example Reserve, Add, Save) are now a darker blue so the white text is easier to read.", "Needs SQL update 9 (ops_bulletin_9_update.sql) in Supabase before the new page works."]}, {"v": "3.71", "date": "27 Nov 2026", "items": ["LOA Reservation: the list is now A to Z with a letter header (and count) for each letter. Applicants sit under their own letter.", "New letter strip. On a phone it floats above the tab bar: press a letter, slide your finger left or right (a magnifying bubble follows) and let go to jump. On desktop it sits at the top, the letters magnify under the mouse, and a click jumps.", "Layout: 3 operators per row on desktop, 2 per row on phones and tablets, so more fit on screen.", "The filters and the search hide empty letters and dim them in the strip."]}, {"v": "3.70", "date": "26 Nov 2026", "items": ["LOA Reservation: the Reserve button is now a compact button at the right of each card instead of full width.", "Gate positions: tiles are laid out so tool names no longer break in the middle of a word on phones.", "Small colour fixes for grey text on the new screens."]}, {"v": "3.69", "date": "26 Nov 2026", "items": ["LOA Reservation: a new tool on the Terminal. Any signed-in member can reserve an air operator's LOA with a tentative issue date and optional remarks. Only the person who reserved it, CT or a Super Admin can edit or clear it.", "A reservation stays until it is cleared. After the tentative date it shows Past issue date. CT and Super Admin can open the full reservation history.", "Settings (CT): a new Air operators list holds the 26 AOC holders and 3 applicants. Add, edit or hide an operator. Hidden operators are not shown to staff. An operator with reservation history cannot be deleted.", "Settings (Super Admin): new Gate positions grid. Press and hold a tool (or drag with a mouse) and drop it on another gate. If the gate is taken you are asked before the two tools swap, and an Undo button appears for 10 seconds. Tap a tool to choose its gate from a list instead.", "Acknowledge can now be moved too, with a warning first.", "Needs SQL update 8 (ops_bulletin_8_update.sql) in Supabase before the new screens work."]}, {"v": "3.68", "date": "26 Nov 2026", "items": ["Bulletins: when adding or editing a bulletin, a new \"Reset to standard deadline\" link under the deadline date brings the date back to today plus the standard number of days."]}, {"v": "3.67", "date": "25 Nov 2026", "items": ["The main colour of the app is now blue (header, Acknowledge section, buttons, chips and charts). Green stays for completed items, the Team and Manage Bulletins sections, the Terminal board and some accents.", "Terminal gates: the panel colour choice is removed (the panels are navy). The text colour choice is now a small drop-down menu.", "Terminal gates: the six flip tiles now sit after the gates.", "Terminal gates: a very long gate name or description now wraps inside its row instead of making the page scroll sideways.", "Terminal: on tablets and narrow computer windows the bulletin board now uses the compact layout, so the page no longer scrolls sideways."]}, {"v": "3.66", "date": "25 Nov 2026", "items": ["Terminal: the gates are now an airport sign board. A wayfinding sign at the top flips to the next sign each time you tap it, six flip tiles sit under it, and the gates are grouped by letter on dark panels. The gates still come from the Super Admin settings (letters A to D, up to 25 for each letter).", "The signs cover 39 airport signs with a pictogram and an arrow (departures, arrivals, immigration with an officer pictogram, customs, baggage claim, taxi and more), shown in English and Thai.", "Text colour and panel colour can be changed on the Terminal page. The choice is saved on the device you use.", "No SQL update is needed for this version."]}, {"v": "3.65", "date": "24 Nov 2026", "items": ["Terminal: the \"Opens in a new tab\" note is removed from the gate cards. Gates that lead to another site still open in a new tab."]}, {"v": "3.64", "date": "24 Nov 2026", "items": ["Gates are no longer built into the app. A Super Admin adds, edits and removes them on the Super Admin page (Gates): up to 25 for each letter A to D, each with a name, an address and an optional short description in English and Thai. Gate A1 (Bulletin Acknowledgement) stays built in. The gates that were built in (A2, B1, C1, C2, D1) are copied in as the starting list. Needs SQL update 7."]}, {"v": "3.63", "date": "24 Nov 2026", "items": ["Sign-in: the Sign in button turns green once the PIN is filled in.", "Sign-in: leaving the app (for another app, a gate, or the phone lock screen) and coming back within 60 minutes keeps you signed in. After 60 minutes you sign in again. Sign out clears it at once."]}, {"v": "3.62", "date": "24 Nov 2026", "items": ["Terminal: new gate D1 (Airport Defense)."]}, {"v": "3.61", "date": "24 Nov 2026", "items": ["Terminal: the AOC Fee Calculator and OPS NC Calculator gates now open at the new web address (opsterminal.github.io)."]}, {"v": "3.60", "date": "24 Nov 2026", "items": ["Terminal banner: the extra sun or moon in the upper sky is removed, so only the one in the runway scene remains."]}, {"v": "3.59", "date": "24 Nov 2026", "items": ["Sign-in: the PIN is now described as the PIN for the OPS Terminal app (it no longer says it is used for every bulletin).", "Sign-in: the 'First time here?' message now has a light blue background with dark blue text, and a dark red notice that the app is for internal use only and the app and PIN must not be shared outside the organization. Returning users see the same notice in dark grey under the Sign in button.", "Terminal: new gates C1 (OPS Gateway) and C2 (CAAT Website).", "Seeing every division in My Team is now for Super Admin only, and that bar is labelled Head of CT View. OPS Manager no longer has the division picker."]}, {"v": "3.58", "date": "23 Nov 2026", "items": ["Terminal runway: the blinking white strobe on the tail fin is removed. At dusk and night every aircraft now has a tail logo light that washes the fin (brightest at the base, fading toward the top), with a small lamp at the tailplane. The green wingtip light stays."]}, {"v": "3.57", "date": "23 Nov 2026", "items": ["Terminal runway: every aircraft now shows a blinking white strobe on the tail fin and a steady green light on the right wingtip, in all four skies.", "Terminal runway: the control tower is now thicker and 1.5 times bigger, with a lit cab window."]}, {"v": "3.56", "date": "23 Nov 2026", "items": ["Terminal: the runway is now a side view of a twin-engine airliner. Four different aircraft liveries take off one after another (taxi in, standby for clearance, takeoff roll, rotate, lift-off, climb). The runway scene changes through dawn, day, dusk and night every four takeoffs, and the order of the four aircraft is shuffled each time."]}, {"v": "3.55", "date": "23 Nov 2026", "items": ["New role: OPS Manager (view only). Can open Settings (CT) and Detailed (CT); everything that cannot be edited is greyed out; no Super Admin access. A Super Admin gives or removes it (Super Admin page or Staff list). Needs SQL update 6.", "My Team: an OPS Manager View picker lets an OPS Manager or Super Admin choose which division to see.", "Search: the bottom sheet can now be swiped down, tapped outside, or closed with its handle.", "Terminal: gate tiles are flat navy with a turquoise bar (no shine).", "Terminal: the hero sky follows Bangkok time (dawn, day, dusk, night) with twinkling stars and shooting stars after dark."]}, {"v": "3.54", "date": "23 Nov 2026", "items": ["Live refresh now runs every 40 seconds (was 20)."]}, {"v": "3.53", "date": "23 Nov 2026", "items": ["One simple sign-in card titled OPS Terminal (Name, PIN, Sign in). Page titles are one word.", "My Team now sits inside Overview (General | Detailed | My team). Sign out and Change PIN are in the header name button.", "Medium font weight and darker grey text.", "Leaner Terminal and Acknowledge pages: fewer repeated buttons and lines."]}, {"v": "3.52", "date": "23 Nov 2026", "items": ["Terminal board: the empty message is no longer cut off (it now reads NO BULLETINS FOR YOU YET over two lines).", "Terminal board: bulletin codes with a revision (for example OPSM 11/25 R12) and long day counts (for example -99+ DAYS) now fit in full.", "Terminal board: a title that is too long for the board ends with a dot instead of being cut mid-word."]}, {"v": "3.51", "date": "23 Nov 2026", "items": ["Version numbers now count in smaller steps (3.51, 3.52, 3.53 ...) so every revision is easy to tell apart."]}, {"v": "3.5", "date": "23 Nov 2026", "items": ["PIN list on the Super Admin page is now a quiet link, shown as (Data Controls | Data Pins) at the bottom."]}, {"v": "3.4", "date": "23 Nov 2026", "items": ["Light / dark mode button added in the header. The choice is remembered on that device.", "Runway aircraft outline is now white.", "Terminal board shows bulletin codes as OPSM (for example OPSM 05/26).", "Default deadline (number of days) can now be set by a Super Admin under Settings > Super Admin. Default stays 7 days. Needs SQL update 5.", "Year filter now allows several years at once, or all years, on every page that shows dashboards and charts."]}, {"v": "3.3", "date": "23 Nov 2026", "items": ["Runway aircraft redrawn as a smooth outline jet, with wingtip, strobe, beacon, wing and landing lights kept."]}, {"v": "3.2", "date": "23 Nov 2026", "items": ["Runway aircraft made 30% smaller."]}, {"v": "3.1", "date": "23 Nov 2026", "items": ["OPS Terminal is now the first page on open, on phone and desktop. Links to a specific bulletin still open that bulletin.", "My bulletin status lists every open bulletin (up to 10) with days left. Click a row to acknowledge it. More than 10 shows a \"more\" note and the Open my bulletins button.", "Departures board removed. The Gates cards stay.", "Gate letters and numbers glow with a shine effect.", "Signed-in name and last-name initial shown under the date in the top banner.", "New runway scene with a detailed aircraft, runway lights, wing and aircraft lights.", "Version label now counts each revision automatically. Change log added to this page."]}, {"v": "3.0", "date": "Nov 2026", "items": ["Renamed to OPS Terminal with a new logo. File name is ops_terminal.html.", "OPS Terminal page opens only after PIN sign-in.", "New tab order: Terminal, Acknowledge, Overview, My Team, Settings.", "Quality-check fixes (SQL update 4): bulletin deletion is Super Admin only and written to the audit log; links must start with https; superseded bulletins no longer count in totals.", "Live demo page with sample data."]}];
+const CHANGELOG = [{"v": "3.76", "date": "28 Nov 2026", "items": ["Terminal: a new navy welcome card with a Monday to Sunday week strip showing who acts as OPS Manager each day, one acting line, a link to the calendar and status pills. The separate Acting OPS Manager widget below the gates is gone.","Terminal: the event banner now sits right under the runway animation.","Gate text colour: one dot. Click it on a computer, or press and hold it on a phone, then pick a colour. The colour of the whole Terminal page follows.","Login: after the first sign-in the screen offers Sign in as your name. Not you? opens a search by name or initials with division buttons.","Super Admin: a list of the people who may be Acting OPS Manager (SQL update 11). The calendar only offers those names.","Super Admin: Acknowledge several at once is now a switch on each row of the staff list. Only the Super Admin can change it.","Super Admin: the health check shows a short summary and its details can be hidden. The backup includes the new list automatically."]},{"v": "3.75", "date": "27 Nov 2026", "items": ["Terminal: a My day card (bulletins due, when you are acting, LOA reservations you hold) and a last-updated time. Pull down on a phone to refresh.","Shortcut links (Terminal, Acknowledge, Acting OPS Manager, LOA) that can be added to the phone home screen.","Acting OPS Manager: hand-over notes on acting days (needs SQL update 10).","Sign board: occasion banner with 8 animations, set by Super Admin (needs SQL update 10).","Super Admin: audit log filters and Excel download, health check, and a universal backup (JSON and Excel)."]}, {"v": "3.74", "date": "27 Nov 2026", "items": ["Acting OPS Manager page: the \"Someone else...\" button is now \"Assign Acting OPS Manager\"."]}, {"v": "3.73", "date": "27 Nov 2026", "items": ["The red for the Gate text colour is now a true red instead of a pink-looking red. If you had picked the old red, it switches to the new one automatically.", "Dark mode is now the default for everyone who has not chosen a theme yet. The sun/moon button still switches to light, and your choice is remembered on that device."]}, {"v": "3.72", "date": "27 Nov 2026", "items": ["New page: Acting OPS Manager (a new gate on the Terminal). A calendar shows this month and the next 12 months, with each person who acts on behalf of the OPS Manager in their own colour. Everyone signed in can look at it.", "New group: GO. Members of GO (and Super Admins) can edit the calendar: tap days to select them (on a computer you can also drag across days or hold Shift to select a range), then choose who is acting. A Super Admin gives or removes GO under Settings (Super Admin).", "Terminal: a new box under the Gates shows who is acting for the next 7 days. Tap it to open the calendar.", "Terminal: the Text colour drop-down is now a row of small dots. Move the mouse over a dot and it grows while the sign board below shows that colour at once. Click or tap to keep it.", "Dark mode: the main buttons (for example Reserve, Add, Save) are now a darker blue so the white text is easier to read.", "Needs SQL update 9 (ops_bulletin_9_update.sql) in Supabase before the new page works."]}, {"v": "3.71", "date": "27 Nov 2026", "items": ["LOA Reservation: the list is now A to Z with a letter header (and count) for each letter. Applicants sit under their own letter.", "New letter strip. On a phone it floats above the tab bar: press a letter, slide your finger left or right (a magnifying bubble follows) and let go to jump. On desktop it sits at the top, the letters magnify under the mouse, and a click jumps.", "Layout: 3 operators per row on desktop, 2 per row on phones and tablets, so more fit on screen.", "The filters and the search hide empty letters and dim them in the strip."]}, {"v": "3.70", "date": "26 Nov 2026", "items": ["LOA Reservation: the Reserve button is now a compact button at the right of each card instead of full width.", "Gate positions: tiles are laid out so tool names no longer break in the middle of a word on phones.", "Small colour fixes for grey text on the new screens."]}, {"v": "3.69", "date": "26 Nov 2026", "items": ["LOA Reservation: a new tool on the Terminal. Any signed-in member can reserve an air operator's LOA with a tentative issue date and optional remarks. Only the person who reserved it, CT or a Super Admin can edit or clear it.", "A reservation stays until it is cleared. After the tentative date it shows Past issue date. CT and Super Admin can open the full reservation history.", "Settings (CT): a new Air operators list holds the 26 AOC holders and 3 applicants. Add, edit or hide an operator. Hidden operators are not shown to staff. An operator with reservation history cannot be deleted.", "Settings (Super Admin): new Gate positions grid. Press and hold a tool (or drag with a mouse) and drop it on another gate. If the gate is taken you are asked before the two tools swap, and an Undo button appears for 10 seconds. Tap a tool to choose its gate from a list instead.", "Acknowledge can now be moved too, with a warning first.", "Needs SQL update 8 (ops_bulletin_8_update.sql) in Supabase before the new screens work."]}, {"v": "3.68", "date": "26 Nov 2026", "items": ["Bulletins: when adding or editing a bulletin, a new \"Reset to standard deadline\" link under the deadline date brings the date back to today plus the standard number of days."]}, {"v": "3.67", "date": "25 Nov 2026", "items": ["The main colour of the app is now blue (header, Acknowledge section, buttons, chips and charts). Green stays for completed items, the Team and Manage Bulletins sections, the Terminal board and some accents.", "Terminal gates: the panel colour choice is removed (the panels are navy). The text colour choice is now a small drop-down menu.", "Terminal gates: the six flip tiles now sit after the gates.", "Terminal gates: a very long gate name or description now wraps inside its row instead of making the page scroll sideways.", "Terminal: on tablets and narrow computer windows the bulletin board now uses the compact layout, so the page no longer scrolls sideways."]}, {"v": "3.66", "date": "25 Nov 2026", "items": ["Terminal: the gates are now an airport sign board. A wayfinding sign at the top flips to the next sign each time you tap it, six flip tiles sit under it, and the gates are grouped by letter on dark panels. The gates still come from the Super Admin settings (letters A to D, up to 25 for each letter).", "The signs cover 39 airport signs with a pictogram and an arrow (departures, arrivals, immigration with an officer pictogram, customs, baggage claim, taxi and more), shown in English and Thai.", "Text colour and panel colour can be changed on the Terminal page. The choice is saved on the device you use.", "No SQL update is needed for this version."]}, {"v": "3.65", "date": "24 Nov 2026", "items": ["Terminal: the \"Opens in a new tab\" note is removed from the gate cards. Gates that lead to another site still open in a new tab."]}, {"v": "3.64", "date": "24 Nov 2026", "items": ["Gates are no longer built into the app. A Super Admin adds, edits and removes them on the Super Admin page (Gates): up to 25 for each letter A to D, each with a name, an address and an optional short description in English and Thai. Gate A1 (Bulletin Acknowledgement) stays built in. The gates that were built in (A2, B1, C1, C2, D1) are copied in as the starting list. Needs SQL update 7."]}, {"v": "3.63", "date": "24 Nov 2026", "items": ["Sign-in: the Sign in button turns green once the PIN is filled in.", "Sign-in: leaving the app (for another app, a gate, or the phone lock screen) and coming back within 60 minutes keeps you signed in. After 60 minutes you sign in again. Sign out clears it at once."]}, {"v": "3.62", "date": "24 Nov 2026", "items": ["Terminal: new gate D1 (Airport Defense)."]}, {"v": "3.61", "date": "24 Nov 2026", "items": ["Terminal: the AOC Fee Calculator and OPS NC Calculator gates now open at the new web address (opsterminal.github.io)."]}, {"v": "3.60", "date": "24 Nov 2026", "items": ["Terminal banner: the extra sun or moon in the upper sky is removed, so only the one in the runway scene remains."]}, {"v": "3.59", "date": "24 Nov 2026", "items": ["Sign-in: the PIN is now described as the PIN for the OPS Terminal app (it no longer says it is used for every bulletin).", "Sign-in: the 'First time here?' message now has a light blue background with dark blue text, and a dark red notice that the app is for internal use only and the app and PIN must not be shared outside the organization. Returning users see the same notice in dark grey under the Sign in button.", "Terminal: new gates C1 (OPS Gateway) and C2 (CAAT Website).", "Seeing every division in My Team is now for Super Admin only, and that bar is labelled Head of CT View. OPS Manager no longer has the division picker."]}, {"v": "3.58", "date": "23 Nov 2026", "items": ["Terminal runway: the blinking white strobe on the tail fin is removed. At dusk and night every aircraft now has a tail logo light that washes the fin (brightest at the base, fading toward the top), with a small lamp at the tailplane. The green wingtip light stays."]}, {"v": "3.57", "date": "23 Nov 2026", "items": ["Terminal runway: every aircraft now shows a blinking white strobe on the tail fin and a steady green light on the right wingtip, in all four skies.", "Terminal runway: the control tower is now thicker and 1.5 times bigger, with a lit cab window."]}, {"v": "3.56", "date": "23 Nov 2026", "items": ["Terminal: the runway is now a side view of a twin-engine airliner. Four different aircraft liveries take off one after another (taxi in, standby for clearance, takeoff roll, rotate, lift-off, climb). The runway scene changes through dawn, day, dusk and night every four takeoffs, and the order of the four aircraft is shuffled each time."]}, {"v": "3.55", "date": "23 Nov 2026", "items": ["New role: OPS Manager (view only). Can open Settings (CT) and Detailed (CT); everything that cannot be edited is greyed out; no Super Admin access. A Super Admin gives or removes it (Super Admin page or Staff list). Needs SQL update 6.", "My Team: an OPS Manager View picker lets an OPS Manager or Super Admin choose which division to see.", "Search: the bottom sheet can now be swiped down, tapped outside, or closed with its handle.", "Terminal: gate tiles are flat navy with a turquoise bar (no shine).", "Terminal: the hero sky follows Bangkok time (dawn, day, dusk, night) with twinkling stars and shooting stars after dark."]}, {"v": "3.54", "date": "23 Nov 2026", "items": ["Live refresh now runs every 40 seconds (was 20)."]}, {"v": "3.53", "date": "23 Nov 2026", "items": ["One simple sign-in card titled OPS Terminal (Name, PIN, Sign in). Page titles are one word.", "My Team now sits inside Overview (General | Detailed | My team). Sign out and Change PIN are in the header name button.", "Medium font weight and darker grey text.", "Leaner Terminal and Acknowledge pages: fewer repeated buttons and lines."]}, {"v": "3.52", "date": "23 Nov 2026", "items": ["Terminal board: the empty message is no longer cut off (it now reads NO BULLETINS FOR YOU YET over two lines).", "Terminal board: bulletin codes with a revision (for example OPSM 11/25 R12) and long day counts (for example -99+ DAYS) now fit in full.", "Terminal board: a title that is too long for the board ends with a dot instead of being cut mid-word."]}, {"v": "3.51", "date": "23 Nov 2026", "items": ["Version numbers now count in smaller steps (3.51, 3.52, 3.53 ...) so every revision is easy to tell apart."]}, {"v": "3.5", "date": "23 Nov 2026", "items": ["PIN list on the Super Admin page is now a quiet link, shown as (Data Controls | Data Pins) at the bottom."]}, {"v": "3.4", "date": "23 Nov 2026", "items": ["Light / dark mode button added in the header. The choice is remembered on that device.", "Runway aircraft outline is now white.", "Terminal board shows bulletin codes as OPSM (for example OPSM 05/26).", "Default deadline (number of days) can now be set by a Super Admin under Settings > Super Admin. Default stays 7 days. Needs SQL update 5.", "Year filter now allows several years at once, or all years, on every page that shows dashboards and charts."]}, {"v": "3.3", "date": "23 Nov 2026", "items": ["Runway aircraft redrawn as a smooth outline jet, with wingtip, strobe, beacon, wing and landing lights kept."]}, {"v": "3.2", "date": "23 Nov 2026", "items": ["Runway aircraft made 30% smaller."]}, {"v": "3.1", "date": "23 Nov 2026", "items": ["OPS Terminal is now the first page on open, on phone and desktop. Links to a specific bulletin still open that bulletin.", "My bulletin status lists every open bulletin (up to 10) with days left. Click a row to acknowledge it. More than 10 shows a \"more\" note and the Open my bulletins button.", "Departures board removed. The Gates cards stay.", "Gate letters and numbers glow with a shine effect.", "Signed-in name and last-name initial shown under the date in the top banner.", "New runway scene with a detailed aircraft, runway lights, wing and aircraft lights.", "Version label now counts each revision automatically. Change log added to this page."]}, {"v": "3.0", "date": "Nov 2026", "items": ["Renamed to OPS Terminal with a new logo. File name is ops_terminal.html.", "OPS Terminal page opens only after PIN sign-in.", "New tab order: Terminal, Acknowledge, Overview, My Team, Settings.", "Quality-check fixes (SQL update 4): bulletin deletion is Super Admin only and written to the audit log; links must start with https; superseded bulletins no longer count in totals.", "Live demo page with sample data."]}];
 function changelogHTML(){
   let h = '<div class="card">' + ch('file', 'Change log', '<span class="chip blue">Current v' + esc(APP_VERSION) + '</span>') + '<p class="muted" style="margin-top:-4px">What changed in each version, newest first.</p>';
   CHANGELOG.forEach(function(e){
@@ -5308,23 +5394,27 @@ function gsSub(s){ return lang === 'th' ? s[0] : s[1]; }
 function gsSignHTML(i){ const s = GS_SIGNS[i]; return '<div class="gscn"><div class="gstx"><div class="gs1">' + esc(gsMain(s)) + '</div><div class="gs2">' + esc(gsSub(s)) + '</div></div><span class="gsi">' + gsIco(s[2], 34) + '</span><span class="gsi">' + gsIco(s[3], 34) + '</span></div>'; }
 function gsTileHTML(i){ const s = GS_SIGNS[i]; return '<div class="gscn"><div class="gstr"><span class="gsi">' + gsIco(s[2], 24) + '</span><span class="gsi">' + gsIco(s[3], 16) + '</span></div><span class="gstl">' + esc(gsMain(s)) + '</span></div>'; }
 function gsCtlHTML(){
-  return '<div class="gsctl"><span class="gsk">' + esc(t('th_ink')) + '</span><div class="gsdots" id="gsDots" role="radiogroup" aria-label="' + esc(t('th_ink')) + '">' + GS_INK.map(function(c){
+  return '<div class="gsctl"><span class="gsk">' + esc(t('th_ink')) + '</span><div class="gsdots" id="gsDots"><button type="button" class="gscur" id="gsCur" style="--c:' + GS.ink + '" aria-haspopup="true" aria-expanded="false" aria-controls="gsPal" aria-label="' + esc(t('th_ink_open') + ': ' + gsInkName(GS.ink)) + '" title="' + esc(t('th_ink_open')) + '"></button>' +
+    '<div class="gspal" id="gsPal" role="radiogroup" aria-label="' + esc(t('th_ink')) + '" hidden>' + GS_INK.map(function(c){
       return '<button type="button" role="radio" class="gsd' + (c[2] === GS.ink ? ' on' : '') + '" aria-checked="' + (c[2] === GS.ink ? 'true' : 'false') + '" data-c="' + c[2] + '" style="--c:' + c[2] + '" aria-label="' + esc(lang === 'th' ? c[1] : c[0]) + '" title="' + esc(lang === 'th' ? c[1] : c[0]) + '"></button>'; }).join('') +
-    '</div><span class="gsnm" id="gsNm">' + esc(gsInkName(GS.ink)) + '</span></div>' +
-    '<p class="muted gshint">' + esc(t('th_ink_h')) + ' ' + esc(t('th_tap')) + '</p>';
+    '</div></div><span class="gsnm" id="gsNm">' + esc(gsInkName(GS.ink)) + '</span></div>' +
+    '<p class="muted gshint">' + esc(t('th_ink_h2')) + ' ' + esc(t('th_tap')) + '</p>';
 }
 function gsSet(v){
   if(!GS_INK.some(function(x){ return x[2] === v; })) return;
   GS.ink = v; try { localStorage.setItem('gsInk', v); } catch(e){}
   const w = $('gsW'); if(w) w.style.setProperty('--ink', v);
-  Array.prototype.forEach.call(document.querySelectorAll('#gsDots .gsd'), function(d){ const on = d.dataset.c === v; d.classList.toggle('on', on); d.setAttribute('aria-checked', on ? 'true' : 'false'); });
+  const c = $('gsCur'); if(c){ c.style.setProperty('--c', v); c.setAttribute('aria-label', t('th_ink_open') + ': ' + gsInkName(v)); }
+  Array.prototype.forEach.call(document.querySelectorAll('#gsPal .gsd'), function(d){ const on = d.dataset.c === v; d.classList.toggle('on', on); d.setAttribute('aria-checked', on ? 'true' : 'false'); });
   const n = $('gsNm'); if(n) n.textContent = gsInkName(v);
+  gsPal(false);
+  if(tab === 'terminal') document.body.setAttribute('data-sec', secKey());
 }
 function gsBoardHTML(){
   const groups = {}, order = [];
   TERM_TOOLS.forEach(function(r, i){ const L = String(r.gate).charAt(0); if(!groups[L]){ groups[L] = []; order.push(L); } groups[L].push([r, i]); });
   order.sort();
-  let h = '<div class="gsw" id="gsW" style="--ink:' + GS.ink + '"><div class="gsf gsign" id="gsTop" role="button" tabindex="0" aria-label="' + esc(t('th_tap')) + '"><div class="ly">' + gsSignHTML(GS.top) + '</div></div>' + bannerBoardHTML();
+  let h = '<div class="gsw" id="gsW" style="--ink:' + GS.ink + '"><div class="gsf gsign" id="gsTop" role="button" tabindex="0" aria-label="' + esc(t('th_tap')) + '"><div class="ly">' + gsSignHTML(GS.top) + '</div></div>';
   order.forEach(function(L){
     h += '<div class="gsg"><div class="gsp gsl"><span class="gsL">' + esc(L) + '</span><span class="gsN">' + groups[L].length + ' / ' + GATE_MAX + '</span></div><div class="gsrs">';
     groups[L].forEach(function(x){
@@ -6013,7 +6103,7 @@ Object.assign(I.th, {
 function actApply(d){
   const m = {}; (d.days || []).forEach(function(x){ m[x.d] = { id: x.id, name: x.name, note: x.note || '' }; });
   ACT.days = m; ACT.people = d.people || []; ACT.pc = {}; ACT.people.forEach(function(p){ ACT.pc[p.id] = p.color; });
-  ACT.from = d.from || ''; ACT.to = d.to || ''; ACT.today = d.today || ''; ACT.canEdit = !!d.can_edit; ACT.state = 'ok';
+  ACT.elig = d.eligible || []; ACT.eligOk = Array.isArray(d.eligible); ACT.from = d.from || ''; ACT.to = d.to || ''; ACT.today = d.today || ''; ACT.canEdit = !!d.can_edit; ACT.state = 'ok';
   const a = ACT.from.slice(0, 7), z = ACT.to.slice(0, 7);
   if(!ACT.month || ACT.month < a || ACT.month > z) ACT.month = (ACT.today || bkkToday()).slice(0, 7);
 }
@@ -6027,7 +6117,7 @@ async function loadActing(){
 function actKick(){
   if(ACT.kick || !me) return;
   ACT.kick = true;
-  loadActing().then(function(){ ACT.kick = false; if(ACT.state !== 'idle' && (tab === 'acting' || tab === 'terminal')) render(); }, function(){ ACT.kick = false; });
+  loadActing().then(function(){ ACT.kick = false; if(ACT.state !== 'idle' && (tab === 'acting' || tab === 'terminal' || tab === 'admin')) render(); }, function(){ ACT.kick = false; });
 }
 function actRetry(){ ACT.state = 'idle'; render(); }
 function actToday(){ return ACT.today || bkkToday(); }
@@ -6088,7 +6178,7 @@ function actBarHTML(){
   const n = Object.keys(ACT.sel).length;
   if(!n) return '<div class="acb idle">' + esc(t('act_pick')) + '</div>';
   return '<div class="acb"><div class="acbt"><b>' + esc(t(n === 1 ? 'act_n1' : 'act_n', { n: n })) + '</b><button type="button" class="btn ghost sm" onclick="actDesel()">' + esc(t('act_desel')) + '</button></div><div class="acbp">' +
-    ACT.people.map(function(p){ return '<button type="button" class="acpk" style="' + actStyle(p.id) + '" onclick="actAssign(' + p.id + ')"><i></i>' + esc(p.name) + '</button>'; }).join('') +
+    actPeopleList().map(function(p){ return '<button type="button" class="acpk" style="' + actStyle(p.id) + '" onclick="actAssign(' + p.id + ')"><i></i>' + esc(p.name) + '</button>'; }).join('') +
     '<button type="button" class="acpk more" onclick="actPick()">' + esc(t('act_else')) + '</button><button type="button" class="acpk note" onclick="actHoOpen()">' + esc(t('ho_btn')) + '</button><button type="button" class="acpk clr" onclick="actAssign(null)">' + esc(t('act_clear')) + '</button></div></div>';
 }
 function actRenderMonth(){
@@ -6161,30 +6251,11 @@ function actPick(){
 }
 function actPickF(){
   const l = $('apL'); if(!l) return; const q = val('apQ').toLowerCase();
-  const list = (staffList || []).filter(function(s){ return !q || (s.name + ' ' + s.division).toLowerCase().indexOf(q) >= 0; }).sort(function(a, b){ return a.name.localeCompare(b.name); }).slice(0, 80);
+  const list = actPickPool().filter(function(s){ return !q || (s.name + ' ' + s.division).toLowerCase().indexOf(q) >= 0; }).sort(function(a, b){ return a.name.localeCompare(b.name); }).slice(0, 80);
   l.innerHTML = list.length ? list.map(function(s){ return '<button type="button" class="apr" onclick="actAssign(' + s.id + ')"><b style="font-weight:600">' + esc(s.name) + '</b><span>' + esc(s.division) + '</span></button>'; }).join('') : '<div class="hint">' + esc(t('act_none_p')) + '</div>';
 }
 
 /* ---------- Terminal widget: next 7 days ---------- */
-function actWidgetHTML(){
-  if(!me || ACT.state === 'missing' || ACT.state === 'error') return '';
-  const hd = '<div class="gh"><div class="gi">' + ico('calendar', 20) + '</div><div><div class="gt">' + esc(t('act_title')) + '</div><div class="gd">' + esc(t('act_w_sub')) + '</div></div></div>';
-  if(ACT.state !== 'ok'){ actKick(); return '<section class="atw" id="thActing">' + hd + '</section>'; }
-  const td = actToday(), days = [];
-  for(let i = 0; i < 7; i++){ const ymd = actAdd(td, i); days.push({ ymd: ymd, a: ACT.days[ymd] || null }); }
-  let tiles = '', runs = [];
-  days.forEach(function(x, i){
-    tiles += '<div class="atw7d' + (i === 0 ? ' me' : '') + '"><span class="wk">' + esc(actDayLabel(x.ymd, { weekday: 'short' })) + '</span><b>' + Number(x.ymd.slice(8)) + '</b>' +
-      (x.a ? '<u style="' + actStyle(x.a.id) + '" title="' + esc(x.a.name) + '">' + esc(x.a.name) + '</u>' : '<u class="no">-</u>') + '</div>';
-    const last = runs[runs.length - 1], id = x.a ? x.a.id : 0;
-    if(last && last.id === id) last.to = x.ymd; else runs.push({ id: id, name: x.a ? x.a.name : '', from: x.ymd, to: x.ymd, today: i === 0 });
-  });
-  const list = runs.map(function(r){
-    const rng = r.from === r.to ? actDayLabel(r.from, { weekday: 'short', day: 'numeric', month: 'short' }) : actDayLabel(r.from, { weekday: 'short', day: 'numeric' }) + ' - ' + actDayLabel(r.to, { weekday: 'short', day: 'numeric', month: 'short' });
-    return '<div class="atwr"><i' + (r.id ? ' style="' + actStyle(r.id) + '"' : ' class="no"') + '></i><div><b>' + esc(r.id ? r.name : t('act_w_none')) + '</b><span>' + esc(rng) + '</span></div>' + (r.today ? '<em>' + esc(t('act_w_today')) + '</em>' : '') + '</div>';
-  }).join('');
-  return '<section class="atw" id="thActing">' + hd + '<div class="atwp" role="button" tabindex="0" aria-label="' + esc(t('act_w_open')) + '" onclick="setTab(\'acting\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();setTab(\'acting\')}"><div class="atw7">' + tiles + '</div><div class="atwl">' + list + '</div></div></section>';
-}
 
 /* ---------- Text colour: dots with hover preview ---------- */
 function gsInkName(c){ const x = GS_INK.filter(function(k){ return k[2] === c; })[0]; return x ? (lang === 'th' ? x[1] : x[0]) : ''; }
@@ -6321,32 +6392,6 @@ function myActRun(){
   if(!mine.length) return null;
   let end = mine[0]; for(let i = 1; i < mine.length; i++){ if(mine[i] === actAdd(end, 1)) end = mine[i]; else break; }
   return { from: mine[0], to: end, today: mine[0] === td };
-}
-function myDayHTML(){
-  if(!me) return '';
-  const today = bkkToday(), L = me.list || [], hr = new Date(Date.now() + 7 * 3600000).getUTCHours();
-  const pend = L.filter(function(b){ return !b.acknowledged_at; });
-  const od = pend.filter(function(b){ return b.deadline && String(b.deadline).slice(0, 10) < today; }).length;
-  let nx = ''; pend.forEach(function(b){ const d = b.deadline ? String(b.deadline).slice(0, 10) : ''; if(d && d >= today && (!nx || d < nx)) nx = d; });
-  let h = '<div class="card myd" id="myDay"><div class="mydh"><div><h2>' + esc(t(hr < 12 ? 'md_gm' : (hr < 17 ? 'md_ga' : 'md_ge'), { name: me.name || '' })) + '</h2>' +
-    '<div class="muted">' + esc(actDayLabel(today, { weekday: 'long', day: 'numeric', month: 'long' })) + '</div></div>' +
-    '<button type="button" class="mydu" onclick="refreshNow()">' + esc(stampTxt() + ' · ' + t('md_tap')) + '</button></div>';
-  h += '<button type="button" class="mydr" onclick="setTab(\'ack\')"><span class="mt"><b>' + esc(t('md_due')) + '</b><span>' + esc(nx ? t('md_next', { d: fmtShort(nx, lang) }) : '') + '</span></span>' +
-    (!pend.length ? '<span class="chip green">' + esc(t('md_allok')) + '</span>' : (od ? '<span class="chip red">' + esc(t('md_od', { n: od })) + '</span>' : '<span class="chip amber">' + esc(t('md_pend', { n: pend.length })) + '</span>')) + '</button>';
-  if(ACT.state === 'idle') actKick();
-  if(ACT.state === 'ok'){
-    const r = myActRun();
-    const txt = !r ? t('md_act_none') : (r.today ? t('md_act_today') : t('md_act_on', { r: r.from === r.to ? actDayLabel(r.from, { weekday: 'short', day: 'numeric', month: 'short' }) : actDayLabel(r.from, { weekday: 'short', day: 'numeric', month: 'short' }) + ' - ' + actDayLabel(r.to, { weekday: 'short', day: 'numeric', month: 'short' }) }));
-    const note = r && ACT.days[r.from] && ACT.days[r.from].note ? ACT.days[r.from].note : '';
-    h += '<button type="button" class="mydr" onclick="setTab(\'acting\')"><span class="mt"><b>' + esc(t('md_acting')) + '</b><span>' + esc(txt) + '</span>' + (note ? '<span>' + esc(note) + '</span>' : '') + '</span>' + (r ? '<span class="chip ' + (r.today ? 'green' : 'blue') + '">' + esc(r.today ? t('act_w_today') : actDayLabel(r.from, { day: 'numeric', month: 'short' })) + '</span>' : '') + '</button>';
-  }
-  if(LOA.state === 'idle' && !LOA.kick){ LOA.kick = true; loadLoa().then(function(){ LOA.kick = false; if(tab === 'terminal') render(); }, function(){ LOA.kick = false; }); }
-  if(LOA.state === 'ok'){
-    const n = (LOA.res || []).filter(function(x){ return x.by_id === me.id; }).length;
-    h += '<button type="button" class="mydr" onclick="setTab(\'loa\')"><span class="mt"><b>' + esc(t('md_loa')) + '</b><span>' + esc(n ? t('md_loa_n', { n: n }) : t('md_loa_0')) + '</span></span>' + (n ? '<span class="chip green">' + n + '</span>' : '') + '</button>';
-  }
-  h += '<div class="mydl"><button type="button" class="btn ghost sm" onclick="myScOpen()">' + esc(t('md_sc')) + '</button></div></div>';
-  return h;
 }
 
 /* ---------- hand-over notes on the Acting OPS Manager page ---------- */
@@ -6490,7 +6535,7 @@ function healthCardHTML(){
     '<p><button class="btn" id="hcBtn" onclick="hcRun()">' + (HC.state === 'run' ? 'Checking...' : (HC.state === 'idle' ? 'Run checks' : 'Run checks again')) + '</button></p><div id="hcBody">' + hcBodyHTML() + '</div></div>';
   return h;
 }
-function hcBodyHTML(){
+function hcDetailHTML(){
   if(HC.state === 'idle') return '';
   if(HC.state === 'run') return spinner();
   const chip = function(ok, yes, no){ return '<span class="chip ' + (ok ? 'green' : 'red') + '">' + esc(ok ? yes : no) + '</span>'; };
@@ -6523,7 +6568,7 @@ async function hcRun(){
 
 /* ---------- Super Admin: universal backup ---------- */
 function backup2HTML(){
-  return '<div class="card">' + ch('shield', 'Backup') + '<p class="muted" style="margin-top:-4px">Downloads ALL data in the app: every table, including staff and roles, bulletins, acknowledgments, understanding checks, leave, the acting calendar and notes, LOA reservations and air operators, gates, the banner and the audit log. Tables added in future are included automatically.</p>' +
+  return '<div class="card">' + ch('shield', 'Backup') + '<p class="muted" style="margin-top:-4px">Downloads ALL data in the app: every table, including staff and roles, bulletins, acknowledgments, understanding checks, leave, the acting calendar and notes, the list of people who may act as OPS Manager, LOA reservations and air operators, gates, the banner and the audit log. Tables added in future are included automatically.</p>' +
     '<p class="muted"><b>The file includes every PIN (the readable PIN and its stored hash).</b> Keep it somewhere private. The .json file is the complete copy for recovery; the Excel file is for reading.</p>' +
     '<p class="row" style="gap:8px"><button class="btn" id="bkBtn" onclick="adBackup(\'json\')">' + ico('download', 16) + 'Download backup (.json)</button><button class="btn ghost" id="bkBtn2" onclick="adBackup(\'xlsx\')">' + ico('download', 16) + 'Download as Excel (.xlsx)</button></p><div id="bkMsg"></div></div>';
 }
@@ -6608,6 +6653,243 @@ async function auExport(){
   toast('Downloaded ' + rows.length + ' entries', 'success');
 }
 ptrInit();
+
+/* ====================== v3.76: WELCOME CARD, LOGIN FINDER, GATE COLOUR, ACTING LIST, STAFF TOGGLE, COLLAPSIBLE HEALTH CHECK ====================== */
+Object.assign(I.en, {
+  wc_me: 'You are acting on behalf of OPS Manager today',
+  wc_other: '{name} is acting as OPS Manager today',
+  wc_nobody: 'No Acting OPS Manager is assigned today',
+  wc_link: 'Open the Acting OPS Manager calendar',
+  wc_mine: 'Your days', wc_week: 'This week',
+  wc_loa: 'LOA reservations: {n}',
+  si_cont: 'Sign in as {name}', si_find: 'Type a name or initials', si_hint: 'Type a few letters of your name or your initials, or choose a division.',
+  si_none: 'No name matches. Check the spelling or choose a division.', si_all: 'All', si_found: '{n} found',
+  th_ink_h2: 'On a computer, click the dot to choose a colour. On a phone, press and hold the dot, then tap a colour. The page colour follows your choice.',
+  th_ink_open: 'Choose a text colour'
+});
+Object.assign(I.th, {
+  wc_me: 'วันนี้คุณปฏิบัติหน้าที่แทน ผจก.OPS',
+  wc_other: 'วันนี้ {name} ปฏิบัติหน้าที่แทน ผจก.OPS',
+  wc_nobody: 'วันนี้ยังไม่มีการกำหนดผู้ปฏิบัติหน้าที่แทน ผจก.OPS',
+  wc_link: 'เปิดปฏิทินผู้ปฏิบัติหน้าที่แทน ผจก.OPS',
+  wc_mine: 'วันของคุณ', wc_week: 'สัปดาห์นี้',
+  wc_loa: 'การจอง LOA: {n}',
+  si_cont: 'เข้าสู่ระบบในชื่อ {name}', si_find: 'พิมพ์ชื่อหรืออักษรย่อ', si_hint: 'พิมพ์ตัวอักษรไม่กี่ตัวของชื่อหรืออักษรย่อ หรือเลือกฝ่าย',
+  si_none: 'ไม่พบชื่อที่ตรงกัน ตรวจตัวสะกดหรือเลือกฝ่าย', si_all: 'ทั้งหมด', si_found: 'พบ {n} ชื่อ',
+  th_ink_h2: 'บนคอมพิวเตอร์ คลิกที่จุดเพื่อเลือกสี บนโทรศัพท์ กดค้างที่จุดแล้วแตะสีที่ต้องการ สีของหน้าจะเปลี่ยนตามสีที่เลือก',
+  th_ink_open: 'เลือกสีตัวอักษร'
+});
+
+/* ---------- initials ---------- */
+function wcInit(name){
+  const tk = String(name || '').replace(/[.·]/g, ' ').trim().split(/\s+/).filter(Boolean);
+  const first = function(s){ const m = /[^เ-ไ\s]/.exec(s || ''); return m ? m[0] : String(s || '').charAt(0); };
+  const a = first(tk[0] || ''), b = tk.length > 1 ? first(tk[tk.length - 1]) : (String(tk[0] || '').length > 1 ? first(String(tk[0]).slice(1)) : '');
+  return (a + b).toUpperCase();
+}
+
+/* ---------- welcome card (navy, week strip) ---------- */
+function wcWeek(){
+  const td = actToday(), dow = new Date(td + 'T00:00:00Z').getUTCDay(), mon = actAdd(td, -((dow + 6) % 7)), out = [];
+  for(let i = 0; i < 7; i++) out.push(actAdd(mon, i));
+  return out;
+}
+function wcStripHTML(){
+  const td = actToday(), days = wcWeek(), seen = [], mine = { n: 0 };
+  let cells = '';
+  days.forEach(function(ymd){
+    const a = ACT.days[ymd] || null;
+    if(a && seen.indexOf(a.id) < 0) seen.push(a.id);
+    if(a && a.id === me.id) mine.n++;
+    cells += '<button type="button" class="wcd' + (ymd === td ? ' td' : '') + '" onclick="setTab(\'acting\')" aria-label="' + esc(actDayLabel(ymd, { weekday: 'long', day: 'numeric', month: 'long' }) + (a ? ': ' + a.name : '')) + '">' +
+      '<span class="n">' + esc(actDayLabel(ymd, { weekday: 'short' })) + '</span><span class="dt">' + Number(ymd.slice(8)) + '</span>' +
+      (a ? '<span class="in" style="' + actStyle(a.id) + '">' + esc(wcInit(a.name)) + '</span>' : '<span class="em" aria-hidden="true">&ndash;</span>') +
+      (a && a.id === me.id ? '<span class="me" aria-hidden="true"></span>' : '') + '</button>';
+  });
+  let lg = seen.map(function(id){
+    const nm = (days.map(function(d){ return ACT.days[d]; }).filter(function(x){ return x && x.id === id; })[0] || {}).name || '';
+    return '<span style="' + actStyle(id) + '"><i></i>' + esc(wcInit(nm) + ' ' + nm) + '</span>';
+  }).join('');
+  if(mine.n) lg += '<span><i style="background:#fff;width:7px;height:7px;margin:0 7px 0 1px"></i>' + esc(t('wc_mine')) + '</span>';
+  return '<div class="wcwk" role="group" aria-label="' + esc(t('wc_week')) + '">' + cells + '</div>' + (lg ? '<div class="wclg">' + lg + '</div>' : '');
+}
+function wcActingHTML(){
+  if(ACT.state === 'idle'){ actKick(); return ''; }
+  if(ACT.state !== 'ok') return '';
+  const td = actToday(), a = ACT.days[td] || null;
+  const line = a ? (a.id === me.id ? t('wc_me') : t('wc_other', { name: a.name })) : t('wc_nobody');
+  const note = a && a.id === me.id && a.note ? '<div class="wcnote">' + esc(a.note) + '</div>' : '';
+  return wcStripHTML() + '<div class="wcline">' + esc(line) + '</div>' + note +
+    '<button type="button" class="wclk" onclick="setTab(\'acting\')">' + esc(t('wc_link')) + ' ' + ico('arrow', 15) + '</button>';
+}
+function myDayHTML(){
+  if(!me) return '';
+  const today = bkkToday(), L = me.list || [], hr = new Date(Date.now() + 7 * 3600000).getUTCHours();
+  const pend = L.filter(function(b){ return !b.acknowledged_at; });
+  const od = pend.filter(function(b){ return b.deadline && String(b.deadline).slice(0, 10) < today; }).length;
+  let nx = ''; pend.forEach(function(b){ const d = b.deadline ? String(b.deadline).slice(0, 10) : ''; if(d && d >= today && (!nx || d < nx)) nx = d; });
+  let h = '<section class="wc" id="myDay"><h2>' + esc(t(hr < 12 ? 'md_gm' : (hr < 17 ? 'md_ga' : 'md_ge'), { name: me.name || '' })) + '</h2>' +
+    '<p class="wcd0">' + esc(actDayLabel(today, { weekday: 'long', day: 'numeric', month: 'long' })) + '</p>';
+  h += wcActingHTML();
+  h += '<div class="wcp">';
+  h += '<button type="button" class="wcpill ' + (!pend.length ? 'g' : (od ? 'r' : 'a')) + '" onclick="setTab(\'ack\')">' + esc(t('md_due') + ': ' + (!pend.length ? t('md_allok') : (od ? t('md_od', { n: od }) : t('md_pend', { n: pend.length })) + (nx ? ' · ' + t('md_next', { d: fmtShort(nx, lang) }) : ''))) + '</button>';
+  if(LOA.state === 'idle' && !LOA.kick){ LOA.kick = true; loadLoa().then(function(){ LOA.kick = false; if(tab === 'terminal') render(); }, function(){ LOA.kick = false; }); }
+  if(LOA.state === 'ok'){
+    const n = (LOA.res || []).filter(function(x){ return x.by_id === me.id; }).length;
+    if(n) h += '<button type="button" class="wcpill t" onclick="setTab(\'loa\')">' + esc(t('wc_loa', { n: n })) + '</button>';
+  }
+  h += '</div><div class="wcft"><button type="button" class="mydu" onclick="refreshNow()">' + esc(stampTxt() + ' · ' + t('md_tap')) + '</button>' +
+    '<button type="button" class="wcsc" onclick="myScOpen()">' + esc(t('md_sc')) + '</button></div></section>';
+  return h;
+}
+function wcBannerHTML(){
+  if(BN.state === 'idle' && !BN.kick){
+    BN.kick = true;
+    softRpc('ack_banner_get').then(function(g){
+      BN.kick = false;
+      if(g.missing) BN.state = 'missing';
+      else if(!g.error && g.data && g.data.ok){ BN.data = g.data; BN.state = 'ok'; if(tab === 'terminal') render(); }
+      else BN.state = 'err';
+    }, function(){ BN.kick = false; BN.state = 'err'; });
+  }
+  const b = bannerBoardHTML(); return b ? '<div class="gbnw">' + b + '</div>' : '';
+}
+
+/* ---------- login: remembered name, then search (name, initials, division) ---------- */
+function siRemId(){ let id = null; try { id = localStorage.getItem('ackStaff'); } catch(e) {} return staffList.find(function(x){ return String(x.id) === String(id); }) || null; }
+function siNorm(s){ return String(s || '').toLowerCase().replace(/[\s.,'\u2019\-_]+/g, ''); }
+function siRank(s, q){
+  const nq = siNorm(q); if(!nq) return 0;
+  const nn = siNorm(s.name), toks = String(s.name).toLowerCase().split(/[\s.]+/).filter(Boolean), init = toks.map(function(x){ return x.charAt(0); }).join('');
+  if(nn.indexOf(nq) === 0) return 1;
+  if(init.indexOf(nq) === 0) return 2;
+  const qt = String(q).toLowerCase().split(/[\s.]+/).filter(Boolean);
+  if(qt.length > 1 && qt.every(function(w){ return toks.some(function(x){ return x.indexOf(w) === 0; }); })) return 3;
+  if(toks.some(function(x){ return x.indexOf(nq) === 0; })) return 3;
+  if(nn.indexOf(nq) >= 0) return 4;
+  return 0;
+}
+function siResults(){
+  const q = (signin.q || '').trim(), dv = signin.dv || '';
+  if(!q && !dv) return null;
+  return staffList.map(function(s){ return { s: s, r: q ? siRank(s, q) : 1 }; })
+    .filter(function(x){ return x.r > 0 && (!dv || x.s.division === dv); })
+    .sort(function(a, b){ return a.r - b.r || a.s.name.localeCompare(b.s.name); }).map(function(x){ return x.s; });
+}
+function siListHTML(){
+  const L = siResults();
+  if(L === null) return '<div class="sin">' + esc(t('si_hint')) + '</div>';
+  if(!L.length) return '<div class="sin">' + esc(t('si_none')) + '</div>';
+  return L.slice(0, 60).map(function(s){ return '<button type="button" class="sir" onclick="siName(\'' + s.id + '\')"><b style="font-weight:600">' + esc(s.name) + '</b><span>' + esc(s.division) + '</span></button>'; }).join('');
+}
+function siNameHTML(st, sel){
+  const head = '<div class="stp"><span class="sn">1</span>' + esc(t('step_name')) + '</div>';
+  if(sel){
+    return head + '<div class="sipk"><span class="sav">' + esc(wcInit(sel.name)) + '</span><div><b>' + esc(sel.name) + '</b><span class="s">' + esc(sel.division) + '</span></div>' +
+      '<button type="button" class="silk" onclick="siNotYou()">' + esc(t('not_you')) + '</button></div>';
+  }
+  const rem = siRemId();
+  if(rem && !st.other){
+    return '<div class="sirem"><button type="button" class="sirb" onclick="siName(\'' + rem.id + '\')"><span class="sav">' + esc(wcInit(rem.name)) + '</span><span><b>' + esc(t('si_cont', { name: rem.name })) + '</b><span class="s">' + esc(rem.division) + '</span></span></button>' +
+      '<button type="button" class="silk" onclick="siNotYou()">' + esc(t('not_you')) + '</button></div>';
+  }
+  const divs = []; staffList.forEach(function(x){ if(divs.indexOf(x.division) < 0) divs.push(x.division); }); divs.sort(cmpDiv);
+  return head + '<input id="siQ" class="lsq" type="text" placeholder="' + esc(t('si_find')) + '" aria-label="' + esc(t('si_find')) + '" value="' + esc(st.q || '') + '" autocomplete="off" autocapitalize="off" spellcheck="false" oninput="siSearch(this.value)" onkeydown="if(event.key===\'Enter\'){siEnter()}">' +
+    '<div class="sich">' + divs.map(function(d){ return '<button type="button" class="' + (st.dv === d ? 'on' : '') + '" data-d="' + esc(d) + '" onclick="siDv(this.dataset.d)" aria-pressed="' + (st.dv === d ? 'true' : 'false') + '">' + esc(d) + '</button>'; }).join('') + '</div>' +
+    '<div class="sil" id="siList">' + siListHTML() + '</div>';
+}
+function siSearch(v){ signin.q = v; const l = $('siList'); if(l) l.innerHTML = siListHTML(); }
+function siDv(d){ signin.dv = signin.dv === d ? '' : d; renderSignin(); const q = $('siQ'); if(q && !signin.dv && !signin.q) try { q.focus({ preventScroll: true }); } catch(e) {} }
+function siEnter(){ const L = siResults(); if(L && L.length === 1) siName(String(L[0].id)); }
+function siNotYou(){
+  signin.other = true; signin.staffId = ''; signin.pin = ''; signin.pin2 = ''; signin.code = ''; signin.msg = null; signin.q = ''; signin.dv = '';
+  renderSignin(); const q = $('siQ'); if(q) try { q.focus({ preventScroll: true }); } catch(e) {}
+}
+function siFocusPin(){ setTimeout(function(){ const p = $('sipin'); if(p) try { p.focus({ preventScroll: true }); } catch(e) {} }, 30); }
+
+/* ---------- gate colour: one dot; click (computer) or press and hold (phone) opens the colours ---------- */
+GS.pt = ''; GS.lp = false; GS.lt = 0; GS.open = false;
+function gsInkIdx(){ const i = GS_INK.findIndex(function(x){ return x[2] === GS.ink; }); return i < 0 ? 0 : i; }
+function gsPal(on){
+  const p = $('gsPal'), c = $('gsCur'); if(!p || !c) { GS.open = false; return; }
+  GS.open = !!on; p.hidden = !on; c.setAttribute('aria-expanded', on ? 'true' : 'false');
+  if(on){ const first = p.querySelector('.gsd.on') || p.querySelector('.gsd'); if(first && GS.pt === '') try { first.focus({ preventScroll: true }); } catch(e) {} }
+  else if(GS.mag){ GS.mag = false; gsMag(null); gsPrev(GS.ink); }
+}
+document.addEventListener('pointerdown', function(e){
+  GS.pt = e.pointerType || '';
+  const cur = e.target.closest ? e.target.closest('#gsCur') : null;
+  if(cur && GS.pt !== 'mouse'){
+    clearTimeout(GS.lt); GS.lp = false;
+    GS.lt = setTimeout(function(){ GS.lp = true; gsPal(true); try { if(navigator.vibrate) navigator.vibrate(12); } catch(x) {} }, 420);
+    return;
+  }
+  if(GS.open && !(e.target.closest && (e.target.closest('#gsPal') || cur))) gsPal(false);
+});
+['pointerup', 'pointercancel', 'pointermove'].forEach(function(n){
+  document.addEventListener(n, function(e){ if(n === 'pointermove' && e.pointerType === 'mouse') return; clearTimeout(GS.lt); });
+});
+document.addEventListener('click', function(e){
+  const cur = e.target.closest ? e.target.closest('#gsCur') : null; if(!cur) return;
+  if(e.detail !== 0 && GS.pt !== 'mouse'){ if(GS.lp){ GS.lp = false; } return; }
+  gsPal(!GS.open);
+});
+document.addEventListener('contextmenu', function(e){ if(e.target.closest && e.target.closest('#gsCur')) e.preventDefault(); });
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && GS.open){ gsPal(false); const c = $('gsCur'); if(c) c.focus(); } });
+
+/* ---------- Super Admin: who may be Acting OPS Manager ---------- */
+function actEligIds(){ const o = {}; (ACT.elig || []).forEach(function(x){ o[x.id] = true; }); return o; }
+function actPeopleList(){ if(!ACT.eligOk) return ACT.people; const o = actEligIds(); return ACT.people.filter(function(p){ return o[p.id]; }); }
+function actPickPool(){ return ACT.eligOk ? ACT.elig : (staffList || []); }
+function actEligCardHTML(){
+  if(ACT.state === 'idle') actKick();
+  let h = '<div class="card acl2" id="aclCard">' + ch('calendar', 'Acting OPS Managers') + '<p class="muted" style="margin-top:-4px">Only the people on this list can be chosen in the Acting OPS Manager calendar by GO and Super Admin. Taking a name off the list does not remove days that are already assigned to that person.</p>';
+  if(ACT.state === 'missing' || (ACT.state === 'ok' && !ACT.eligOk)) return h + '<div class="msg error">This list needs SQL update 11. Run it in the Supabase SQL Editor, then reload this page.</div></div>';
+  if(ACT.state !== 'ok') return h + (ACT.state === 'error' ? '<div class="msg error">The list could not be loaded.</div>' : spinner()) + '</div>';
+  const el = (ACT.elig || []).slice().sort(function(a, b){ return a.name.localeCompare(b.name); });
+  h += el.length ? '<div class="tablewrap"><table><thead><tr><th>Name</th><th>Division</th><th></th></tr></thead><tbody>' + el.map(function(x){
+    return '<tr><td><b>' + esc(x.name) + '</b></td><td>' + divTag(x.division) + '</td><td><button class="btn sm c-red" onclick="aclSet(' + x.id + ',false)">Remove</button></td></tr>';
+  }).join('') + '</tbody></table></div>' : '<div class="hint">Nobody is on the list yet. Add a name below.</div>';
+  h += '<label class="lbl">Add a person</label><input id="aclQ" class="lsq" type="text" placeholder="Search by name" autocomplete="off" autocapitalize="off" spellcheck="false" oninput="aclF()"><div class="aplist" id="aclRes"></div></div>';
+  return h;
+}
+function aclF(){
+  const l = $('aclRes'); if(!l) return; const q = val('aclQ').toLowerCase(), on = actEligIds();
+  if(!q){ l.innerHTML = ''; return; }
+  const list = (admin ? admin.staff : []).filter(function(s){ return s.active && !on[s.id] && (s.name + ' ' + s.division).toLowerCase().indexOf(q) >= 0; }).sort(function(a, b){ return a.name.localeCompare(b.name); }).slice(0, 30);
+  l.innerHTML = list.length ? list.map(function(s){ return '<button type="button" class="apr" onclick="aclSet(' + s.id + ',true)"><b style="font-weight:600">' + esc(s.name) + '</b><span>' + esc(s.division) + '</span></button>'; }).join('') : '<div class="hint">No match.</div>';
+}
+async function aclSet(id, on){
+  const r = await rpc('ack_super_set_acting', { p_staff_id: me.id, p_pin: me.pin, p_targets: [id], p_on: !!on });
+  if(!adminOk(r)) return;
+  await loadActing(); render(); toast(on ? 'Added to the list' : 'Removed from the list', 'success');
+}
+
+/* ---------- staff list: Acknowledge several at once, per person ---------- */
+function batchOnMap(){ const o = {}; ((me.extra && me.extra.batch_ids) || []).forEach(function(i){ o[i] = true; }); return o; }
+function batchTd(s, on){
+  const sup = isSuper();
+  return '<td><label class="swrow bsw' + (sup ? '' : ' off') + '" style="margin:0"' + (sup ? '' : ' title="Only the Super Admin can change this"') + '><input type="checkbox" ' + (on[s.id] ? 'checked ' : '') + (sup && s.active ? '' : 'disabled ') + 'onchange="adBatchSet([' + s.id + '],this.checked)" aria-label="Several at once: ' + esc(s.name) + '"><span>' + (on[s.id] ? 'On' : 'Off') + '</span></label></td>';
+}
+function batchSetCardHTML(){
+  const sup = isSuper(), divs = []; admin.staff.forEach(function(x){ if(x.active && divs.indexOf(x.division) < 0) divs.push(x.division); }); divs.sort(cmpDiv);
+  return '<div class="card">' + ch('layers', 'Acknowledge several at once') + '<p class="muted" style="margin-top:-4px">The switch on each row below lets that person select several bulletins and acknowledge them in one go. It is off for everyone by default. Bulletins with an understanding check are always done one by one. ' + (sup ? '' : '<b>Only the Super Admin can change it.</b>') + '</p>' +
+    '<div class="row"><select id="bkDiv"' + (sup ? '' : ' disabled') + '>' + divs.map(function(d){ return '<option value="' + esc(d) + '">' + esc(d) + '</option>'; }).join('') + '</select>' +
+    '<button class="btn sm ghost"' + (sup ? '' : ' disabled') + ' onclick="adBatchDiv(val(\'bkDiv\'),true)">Switch the whole division on</button><button class="btn sm ghost"' + (sup ? '' : ' disabled') + ' onclick="adBatchDiv(val(\'bkDiv\'),false)">Switch the whole division off</button></div></div>';
+}
+
+/* ---------- Health check: summary first, details can be hidden ---------- */
+function hcToggle(){ HC.open = !HC.open; const b = $('hcBody'); if(b) b.innerHTML = hcBodyHTML(); }
+function hcBodyHTML(){
+  if(HC.state === 'run'){ HC.open = undefined; return hcDetailHTML(); }
+  if(HC.state !== 'done') return hcDetailHTML();
+  const items = HC.items || [], bad = items.filter(function(i){ return !i.ok; }).length;
+  if(HC.open === undefined) HC.open = bad > 0 || !!HC.note || HC.ms === null;
+  const sm = [HC.ms === null ? '<span class="chip red">No answer from the database</span>' : '<span class="chip green">Database OK · ' + HC.ms + ' ms</span>'];
+  if(HC.remote) sm.push(HC.remote === APP_VERSION ? '<span class="chip green">Website file v' + esc(HC.remote) + ' · same</span>' : '<span class="chip amber">Website file v' + esc(HC.remote) + ' · refresh the page</span>');
+  if(items.length) sm.push(bad ? '<span class="chip red">' + bad + ' of ' + items.length + ' not detected</span>' : '<span class="chip green">All ' + items.length + ' checks detected</span>');
+  return '<div class="hcs"><div class="chips">' + sm.join('') + '</div><button class="btn ghost sm" onclick="hcToggle()" aria-expanded="' + (HC.open ? 'true' : 'false') + '">' + (HC.open ? 'Hide details' : 'Show details') + '</button></div>' + (HC.open ? hcDetailHTML() : '');
+}
 
 /* ====================== INIT ====================== */
 async function init(){
