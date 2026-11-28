@@ -870,18 +870,29 @@ select.gssel{width:auto;max-width:170px;height:34px;margin:0;padding:4px 30px 4p
 
 /* v3.56 side-view takeoff runway */
 .tkr{position:relative;height:130px;margin:0 -24px;overflow:hidden;border-top:2px solid #24405f;background:#0f1b2d}
+.tkr #tkbtn{position:absolute;z-index:6;background:transparent;border:0;padding:0;margin:0;cursor:pointer;border-radius:12px;-webkit-tap-highlight-color:transparent}
+.tkr #tkbtn:focus-visible{outline:2px solid #7fe0cf;outline-offset:2px}
+.tkr .tkhint{position:absolute;z-index:6;white-space:nowrap;font-size:9.5px;font-weight:600;line-height:1;font-family:inherit;letter-spacing:.09em;text-transform:uppercase;opacity:.78;pointer-events:none}
+html[lang=th] .tkr .tkhint{letter-spacing:0;text-transform:none}
+.tkr .tkring{position:absolute;z-index:6;width:26px;height:26px;border-radius:50%;border:1.5px solid #fff;opacity:.7;pointer-events:none;animation:tkphr 2s ease-out infinite}
+@keyframes tkphr{0%{transform:scale(.7);opacity:.7}100%{transform:scale(1.8);opacity:0}}
+.tkr .tkbub{position:absolute;z-index:7;left:8px;padding:7px 11px;font-size:12px;font-weight:600;line-height:1.3;font-family:inherit;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.tkr .tkring{animation:none}}
 .tkr svg{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
 .tkr svg.tkl{opacity:0;transition:opacity 1.6s ease}
 .tkr svg.tkl.on{opacity:1}
 .tkst,.tkfs,.tkwg,.tken{stroke:var(--ol,rgba(15,32,56,.35));stroke-width:.7}
 .tkst{fill:var(--tail)}.tkfs{fill:var(--fus)}.tkwg{fill:var(--wing)}.tken{fill:var(--eng)}
 .tkbl{fill:var(--belly)}.tkch{fill:var(--cheat,transparent)}.tkwn{stroke:var(--win)}.tkck{fill:#1b2f4a}
+.tkt{animation:tkt 3.2s ease-in-out infinite}@keyframes tkt{0%,100%{opacity:.25}50%{opacity:1}}
+.tkbg{animation:tkbg 3s infinite}@keyframes tkbg{0%,38%{opacity:1}44%,100%{opacity:0}}
+.tkbw{animation:tkbw 3s infinite}@keyframes tkbw{0%,50%{opacity:0}56%,88%{opacity:1}94%,100%{opacity:0}}
 .tkbk{animation:tkbk 1.3s ease-in-out infinite}
 .tkrl{animation:tkrl 1.2s linear infinite}
 @keyframes tkbk{0%,100%{opacity:1}50%{opacity:.1}}
 @keyframes tkrl{0%{opacity:1}50%{opacity:.25}100%{opacity:1}}
 @media (max-width:640px){.tkr{height:96px;margin:0 -16px}}
-@media (prefers-reduced-motion:reduce){.tkbk,.tkrl{animation:none}}
+@media (prefers-reduced-motion:reduce){.tkbk,.tkrl,.tkt{animation:none}.tkbg{animation:none;opacity:1}.tkbw{animation:none;opacity:0}}
 .msg.ftu{background:#d6e7fa;color:#0d2f5e;border:1px solid #a8c6ea;box-shadow:0 2px 10px rgba(30,77,140,.14);padding:14px 16px;font-size:15px;line-height:1.45}
 .msg.ftu .ftu1{font-weight:600}
 .msg.ftu .ftu2{margin-top:10px;padding-top:10px;border-top:1px solid rgba(13,47,94,.18);color:#7a1616;font-weight:600;font-size:13.5px}
@@ -1183,6 +1194,9 @@ textarea.hota{width:100%;min-height:110px;resize:vertical}
 .wc>*{position:relative}
 .wc h2{margin:0;color:#fff;font-size:21px;font-weight:700;line-height:1.25}
 .wc h2::before{display:none}
+.tba .tbi{background:#2563a8}
+.tba .wcwk{margin-top:2px}
+.tba .wcline{font-size:14.5px}
 .wc .wcd0{margin:2px 0 0;font-size:13px;color:#b9c8dc}
 .wcwk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:14px}
 .wcd{appearance:none;border:0;font:inherit;color:inherit;cursor:pointer;text-align:center;border-radius:12px;padding:6px 0 7px;background:#233b5c;position:relative;min-width:0}
@@ -1336,7 +1350,7 @@ body[data-sec=black] .banner p{color:#b4c0cf}
   <div class="gridbg"></div><div class="glow g1"></div><div class="glow g2"></div>
   <div class="hin">
     <div class="logo"><svg viewBox="0 0 100 100" width="44" height="44" role="img" aria-label="OPS Terminal"><rect width="100" height="100" rx="22" fill="#1a2e4a"/><path d="M0,-20 C2,-20 3,-17 3,-12 L3,-4 L20,6 L20,10 L3,5 L3,13 L8,17 L8,20 L0,18 L-8,20 L-8,17 L-3,13 L-3,5 L-20,10 L-20,6 L-3,-4 L-3,-12 C-3,-17 -2,-20 0,-20 Z" transform="translate(50,34) rotate(45) scale(0.95)" fill="#2a9d8f"/><path d="M26.7 82.33C33.33 82.33 38.46 77.8 38.46 69.65C38.46 61.48 33.33 56.93 26.7 56.93C20.05 56.93 14.92 61.48 14.92 69.65C14.92 77.77 20.05 82.33 26.7 82.33ZM26.7 77.19C23.1 77.19 20.91 74.53 20.91 69.65C20.91 64.75 23.1 62.08 26.7 62.08C30.29 62.08 32.48 64.73 32.48 69.65C32.48 74.53 30.29 77.19 26.7 77.19ZM42.76 82H48.62V74.28H52.72C58.4 74.28 61.9 70.91 61.9 65.81C61.9 60.75 58.47 57.26 52.89 57.26H42.76ZM48.62 69.65V62.01H51.64C54.4 62.01 55.83 63.49 55.83 65.81C55.83 68.1 54.4 69.65 51.66 69.65ZM75.47 82.33C81.6 82.33 85.25 79.53 85.25 74.83C85.25 70.88 82.48 68.49 77.7 67.44L75.55 66.94C73.35 66.44 71.9 65.71 71.9 64.19C71.9 62.81 73.11 61.8 75.45 61.8C77.81 61.8 79.12 62.84 79.29 64.63H84.92C84.85 60.05 81.2 56.93 75.47 56.93C69.86 56.93 65.84 60 65.84 64.58C65.84 68.3 68.43 70.45 72.7 71.42L75.32 72.04C78.03 72.65 79.32 73.4 79.32 74.81C79.32 76.39 77.83 77.47 75.4 77.47C72.73 77.47 70.96 76.24 70.82 73.83H65.19C65.29 79.54 69.28 82.33 75.47 82.33Z" fill="#e8eff8"/></svg></div>
-    <div class="ht"><h1 id="appTitle">OPS Terminal</h1><div class="sub">CT / OPS &middot; v3.86</div></div>
+    <div class="ht"><h1 id="appTitle">OPS Terminal</h1><div class="sub">CT / OPS &middot; v3.89</div></div>
     <span id="conn">...</span>
     <button class="langbtn" id="searchBtn" onclick="openSearch()" aria-label="Search" title="Search (Ctrl+K)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
     <button class="langbtn" id="acctBtn" onclick="acctMenu(event)" aria-label="Account" hidden></button>
@@ -1346,7 +1360,7 @@ body[data-sec=black] .banner p{color:#b4c0cf}
 </header>
 <nav id="nav"></nav>
 <main class="wrap" id="view"></main>
-<footer class="appfoot">OPS Terminal &middot; v3.86</footer>
+<footer class="appfoot">OPS Terminal &middot; v3.89</footer>
 <div id="miniBar"></div>
 <div id="toasts"></div>
 <div id="modalRoot"></div>
@@ -1364,7 +1378,7 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-const APP_VERSION = '3.86';
+const APP_VERSION = '3.89';
 const CFG = {
   divOrder: ['Manager/FO','Sr. Flight Ops Expert','Specialist','CT','FO','CS','OM','FA','GA','DG'],
   // Signature blocks used in the reminder email and the PDF report (edit here if the official wording differs)
@@ -1463,6 +1477,7 @@ const ICO = {
   lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>',
   bell:'<path d="M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8M10 21a2 2 0 004 0"/>',
   file:'<path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8zM14 3v5h5M9 13h6M9 17h6"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/>',
   users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0M16 4.5a3.5 3.5 0 010 7M18 14.5a6.5 6.5 0 013.5 5.5"/>',
   gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>',
   refresh:'<path d="M20 11a8 8 0 00-14.5-4M4 4v4h4M4 13a8 8 0 0014.5 4M20 20v-4h-4"/>',
@@ -4656,7 +4671,7 @@ function termGatesHTML(){
     (!GATES.length ? '<p class="muted center" style="margin:-6px 0 16px">' + esc(t('th_sb')) + '</p>' : '');
 }
 function viewTerminal(){
-  return termHeroHTML() + wcBannerHTML() + myDayHTML() + termBoardHTML('bul') + '<div class="tbtick card0"><span id="thTick"></span></div>' + termGatesHTML() + '<div id="thInst">' + installCardHTML() + '</div>';
+  return termHeroHTML() + wcBannerHTML() + myDayHTML() + termBoardHTML('bul') + actCardHTML() + '<div class="tbtick card0"><span id="thTick"></span></div>' + termGatesHTML() + '<div id="thInst">' + installCardHTML() + '</div>';
 }
 function termGo(id){ const e = $(id); if(e) e.scrollIntoView({ behavior: TERM.reduce ? 'auto' : 'smooth', block: 'start' }); }
 function termOpenTool(i){ const r = TERM_TOOLS[i]; if(!r) return; if(r.url) window.open(r.url, '_blank', 'noopener'); else if(r.go) (new Function(r.go))(); }
@@ -4882,7 +4897,7 @@ function termRunwayHTML(){
 
 
 /* ====================== VERSION CHANGE LOG ====================== */
-const CHANGELOG = [{"v": "3.86", "date": "28 Nov 2026", "items": ["Terminal runway: four new aircraft colours join the take-offs (red, purple, yellow and blue, each with white). Each take-off picks a different colour."]},{"v": "3.85", "date": "28 Nov 2026", "items": ["Occasion banner: the text can now run to as many lines as it needs, up to 240 characters per message (SQL update 13).", "Saturday and Sunday show in a lighter, greyer tone in the acting calendar, the week strip on the welcome card, and the day-of-week chart."]},{"v": "3.83", "date": "28 Nov 2026", "items": ["You now stay signed in on your device for longer after you leave the app."]},{"v": "3.81", "date": "28 Nov 2026", "items": ["Terminal: the LOA reservations pill on the welcome card is always shown, also when you have none (it then reads 0)."]},{"v": "3.80", "date": "28 Nov 2026", "items": ["One name picker everywhere in Settings: type to narrow the list or tap the arrow to see everyone, and a clear button resets the field. It replaces the long drop-downs in Super admins, CT access, OPS Managers, GO and Set acknowledgment time, and the search list in Acting OPS Managers."]},{"v": "3.79", "date": "28 Nov 2026", "items": ["Occasion banner: the text is white on every animation and can run to 2 lines. In Super Admin the preview now sits directly under the Animation field."]},{"v": "3.78", "date": "28 Nov 2026", "items": ["PINs can no longer be viewed by anyone, including Super Admins. The Data Pins list is gone and the backup no longer contains PINs (SQL update 12). People still set and change their own PIN, and CT and Super Admins can still reset a PIN or issue a one-time code under the same rules."]},{"v": "3.77", "date": "28 Nov 2026", "items": ["Gate text colour: click the dot to open the colours on every device (press and hold is gone). Instruction text removed or shortened across the app.","Super Admin: black headers with a smooth gradient so the page is easy to tell apart. The Acting OPS Managers list now sits directly under OPS Managers. The audit log and the change log are collapsed until opened.","Terminal: when you have no bulletins yet, the board shows one tidy line on a phone."]},{"v": "3.76", "date": "28 Nov 2026", "items": ["Terminal: a new navy welcome card with a Monday to Sunday week strip showing who acts as OPS Manager each day, one acting line, a link to the calendar and status pills. The separate Acting OPS Manager widget below the gates is gone.","Terminal: the event banner now sits right under the runway animation.","Gate text colour: one dot. Click it on a computer, or press and hold it on a phone, then pick a colour. The colour of the whole Terminal page follows.","Login: after the first sign-in the screen offers Sign in as your name. Not you? opens a search by name or initials with division buttons.","Super Admin: a list of the people who may be Acting OPS Manager (SQL update 11). The calendar only offers those names.","Super Admin: Acknowledge several at once is now a switch on each row of the staff list. Only the Super Admin can change it.","Super Admin: the health check shows a short summary and its details can be hidden. The backup includes the new list automatically."]},{"v": "3.75", "date": "27 Nov 2026", "items": ["Terminal: a My day card (bulletins due, when you are acting, LOA reservations you hold) and a last-updated time. Pull down on a phone to refresh.","Shortcut links (Terminal, Acknowledge, Acting OPS Manager, LOA) that can be added to the phone home screen.","Acting OPS Manager: hand-over notes on acting days (needs SQL update 10).","Sign board: occasion banner with 8 animations, set by Super Admin (needs SQL update 10).","Super Admin: audit log filters and Excel download, health check, and a universal backup (JSON and Excel)."]}, {"v": "3.74", "date": "27 Nov 2026", "items": ["Acting OPS Manager page: the \"Someone else...\" button is now \"Assign Acting OPS Manager\"."]}, {"v": "3.73", "date": "27 Nov 2026", "items": ["The red for the Gate text colour is now a true red instead of a pink-looking red. If you had picked the old red, it switches to the new one automatically.", "Dark mode is now the default for everyone who has not chosen a theme yet. The sun/moon button still switches to light, and your choice is remembered on that device."]}, {"v": "3.72", "date": "27 Nov 2026", "items": ["New page: Acting OPS Manager (a new gate on the Terminal). A calendar shows this month and the next 12 months, with each person who acts on behalf of the OPS Manager in their own colour. Everyone signed in can look at it.", "New group: GO. Members of GO (and Super Admins) can edit the calendar: tap days to select them (on a computer you can also drag across days or hold Shift to select a range), then choose who is acting. A Super Admin gives or removes GO under Settings (Super Admin).", "Terminal: a new box under the Gates shows who is acting for the next 7 days. Tap it to open the calendar.", "Terminal: the Text colour drop-down is now a row of small dots. Move the mouse over a dot and it grows while the sign board below shows that colour at once. Click or tap to keep it.", "Dark mode: the main buttons (for example Reserve, Add, Save) are now a darker blue so the white text is easier to read.", "Needs SQL update 9 (ops_bulletin_9_update.sql) in Supabase before the new page works."]}, {"v": "3.71", "date": "27 Nov 2026", "items": ["LOA Reservation: the list is now A to Z with a letter header (and count) for each letter. Applicants sit under their own letter.", "New letter strip. On a phone it floats above the tab bar: press a letter, slide your finger left or right (a magnifying bubble follows) and let go to jump. On desktop it sits at the top, the letters magnify under the mouse, and a click jumps.", "Layout: 3 operators per row on desktop, 2 per row on phones and tablets, so more fit on screen.", "The filters and the search hide empty letters and dim them in the strip."]}, {"v": "3.70", "date": "26 Nov 2026", "items": ["LOA Reservation: the Reserve button is now a compact button at the right of each card instead of full width.", "Gate positions: tiles are laid out so tool names no longer break in the middle of a word on phones.", "Small colour fixes for grey text on the new screens."]}, {"v": "3.69", "date": "26 Nov 2026", "items": ["LOA Reservation: a new tool on the Terminal. Any signed-in member can reserve an air operator's LOA with a tentative issue date and optional remarks. Only the person who reserved it, CT or a Super Admin can edit or clear it.", "A reservation stays until it is cleared. After the tentative date it shows Past issue date. CT and Super Admin can open the full reservation history.", "Settings (CT): a new Air operators list holds the 26 AOC holders and 3 applicants. Add, edit or hide an operator. Hidden operators are not shown to staff. An operator with reservation history cannot be deleted.", "Settings (Super Admin): new Gate positions grid. Press and hold a tool (or drag with a mouse) and drop it on another gate. If the gate is taken you are asked before the two tools swap, and an Undo button appears for 10 seconds. Tap a tool to choose its gate from a list instead.", "Acknowledge can now be moved too, with a warning first.", "Needs SQL update 8 (ops_bulletin_8_update.sql) in Supabase before the new screens work."]}, {"v": "3.68", "date": "26 Nov 2026", "items": ["Bulletins: when adding or editing a bulletin, a new \"Reset to standard deadline\" link under the deadline date brings the date back to today plus the standard number of days."]}, {"v": "3.67", "date": "25 Nov 2026", "items": ["The main colour of the app is now blue (header, Acknowledge section, buttons, chips and charts). Green stays for completed items, the Team and Manage Bulletins sections, the Terminal board and some accents.", "Terminal gates: the panel colour choice is removed (the panels are navy). The text colour choice is now a small drop-down menu.", "Terminal gates: the six flip tiles now sit after the gates.", "Terminal gates: a very long gate name or description now wraps inside its row instead of making the page scroll sideways.", "Terminal: on tablets and narrow computer windows the bulletin board now uses the compact layout, so the page no longer scrolls sideways."]}, {"v": "3.66", "date": "25 Nov 2026", "items": ["Terminal: the gates are now an airport sign board. A wayfinding sign at the top flips to the next sign each time you tap it, six flip tiles sit under it, and the gates are grouped by letter on dark panels. The gates still come from the Super Admin settings (letters A to D, up to 25 for each letter).", "The signs cover 39 airport signs with a pictogram and an arrow (departures, arrivals, immigration with an officer pictogram, customs, baggage claim, taxi and more), shown in English and Thai.", "Text colour and panel colour can be changed on the Terminal page. The choice is saved on the device you use.", "No SQL update is needed for this version."]}, {"v": "3.65", "date": "24 Nov 2026", "items": ["Terminal: the \"Opens in a new tab\" note is removed from the gate cards. Gates that lead to another site still open in a new tab."]}, {"v": "3.64", "date": "24 Nov 2026", "items": ["Gates are no longer built into the app. A Super Admin adds, edits and removes them on the Super Admin page (Gates): up to 25 for each letter A to D, each with a name, an address and an optional short description in English and Thai. Gate A1 (Bulletin Acknowledgement) stays built in. The gates that were built in (A2, B1, C1, C2, D1) are copied in as the starting list. Needs SQL update 7."]}, {"v": "3.63", "date": "24 Nov 2026", "items": ["Sign-in: the Sign in button turns green once the PIN is filled in.", "Sign-in: leaving the app (for another app, a gate, or the phone lock screen) and coming back within 60 minutes keeps you signed in. After 60 minutes you sign in again. Sign out clears it at once."]}, {"v": "3.62", "date": "24 Nov 2026", "items": ["Terminal: new gate D1 (Airport Defense)."]}, {"v": "3.61", "date": "24 Nov 2026", "items": ["Terminal: the AOC Fee Calculator and OPS NC Calculator gates now open at the new web address (opsterminal.github.io)."]}, {"v": "3.60", "date": "24 Nov 2026", "items": ["Terminal banner: the extra sun or moon in the upper sky is removed, so only the one in the runway scene remains."]}, {"v": "3.59", "date": "24 Nov 2026", "items": ["Sign-in: the PIN is now described as the PIN for the OPS Terminal app (it no longer says it is used for every bulletin).", "Sign-in: the 'First time here?' message now has a light blue background with dark blue text, and a dark red notice that the app is for internal use only and the app and PIN must not be shared outside the organization. Returning users see the same notice in dark grey under the Sign in button.", "Terminal: new gates C1 (OPS Gateway) and C2 (CAAT Website).", "Seeing every division in My Team is now for Super Admin only, and that bar is labelled Head of CT View. OPS Manager no longer has the division picker."]}, {"v": "3.58", "date": "23 Nov 2026", "items": ["Terminal runway: the blinking white strobe on the tail fin is removed. At dusk and night every aircraft now has a tail logo light that washes the fin (brightest at the base, fading toward the top), with a small lamp at the tailplane. The green wingtip light stays."]}, {"v": "3.57", "date": "23 Nov 2026", "items": ["Terminal runway: every aircraft now shows a blinking white strobe on the tail fin and a steady green light on the right wingtip, in all four skies.", "Terminal runway: the control tower is now thicker and 1.5 times bigger, with a lit cab window."]}, {"v": "3.56", "date": "23 Nov 2026", "items": ["Terminal: the runway is now a side view of a twin-engine airliner. Four different aircraft liveries take off one after another (taxi in, standby for clearance, takeoff roll, rotate, lift-off, climb). The runway scene changes through dawn, day, dusk and night every four takeoffs, and the order of the four aircraft is shuffled each time."]}, {"v": "3.55", "date": "23 Nov 2026", "items": ["New role: OPS Manager (view only). Can open Settings (CT) and Detailed (CT); everything that cannot be edited is greyed out; no Super Admin access. A Super Admin gives or removes it (Super Admin page or Staff list). Needs SQL update 6.", "My Team: an OPS Manager View picker lets an OPS Manager or Super Admin choose which division to see.", "Search: the bottom sheet can now be swiped down, tapped outside, or closed with its handle.", "Terminal: gate tiles are flat navy with a turquoise bar (no shine).", "Terminal: the hero sky follows Bangkok time (dawn, day, dusk, night) with twinkling stars and shooting stars after dark."]}, {"v": "3.54", "date": "23 Nov 2026", "items": ["Live refresh now runs every 40 seconds (was 20)."]}, {"v": "3.53", "date": "23 Nov 2026", "items": ["One simple sign-in card titled OPS Terminal (Name, PIN, Sign in). Page titles are one word.", "My Team now sits inside Overview (General | Detailed | My team). Sign out and Change PIN are in the header name button.", "Medium font weight and darker grey text.", "Leaner Terminal and Acknowledge pages: fewer repeated buttons and lines."]}, {"v": "3.52", "date": "23 Nov 2026", "items": ["Terminal board: the empty message is no longer cut off (it now reads NO BULLETINS FOR YOU YET over two lines).", "Terminal board: bulletin codes with a revision (for example OPSM 11/25 R12) and long day counts (for example -99+ DAYS) now fit in full.", "Terminal board: a title that is too long for the board ends with a dot instead of being cut mid-word."]}, {"v": "3.51", "date": "23 Nov 2026", "items": ["Version numbers now count in smaller steps (3.51, 3.52, 3.53 ...) so every revision is easy to tell apart."]}, {"v": "3.5", "date": "23 Nov 2026", "items": ["PIN list on the Super Admin page is now a quiet link, shown as (Data Controls | Data Pins) at the bottom."]}, {"v": "3.4", "date": "23 Nov 2026", "items": ["Light / dark mode button added in the header. The choice is remembered on that device.", "Runway aircraft outline is now white.", "Terminal board shows bulletin codes as OPSM (for example OPSM 05/26).", "Default deadline (number of days) can now be set by a Super Admin under Settings > Super Admin. Default stays 7 days. Needs SQL update 5.", "Year filter now allows several years at once, or all years, on every page that shows dashboards and charts."]}, {"v": "3.3", "date": "23 Nov 2026", "items": ["Runway aircraft redrawn as a smooth outline jet, with wingtip, strobe, beacon, wing and landing lights kept."]}, {"v": "3.2", "date": "23 Nov 2026", "items": ["Runway aircraft made 30% smaller."]}, {"v": "3.1", "date": "23 Nov 2026", "items": ["OPS Terminal is now the first page on open, on phone and desktop. Links to a specific bulletin still open that bulletin.", "My bulletin status lists every open bulletin (up to 10) with days left. Click a row to acknowledge it. More than 10 shows a \"more\" note and the Open my bulletins button.", "Departures board removed. The Gates cards stay.", "Gate letters and numbers glow with a shine effect.", "Signed-in name and last-name initial shown under the date in the top banner.", "New runway scene with a detailed aircraft, runway lights, wing and aircraft lights.", "Version label now counts each revision automatically. Change log added to this page."]}, {"v": "3.0", "date": "Nov 2026", "items": ["Renamed to OPS Terminal with a new logo. File name is ops_terminal.html.", "OPS Terminal page opens only after PIN sign-in.", "New tab order: Terminal, Acknowledge, Overview, My Team, Settings.", "Quality-check fixes (SQL update 4): bulletin deletion is Super Admin only and written to the audit log; links must start with https; superseded bulletins no longer count in totals.", "Live demo page with sample data."]}];
+const CHANGELOG = [{"v": "3.89", "date": "28 Nov 2026", "items": ["Terminal: a separate Acting Manager card with the Monday to Sunday tiles now sits under My bulletin status. The week strip is no longer in the welcome card.", "Terminal runway: tap the waiting aircraft to request take-off clearance. The captain calls out the clearance in a speech bubble and the aircraft then takes off. Every active staff member gets a turn as the call sign (first name and 3 digits) before anyone repeats. If nobody taps, the call is made automatically after a few seconds.", "Terminal runway: yellow runway signs along the grass (2 on a phone, 3 on a wide screen)."]}, {"v": "3.88", "date": "28 Nov 2026", "items": ["Terminal runway: floodlight poles removed; night scenes are now lit by runway centreline lights, PAPI lights, a green threshold bar and a red end bar", "Terminal runway: the clear night scene now appears 40% of the time"]}, {"v": "3.87", "date": "28 Nov 2026", "items": ["Terminal runway: a fifth scene, a clear night with a glowing runway, taxiway lights, lit terminal, tower beacon, apron floodlights and a moon. Dusk and night now glow in the same way.","Terminal runway: the green wingtip light now blinks in every scene."]},{"v": "3.86", "date": "28 Nov 2026", "items": ["Terminal runway: four new aircraft colours join the take-offs (red, purple, yellow and blue, each with white). Each take-off picks a different colour."]},{"v": "3.85", "date": "28 Nov 2026", "items": ["Occasion banner: the text can now run to as many lines as it needs, up to 240 characters per message (SQL update 13).", "Saturday and Sunday show in a lighter, greyer tone in the acting calendar, the week strip on the welcome card, and the day-of-week chart."]},{"v": "3.83", "date": "28 Nov 2026", "items": ["You now stay signed in on your device for longer after you leave the app."]},{"v": "3.81", "date": "28 Nov 2026", "items": ["Terminal: the LOA reservations pill on the welcome card is always shown, also when you have none (it then reads 0)."]},{"v": "3.80", "date": "28 Nov 2026", "items": ["One name picker everywhere in Settings: type to narrow the list or tap the arrow to see everyone, and a clear button resets the field. It replaces the long drop-downs in Super admins, CT access, OPS Managers, GO and Set acknowledgment time, and the search list in Acting OPS Managers."]},{"v": "3.79", "date": "28 Nov 2026", "items": ["Occasion banner: the text is white on every animation and can run to 2 lines. In Super Admin the preview now sits directly under the Animation field."]},{"v": "3.78", "date": "28 Nov 2026", "items": ["PINs can no longer be viewed by anyone, including Super Admins. The Data Pins list is gone and the backup no longer contains PINs (SQL update 12). People still set and change their own PIN, and CT and Super Admins can still reset a PIN or issue a one-time code under the same rules."]},{"v": "3.77", "date": "28 Nov 2026", "items": ["Gate text colour: click the dot to open the colours on every device (press and hold is gone). Instruction text removed or shortened across the app.","Super Admin: black headers with a smooth gradient so the page is easy to tell apart. The Acting OPS Managers list now sits directly under OPS Managers. The audit log and the change log are collapsed until opened.","Terminal: when you have no bulletins yet, the board shows one tidy line on a phone."]},{"v": "3.76", "date": "28 Nov 2026", "items": ["Terminal: a new navy welcome card with a Monday to Sunday week strip showing who acts as OPS Manager each day, one acting line, a link to the calendar and status pills. The separate Acting OPS Manager widget below the gates is gone.","Terminal: the event banner now sits right under the runway animation.","Gate text colour: one dot. Click it on a computer, or press and hold it on a phone, then pick a colour. The colour of the whole Terminal page follows.","Login: after the first sign-in the screen offers Sign in as your name. Not you? opens a search by name or initials with division buttons.","Super Admin: a list of the people who may be Acting OPS Manager (SQL update 11). The calendar only offers those names.","Super Admin: Acknowledge several at once is now a switch on each row of the staff list. Only the Super Admin can change it.","Super Admin: the health check shows a short summary and its details can be hidden. The backup includes the new list automatically."]},{"v": "3.75", "date": "27 Nov 2026", "items": ["Terminal: a My day card (bulletins due, when you are acting, LOA reservations you hold) and a last-updated time. Pull down on a phone to refresh.","Shortcut links (Terminal, Acknowledge, Acting OPS Manager, LOA) that can be added to the phone home screen.","Acting OPS Manager: hand-over notes on acting days (needs SQL update 10).","Sign board: occasion banner with 8 animations, set by Super Admin (needs SQL update 10).","Super Admin: audit log filters and Excel download, health check, and a universal backup (JSON and Excel)."]}, {"v": "3.74", "date": "27 Nov 2026", "items": ["Acting OPS Manager page: the \"Someone else...\" button is now \"Assign Acting OPS Manager\"."]}, {"v": "3.73", "date": "27 Nov 2026", "items": ["The red for the Gate text colour is now a true red instead of a pink-looking red. If you had picked the old red, it switches to the new one automatically.", "Dark mode is now the default for everyone who has not chosen a theme yet. The sun/moon button still switches to light, and your choice is remembered on that device."]}, {"v": "3.72", "date": "27 Nov 2026", "items": ["New page: Acting OPS Manager (a new gate on the Terminal). A calendar shows this month and the next 12 months, with each person who acts on behalf of the OPS Manager in their own colour. Everyone signed in can look at it.", "New group: GO. Members of GO (and Super Admins) can edit the calendar: tap days to select them (on a computer you can also drag across days or hold Shift to select a range), then choose who is acting. A Super Admin gives or removes GO under Settings (Super Admin).", "Terminal: a new box under the Gates shows who is acting for the next 7 days. Tap it to open the calendar.", "Terminal: the Text colour drop-down is now a row of small dots. Move the mouse over a dot and it grows while the sign board below shows that colour at once. Click or tap to keep it.", "Dark mode: the main buttons (for example Reserve, Add, Save) are now a darker blue so the white text is easier to read.", "Needs SQL update 9 (ops_bulletin_9_update.sql) in Supabase before the new page works."]}, {"v": "3.71", "date": "27 Nov 2026", "items": ["LOA Reservation: the list is now A to Z with a letter header (and count) for each letter. Applicants sit under their own letter.", "New letter strip. On a phone it floats above the tab bar: press a letter, slide your finger left or right (a magnifying bubble follows) and let go to jump. On desktop it sits at the top, the letters magnify under the mouse, and a click jumps.", "Layout: 3 operators per row on desktop, 2 per row on phones and tablets, so more fit on screen.", "The filters and the search hide empty letters and dim them in the strip."]}, {"v": "3.70", "date": "26 Nov 2026", "items": ["LOA Reservation: the Reserve button is now a compact button at the right of each card instead of full width.", "Gate positions: tiles are laid out so tool names no longer break in the middle of a word on phones.", "Small colour fixes for grey text on the new screens."]}, {"v": "3.69", "date": "26 Nov 2026", "items": ["LOA Reservation: a new tool on the Terminal. Any signed-in member can reserve an air operator's LOA with a tentative issue date and optional remarks. Only the person who reserved it, CT or a Super Admin can edit or clear it.", "A reservation stays until it is cleared. After the tentative date it shows Past issue date. CT and Super Admin can open the full reservation history.", "Settings (CT): a new Air operators list holds the 26 AOC holders and 3 applicants. Add, edit or hide an operator. Hidden operators are not shown to staff. An operator with reservation history cannot be deleted.", "Settings (Super Admin): new Gate positions grid. Press and hold a tool (or drag with a mouse) and drop it on another gate. If the gate is taken you are asked before the two tools swap, and an Undo button appears for 10 seconds. Tap a tool to choose its gate from a list instead.", "Acknowledge can now be moved too, with a warning first.", "Needs SQL update 8 (ops_bulletin_8_update.sql) in Supabase before the new screens work."]}, {"v": "3.68", "date": "26 Nov 2026", "items": ["Bulletins: when adding or editing a bulletin, a new \"Reset to standard deadline\" link under the deadline date brings the date back to today plus the standard number of days."]}, {"v": "3.67", "date": "25 Nov 2026", "items": ["The main colour of the app is now blue (header, Acknowledge section, buttons, chips and charts). Green stays for completed items, the Team and Manage Bulletins sections, the Terminal board and some accents.", "Terminal gates: the panel colour choice is removed (the panels are navy). The text colour choice is now a small drop-down menu.", "Terminal gates: the six flip tiles now sit after the gates.", "Terminal gates: a very long gate name or description now wraps inside its row instead of making the page scroll sideways.", "Terminal: on tablets and narrow computer windows the bulletin board now uses the compact layout, so the page no longer scrolls sideways."]}, {"v": "3.66", "date": "25 Nov 2026", "items": ["Terminal: the gates are now an airport sign board. A wayfinding sign at the top flips to the next sign each time you tap it, six flip tiles sit under it, and the gates are grouped by letter on dark panels. The gates still come from the Super Admin settings (letters A to D, up to 25 for each letter).", "The signs cover 39 airport signs with a pictogram and an arrow (departures, arrivals, immigration with an officer pictogram, customs, baggage claim, taxi and more), shown in English and Thai.", "Text colour and panel colour can be changed on the Terminal page. The choice is saved on the device you use.", "No SQL update is needed for this version."]}, {"v": "3.65", "date": "24 Nov 2026", "items": ["Terminal: the \"Opens in a new tab\" note is removed from the gate cards. Gates that lead to another site still open in a new tab."]}, {"v": "3.64", "date": "24 Nov 2026", "items": ["Gates are no longer built into the app. A Super Admin adds, edits and removes them on the Super Admin page (Gates): up to 25 for each letter A to D, each with a name, an address and an optional short description in English and Thai. Gate A1 (Bulletin Acknowledgement) stays built in. The gates that were built in (A2, B1, C1, C2, D1) are copied in as the starting list. Needs SQL update 7."]}, {"v": "3.63", "date": "24 Nov 2026", "items": ["Sign-in: the Sign in button turns green once the PIN is filled in.", "Sign-in: leaving the app (for another app, a gate, or the phone lock screen) and coming back within 60 minutes keeps you signed in. After 60 minutes you sign in again. Sign out clears it at once."]}, {"v": "3.62", "date": "24 Nov 2026", "items": ["Terminal: new gate D1 (Airport Defense)."]}, {"v": "3.61", "date": "24 Nov 2026", "items": ["Terminal: the AOC Fee Calculator and OPS NC Calculator gates now open at the new web address (opsterminal.github.io)."]}, {"v": "3.60", "date": "24 Nov 2026", "items": ["Terminal banner: the extra sun or moon in the upper sky is removed, so only the one in the runway scene remains."]}, {"v": "3.59", "date": "24 Nov 2026", "items": ["Sign-in: the PIN is now described as the PIN for the OPS Terminal app (it no longer says it is used for every bulletin).", "Sign-in: the 'First time here?' message now has a light blue background with dark blue text, and a dark red notice that the app is for internal use only and the app and PIN must not be shared outside the organization. Returning users see the same notice in dark grey under the Sign in button.", "Terminal: new gates C1 (OPS Gateway) and C2 (CAAT Website).", "Seeing every division in My Team is now for Super Admin only, and that bar is labelled Head of CT View. OPS Manager no longer has the division picker."]}, {"v": "3.58", "date": "23 Nov 2026", "items": ["Terminal runway: the blinking white strobe on the tail fin is removed. At dusk and night every aircraft now has a tail logo light that washes the fin (brightest at the base, fading toward the top), with a small lamp at the tailplane. The green wingtip light stays."]}, {"v": "3.57", "date": "23 Nov 2026", "items": ["Terminal runway: every aircraft now shows a blinking white strobe on the tail fin and a steady green light on the right wingtip, in all four skies.", "Terminal runway: the control tower is now thicker and 1.5 times bigger, with a lit cab window."]}, {"v": "3.56", "date": "23 Nov 2026", "items": ["Terminal: the runway is now a side view of a twin-engine airliner. Four different aircraft liveries take off one after another (taxi in, standby for clearance, takeoff roll, rotate, lift-off, climb). The runway scene changes through dawn, day, dusk and night every four takeoffs, and the order of the four aircraft is shuffled each time."]}, {"v": "3.55", "date": "23 Nov 2026", "items": ["New role: OPS Manager (view only). Can open Settings (CT) and Detailed (CT); everything that cannot be edited is greyed out; no Super Admin access. A Super Admin gives or removes it (Super Admin page or Staff list). Needs SQL update 6.", "My Team: an OPS Manager View picker lets an OPS Manager or Super Admin choose which division to see.", "Search: the bottom sheet can now be swiped down, tapped outside, or closed with its handle.", "Terminal: gate tiles are flat navy with a turquoise bar (no shine).", "Terminal: the hero sky follows Bangkok time (dawn, day, dusk, night) with twinkling stars and shooting stars after dark."]}, {"v": "3.54", "date": "23 Nov 2026", "items": ["Live refresh now runs every 40 seconds (was 20)."]}, {"v": "3.53", "date": "23 Nov 2026", "items": ["One simple sign-in card titled OPS Terminal (Name, PIN, Sign in). Page titles are one word.", "My Team now sits inside Overview (General | Detailed | My team). Sign out and Change PIN are in the header name button.", "Medium font weight and darker grey text.", "Leaner Terminal and Acknowledge pages: fewer repeated buttons and lines."]}, {"v": "3.52", "date": "23 Nov 2026", "items": ["Terminal board: the empty message is no longer cut off (it now reads NO BULLETINS FOR YOU YET over two lines).", "Terminal board: bulletin codes with a revision (for example OPSM 11/25 R12) and long day counts (for example -99+ DAYS) now fit in full.", "Terminal board: a title that is too long for the board ends with a dot instead of being cut mid-word."]}, {"v": "3.51", "date": "23 Nov 2026", "items": ["Version numbers now count in smaller steps (3.51, 3.52, 3.53 ...) so every revision is easy to tell apart."]}, {"v": "3.5", "date": "23 Nov 2026", "items": ["PIN list on the Super Admin page is now a quiet link, shown as (Data Controls | Data Pins) at the bottom."]}, {"v": "3.4", "date": "23 Nov 2026", "items": ["Light / dark mode button added in the header. The choice is remembered on that device.", "Runway aircraft outline is now white.", "Terminal board shows bulletin codes as OPSM (for example OPSM 05/26).", "Default deadline (number of days) can now be set by a Super Admin under Settings > Super Admin. Default stays 7 days. Needs SQL update 5.", "Year filter now allows several years at once, or all years, on every page that shows dashboards and charts."]}, {"v": "3.3", "date": "23 Nov 2026", "items": ["Runway aircraft redrawn as a smooth outline jet, with wingtip, strobe, beacon, wing and landing lights kept."]}, {"v": "3.2", "date": "23 Nov 2026", "items": ["Runway aircraft made 30% smaller."]}, {"v": "3.1", "date": "23 Nov 2026", "items": ["OPS Terminal is now the first page on open, on phone and desktop. Links to a specific bulletin still open that bulletin.", "My bulletin status lists every open bulletin (up to 10) with days left. Click a row to acknowledge it. More than 10 shows a \"more\" note and the Open my bulletins button.", "Departures board removed. The Gates cards stay.", "Gate letters and numbers glow with a shine effect.", "Signed-in name and last-name initial shown under the date in the top banner.", "New runway scene with a detailed aircraft, runway lights, wing and aircraft lights.", "Version label now counts each revision automatically. Change log added to this page."]}, {"v": "3.0", "date": "Nov 2026", "items": ["Renamed to OPS Terminal with a new logo. File name is ops_terminal.html.", "OPS Terminal page opens only after PIN sign-in.", "New tab order: Terminal, Acknowledge, Overview, My Team, Settings.", "Quality-check fixes (SQL update 4): bulletin deletion is Super Admin only and written to the audit log; links must start with https; superseded bulletins no longer count in totals.", "Live demo page with sample data."]}];
 function changelogHTML(){
   if(!CL.open) return '<div class="card">' + ch('file', 'Change log', '<span class="chip blue">v' + esc(APP_VERSION) + '</span> <button class="btn ghost sm" onclick="clTog()">Show</button>') + '</div>';
   let h = '<div class="card">' + ch('file', 'Change log', '<span class="chip blue">v' + esc(APP_VERSION) + '</span> <button class="btn ghost sm" onclick="clTog()">Hide</button>');
@@ -5146,13 +5161,16 @@ function roLock(){
 
 
 /* ====================== v3.56: SIDE-VIEW TAKEOFF RUNWAY ====================== */
-const TK = { t0: 0, W: 0, sky0: -1, ord: {}, deck: [], gen: -1, lastLv: -1, run: false, last: -1, cur: -1, e: null, chk: 0 };
+const TK = { say: 0, wt: 0, prev: 0, waiting: false, txt: '', dk: 1, px: 0, t0: 0, W: 0, sky0: -1, ord: {}, deck: [], gen: -1, lastLv: -1, run: false, last: -1, cur: -1, e: null, chk: 0 };
 const TK_SKIES = [
   { k: 'dawn', c: ['#4d7ea8', '#e7c9a4'], sk: '#4f6b88', rw: '#3a4a5e', gr: '#5f8a6e', lights: 0, night: 0 },
   { k: 'day', c: ['#cfe3f5', '#eaf2fa'], sk: '#9fb4cb', rw: '#46576c', gr: '#7fa98b', lights: 0, night: 0 },
-  { k: 'dusk', c: ['#1f3d63', '#c89a72'], sk: '#1a2f4d', rw: '#2b3a4f', gr: '#4a6f5b', lights: 1, night: 0 },
-  { k: 'night', c: ['#050c18', '#12365a'], sk: '#0b1828', rw: '#1a2638', gr: '#24402f', lights: 1, night: 1 }
+  { k: 'dusk', c: ['#1f3d63', '#c89a72'], sk: '#1a2f4d', rw: '#2b3a4f', gr: '#4a6f5b', lights: 1, night: 0, glow: .75 },
+  { k: 'night', c: ['#050c18', '#12365a'], sk: '#0b1828', rw: '#1a2638', gr: '#24402f', lights: 1, night: 1, glow: 1 },
+  { k: 'night2', c: ['#03070f', '#1c4a6e'], sk: '#08121f', rw: '#26364b', gr: '#0b1b12', lights: 1, night: 1, glow: 1, rich: 1 }
 ];
+/* Scene schedule in blocks of 4 take-offs (10 blocks): dawn 10%, day 20%, dusk 10%, night 20%, clear night 40%. Values index TK_SKIES. */
+const TK_SCHED = [0, 1, 1, 2, 3, 4, 4, 4, 4, 3];
 const TK_LV = [
   '--fus:#f4f7fb;--belly:#b9c8da;--tail:#1f4a73;--cheat:#2a9d8f;--win:#3b5a7d;--eng:#cfd9e6;--wing:#cfd9e6',
   '--fus:#eef2f7;--belly:#8b97a8;--tail:#17304f;--cheat:transparent;--win:#44586f;--eng:#aebccd;--wing:#b6c3d3',
@@ -5162,8 +5180,8 @@ const TK_LV = [
   return '--fus:#f4f7fb;--belly:' + c + ';--tail:' + c + ';--cheat:#ffffff;--win:#3b5a7d;--eng:' + c + ';--wing:#d9e1ec';
 }));
 const TK_TAXI = 5000, TK_HOLD = 2200, TK_CLR = 900, TK_TO = 6500, TK_CYC = TK_TAXI + TK_HOLD + TK_CLR + TK_TO;
-function termRunwayHTML3(){ setTimeout(tkBoot, 0); return '<div class="tkr" id="tkr" aria-hidden="true"></div>'; }
-function tkBoot(){ if(TK.run) return; TK.run = true; if(!TK.t0) TK.t0 = performance.now(); requestAnimationFrame(tkLoop); }
+function termRunwayHTML3(){ setTimeout(tkBoot, 0); return '<div class="tkr" id="tkr"></div>'; }
+function tkBoot(){ if(TK.run) return; TK.run = true; TK.rm = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); if(!TK.t0) TK.t0 = performance.now(); requestAnimationFrame(tkLoop); }
 function tkShuffle(){ const r = []; for(let k = 0; k < TK_LV.length; k++) r.push(k); for(let i = r.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)), x = r[i]; r[i] = r[j]; r[j] = x; } return r; }
 function tkOrder(g){
   while(TK.gen < g){
@@ -5175,7 +5193,92 @@ function tkOrder(g){
   }
   return TK.ord[g];
 }
+
+function tkRg(id, col, a0, a1, mid){ return '<radialGradient id="' + id + '"><stop offset="0" stop-color="' + col + '" stop-opacity="' + a0 + '"/>' + (mid ? '<stop offset=".35" stop-color="' + col + '" stop-opacity="' + mid + '"/>' : '') + '<stop offset="1" stop-color="' + col + '" stop-opacity="' + a1 + '"/></radialGradient>'; }
+/* Dark scenes (dusk, night, deep night): lit terminal, tower beacon, glowing runway edge, centreline, PAPI, threshold and end lights, blue taxiway lights. c.glow scales the glow. */
+function tkGlowGround(c, i, W){
+  const u = function(n){ return n + i; }, tx = W - 70, k = c.glow || 1, ft = 'url(#' + u('nf') + ')';
+  let s = '<defs>' + tkRg(u('nl'), '#ffe6ae', .95, 0, .4) + tkRg(u('nb'), '#6db4ff', .95, 0, .4) + tkRg(u('ng'), '#4fd08a', .95, 0, .45) + tkRg(u('nw'), '#ffffff', .95, 0, .4) + tkRg(u('np'), '#ffe0a0', .3, 0) + tkRg(u('nrd'), '#ff5a4d', .95, 0, .45) +
+    '<linearGradient id="' + u('nc') + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe6ae" stop-opacity=".55"/><stop offset="1" stop-color="#ffe6ae" stop-opacity="0"/></linearGradient>' +
+    '<linearGradient id="' + u('nr') + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe6ae" stop-opacity=".42"/><stop offset="1" stop-color="#ffe6ae" stop-opacity="0"/></linearGradient>' +
+    '<filter id="' + u('nf') + '" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.7"/></filter></defs>';
+  // terminal
+  s += '<path d="M0 116L0 98L46 98L46 90L120 90L120 102L170 102L170 116Z" fill="' + c.sk + '"/>';
+  let win = '';
+  [[50, 93, 8], [124, 105, 5], [4, 101, 5]].forEach(function(r){ for(let q = 0; q < r[2]; q++) win += '<rect x="' + (r[0] + q * 9) + '" y="' + r[1] + '" width="5" height="3" fill="#ffd98a"/>'; });
+  for(let q = 0; q < 8; q++) if(q % 3 !== 1) win += '<rect x="' + (50 + q * 9) + '" y="99" width="5" height="3" fill="#ffd98a"/>';
+  s += '<g opacity="' + k + '"><g filter="' + ft + '" opacity=".85">' + win + '</g>' + win + '<rect x="46" y="89.6" width="74" height="1.2" fill="#3bbfb0" opacity=".9"/><rect x="46" y="89.6" width="74" height="1.2" fill="#3bbfb0" filter="' + ft + '"/></g>';
+  // tower
+  s += '<circle cx="' + tx + '" cy="40" r="26" fill="url(#' + u('nl') + ')" opacity="' + (.4 * k).toFixed(2) + '"/>' +
+    '<rect x="' + (tx - 6) + '" y="47" width="12" height="69" fill="' + c.sk + '"/><rect x="' + (tx + 4.5) + '" y="47" width="1.5" height="69" fill="#ffffff" opacity=".1"/>' +
+    '<path d="M' + (tx - 21) + ' 47L' + (tx + 21) + ' 47L' + (tx + 15) + ' 32L' + (tx - 15) + ' 32Z" fill="' + c.sk + '"/>' +
+    '<g opacity="' + k + '"><rect x="' + (tx - 17) + '" y="38" width="34" height="5" rx="1" fill="#ffd98a"/><rect x="' + (tx - 17) + '" y="38" width="34" height="5" rx="1" fill="#ffd98a" filter="' + ft + '"/></g>' +
+    '<rect x="' + (tx - 1) + '" y="22" width="2" height="10" fill="' + c.sk + '"/>' +
+    '<circle cx="' + (tx - 15) + '" cy="32" r="1.3" fill="#e4766e"/><circle cx="' + (tx + 15) + '" cy="32" r="1.3" fill="#e4766e"/>' +
+    '<g class="tkbg"><circle cx="' + tx + '" cy="21" r="11" fill="url(#' + u('ng') + ')"/><circle cx="' + tx + '" cy="21" r="1.9" fill="#bfffd9"/></g>' +
+    '<g class="tkbw"><circle cx="' + tx + '" cy="21" r="11" fill="url(#' + u('nw') + ')"/><circle cx="' + tx + '" cy="21" r="1.9" fill="#fff"/></g>';
+  // ground
+  s += '<rect y="136" width="' + W + '" height="14" fill="' + c.gr + '"/><rect y="116" width="' + W + '" height="20" fill="' + c.rw + '"/>';
+  s += '<rect y="116" width="' + W + '" height="20" fill="#9fb8d6" opacity=".05"/>';
+  s += '<line x1="0" y1="116.5" x2="' + W + '" y2="116.5" stroke="#cfe0f2" stroke-width="1" opacity=".5"/><line x1="0" y1="135.5" x2="' + W + '" y2="135.5" stroke="#cfe0f2" stroke-width="1" opacity=".5"/>';
+  s += '<line x1="0" y1="126" x2="' + W + '" y2="126" stroke="#ffe6ae" stroke-width="5" stroke-dasharray="16 12" opacity="' + (.1 * k).toFixed(2) + '"/><line x1="0" y1="126" x2="' + W + '" y2="126" stroke="#eaf1f8" stroke-width="1.6" stroke-dasharray="16 12" opacity=".85"/>';
+  // runway lights: far edge, near edge, blue taxiway lights
+  s += '<g opacity="' + k + '">';
+  for(let q = 0; q * 32 + 10 < W; q++){ const x = q * 32 + 10;
+    s += '<rect x="' + (x - .6) + '" y="116" width="1.2" height="19" fill="url(#' + u('nr') + ')"/>' +
+      '<g class="tkrl" style="animation-delay:' + (q * .06).toFixed(2) + 's"><circle cx="' + x + '" cy="114.5" r="7" fill="url(#' + u('nl') + ')"/><circle cx="' + x + '" cy="114.5" r="1.7" fill="#fff4d6"/></g>'; }
+  for(let q = 0; q * 32 + 26 < W; q++){ const x = q * 32 + 26;
+    s += '<g class="tkrl" style="animation-delay:' + (q * .06 + .3).toFixed(2) + 's"><circle cx="' + x + '" cy="137.4" r="9" fill="url(#' + u('nl') + ')"/><circle cx="' + x + '" cy="137.4" r="2.1" fill="#fff4d6"/></g>'; }
+  for(let q = 0; q * 26 + 14 < W; q++){ const x = q * 26 + 14;
+    s += '<circle cx="' + x + '" cy="145.5" r="6" fill="url(#' + u('nb') + ')"/><circle cx="' + x + '" cy="145.5" r="1.4" fill="#cfe6ff"/>'; }
+  s += '</g>';
+  // centreline lights, PAPI, green threshold bar, red end bar, soft glow at the foot of the terminal
+  const G = { wh: 'url(#' + u('nw') + ')', g: 'url(#' + u('ng') + ')', r: 'url(#' + u('nrd') + ')' };
+  const core = { wh: '#ffffff', g: '#caffe0', r: '#ffd0ca' };
+  const L = function(x, y, cc, hr, cr, cls, d){ return '<g' + (cls ? ' class="' + cls + '"' : '') + (d !== undefined ? ' style="animation-delay:' + d + 's"' : '') + '><circle cx="' + x + '" cy="' + y + '" r="' + hr + '" fill="' + G[cc] + '"/><circle cx="' + x + '" cy="' + y + '" r="' + cr + '" fill="' + core[cc] + '"/></g>'; };
+  const bar = function(x, ys, cc){ let o = ''; ys.forEach(function(y){ o += L(x, y, cc, 7, 1.6); }); return o; };
+  s += '<g opacity="' + k + '"><ellipse cx="90" cy="116" rx="110" ry="9" fill="url(#' + u('np') + ')"/>';
+  for(let q = 0; 8 + q * 28 < W; q++){ const x = 8 + q * 28; s += '<ellipse cx="' + x + '" cy="126" rx="7" ry="2.4" fill="' + G.wh + '" opacity=".55"/>' + L(x, 126, 'wh', 5, 1.5, 'tkrl', (q * .05).toFixed(2)); }
+  const px0 = Math.round(W * .38);
+  ['wh', 'wh', 'r', 'r'].forEach(function(cc, q){ const x = px0 + q * 13; s += '<rect x="' + (x - 1) + '" y="112" width="2" height="3" fill="#0b1626"/><rect x="' + (x - 4.5) + '" y="107" width="9" height="5.5" rx="1.2" fill="#0b1626" stroke="#2c4666" stroke-width=".5"/>' + L(x, 109.7, cc, 9, 2); });
+  s += bar(22, [118, 122, 126, 130, 134], 'g') + bar(W - 22, [118, 122, 126, 130, 134], 'r') + '</g>';
+  return s;
+}
+/* Fifth scene: a clear night with a haloed moon, twinkling stars and a warm horizon haze. */
+function tkRichScene(c, i, W){
+  const u = function(n){ return n + i; };
+  let seed = 11; const rnd = function(){ seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+  let s = '<defs><linearGradient id="' + u('ns') + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#03070f"/><stop offset=".5" stop-color="#0a1b33"/><stop offset="1" stop-color="#1c4a6e"/></linearGradient>' +
+    tkRg(u('nh'), '#f1b36a', .34, 0) + tkRg(u('nm'), '#cfe2f7', .42, 0) + '</defs>';
+  s += '<rect width="' + W + '" height="150" fill="url(#' + u('ns') + ')"/>';
+  s += '<ellipse cx="' + Math.round(W * .3) + '" cy="114" rx="' + Math.round(W * .6) + '" ry="34" fill="url(#' + u('nh') + ')"/>';
+  for(let q = 0; q < Math.round(W / 55); q++){ const x = (rnd() * W).toFixed(0), y = (5 + rnd() * 56).toFixed(0);
+    s += '<circle class="' + (q % 3 === 0 ? 'tkt' : '') + '" cx="' + x + '" cy="' + y + '" r="' + (q % 5 === 0 ? 1.5 : 1) + '" fill="#eaf3ff"' + (q % 3 === 0 ? ' style="animation-delay:' + (rnd() * 3).toFixed(1) + 's"' : '') + '/>'; }
+  const mx = Math.round(W * .7);
+  s += '<circle cx="' + mx + '" cy="30" r="40" fill="url(#' + u('nm') + ')"/><circle cx="' + mx + '" cy="30" r="9.5" fill="#eef4fb"/><circle cx="' + (mx - 3) + '" cy="28" r="2" fill="#d4deea"/><circle cx="' + (mx + 3) + '" cy="33" r="1.4" fill="#d4deea"/>';
+  for(let q = 0; q < Math.round(W / 22); q++) s += '<circle cx="' + (rnd() * W).toFixed(0) + '" cy="' + (107 + rnd() * 6).toFixed(0) + '" r=".8" fill="#ffd98a" opacity="' + (.35 + rnd() * .4).toFixed(2) + '"/>';
+  s += tkGlowGround(c, i, W);
+  return '<svg class="tkl" viewBox="0 0 ' + W + ' 150" data-i="' + i + '">' + s + '</svg>';
+}
+function tkSigns(c, i, W){
+  const n = (TK.px || window.innerWidth || 1024) <= 520 ? 2 : 3, fr = n === 2 ? [.3, .72] : [.2, .52, .85], dk = c.lights ? 1 : 0;
+  const T = [['A2', 'r'], ['19L', ''], ['B1', 'l']];
+  let o = '<g class="tksg">';
+  for(let q = 0; q < n; q++){
+    const x = Math.round(W * fr[q]), lab = T[q][0], dir = T[q][1], w = 11 + lab.length * 5.6 + (dir ? 8 : 0), y = 138.6, h = 10.6, x0 = x - w / 2;
+    if(dk) o += '<ellipse cx="' + x + '" cy="' + (y + h / 2) + '" rx="' + (w * .85) + '" ry="9" fill="#f2c230" opacity=".16"/>';
+    o += '<rect x="' + x0 + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="1" fill="#eab92b" stroke="#10151c" stroke-width=".9"/>' +
+      '<text x="' + (x + (dir === 'r' ? -2.6 : (dir === 'l' ? 2.6 : 0))) + '" y="' + (y + 7.6) + '" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="7.2" fill="#10151c">' + lab + '</text>';
+    if(dir === 'r') o += '<path d="M' + (x0 + w - 7) + ' ' + (y + 2.6) + 'L' + (x0 + w - 3) + ' ' + (y + h / 2) + 'L' + (x0 + w - 7) + ' ' + (y + h - 2.6) + 'Z" fill="#10151c"/>';
+    if(dir === 'l') o += '<path d="M' + (x0 + 7) + ' ' + (y + 2.6) + 'L' + (x0 + 3) + ' ' + (y + h / 2) + 'L' + (x0 + 7) + ' ' + (y + h - 2.6) + 'Z" fill="#10151c"/>';
+  }
+  return o + '</g>';
+}
 function tkScene(c, i, W){
+  const o = tkScene0(c, i, W); return o.replace(/<\/svg>$/, tkSigns(c, i, W) + '</svg>');
+}
+function tkScene0(c, i, W){
+  if(c.rich) return tkRichScene(c, i, W);
   let s = '<defs><linearGradient id="tksg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + c.c[0] + '"/><stop offset="1" stop-color="' + c.c[1] + '"/></linearGradient></defs>';
   s += '<rect width="' + W + '" height="150" fill="url(#tksg' + i + ')"/>';
   if(c.night){
@@ -5185,6 +5288,7 @@ function tkScene(c, i, W){
   } else if(c.k === 'day') s += '<circle cx="' + Math.round(W * .82) + '" cy="26" r="12" fill="#fff6dc" opacity=".9"/>';
   else if(c.k === 'dawn') s += '<circle cx="' + Math.round(W * .88) + '" cy="86" r="14" fill="#f4e3c0" opacity=".85"/>';
   else s += '<circle cx="' + Math.round(W * .14) + '" cy="84" r="13" fill="#e6b98a" opacity=".8"/>';
+  if(c.lights) return '<svg class="tkl" viewBox="0 0 ' + W + ' 150" data-i="' + i + '">' + s + tkGlowGround(c, i, W) + '</svg>';
   const tx = W - 70;
   s += '<path d="M0 116L0 98L46 98L46 90L120 90L120 102L170 102L170 116Z" fill="' + c.sk + '"/>' +
     '<rect x="' + (tx - 6) + '" y="47" width="12" height="69" fill="' + c.sk + '"/>' +
@@ -5211,14 +5315,16 @@ function tkPlane(W){
     '<linearGradient id="tklg" x1="0" y1="25" x2="0" y2="-26" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#eaf2fa" stop-opacity=".55"/><stop offset="1" stop-color="#eaf2fa" stop-opacity=".04"/></linearGradient>' +
     '<radialGradient id="tklp" cx="60" cy="44" r="6" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>' +
     '<linearGradient id="tklc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f6e3b8" stop-opacity=".6"/><stop offset="1" stop-color="#f6e3b8" stop-opacity="0"/></linearGradient>' +
-    '<radialGradient id="tkgg"><stop offset="0" stop-color="#4fd08a" stop-opacity=".85"/><stop offset="1" stop-color="#4fd08a" stop-opacity="0"/></radialGradient>' +
+    '<filter id="tkbf" x="-5%" y="-300%" width="110%" height="700%"><feGaussianBlur stdDeviation="3"/></filter><radialGradient id="tkpool"><stop offset="0" stop-color="#ffe6b0" stop-opacity=".38"/><stop offset="1" stop-color="#ffe6b0" stop-opacity="0"/></radialGradient><radialGradient id="tkgg"><stop offset="0" stop-color="#4fd08a" stop-opacity=".85"/><stop offset="1" stop-color="#4fd08a" stop-opacity="0"/></radialGradient>' +
     '<radialGradient id="tkwg"><stop offset="0" stop-color="#ffffff" stop-opacity=".9"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient></defs>' +
-    '<g id="tksh"><ellipse cx="94" cy="130" rx="60" ry="2.4" fill="#000"/></g>' +
+    '<g id="tksh"><g id="tksp" style="display:none"><ellipse cx="96" cy="126" rx="80" ry="7" fill="url(#tkpool)"/><ellipse id="tkgs" cx="102" cy="127" rx="30" ry="5" fill="url(#tkgg)" opacity=".55"/></g><ellipse cx="94" cy="130" rx="60" ry="2.4" fill="#000"/></g>' +
     '<g id="tkmv"><g transform="translate(24 95) scale(.4675)"><g id="tkrt"><g id="tkpl">' +
     '<g id="tknl" style="display:none"><polygon points="286,44 470,64 470,71 286,49" fill="url(#tklc)"/></g>' +
     '<g id="tkgr"><rect x="128" y="58" width="2.4" height="9" fill="#566a82"/><rect x="253" y="58" width="2.2" height="9" fill="#566a82"/><g fill="#17283d"><circle cx="120" cy="67.2" r="3.4"/><circle cx="129" cy="67.2" r="3.4"/><circle cx="138" cy="67.2" r="3.4"/><circle cx="253" cy="67.4" r="3.2"/></g></g>' +
     body +
     '<line id="tkwi" x1="76" y1="40" x2="248" y2="40" stroke="#f1d9a8" stroke-width="4" stroke-dasharray="1.2 4.2" stroke-linecap="round" opacity=".35" style="display:none"/>' +
+    '<g id="tkng" style="display:none"><line x1="76" y1="40" x2="248" y2="40" stroke="#ffe1a0" stroke-width="9" stroke-linecap="round" opacity=".2" filter="url(#tkbf)"/></g>' +
+    '<g id="tkgh" style="display:none"><circle cx="103" cy="63.5" r="30" fill="url(#tkgg)" opacity=".85"/><ellipse cx="114" cy="61" rx="20" ry="5" fill="url(#tkgg)" opacity=".5"/><path d="M103 54.5V72.5M94 63.5H112" stroke="#b5ffd6" stroke-width=".8" opacity=".75"/><circle cx="103" cy="63.5" r="3.4" fill="#d9ffe9" opacity=".9"/></g>' +
     '<g id="tkna"><circle cx="103" cy="63.5" r="7" fill="url(#tkgg)"/><circle cx="103" cy="63.5" r="2.4" fill="#5fd08f"/><circle cx="103" cy="63.5" r="1" fill="#eafff2"/>' +
     '</g>' +
     '<g id="tklm" style="display:none"><circle cx="60" cy="44" r="6" fill="url(#tklp)"/><circle cx="60" cy="44" r="1.2" fill="#fff"/></g>' +
@@ -5227,23 +5333,28 @@ function tkPlane(W){
 }
 function tkInit(el){
   const W = Math.max(480, Math.round(el.clientWidth * 150 / Math.max(1, el.clientHeight)));
-  TK.W = W; let h = '';
+  TK.W = W; TK.px = el.clientWidth; let h = '';
   TK_SKIES.forEach(function(c, i){ h += tkScene(c, i, W); });
   el.innerHTML = h + tkPlane(W);
+  el.querySelectorAll('svg').forEach(function(v){ v.setAttribute('aria-hidden', 'true'); });
   const g = function(id){ return el.querySelector('#' + id); };
-  TK.e = { el: el, lay: el.querySelectorAll('svg.tkl'), mv: g('tkmv'), rt: g('tkrt'), gr: g('tkgr'), sh: g('tksh'), pl: g('tkpl'), nl: g('tknl'), li: g('tkli'), wi: g('tkwi'), fl: g('tkfl'), lm: g('tklm') };
-  if(TK.sky0 < 0){ const p = skyPhase(); TK.sky0 = Math.max(0, TK_SKIES.findIndex(function(x){ return x.k === p; })); }
+  TK.e = { el: el, lay: el.querySelectorAll('svg.tkl'), mv: g('tkmv'), rt: g('tkrt'), gr: g('tkgr'), sh: g('tksh'), pl: g('tkpl'), nl: g('tknl'), li: g('tkli'), wi: g('tkwi'), fl: g('tkfl'), lm: g('tklm'), ng: g('tkng'), gh: g('tkgh'), na: g('tkna'), sp: g('tksp'), gs: g('tkgs') };
+  if(TK.sky0 < 0){ const p = skyPhase(); TK.sky0 = Math.max(0, TK_SCHED.findIndex(function(x){ return TK_SKIES[x].k === p; })); }
   TK.last = -1; TK.cur = -1; el._tk = 1;
 }
 function tkSetup(n){
-  const e = TK.e, g = Math.floor(n / 4), k = n % 4, ord = tkOrder(g), si = (TK.sky0 + g) % 4, c = TK_SKIES[si];
+  const e = TK.e, g = Math.floor(n / 4), k = n % 4, ord = tkOrder(g), si = TK_SCHED[(TK.sky0 + g) % TK_SCHED.length], c = TK_SKIES[si];
   for(let i = 0; i < e.lay.length; i++) e.lay[i].setAttribute('class', 'tkl' + (i === si ? ' on' : ''));
-  e.li.style.display = c.lights ? '' : 'none'; e.wi.style.display = c.night ? '' : 'none';
+  e.li.style.display = c.lights ? '' : 'none'; e.wi.style.display = c.lights ? '' : 'none';
+  e.ng.style.display = e.gh.style.display = e.sp.style.display = c.lights ? '' : 'none'; e.ng.style.opacity = e.sp.style.opacity = c.glow || 1;
+  TK.dk = c.k === 'day' ? 0 : 1;
   e.fl.style.display = e.lm.style.display = c.lights ? '' : 'none'; e.fl.style.opacity = e.lm.style.opacity = c.night ? 1 : .6;
-  e.pl.setAttribute('style', TK_LV[ord[k]]); TK.cur = -1; TK.night = c.night;
+  e.pl.setAttribute('style', TK_LV[ord[k]]); TK.cur = -1; TK.night = c.lights;
 }
+function tkBlink(){ const p = (performance.now() % 1400) / 1400; return p < .5 ? 1 : p < .58 ? 1 - (p - .5) / .08 * .85 : p < .92 ? .15 : .15 + (p - .92) / .08 * .85; }
 function tkFrame(t){
   const e = TK.e, W = TK.W, X1 = .45 * W, XE = 2.5 * X1;
+  const bl = TK.rm ? 1 : tkBlink(); e.na.style.opacity = e.gh.style.opacity = e.gs.style.opacity = bl.toFixed(2);
   let ph, x = 0, y = 0, rot = 0, go = 1, so = 1;
   if(t < TK_TAXI){ ph = 0; const s = t / TK_TAXI; x = -170 * (1 - s) * (1 - s); }
   else if(t < TK_TAXI + TK_HOLD) ph = 1;
@@ -5263,6 +5374,64 @@ function tkFrame(t){
   e.sh.setAttribute('transform', 'translate(' + x.toFixed(1) + ' 0)'); e.sh.setAttribute('opacity', so.toFixed(2));
   if(ph !== TK.cur){ TK.cur = ph; e.nl.style.display = (TK.night && ph >= 2) ? '' : 'none'; }
 }
+
+/* ====================== v3.89: captain's call before take-off ====================== */
+Object.assign(I.en, { tk_hint: 'Tap aircraft to request take-off clearance', tk_btn: 'Request take-off clearance' });
+Object.assign(I.th, { tk_hint: 'แตะที่อากาศยานเพื่อขออนุญาตขึ้นบิน', tk_btn: 'ขออนุญาตขึ้นบิน' });
+const TK_WAIT = 6000, TK_SAY = 2800, TK_CS_KEY = 'tkCallsigns';
+function tkCsNum(id){ let h = 0; String(id).split('').forEach(function(ch){ h = (h * 31 + ch.charCodeAt(0)) % 100003; }); return 100 + (h % 900); }
+/* Every active staff member gets a turn (first name + 3 digits) before anyone repeats. The order is kept on this device. */
+function tkCsNext(){
+  const L = (staffList || []).filter(function(x){ return x && x.name && String(x.name).trim(); }), by = {};
+  L.forEach(function(x){ by[String(x.id)] = x; });
+  let j = { o: [], i: 0, last: '' };
+  try { const r = JSON.parse(localStorage.getItem(TK_CS_KEY) || 'null'); if(r && Array.isArray(r.o) && typeof r.i === 'number') j = r; } catch(e) {}
+  let pick = null;
+  while(j.i < j.o.length){ const id = String(j.o[j.i++]); if(by[id]){ pick = by[id]; break; } }
+  if(!pick && L.length){
+    const ids = L.map(function(x){ return String(x.id); });
+    for(let a = ids.length - 1; a > 0; a--){ const b = Math.floor(Math.random() * (a + 1)), x = ids[a]; ids[a] = ids[b]; ids[b] = x; }
+    if(ids.length > 1 && ids[0] === String(j.last)){ const x = ids[0]; ids[0] = ids[ids.length - 1]; ids[ids.length - 1] = x; }
+    j.o = ids; j.i = 1; pick = by[ids[0]];
+  }
+  if(pick){ j.last = String(pick.id); try { localStorage.setItem(TK_CS_KEY, JSON.stringify(j)); } catch(e) {} }
+  return pick ? String(pick.name).trim().split(/\s+/)[0].replace(/[.,]+$/, '') + ' ' + tkCsNum(pick.id) : 'OPS 123';
+}
+function tkSay(now){ if(TK.say || TK.rm || !TK.waiting) return; TK.say = now || performance.now(); TK.txt = 'Cleared for take-off, runway 19L, ' + tkCsNext() + '.'; }
+function tkUI(now){
+  const el = TK.e && TK.e.el; if(!el) return;
+  const fs = el.querySelector('.tkfs'), R = el.getBoundingClientRect();
+  let bt = el.querySelector('#tkbtn'), hi = el.querySelector('#tkhint'), rg = el.querySelector('#tkring'), bu = el.querySelector('#tkbub');
+  const wait = TK.waiting && !TK.say, talk = TK.say && now - TK.say < TK_SAY && TK.txt;
+  if(!bt){
+    el.insertAdjacentHTML('beforeend', '<button type="button" id="tkbtn"></button><div class="tkhint" id="tkhint"></div><div class="tkring" id="tkring"></div>');
+    bt = el.querySelector('#tkbtn'); hi = el.querySelector('#tkhint'); rg = el.querySelector('#tkring');
+    bt.addEventListener('click', function(ev){ ev.stopPropagation(); tkSay(performance.now()); });
+  }
+  const show = wait && fs;
+  bt.style.display = hi.style.display = rg.style.display = show ? '' : 'none';
+  if(show){
+    const P = fs.getBoundingClientRect(), col = TK.dk ? '#ffffff' : '#10243d', narrow = el.clientWidth < 500;
+    bt.setAttribute('aria-label', t('tk_btn'));
+    bt.style.left = (P.left - R.left - 8) + 'px'; bt.style.top = (P.top - R.top - 12) + 'px'; bt.style.width = (P.width + 16) + 'px'; bt.style.height = (P.height + 24) + 'px';
+    rg.style.left = (P.left - R.left + P.width * .5 - 13) + 'px'; rg.style.top = (P.top - R.top + P.height * .5 - 13) + 'px'; rg.style.borderColor = col;
+    hi.textContent = t('tk_hint'); hi.style.color = col; hi.style.fontSize = (narrow ? 8.5 : 9.5) + 'px'; hi.style.left = '10px'; hi.style.top = Math.max(2, P.top - R.top - 38) + 'px';
+    hi.style.textShadow = TK.dk ? '0 1px 3px rgba(0,0,0,.7)' : '0 0 3px rgba(255,255,255,.8)';
+  }
+  if(talk && fs){
+    if(!bu || bu.getAttribute('data-t') !== TK.txt){
+      if(bu) bu.remove();
+      const col = TK.dk ? '#ffffff' : '#10243d', P = fs.getBoundingClientRect();
+      el.insertAdjacentHTML('beforeend', '<div class="tkbub" id="tkbub" role="status"></div>');
+      bu = el.querySelector('#tkbub'); bu.setAttribute('data-t', TK.txt); bu.textContent = TK.txt; bu.style.color = col; bu.style.maxWidth = Math.min(300, el.clientWidth * .62) + 'px';
+      bu.style.textShadow = TK.dk ? '0 1px 3px rgba(0,0,0,.6)' : '0 0 3px rgba(255,255,255,.7)';
+      const w = bu.offsetWidth, h = bu.offsetHeight, rr = 12, tx = Math.max(20, Math.min(w - 20, (P.right - R.left) - P.width * .12 - 8));
+      const d = 'M' + rr + ' 0H' + (w - rr) + 'Q' + w + ' 0 ' + w + ' ' + rr + 'V' + (h - rr) + 'Q' + w + ' ' + h + ' ' + (w - rr) + ' ' + h + 'H' + (tx + 7) + 'L' + tx + ' ' + (h + 8) + 'L' + (tx - 7) + ' ' + h + 'H' + rr + 'Q0 ' + h + ' 0 ' + (h - rr) + 'V' + rr + 'Q0 0 ' + rr + ' 0Z';
+      bu.insertAdjacentHTML('afterbegin', '<svg width="' + (w + 2) + '" height="' + (h + 10) + '" aria-hidden="true" style="position:absolute;left:-1px;top:-1px;overflow:visible;pointer-events:none"><path d="' + d + '" fill="none" stroke="' + col + '" stroke-width="1.5" stroke-linejoin="round" transform="translate(1 1)"/></svg>');
+      bu.style.top = Math.max(2, P.top - R.top - h - 14) + 'px';
+    }
+  } else if(bu) bu.remove();
+}
 function tkLoop(now){
   const el = document.getElementById('tkr');
   if(!el){ TK.run = false; return; }
@@ -5271,9 +5440,19 @@ function tkLoop(now){
     TK.chk = now; const W2 = Math.round(el.clientWidth * 150 / Math.max(1, el.clientHeight));
     if(W2 > 0 && Math.abs(W2 - TK.W) > TK.W * .08) tkInit(el);
   }
-  const t = now - TK.t0, n = Math.floor(t / TK_CYC);
-  if(n !== TK.last){ TK.last = n; tkSetup(n); }
+  const raw = TK.prev ? now - TK.prev : 0, dt = Math.min(raw, 100); TK.prev = now;
+  let t = now - TK.t0; const n = Math.floor(t / TK_CYC);
+  if(n !== TK.last){ TK.last = n; TK.say = 0; TK.wt = 0; TK.txt = ''; tkSetup(n); }
+  const lc = t % TK_CYC, hold = !TK.rm && lc >= TK_TAXI && lc < TK_TAXI + TK_HOLD;
+  TK.waiting = hold && !TK.say;
+  if(hold){
+    if(!TK.say){ TK.wt += dt; if(TK.wt >= TK_WAIT){ TK.waiting = true; tkSay(now); } }
+    if(TK.say && now - TK.say >= TK_SAY) TK.t0 = now - (n * TK_CYC + TK_TAXI + TK_HOLD);
+    else TK.t0 += raw;
+    t = now - TK.t0;
+  }
   tkFrame(t % TK_CYC);
+  if(!TK.rm) tkUI(now);
   if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){ tkFrame(TK_TAXI + TK_HOLD + TK_CLR + TK_TO * .4); TK.run = false; return; }
   requestAnimationFrame(tkLoop);
 }
@@ -6709,7 +6888,7 @@ Object.assign(I.en, {
   wc_other: '{name} is acting as OPS Manager today',
   wc_nobody: 'No Acting OPS Manager is assigned today',
   wc_link: 'Open the Acting OPS Manager calendar',
-  wc_mine: 'Your days', wc_week: 'This week',
+  wc_mine: 'Your days', wc_week: 'This week', wc_card: 'Acting Manager',
   wc_loa: 'LOA reservations: {n}',
   si_cont: 'Sign in as {name}', si_find: 'Type a name or initials', si_hint: 'Type a name or pick a division',
   si_none: 'No name matches. Check the spelling or choose a division.', si_all: 'All', si_found: '{n} found',
@@ -6721,7 +6900,7 @@ Object.assign(I.th, {
   wc_other: 'วันนี้ {name} ปฏิบัติหน้าที่แทน ผจก.OPS',
   wc_nobody: 'วันนี้ยังไม่มีการกำหนดผู้ปฏิบัติหน้าที่แทน ผจก.OPS',
   wc_link: 'เปิดปฏิทินผู้ปฏิบัติหน้าที่แทน ผจก.OPS',
-  wc_mine: 'วันของคุณ', wc_week: 'สัปดาห์นี้',
+  wc_mine: 'วันของคุณ', wc_week: 'สัปดาห์นี้', wc_card: 'ผู้ปฏิบัติหน้าที่แทน ผจก.OPS',
   wc_loa: 'การจอง LOA: {n}',
   si_cont: 'เข้าสู่ระบบในชื่อ {name}', si_find: 'พิมพ์ชื่อหรืออักษรย่อ', si_hint: 'พิมพ์ชื่อหรือเลือกฝ่าย',
   si_none: 'ไม่พบชื่อที่ตรงกัน ตรวจตัวสะกดหรือเลือกฝ่าย', si_all: 'ทั้งหมด', si_found: 'พบ {n} ชื่อ',
@@ -6772,6 +6951,11 @@ function wcActingHTML(){
   return wcStripHTML() + '<div class="wcline">' + esc(line) + '</div>' + note +
     '<button type="button" class="wclk" onclick="setTab(\'acting\')">' + esc(t('wc_link')) + ' ' + ico('arrow', 15) + '</button>';
 }
+function actCardHTML(){
+  if(!me) return '';
+  const body = wcActingHTML(); if(!body) return '';
+  return '<div class="tb tba" id="actCard"><div class="tbh"><span class="tbi">' + ico('user', 17) + '</span><b>' + esc(t('wc_card')) + '</b></div>' + body + '</div>';
+}
 function myDayHTML(){
   if(!me) return '';
   const today = bkkToday(), L = me.list || [], hr = new Date(Date.now() + 7 * 3600000).getUTCHours();
@@ -6780,7 +6964,6 @@ function myDayHTML(){
   let nx = ''; pend.forEach(function(b){ const d = b.deadline ? String(b.deadline).slice(0, 10) : ''; if(d && d >= today && (!nx || d < nx)) nx = d; });
   let h = '<section class="wc" id="myDay"><h2>' + esc(t(hr < 12 ? 'md_gm' : (hr < 17 ? 'md_ga' : 'md_ge'), { name: me.name || '' })) + '</h2>' +
     '<p class="wcd0">' + esc(actDayLabel(today, { weekday: 'long', day: 'numeric', month: 'long' })) + '</p>';
-  h += wcActingHTML();
   h += '<div class="wcp">';
   h += '<button type="button" class="wcpill ' + (!pend.length ? 'g' : (od ? 'r' : 'a')) + '" onclick="setTab(\'ack\')">' + esc(t('md_due') + ': ' + (!pend.length ? t('md_allok') : (od ? t('md_od', { n: od }) : t('md_pend', { n: pend.length })) + (nx ? ' · ' + t('md_next', { d: fmtShort(nx, lang) }) : ''))) + '</button>';
   if(LOA.state === 'idle' && !LOA.kick){ LOA.kick = true; loadLoa().then(function(){ LOA.kick = false; if(tab === 'terminal') render(); }, function(){ LOA.kick = false; }); }
